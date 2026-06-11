@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Woman in the Mirror Journal · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Mirror prompt (feature panel) ---------- */
+  .mirror{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .mirror::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .mirror p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:19px; line-height:1.45; position:relative; z-index:1;
+  }
+  .mirror .tag{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .mirror-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], select{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  .affirm-input{
+    font-family:'Fraunces',serif; font-style:italic; font-size:18px; color:var(--emerald); font-weight:500;
+  }
+
+  /* ---------- Said-it marker ---------- */
+  .saidit{
+    display:flex; align-items:center; gap:10px; margin-top:12px;
+    min-height:44px; cursor:pointer; user-select:none;
+  }
+  .saidit .box{
+    flex:none; width:26px;height:26px;border-radius:8px;
+    border:1.5px solid var(--line); background:var(--cream);
+    display:flex;align-items:center;justify-content:center;
+    font-size:15px; color:transparent; transition:all .15s;
+  }
+  .saidit.on .box{
+    background:var(--emerald); border-color:var(--emerald); color:#FCF8EF;
+  }
+  .saidit span.lbl{ font-size:14.5px; font-weight:600; color:var(--ink); }
+  .saidit.on span.lbl{ color:var(--emerald); }
+
+  /* ---------- Complete button ---------- */
+  .complete-btn{
+    width:100%; margin-top:8px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+  .complete-btn.done{
+    background:var(--emerald-soft); color:var(--emerald); box-shadow:none;
+    border:1px solid rgba(20,84,62,.2);
+  }
+
+  .blessing{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .blessing.show{ display:block; animation:rise .4s ease; }
+  .blessing .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .blessing .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Streak ---------- */
+  .streak{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:18px; color:var(--muted); font-size:14px;
+  }
+  .streak b{ color:var(--emerald); font-size:15px; }
+  .flame{ font-size:16px; }
+
+  /* ---------- History ---------- */
+  .history-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 4px;
+  }
+  .history-list{ list-style:none; }
+  .history-item{
+    border-bottom:1px solid var(--line);
+  }
+  .history-item:last-child{ border-bottom:none; }
+  .history-head{
+    width:100%; display:flex; justify-content:space-between; align-items:center; gap:10px;
+    padding:12px 2px; background:none; border:none; font-family:inherit; cursor:pointer;
+    text-align:left; min-height:44px;
+  }
+  .history-head .h-date{ color:var(--ink); font-weight:600; font-size:14px; }
+  .history-head .h-word{ color:var(--gold); font-family:'Fraunces',serif; font-style:italic; font-size:14px; }
+  .history-head .chev{ color:var(--muted); font-size:13px; transition:transform .2s; }
+  .history-item.open .chev{ transform:rotate(180deg); }
+  .history-body{ display:none; padding:2px 2px 14px; }
+  .history-item.open .history-body{ display:block; animation:rise .25s ease; }
+  .h-line{ margin-bottom:10px; }
+  .h-line .lbl{
+    display:block; font-size:11.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; margin-bottom:2px;
+  }
+  .h-line .val{ font-size:14.5px; color:var(--ink); }
+  .h-line .val.affirm{ font-family:'Fraunces',serif; font-style:italic; color:var(--emerald); }
+  .h-delete{
+    margin-top:6px; background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:9px; padding:8px 12px; font-family:inherit; font-size:12.5px; cursor:pointer;
+    min-height:44px;
+  }
+  .h-delete:hover{ border-color:var(--gold); color:var(--ink); }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- First-run welcome ---------- */
+  .welcome{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 18px; margin-top:16px; color:var(--emerald);
+  }
+  .welcome .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:6px; }
+  .welcome .sm{ font-size:14px; color:var(--muted); line-height:1.5; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Woman in the Mirror</h1>
+    <p class="subtitle">A daily love letter to the woman you're becoming.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- First-run welcome -->
+  <section class="welcome" id="welcome" style="display:none;">
+    <div class="big">Hello, beautiful. 💛</div>
+    <div class="sm">This is your space to meet yourself with kindness. Each day, you'll celebrate one small thing you love, one thing you did well, and the woman you're growing into. Be gentle. Be honest. She's worth it — and so are you.</div>
+  </section>
+
+  <!-- 1. Today's mirror prompt -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Look in the Mirror</h2></div>
+    <p class="hint">A small prompt to meet her with softness today.</p>
+    <div class="mirror">
+      <p id="mirrorText">—</p>
+      <div class="tag">Today's mirror prompt</div>
+    </div>
+    <div class="mirror-actions">
+      <button class="link-btn" id="anotherPrompt" type="button">↻ Show me another</button>
+    </div>
+  </section>
+
+  <!-- 2. Daily reflection -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Celebrate Her</h2></div>
+    <p class="hint">No answer is too small. Naming the good is how you grow it.</p>
+
+    <label class="field-label" for="love">One thing I love or appreciate about myself today</label>
+    <textarea id="love" placeholder="Even something tiny counts…"></textarea>
+
+    <label class="field-label" for="well">Something I did well today</label>
+    <textarea id="well" placeholder="You showed up. What went right?"></textarea>
+
+    <label class="field-label" for="becoming">A way I'm becoming her</label>
+    <textarea id="becoming" placeholder="The woman you're growing into — how did you move toward her?"></textarea>
+
+    <label class="field-label" for="kind">A kind thing I'll tell the woman in the mirror</label>
+    <textarea id="kind" placeholder="Speak to her the way you'd speak to your dearest friend…"></textarea>
+  </section>
+
+  <!-- 3. Mirror affirmation -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Speak It Over Yourself</h2></div>
+    <p class="hint">Pick a mirror affirmation or write your own — then say it out loud to your reflection.</p>
+
+    <label class="field-label" for="affirmPick">Choose an affirmation</label>
+    <select id="affirmPick">
+      <option value="">— Write my own below —</option>
+    </select>
+
+    <label class="field-label" for="affirm">My affirmation</label>
+    <input type="text" class="affirm-input" id="affirm" placeholder="I am becoming her, and I love who I am today.">
+
+    <div class="saidit" id="saidIt" role="checkbox" aria-checked="false" tabindex="0">
+      <span class="box" aria-hidden="true">✓</span>
+      <span class="lbl">I said it to myself out loud</span>
+    </div>
+
+    <button class="complete-btn" id="completeBtn" type="button" style="margin-top:18px;">Complete today's reflection 🪞</button>
+    <div class="blessing" id="blessing">
+      <div class="big">Look at you. 💛</div>
+      <div class="sm">You met yourself with kindness today. The woman in the mirror is so proud of you.</div>
+    </div>
+
+    <div class="streak">
+      <span class="flame">🔥</span>
+      <span><b id="streakCount">0</b> day streak · <b id="totalCount">0</b> reflections total</span>
+    </div>
+  </section>
+
+  <!-- History -->
+  <section class="card">
+    <div class="history-title">Your record of self-celebration</div>
+    <ul class="history-list" id="historyList"></ul>
+    <p class="empty-note" id="historyEmpty">Complete today's reflection and it'll begin to grow here — a record of every kind thing you've said to yourself. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_woman_in_mirror";
+
+  // ---- Rotating daily mirror prompts ----
+  var PROMPTS = [
+    "What would you say to her if you truly believed she was worthy of love?",
+    "Where did your strength quietly show up today?",
+    "What is one part of yourself you've been learning to accept?",
+    "How are you softer with yourself than you were a year ago?",
+    "What did your body carry you through today? Thank it.",
+    "Name one thing about your heart that the world doesn't see, but God does.",
+    "What would the woman you're becoming thank you for today?",
+    "Where did you choose courage over comfort, even in a small way?",
+    "What is something you forgive yourself for right now?",
+    "If your younger self could see you today, what would make her proud?",
+    "What does your reflection deserve to hear that she rarely does?",
+    "How did you honour your own needs today?",
+    "What is beautiful about who you're growing into?",
+    "Where did you show love today — and did any of it return to you?",
+    "What season are you in, and how are you being faithful through it?",
+    "Speak one truth over yourself that fear has been arguing against.",
+    "What did you learn about yourself this week that you'd like to keep?",
+    "How are you more whole today, even if not yet finished?",
+    "What part of your story are you ready to be gentle about?",
+    "Tell her: which of her dreams is still worth chasing?",
+    "What grace did you extend to yourself that you used to withhold?",
+    "Where is God growing something good in you right now?"
+  ];
+
+  // ---- Built-in mirror affirmations ----
+  var AFFIRMATIONS = [
+    "I am becoming her, and I love who I am today.",
+    "I am worthy of the same kindness I give to everyone else.",
+    "I am clothed with strength and dignity.",
+    "I am growing, healing, and becoming more myself each day.",
+    "I am enough exactly as I am, and still rising.",
+    "I am a daughter of the King — chosen, loved, and never alone.",
+    "I trust the woman I'm becoming.",
+    "I am proud of how far I've come.",
+    "My softness is not weakness; it is my strength.",
+    "I deserve a life that makes me feel alive.",
+    "I am allowed to celebrate myself.",
+    "I am exactly where I need to be, and I'm still moving forward."
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    var diff = d - start;
+    return Math.floor(diff / 86400000);
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+  }
+
+  // ---- State ----
+  var data = load();
+  var TODAY = todayKey();
+  var entry = data.entries[TODAY] || {
+    love:"", well:"", becoming:"", kind:"",
+    affirm:"", saidIt:false, prompt:null, completed:false
+  };
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.entries) return o; }
+    }catch(e){}
+    return { entries:{} };
+  }
+  function save(){
+    data.entries[TODAY] = entry;
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var loveEl=$("love"), wellEl=$("well"), becomingEl=$("becoming"), kindEl=$("kind");
+  var affirmEl=$("affirm"), affirmPick=$("affirmPick"), saidItEl=$("saidIt");
+  var completeBtn=$("completeBtn"), blessingEl=$("blessing");
+  var mirrorTextEl=$("mirrorText");
+
+  // ---- Populate affirmation dropdown ----
+  AFFIRMATIONS.forEach(function(a){
+    var opt = document.createElement("option");
+    opt.value = a; opt.textContent = a;
+    affirmPick.appendChild(opt);
+  });
+
+  // ---- Mirror prompt: deterministic daily default, user can cycle ----
+  if(entry.prompt === null || entry.prompt === undefined){
+    entry.prompt = dayOfYear(new Date()) % PROMPTS.length;
+  }
+  function renderPrompt(){
+    mirrorTextEl.textContent = PROMPTS[entry.prompt];
+  }
+  $("anotherPrompt").addEventListener("click", function(){
+    entry.prompt = (entry.prompt + 1) % PROMPTS.length;
+    renderPrompt(); save();
+  });
+
+  // ---- Restore inputs ----
+  $("todayDate").textContent = prettyDate(TODAY);
+  loveEl.value = entry.love || "";
+  wellEl.value = entry.well || "";
+  becomingEl.value = entry.becoming || "";
+  kindEl.value = entry.kind || "";
+  affirmEl.value = entry.affirm || "";
+  // sync dropdown if affirmation matches a built-in
+  if(entry.affirm && AFFIRMATIONS.indexOf(entry.affirm) !== -1){ affirmPick.value = entry.affirm; }
+  renderPrompt();
+  renderSaidIt();
+  renderCompleted();
+
+  // ---- Auto-save on every change ----
+  function wire(el, fn){
+    el.addEventListener("input", function(){ fn(el.value); save(); });
+  }
+  wire(loveEl, function(v){ entry.love=v; });
+  wire(wellEl, function(v){ entry.well=v; });
+  wire(becomingEl, function(v){ entry.becoming=v; });
+  wire(kindEl, function(v){ entry.kind=v; });
+  wire(affirmEl, function(v){
+    entry.affirm=v;
+    // if user types something different, deselect dropdown
+    if(AFFIRMATIONS.indexOf(v) === -1){ affirmPick.value=""; }
+  });
+
+  affirmPick.addEventListener("change", function(){
+    if(affirmPick.value){
+      affirmEl.value = affirmPick.value;
+      entry.affirm = affirmPick.value;
+      save();
+    }
+  });
+
+  // ---- "Said it to myself" marker ----
+  function renderSaidIt(){
+    if(entry.saidIt){ saidItEl.classList.add("on"); saidItEl.setAttribute("aria-checked","true"); }
+    else{ saidItEl.classList.remove("on"); saidItEl.setAttribute("aria-checked","false"); }
+  }
+  function toggleSaidIt(){
+    entry.saidIt = !entry.saidIt;
+    renderSaidIt(); save();
+  }
+  saidItEl.addEventListener("click", toggleSaidIt);
+  saidItEl.addEventListener("keydown", function(e){
+    if(e.key === " " || e.key === "Enter"){ e.preventDefault(); toggleSaidIt(); }
+  });
+
+  // ---- Complete ----
+  function renderCompleted(){
+    if(entry.completed){
+      completeBtn.textContent = "Reflection complete for today ✓";
+      completeBtn.classList.add("done");
+    }else{
+      completeBtn.textContent = "Complete today's reflection 🪞";
+      completeBtn.classList.remove("done");
+    }
+    renderStreak();
+    renderHistory();
+    renderWelcome();
+  }
+  completeBtn.addEventListener("click", function(){
+    entry.completed = !entry.completed;
+    save();
+    if(entry.completed){ blessingEl.classList.add("show"); }
+    else{ blessingEl.classList.remove("show"); }
+    renderCompleted();
+  });
+
+  // ---- Streak + totals ----
+  function renderStreak(){
+    var keys = Object.keys(data.entries).filter(function(k){ return data.entries[k].completed; });
+    $("totalCount").textContent = keys.length;
+    var streak = 0;
+    var d = new Date();
+    while(true){
+      var m = String(d.getMonth()+1).padStart(2,"0");
+      var day = String(d.getDate()).padStart(2,"0");
+      var k = d.getFullYear()+"-"+m+"-"+day;
+      if(data.entries[k] && data.entries[k].completed){ streak++; d.setDate(d.getDate()-1); }
+      else break;
+    }
+    $("streakCount").textContent = streak;
+  }
+
+  // ---- Welcome (first run, no completed entries) ----
+  function renderWelcome(){
+    var any = Object.keys(data.entries).some(function(k){ return data.entries[k].completed; });
+    $("welcome").style.display = any ? "none" : "block";
+  }
+
+  // ---- History (all completed, most recent first, expandable) ----
+  function field(label, value, isAffirm){
+    if(!value) return "";
+    var v = document.createElement("div"); v.className = "h-line";
+    var l = document.createElement("span"); l.className = "lbl"; l.textContent = label;
+    var t = document.createElement("span"); t.className = "val" + (isAffirm ? " affirm" : ""); t.textContent = value;
+    v.appendChild(l); v.appendChild(t);
+    return v;
+  }
+  function renderHistory(){
+    var list = $("historyList"), empty = $("historyEmpty");
+    var keys = Object.keys(data.entries)
+      .filter(function(k){ return data.entries[k].completed; })
+      .sort().reverse();
+    list.innerHTML = "";
+    if(keys.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+
+    keys.forEach(function(k){
+      var e = data.entries[k];
+      var li = document.createElement("li"); li.className = "history-item";
+
+      var head = document.createElement("button");
+      head.className = "history-head"; head.type = "button";
+      head.setAttribute("aria-expanded","false");
+      var hd = document.createElement("span"); hd.className="h-date"; hd.textContent = prettyDate(k);
+      var hw = document.createElement("span"); hw.className="h-word";
+      hw.textContent = e.affirm ? "“" + (e.affirm.length>26 ? e.affirm.slice(0,26)+"…" : e.affirm) + "”" : "—";
+      var chev = document.createElement("span"); chev.className="chev"; chev.textContent="▾";
+      var hwWrap = document.createElement("span");
+      hwWrap.style.display="flex"; hwWrap.style.alignItems="center"; hwWrap.style.gap="8px";
+      hwWrap.appendChild(hw); hwWrap.appendChild(chev);
+      head.appendChild(hd); head.appendChild(hwWrap);
+
+      var body = document.createElement("div"); body.className="history-body";
+      var f1 = field("I love about myself", e.love);
+      var f2 = field("I did well", e.well);
+      var f3 = field("Becoming her", e.becoming);
+      var f4 = field("Kind words to her", e.kind);
+      var f5 = field(e.saidIt ? "Affirmation (said aloud ✓)" : "Affirmation", e.affirm, true);
+      [f1,f2,f3,f4,f5].forEach(function(f){ if(f) body.appendChild(f); });
+      if(!f1 && !f2 && !f3 && !f4 && !f5){
+        var note = document.createElement("div"); note.className="h-line";
+        note.innerHTML = '<span class="val" style="font-style:italic;color:var(--muted)">You showed up — and that counts. 💛</span>';
+        body.appendChild(note);
+      }
+
+      var del = document.createElement("button");
+      del.className="h-delete"; del.type="button"; del.textContent="Delete this entry";
+      del.addEventListener("click", function(ev){
+        ev.stopPropagation();
+        if(confirm("Delete your reflection from " + prettyDate(k) + "? This can't be undone, sister.")){
+          delete data.entries[k];
+          if(k === TODAY){
+            entry = { love:"", well:"", becoming:"", kind:"", affirm:"", saidIt:false,
+                      prompt: dayOfYear(new Date()) % PROMPTS.length, completed:false };
+            loveEl.value=""; wellEl.value=""; becomingEl.value=""; kindEl.value="";
+            affirmEl.value=""; affirmPick.value="";
+            blessingEl.classList.remove("show");
+            renderPrompt(); renderSaidIt();
+          }
+          try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+          renderCompleted();
+        }
+      });
+      body.appendChild(del);
+
+      head.addEventListener("click", function(){
+        var open = li.classList.toggle("open");
+        head.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+
+      li.appendChild(head); li.appendChild(body);
+      list.appendChild(li);
+    });
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Woman in the Mirror entries? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { entries:{} };
+      entry = { love:"", well:"", becoming:"", kind:"", affirm:"", saidIt:false,
+                prompt: dayOfYear(new Date()) % PROMPTS.length, completed:false };
+      loveEl.value=""; wellEl.value=""; becomingEl.value=""; kindEl.value="";
+      affirmEl.value=""; affirmPick.value="";
+      blessingEl.classList.remove("show");
+      renderPrompt(); renderSaidIt(); renderCompleted();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

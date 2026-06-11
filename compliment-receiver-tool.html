@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compliment Receiver Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Daily prompt (emerald banner) ---------- */
+  .prompt{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .prompt::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .prompt p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:19px; line-height:1.45; position:relative; z-index:1;
+  }
+  .prompt .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .prompt-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="date"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="date"]{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  .two-col{ display:flex; gap:10px; }
+  .two-col > div{ flex:1; }
+
+  /* ---------- Primary button ---------- */
+  .complete-btn{
+    width:100%; margin-top:16px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Coaching note ---------- */
+  .coach{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 18px;
+  }
+  .coach h3{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:17px; margin-bottom:8px;
+  }
+  .coach p{ font-size:14px; color:var(--ink); margin-bottom:10px; }
+  .coach p:last-child{ margin-bottom:0; }
+  .coach .say{
+    font-family:'Fraunces',serif; font-style:italic; color:var(--emerald);
+    font-size:18px; font-weight:500;
+  }
+
+  /* ---------- Stats ---------- */
+  .stats{
+    display:flex; gap:12px; margin-top:4px;
+  }
+  .stat{
+    flex:1; background:var(--cream); border:1px solid var(--line);
+    border-radius:12px; padding:14px 10px; text-align:center;
+  }
+  .stat .n{ font-family:'Fraunces',serif; color:var(--emerald); font-size:26px; font-weight:600; line-height:1; }
+  .stat .l{ color:var(--muted); font-size:12px; margin-top:6px; }
+  .stat-line{
+    margin-top:14px; text-align:center; color:var(--emerald);
+    font-family:'Fraunces',serif; font-style:italic; font-size:16px;
+  }
+
+  /* ---------- Mode toggle ---------- */
+  .toggle{
+    display:flex; gap:8px; background:var(--cream); border:1px solid var(--line);
+    border-radius:12px; padding:5px; margin-bottom:4px;
+  }
+  .toggle button{
+    flex:1; min-height:42px; border:none; background:none; cursor:pointer;
+    font-family:inherit; font-weight:600; font-size:14px; color:var(--muted);
+    border-radius:9px; transition:background .15s, color .15s;
+  }
+  .toggle button.active{ background:var(--gold); color:var(--ink); box-shadow:0 3px 8px rgba(200,160,74,.28); }
+
+  /* ---------- Compliment list ---------- */
+  .c-list{ list-style:none; }
+  .c-item{
+    border:1px solid var(--line); border-radius:14px; padding:16px;
+    margin-top:14px; background:#fff;
+  }
+  .c-item.owned{ border-color:var(--gold-soft); background:linear-gradient(180deg,#fff 0%,#FFFDF7 100%); }
+  .c-quote{
+    font-family:'Fraunces',serif; font-style:italic; color:var(--ink);
+    font-size:18px; line-height:1.4;
+  }
+  .c-meta{ color:var(--muted); font-size:12.5px; margin-top:8px; letter-spacing:.02em; }
+  .c-istate{
+    margin-top:12px; display:flex; align-items:center; gap:8px;
+    background:var(--emerald-soft); border-radius:10px; padding:10px 12px;
+  }
+  .c-istate .own-word{
+    font-family:'Fraunces',serif; color:var(--emerald); font-weight:600; font-size:16px;
+  }
+  .c-actions{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; align-items:center; }
+  .receive-btn{
+    min-height:44px; border:none; border-radius:11px; cursor:pointer;
+    font-family:inherit; font-weight:700; font-size:14px; padding:10px 16px;
+    background:var(--gold); color:var(--ink); box-shadow:0 4px 12px rgba(200,160,74,.3);
+    transition:transform .08s ease;
+  }
+  .receive-btn:active{ transform:translateY(1px); }
+  .receive-btn.owned{
+    background:var(--emerald-soft); color:var(--emerald); box-shadow:none;
+    border:1px solid rgba(20,84,62,.2);
+  }
+  .receive-btn.pulse{ animation:pulse .5s ease; }
+  @keyframes pulse{ 0%{transform:scale(1);} 40%{transform:scale(1.08);} 100%{transform:scale(1);} }
+  .del-btn{
+    margin-left:auto; min-height:44px; background:none; border:none; cursor:pointer;
+    color:var(--muted); font-family:inherit; font-size:13px; padding:8px 6px;
+  }
+  .del-btn:hover{ color:#b04a4a; }
+
+  .own-line{
+    display:none; margin-top:10px; text-align:center; color:var(--emerald);
+    background:var(--emerald-soft); border-radius:10px; padding:10px; font-size:13.5px;
+  }
+  .own-line.show{ display:block; animation:rise .4s ease; }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Read mode ---------- */
+  .read-card{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:16px; padding:30px 22px; text-align:center;
+    position:relative; overflow:hidden; min-height:180px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+  }
+  .read-card::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-10px; left:14px; font-size:90px; color:rgba(231,211,161,.22);
+  }
+  .read-card .rq{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:22px; line-height:1.45; position:relative; z-index:1;
+  }
+  .read-card .rwho{
+    margin-top:14px; font-weight:600; font-size:12.5px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--gold-soft);
+  }
+  .read-actions{ display:flex; justify-content:center; margin-top:14px; }
+
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+  .welcome{
+    text-align:center; padding:6px 4px;
+  }
+  .welcome p{ color:var(--ink); font-size:14.5px; margin-top:8px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Compliment Receiver</h1>
+    <p class="subtitle">Learn to receive the good — let kind, true words actually land.</p>
+  </header>
+
+  <!-- Daily prompt -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Today's Invitation</h2></div>
+    <p class="hint">A gentle nudge — add one received compliment, or one true kind thing about you.</p>
+    <div class="prompt">
+      <p id="promptText">—</p>
+      <div class="ref">A Word for You</div>
+    </div>
+    <div class="prompt-actions">
+      <button class="link-btn" id="anotherPrompt" type="button">↻ Show me another</button>
+    </div>
+  </section>
+
+  <!-- Log a compliment -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Words Said Over Me</h2></div>
+    <p class="hint">Caught a kind word today? Don't let it slip away — keep it here.</p>
+
+    <label class="field-label" for="cText">The compliment or kind words</label>
+    <textarea id="cText" placeholder="e.g. You're so thoughtful and easy to talk to."></textarea>
+
+    <div class="two-col">
+      <div>
+        <label class="field-label" for="cWho">Who said it? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+        <input type="text" id="cWho" placeholder="A friend, your mom…">
+      </div>
+      <div>
+        <label class="field-label" for="cDate">Date</label>
+        <input type="date" id="cDate">
+      </div>
+    </div>
+
+    <button class="complete-btn" id="addBtn" type="button">Add to my collection 💛</button>
+  </section>
+
+  <!-- Why we deflect -->
+  <section class="card coach">
+    <h3>Why it's hard to receive — and how to let it land</h3>
+    <p>When someone praises you, do you rush to deflect? <em>"Oh, this old thing."</em> <em>"It was nothing."</em> We brush off compliments to seem humble, or because deep down a kind word feels unsafe to believe. But every deflection quietly tells your heart the good isn't true.</p>
+    <p>Here's the practice, sister: when a compliment comes, pause. Breathe. Then simply say —</p>
+    <p class="say">"Thank you. That means a lot."</p>
+    <p>No minimizing. No deflecting. Just let it land. Receiving isn't pride — it's agreeing with what's already true about you.</p>
+  </section>
+
+  <!-- Collection + practice -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Receive &amp; Own Them</h2></div>
+    <div class="toggle" role="tablist">
+      <button id="tabList" class="active" type="button" role="tab">Practice</button>
+      <button id="tabRead" type="button" role="tab">Read Mode</button>
+    </div>
+
+    <!-- Practice list view -->
+    <div id="listView">
+      <p class="hint" style="margin-top:14px;">For each one, rewrite it as something you can own — then press <b>Receive it</b> to let it in.</p>
+      <ul class="c-list" id="cList"></ul>
+      <div class="welcome" id="emptyState">
+        <p class="empty-note" style="margin-top:14px;">No words collected yet.</p>
+        <p>Receiving is a skill you can practice, beautiful. Start by adding one kind thing someone said over you — or one true, kind thing about yourself. We'll help you let it land. 💛</p>
+      </div>
+    </div>
+
+    <!-- Read mode view -->
+    <div id="readView" style="display:none;">
+      <p class="hint" style="margin-top:14px;">On a hard day, come here and read the true things people have said about you.</p>
+      <div class="read-card">
+        <div class="rq" id="readQuote">—</div>
+        <div class="rwho" id="readWho"></div>
+      </div>
+      <div class="read-actions">
+        <button class="link-btn" id="nextRead" type="button">↻ Another kind word</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>How You're Growing</h2></div>
+    <div class="stats">
+      <div class="stat"><div class="n" id="statReceived">0</div><div class="l">words received</div></div>
+      <div class="stat"><div class="n" id="statOwned">0</div><div class="l">truly owned</div></div>
+    </div>
+    <div class="stat-line" id="statLine">Every kind word you keep is a brick in your confidence. 💛</div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_compliment_receiver";
+
+  // ---- Daily prompts ----
+  var PROMPTS = [
+    "What's one compliment someone gave you recently — that you brushed off too quickly?",
+    "Name one true, kind thing about yourself you'd be glad to hear from a friend.",
+    "Who in your life sees the good in you? What do they say about you?",
+    "Think of a moment you made someone's day better. What might they have said about you?",
+    "What strength of yours did someone notice this week?",
+    "If your closest friend described your heart in one sentence, what would she say?",
+    "What did someone thank you for lately? Let yourself believe you earned it.",
+    "What's something you do well that others have praised — and you waved away?",
+    "Recall a kind text or message you received. What did it say about who you are?",
+    "What would the woman who loves you most want you to know about yourself today?"
+  ];
+
+  function todayISO(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    return Math.floor((d - start)/86400000);
+  }
+  function prettyDate(iso){
+    if(!iso) return "";
+    var p = iso.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{month:"short", day:"numeric", year:"numeric"});
+  }
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  // ---- State ----
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.items) return o; }
+    }catch(e){}
+    return { items:[], promptIdx:null, readIdx:0 };
+  }
+  var data = load();
+  if(data.promptIdx === null || data.promptIdx === undefined){
+    data.promptIdx = dayOfYear(new Date()) % PROMPTS.length;
+  }
+
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Daily prompt ----
+  function renderPrompt(){ $("promptText").textContent = PROMPTS[data.promptIdx]; }
+  $("anotherPrompt").addEventListener("click", function(){
+    data.promptIdx = (data.promptIdx + 1) % PROMPTS.length;
+    renderPrompt(); save();
+  });
+
+  // ---- Add compliment ----
+  var cText = $("cText"), cWho = $("cWho"), cDate = $("cDate");
+  cDate.value = todayISO();
+
+  $("addBtn").addEventListener("click", function(){
+    var text = cText.value.trim();
+    if(!text){
+      cText.focus();
+      cText.style.borderColor = "#C8A04A";
+      return;
+    }
+    data.items.unshift({
+      id: Date.now()+"_"+Math.floor(Math.random()*1000),
+      text: text,
+      who: cWho.value.trim(),
+      date: cDate.value || todayISO(),
+      istatement: "",
+      owned: false
+    });
+    save();
+    cText.value=""; cWho.value=""; cDate.value = todayISO();
+    renderList(); renderStats(); renderRead();
+  });
+
+  // ---- Practice list ----
+  function renderList(){
+    var list = $("cList"), empty = $("emptyState");
+    list.innerHTML = "";
+    if(data.items.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+
+    data.items.forEach(function(item){
+      var li = document.createElement("li");
+      li.className = "c-item" + (item.owned ? " owned" : "");
+
+      var meta = item.who ? (item.who + " · " + prettyDate(item.date)) : prettyDate(item.date);
+
+      li.innerHTML =
+        '<div class="c-quote">&ldquo;' + escapeHtml(item.text) + '&rdquo;</div>' +
+        '<div class="c-meta">' + escapeHtml(meta) + '</div>' +
+        '<label class="field-label" for="istate_'+item.id+'">Rewrite it as something you can own — an &ldquo;I&rdquo; statement</label>' +
+        '<div class="c-istate">' +
+          '<span class="own-word">I am…</span>' +
+          '<input type="text" id="istate_'+item.id+'" data-id="'+item.id+'" class="istate-input" ' +
+            'style="flex:1;background:#fff;" placeholder="thoughtful, kind, a good friend" ' +
+            'value="'+escapeHtml(item.istatement)+'">' +
+        '</div>' +
+        '<div class="c-actions">' +
+          '<button class="receive-btn'+(item.owned?' owned':'')+'" data-id="'+item.id+'" type="button">' +
+            (item.owned ? '✓ Received &amp; owned' : 'Receive it 🤍') +
+          '</button>' +
+          '<button class="del-btn" data-del="'+item.id+'" type="button">Delete</button>' +
+        '</div>' +
+        '<div class="own-line" id="ownline_'+item.id+'">Let it land. This is true about you. 💛</div>';
+
+      list.appendChild(li);
+    });
+
+    // wire I-statement inputs
+    Array.prototype.forEach.call(list.querySelectorAll(".istate-input"), function(inp){
+      inp.addEventListener("input", function(){
+        var it = findItem(inp.getAttribute("data-id"));
+        if(it){ it.istatement = inp.value; save(); }
+      });
+    });
+    // wire receive buttons
+    Array.prototype.forEach.call(list.querySelectorAll(".receive-btn"), function(btn){
+      btn.addEventListener("click", function(){
+        var it = findItem(btn.getAttribute("data-id"));
+        if(!it) return;
+        it.owned = !it.owned;
+        save();
+        if(it.owned){
+          btn.classList.add("pulse");
+          var line = $("ownline_"+it.id);
+          if(line){ line.classList.add("show"); }
+          setTimeout(function(){ renderList(); }, 650);
+        }else{
+          renderList();
+        }
+        renderStats(); renderRead();
+      });
+    });
+    // wire delete
+    Array.prototype.forEach.call(list.querySelectorAll(".del-btn"), function(btn){
+      btn.addEventListener("click", function(){
+        if(confirm("Remove this kind word from your collection, sister?")){
+          var id = btn.getAttribute("data-del");
+          data.items = data.items.filter(function(x){ return x.id !== id; });
+          save(); renderList(); renderStats(); renderRead();
+        }
+      });
+    });
+  }
+
+  function findItem(id){
+    for(var i=0;i<data.items.length;i++){ if(data.items[i].id === id) return data.items[i]; }
+    return null;
+  }
+
+  // ---- Read mode ----
+  function renderRead(){
+    var q = $("readQuote"), who = $("readWho");
+    if(data.items.length === 0){
+      q.textContent = "Add a kind word and it'll glow here for the hard days.";
+      who.textContent = "";
+      return;
+    }
+    if(data.readIdx >= data.items.length) data.readIdx = 0;
+    var item = data.items[data.readIdx];
+    q.textContent = item.text;
+    who.textContent = item.who ? ("— " + item.who) : "— said over you";
+  }
+  $("nextRead").addEventListener("click", function(){
+    if(data.items.length === 0) return;
+    data.readIdx = (data.readIdx + 1) % data.items.length;
+    save(); renderRead();
+  });
+
+  // ---- Tabs ----
+  var tabList = $("tabList"), tabRead = $("tabRead");
+  tabList.addEventListener("click", function(){
+    tabList.classList.add("active"); tabRead.classList.remove("active");
+    $("listView").style.display="block"; $("readView").style.display="none";
+  });
+  tabRead.addEventListener("click", function(){
+    tabRead.classList.add("active"); tabList.classList.remove("active");
+    $("readView").style.display="block"; $("listView").style.display="none";
+    renderRead();
+  });
+
+  // ---- Stats ----
+  function renderStats(){
+    var total = data.items.length;
+    var owned = data.items.filter(function(x){ return x.owned; }).length;
+    $("statReceived").textContent = total;
+    $("statOwned").textContent = owned;
+    var line;
+    if(total === 0){
+      line = "Every kind word you keep is a brick in your confidence. 💛";
+    }else if(owned === 0){
+      line = "You've started collecting. Now practice letting them land.";
+    }else if(owned === total){
+      line = "You're owning every word said over you. That's growth, sister. 🌿";
+    }else{
+      line = "You've truly received " + owned + " of " + total + " — keep letting the good in.";
+    }
+    $("statLine").textContent = line;
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your collected words? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { items:[], promptIdx: dayOfYear(new Date()) % PROMPTS.length, readIdx:0 };
+      cText.value=""; cWho.value=""; cDate.value = todayISO();
+      renderPrompt(); renderList(); renderStats(); renderRead();
+    }
+  });
+
+  // ---- Init ----
+  renderPrompt();
+  renderList();
+  renderStats();
+  renderRead();
+
+})();
+</script>
+</body>
+</html>

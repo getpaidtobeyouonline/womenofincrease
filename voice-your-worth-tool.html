@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice Your Worth Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:16px; padding:24px 20px; margin-top:18px;
+    text-align:center; position:relative; overflow:hidden;
+  }
+  .welcome h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:21px;
+    line-height:1.25; margin-bottom:8px; color:#FCF8EF;
+  }
+  .welcome p{ font-size:14.5px; color:var(--gold-soft); line-height:1.5; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:8px 0 14px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:74px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Life areas ---------- */
+  .area{
+    border:1px solid var(--line); border-radius:14px; padding:16px;
+    margin-bottom:14px; background:var(--cream);
+  }
+  .area-head{
+    display:flex; align-items:center; gap:9px; margin-bottom:6px;
+  }
+  .area-head .icon{ font-size:18px; }
+  .area-head h3{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:16.5px;
+  }
+  .area .area-hint{ color:var(--muted); font-size:12.5px; margin-bottom:12px; }
+  .val-row{ display:flex; align-items:center; gap:8px; margin-bottom:9px; }
+  .val-row .dot{ flex:none; width:9px;height:9px;border-radius:50%;background:var(--gold); }
+  .val-row input{ flex:1; background:#fff; }
+  .val-row .del{
+    flex:none; width:40px; min-height:40px; border:1px solid var(--line);
+    background:#fff; color:var(--muted); border-radius:10px; cursor:pointer;
+    font-size:18px; line-height:1; display:flex; align-items:center; justify-content:center;
+  }
+  .val-row .del:hover{ border-color:var(--gold); color:var(--ink); }
+  .add-val{
+    width:100%; min-height:44px; margin-top:2px;
+    background:none; border:1px dashed var(--gold-soft); color:var(--emerald);
+    border-radius:10px; font-family:inherit; font-weight:600; font-size:13.5px; cursor:pointer;
+  }
+  .add-val:hover{ border-color:var(--gold); background:var(--emerald-soft); }
+
+  /* ---------- Starter strengths ---------- */
+  .starters-title{ font-weight:600; font-size:13px; color:var(--ink); margin:6px 0 9px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.14);
+    border-radius:999px; padding:8px 13px; min-height:38px; font-family:inherit;
+    font-size:13px; font-weight:600; cursor:pointer; transition:transform .08s ease;
+  }
+  .chip:hover{ background:var(--gold-soft); color:var(--ink); }
+  .chip:active{ transform:translateY(1px); }
+  .chip-note{ color:var(--muted); font-size:12px; margin-top:10px; font-style:italic; }
+
+  /* ---------- Statement blocks ---------- */
+  .statement{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:16px; margin-bottom:14px;
+  }
+  .statement .st-label{
+    font-weight:600; font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--emerald); margin-bottom:8px;
+  }
+  .statement textarea{ background:#fff; min-height:88px; }
+  .st-actions{ display:flex; justify-content:flex-end; margin-top:8px; }
+
+  .overall-statement{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:20px; position:relative; overflow:hidden;
+    margin-bottom:14px;
+  }
+  .overall-statement::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.22);
+  }
+  .overall-statement .st-label{ color:var(--gold-soft); }
+  .overall-statement textarea{
+    background:rgba(255,255,255,.95); color:var(--ink); min-height:96px;
+    font-family:'Fraunces',serif; font-size:16px; line-height:1.45;
+  }
+
+  /* ---------- Scripts ---------- */
+  .script{
+    border:1px solid var(--line); border-radius:13px; padding:15px; margin-bottom:12px;
+    background:var(--cream);
+  }
+  .script h4{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:15px; margin-bottom:8px;
+  }
+  .script textarea{ background:#fff; min-height:70px; font-size:15px; }
+
+  /* ---------- Buttons ---------- */
+  .copy-btn, .gen-btn{
+    background:none; border:1px solid var(--line); color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13px; cursor:pointer; padding:9px 14px; min-height:40px;
+    border-radius:10px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .copy-btn:hover, .gen-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .copy-btn.copied{ background:var(--emerald-soft); border-color:rgba(20,84,62,.2); color:var(--emerald); }
+  .gen-btn{
+    width:100%; justify-content:center; min-height:48px; margin-top:6px;
+    background:var(--gold-soft); border-color:transparent; color:var(--ink); font-size:14px;
+  }
+  .gen-btn:hover{ background:var(--gold); border-color:transparent; color:var(--ink); }
+
+  /* ---------- Communicate (voice it) ---------- */
+  .voice-item{
+    border:1px solid var(--line); border-radius:13px; padding:14px; margin-bottom:12px;
+    background:var(--cream);
+  }
+  .voice-item.done{ background:var(--emerald-soft); border-color:rgba(20,84,62,.18); }
+  .voice-top{ display:flex; gap:11px; align-items:flex-start; }
+  .voice-check{
+    flex:none; width:30px; height:30px; border-radius:9px;
+    border:2px solid var(--gold); background:#fff; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size:17px; color:var(--emerald); line-height:1; margin-top:2px;
+  }
+  .voice-item.done .voice-check{ background:var(--gold); border-color:var(--gold); color:var(--ink); }
+  .voice-body{ flex:1; }
+  .voice-what{ font-weight:600; font-size:15px; color:var(--ink); }
+  .voice-item.done .voice-what{ text-decoration:line-through; color:var(--muted); }
+  .voice-meta{ font-size:12.5px; color:var(--muted); margin-top:3px; }
+  .voice-del{
+    flex:none; width:34px; min-height:34px; border:none; background:none;
+    color:var(--muted); cursor:pointer; font-size:16px;
+  }
+  .voice-del:hover{ color:var(--ink); }
+  .voice-add-row{ margin-top:6px; }
+  .new-voice{ margin-bottom:8px; }
+
+  /* ---------- Progress ---------- */
+  .progress{
+    display:flex; gap:12px; margin-top:6px;
+  }
+  .stat{
+    flex:1; text-align:center; background:var(--cream); border:1px solid var(--line);
+    border-radius:13px; padding:14px 8px;
+  }
+  .stat b{
+    display:block; font-family:'Fraunces',serif; color:var(--emerald);
+    font-size:26px; font-weight:600; line-height:1;
+  }
+  .stat span{ font-size:12px; color:var(--muted); display:block; margin-top:5px; }
+  .encourage{
+    text-align:center; margin-top:14px; color:var(--emerald);
+    font-family:'Fraunces',serif; font-style:italic; font-size:15px;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  .empty-note{ color:var(--muted); font-size:13.5px; font-style:italic; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Voice Your Worth</h1>
+    <p class="subtitle">Identify it. Put it into words. Then say it out loud.</p>
+  </header>
+
+  <!-- Welcome (first run) -->
+  <section class="welcome" id="welcome">
+    <h2>You can stop auditioning for a worth you already have.</h2>
+    <p>Sister, your value isn't up for a vote. This space helps you name what you bring, find the words for it, and speak it with a steady, unapologetic voice.</p>
+  </section>
+
+  <!-- 1. IDENTIFY -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Identify your worth</h2></div>
+    <p class="hint">Across the areas of your life, name what you bring — your strengths, your gifts, the value others feel when you show up. Add as many as you like.</p>
+
+    <div id="areas"></div>
+
+    <div class="starters-title">Need a spark? Tap a strength to drop it in your first empty spot:</div>
+    <div class="chips" id="starters"></div>
+    <p class="chip-note">These are starting points — your truest words are yours to write.</p>
+  </section>
+
+  <!-- 2. ARTICULATE -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Put words to your worth</h2></div>
+    <p class="hint">From what you named above, let's craft statements you can actually say. Generate, then edit until it sounds like you.</p>
+
+    <button class="gen-btn" id="genStatements" type="button">✨ Build my worth statements from my entries</button>
+
+    <div id="areaStatements" style="margin-top:14px;"></div>
+
+    <div class="overall-statement" id="overallWrap" style="display:none;">
+      <div class="st-label">My overall worth</div>
+      <textarea id="overallStatement" aria-label="My overall worth statement"></textarea>
+      <div class="st-actions"><button class="copy-btn" data-copy="overallStatement" type="button">⧉ Copy</button></div>
+    </div>
+
+    <label class="field-label" style="margin-top:18px;">Phrasings for speaking your value</label>
+    <p class="hint" style="margin-top:0;">Adapt these for the moments that matter — asking for what you deserve, stating your rate, holding your ground without apology.</p>
+    <div id="scripts"></div>
+  </section>
+
+  <!-- 3. COMMUNICATE -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Voice it</h2></div>
+    <p class="hint">Where do you need to speak up — a raise, a boundary, a rate, an opinion? Name it, set the intention, and check it off when you do.</p>
+
+    <div class="new-voice">
+      <input type="text" id="newVoiceWhat" placeholder="e.g. Ask for a raise / Hold my rate / Say no to Sunday shifts">
+    </div>
+    <button class="gen-btn" id="addVoice" type="button" style="background:var(--emerald-soft);">+ Add something to voice</button>
+
+    <div id="voiceList" style="margin-top:14px;"></div>
+    <p class="empty-note" id="voiceEmpty">Nothing here yet — name one thing you've been swallowing. 💛</p>
+  </section>
+
+  <!-- Progress -->
+  <section class="card">
+    <div class="step"><span class="num">★</span><h2>Your becoming</h2></div>
+    <div class="progress">
+      <div class="stat"><b id="statAreas">0</b><span>areas defined</span></div>
+      <div class="stat"><b id="statValues">0</b><span>strengths named</span></div>
+      <div class="stat"><b id="statVoiced">0</b><span>times you voiced it</span></div>
+    </div>
+    <p class="encourage" id="encourage">Every word you claim is a wall you take down.</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_voice_your_worth";
+
+  // ---- Life areas ----
+  var AREAS = [
+    { id:"work",    icon:"💼", name:"Work / Career",     hint:"What you deliver, the standard you hold, how you make things better." },
+    { id:"rel",     icon:"💞", name:"Relationships",     hint:"The love, loyalty, and presence you offer." },
+    { id:"family",  icon:"🏡", name:"Family",            hint:"How you show up, hold things together, pass down what matters." },
+    { id:"friends", icon:"🤝", name:"Friendships",       hint:"What it feels like to have you in someone's corner." },
+    { id:"money",   icon:"💰", name:"Business / Money",   hint:"The value you create, your skill, what you're worth being paid." }
+  ];
+
+  // ---- Starter strengths ----
+  var STARTERS = [
+    "Dependable","A great listener","Creative","Resilient","Honest","Loyal",
+    "Hard-working","Compassionate","Organised","A problem-solver","Encouraging",
+    "Wise","Patient","Bold","Detail-oriented","A natural leader","Generous",
+    "Calm under pressure","Faithful","Quick to learn"
+  ];
+
+  // ---- Scripts (templates the user can adapt) ----
+  var SCRIPT_DEFS = [
+    { id:"raise", title:"Asking for what you deserve",
+      text:"I've taken on more and delivered consistently, and I'd like to talk about my compensation. Based on the value I bring, I believe a raise to ___ is fair. Can we make that happen?" },
+    { id:"rate", title:"Stating your rate — no shrinking",
+      text:"My rate for this is ___. It reflects the quality and care I bring, and I'm confident it's a fair investment for the results you'll get." },
+    { id:"boundary", title:"Holding a boundary",
+      text:"I'm not able to take that on. I want to give my best to what I've already committed to, so the answer here is no — and that's okay." },
+    { id:"opinion", title:"Stating your opinion without apology",
+      text:"Here's how I see it. ___. I've thought this through, and I'm confident it's worth considering." },
+    { id:"noapology", title:"Receiving praise (without deflecting)",
+      text:"Thank you. I worked hard on this, and I'm proud of it." }
+  ];
+
+  // ---- State ----
+  var data = load();
+
+  function blank(){
+    var areaVals = {};
+    AREAS.forEach(function(a){ areaVals[a.id] = [""]; });
+    var areaSt = {};
+    AREAS.forEach(function(a){ areaSt[a.id] = ""; });
+    var scr = {};
+    SCRIPT_DEFS.forEach(function(s){ scr[s.id] = s.text; });
+    return {
+      areaValues: areaVals,
+      areaStatements: areaSt,
+      overall: "",
+      scripts: scr,
+      voice: []   // {id, what, done, doneDate}
+    };
+  }
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && o.areaValues){
+          // backfill any missing keys
+          var b = blank();
+          AREAS.forEach(function(a){
+            if(!o.areaValues[a.id]) o.areaValues[a.id] = [""];
+            if(o.areaStatements[a.id] === undefined) o.areaStatements[a.id] = "";
+          });
+          SCRIPT_DEFS.forEach(function(s){ if(o.scripts[s.id] === undefined) o.scripts[s.id] = s.text; });
+          if(!o.voice) o.voice = [];
+          if(o.overall === undefined) o.overall = "";
+          return o;
+        }
+      }
+    }catch(e){}
+    return blank();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ============ STEP 1: IDENTIFY ============
+  function renderAreas(){
+    var host = $("areas");
+    host.innerHTML = "";
+    AREAS.forEach(function(a){
+      var vals = data.areaValues[a.id];
+      var wrap = document.createElement("div");
+      wrap.className = "area";
+
+      var head = document.createElement("div");
+      head.className = "area-head";
+      head.innerHTML = '<span class="icon">'+a.icon+'</span><h3>'+a.name+'</h3>';
+      wrap.appendChild(head);
+
+      var hint = document.createElement("div");
+      hint.className = "area-hint";
+      hint.textContent = a.hint;
+      wrap.appendChild(hint);
+
+      vals.forEach(function(v, idx){
+        var row = document.createElement("div");
+        row.className = "val-row";
+
+        var dot = document.createElement("span");
+        dot.className = "dot";
+        row.appendChild(dot);
+
+        var inp = document.createElement("input");
+        inp.type = "text";
+        inp.value = v;
+        inp.placeholder = "I bring…";
+        inp.setAttribute("aria-label", a.name + " strength " + (idx+1));
+        inp.addEventListener("input", function(){
+          data.areaValues[a.id][idx] = inp.value;
+          save(); renderProgress();
+        });
+        row.appendChild(inp);
+
+        var del = document.createElement("button");
+        del.className = "del";
+        del.type = "button";
+        del.textContent = "×";
+        del.setAttribute("aria-label", "Remove this strength");
+        del.addEventListener("click", function(){
+          data.areaValues[a.id].splice(idx, 1);
+          if(data.areaValues[a.id].length === 0) data.areaValues[a.id] = [""];
+          save(); renderAreas(); renderProgress();
+        });
+        row.appendChild(del);
+
+        wrap.appendChild(row);
+      });
+
+      var add = document.createElement("button");
+      add.className = "add-val";
+      add.type = "button";
+      add.textContent = "+ Add another for " + a.name;
+      add.addEventListener("click", function(){
+        data.areaValues[a.id].push("");
+        save(); renderAreas();
+        // focus the new input
+        var rows = wrap.querySelectorAll(".val-row input");
+        if(rows.length) rows[rows.length-1].focus();
+      });
+      wrap.appendChild(add);
+
+      host.appendChild(wrap);
+    });
+  }
+
+  // ---- Starters ----
+  function renderStarters(){
+    var host = $("starters");
+    host.innerHTML = "";
+    STARTERS.forEach(function(s){
+      var chip = document.createElement("button");
+      chip.className = "chip";
+      chip.type = "button";
+      chip.textContent = s;
+      chip.addEventListener("click", function(){ dropStarter(s); });
+      host.appendChild(chip);
+    });
+  }
+  function dropStarter(text){
+    // find first area with an empty slot; else append to first area
+    for(var i=0;i<AREAS.length;i++){
+      var id = AREAS[i].id, arr = data.areaValues[id];
+      for(var j=0;j<arr.length;j++){
+        if(!arr[j].trim()){ arr[j] = text; save(); renderAreas(); renderProgress(); return; }
+      }
+    }
+    data.areaValues[AREAS[0].id].push(text);
+    save(); renderAreas(); renderProgress();
+  }
+
+  // ============ STEP 2: ARTICULATE ============
+  function valuesFor(id){
+    return data.areaValues[id].map(function(v){ return v.trim(); }).filter(Boolean);
+  }
+  function joinList(arr){
+    if(arr.length === 0) return "";
+    if(arr.length === 1) return arr[0];
+    if(arr.length === 2) return arr[0] + " and " + arr[1];
+    return arr.slice(0,-1).join(", ") + ", and " + arr[arr.length-1];
+  }
+  function lower(s){ return s.charAt(0).toLowerCase() + s.slice(1); }
+
+  function buildStatements(){
+    var any = false;
+    AREAS.forEach(function(a){
+      var v = valuesFor(a.id);
+      if(v.length){
+        any = true;
+        var phrase = joinList(v.map(lower));
+        data.areaStatements[a.id] = "In " + a.name.toLowerCase() + ", I bring " + phrase + ". That has real value, and I won't downplay it.";
+      }
+    });
+    // overall
+    var allBits = [];
+    AREAS.forEach(function(a){ valuesFor(a.id).forEach(function(v){ allBits.push(lower(v)); }); });
+    // de-dupe
+    var seen = {}, uniq = [];
+    allBits.forEach(function(b){ var k=b.toLowerCase(); if(!seen[k]){ seen[k]=1; uniq.push(b);} });
+    if(uniq.length){
+      var top = uniq.slice(0, 6);
+      data.overall = "I bring " + joinList(top) + ". I have earned my place, and I show up as someone of genuine worth — no apology, no shrinking.";
+    }
+    save();
+    renderStatements();
+    renderProgress();
+    if(!any){
+      // gentle nudge if nothing to build from
+      data.overall = "Add a few strengths in Step 1, then tap this again — your statement is built from your own words.";
+      $("overallWrap").style.display = "block";
+      $("overallStatement").value = data.overall;
+    }
+  }
+
+  function renderStatements(){
+    var host = $("areaStatements");
+    host.innerHTML = "";
+    AREAS.forEach(function(a){
+      var txt = data.areaStatements[a.id];
+      if(!txt) return;
+      var block = document.createElement("div");
+      block.className = "statement";
+
+      var lbl = document.createElement("div");
+      lbl.className = "st-label";
+      lbl.textContent = a.icon + " " + a.name;
+      block.appendChild(lbl);
+
+      var ta = document.createElement("textarea");
+      ta.value = txt;
+      ta.setAttribute("aria-label", a.name + " worth statement");
+      ta.addEventListener("input", function(){ data.areaStatements[a.id] = ta.value; save(); });
+      block.appendChild(ta);
+
+      var actions = document.createElement("div");
+      actions.className = "st-actions";
+      var cp = document.createElement("button");
+      cp.className = "copy-btn"; cp.type = "button"; cp.textContent = "⧉ Copy";
+      cp.addEventListener("click", function(){ copyText(ta.value, cp); });
+      actions.appendChild(cp);
+      block.appendChild(actions);
+
+      host.appendChild(block);
+    });
+
+    if(data.overall){
+      $("overallWrap").style.display = "block";
+      $("overallStatement").value = data.overall;
+    }
+  }
+
+  // overall edit autosave
+  $("overallStatement").addEventListener("input", function(){
+    data.overall = $("overallStatement").value; save();
+  });
+
+  // ---- Scripts ----
+  function renderScripts(){
+    var host = $("scripts");
+    host.innerHTML = "";
+    SCRIPT_DEFS.forEach(function(s){
+      var block = document.createElement("div");
+      block.className = "script";
+
+      var h = document.createElement("h4");
+      h.textContent = s.title;
+      block.appendChild(h);
+
+      var ta = document.createElement("textarea");
+      ta.value = data.scripts[s.id];
+      ta.setAttribute("aria-label", s.title);
+      ta.addEventListener("input", function(){ data.scripts[s.id] = ta.value; save(); });
+      block.appendChild(ta);
+
+      var actions = document.createElement("div");
+      actions.className = "st-actions";
+      var cp = document.createElement("button");
+      cp.className = "copy-btn"; cp.type = "button"; cp.textContent = "⧉ Copy";
+      cp.addEventListener("click", function(){ copyText(ta.value, cp); });
+      actions.appendChild(cp);
+      block.appendChild(actions);
+
+      host.appendChild(block);
+    });
+  }
+
+  // ============ STEP 3: COMMUNICATE ============
+  function renderVoice(){
+    var host = $("voiceList");
+    host.innerHTML = "";
+    if(data.voice.length === 0){
+      $("voiceEmpty").style.display = "block";
+    } else {
+      $("voiceEmpty").style.display = "none";
+    }
+    data.voice.forEach(function(item, idx){
+      var wrap = document.createElement("div");
+      wrap.className = "voice-item" + (item.done ? " done" : "");
+
+      var top = document.createElement("div");
+      top.className = "voice-top";
+
+      var chk = document.createElement("button");
+      chk.className = "voice-check";
+      chk.type = "button";
+      chk.textContent = item.done ? "✓" : "";
+      chk.setAttribute("aria-label", item.done ? "Mark as not yet voiced" : "Mark as voiced");
+      chk.addEventListener("click", function(){
+        item.done = !item.done;
+        item.doneDate = item.done ? todayPretty() : null;
+        save(); renderVoice(); renderProgress();
+      });
+      top.appendChild(chk);
+
+      var body = document.createElement("div");
+      body.className = "voice-body";
+      var what = document.createElement("div");
+      what.className = "voice-what";
+      what.textContent = item.what;
+      body.appendChild(what);
+      var meta = document.createElement("div");
+      meta.className = "voice-meta";
+      meta.textContent = item.done ? ("Voiced — " + (item.doneDate || "done") + " 💛") : "Intention set · you've got this.";
+      body.appendChild(meta);
+      top.appendChild(body);
+
+      var del = document.createElement("button");
+      del.className = "voice-del";
+      del.type = "button";
+      del.textContent = "×";
+      del.setAttribute("aria-label", "Remove");
+      del.addEventListener("click", function(){
+        data.voice.splice(idx,1); save(); renderVoice(); renderProgress();
+      });
+      top.appendChild(del);
+
+      wrap.appendChild(top);
+      host.appendChild(wrap);
+    });
+  }
+
+  function addVoice(){
+    var inp = $("newVoiceWhat");
+    var v = inp.value.trim();
+    if(!v) return;
+    data.voice.unshift({ id: Date.now(), what: v, done:false, doneDate:null });
+    inp.value = "";
+    save(); renderVoice(); renderProgress();
+  }
+  $("addVoice").addEventListener("click", addVoice);
+  $("newVoiceWhat").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); addVoice(); }
+  });
+
+  // ============ Progress ============
+  function renderProgress(){
+    var areasDefined = 0, valuesNamed = 0;
+    AREAS.forEach(function(a){
+      var v = valuesFor(a.id);
+      if(v.length) areasDefined++;
+      valuesNamed += v.length;
+    });
+    var voiced = data.voice.filter(function(i){ return i.done; }).length;
+    $("statAreas").textContent = areasDefined;
+    $("statValues").textContent = valuesNamed;
+    $("statVoiced").textContent = voiced;
+
+    // hide welcome once she's started
+    $("welcome").style.display = (valuesNamed > 0 || data.voice.length > 0) ? "none" : "block";
+
+    var msg = "Every word you claim is a wall you take down.";
+    if(voiced >= 3) msg = "Look at you — speaking your worth like the truth it is. 💛";
+    else if(voiced >= 1) msg = "You said it out loud. That's the whole victory, sister.";
+    else if(valuesNamed >= 5) msg = "You're seeing yourself clearly. Now let it reach your voice.";
+    else if(valuesNamed >= 1) msg = "Good — you're naming it. Worth always starts with knowing.";
+    $("encourage").textContent = msg;
+  }
+
+  // ============ Copy helper ============
+  function copyText(text, btn){
+    var done = function(){
+      var old = btn.textContent;
+      btn.textContent = "✓ Copied!";
+      btn.classList.add("copied");
+      setTimeout(function(){ btn.textContent = old; btn.classList.remove("copied"); }, 1600);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, function(){ fallbackCopy(text, done); });
+    } else {
+      fallbackCopy(text, done);
+    }
+  }
+  function fallbackCopy(text, done){
+    try{
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed"; ta.style.top = "-1000px";
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      done();
+    }catch(e){}
+  }
+
+  function todayPretty(){
+    return new Date().toLocaleDateString(undefined,{month:"short", day:"numeric"});
+  }
+
+  // ============ Wire buttons ============
+  $("genStatements").addEventListener("click", buildStatements);
+
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Voice Your Worth data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = blank();
+      renderAll();
+    }
+  });
+
+  // ============ Init ============
+  function renderAll(){
+    renderAreas();
+    renderStarters();
+    renderStatements();
+    renderScripts();
+    renderVoice();
+    renderProgress();
+  }
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

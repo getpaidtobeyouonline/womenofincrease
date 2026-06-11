@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boundaries Script Builder · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome banner ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .welcome p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .welcome .ref{
+    margin-top:12px; font-weight:600; font-size:12.5px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--gold-soft);
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label:first-of-type{ margin-top:0; }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], select{ min-height:48px; }
+  textarea{ min-height:74px; line-height:1.5; }
+  select{
+    -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2314543E' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:40px;
+  }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Tone toggle ---------- */
+  .tone-group{ display:flex; gap:8px; margin-top:6px; }
+  .tone-btn{
+    flex:1; min-height:46px; cursor:pointer;
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    font-family:inherit; font-weight:600; font-size:14px; color:var(--muted);
+    transition:all .12s ease;
+  }
+  .tone-btn .t-emoji{ display:block; font-size:16px; margin-bottom:1px; }
+  .tone-btn.active{
+    background:var(--emerald-soft); border-color:var(--emerald);
+    color:var(--emerald); box-shadow:0 0 0 2px rgba(20,84,62,.1);
+  }
+
+  /* ---------- Generate button ---------- */
+  .gen-btn{
+    width:100%; margin-top:18px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .gen-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .gen-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Generated scripts ---------- */
+  .results{ display:none; }
+  .results.show{ display:block; animation:rise .4s ease; }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+  .results-head{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:17px; font-weight:600;
+    margin-bottom:4px;
+  }
+  .script{
+    background:var(--cream); border:1px solid var(--line); border-radius:13px;
+    padding:14px; margin-top:14px;
+  }
+  .script-label{
+    display:flex; align-items:center; gap:7px; margin-bottom:8px;
+  }
+  .script-label .vnum{
+    flex:none; width:22px;height:22px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:12px; display:flex;align-items:center;justify-content:center;
+  }
+  .script-label .vname{
+    font-family:'Fraunces',serif; font-weight:600; font-size:14.5px; color:var(--emerald);
+  }
+  .script textarea{
+    background:#fff; min-height:96px; font-size:15px; line-height:1.55;
+  }
+  .script-actions{ display:flex; gap:8px; margin-top:10px; }
+  .mini-btn{
+    flex:1; min-height:44px; cursor:pointer; font-family:inherit;
+    font-weight:600; font-size:13.5px; border-radius:10px;
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    transition:all .12s ease;
+  }
+  .copy-btn{ background:var(--emerald); color:#FCF8EF; border:none; }
+  .copy-btn:hover{ background:#0f3f2e; }
+  .copy-btn.copied{ background:var(--emerald-soft); color:var(--emerald); }
+  .save-btn{ background:#fff; color:var(--emerald); border:1px solid var(--emerald); }
+  .save-btn:hover{ background:var(--emerald-soft); }
+  .save-btn.saved{ background:var(--emerald-soft); border-color:var(--line); color:var(--muted); }
+
+  /* ---------- Library ---------- */
+  .lib-item{
+    background:#fff; border:1px solid var(--line); border-radius:13px;
+    padding:14px; margin-top:12px;
+  }
+  .lib-top{ display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:8px; }
+  .lib-tag{
+    display:inline-block; background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.12); font-weight:600; font-size:11.5px;
+    letter-spacing:.04em; padding:4px 10px; border-radius:999px;
+  }
+  .lib-date{ color:var(--muted); font-size:12px; }
+  .lib-text{
+    white-space:pre-wrap; font-size:14.5px; color:var(--ink); line-height:1.5;
+    background:var(--cream); border:1px solid var(--line); border-radius:10px; padding:11px 12px;
+  }
+  .lib-actions{ display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+  .lib-actions .mini-btn{ flex:1 1 30%; min-width:96px; }
+  .used-btn{ background:#fff; color:var(--emerald); border:1px solid var(--emerald); }
+  .used-btn:hover{ background:var(--emerald-soft); }
+  .used-btn.is-used{ background:var(--emerald); color:#FCF8EF; border-color:var(--emerald); }
+  .del-btn{ background:#fff; color:var(--muted); border:1px solid var(--line); }
+  .del-btn:hover{ border-color:#c0392b; color:#c0392b; }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  .lib-count{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:18px; color:var(--muted); font-size:14px;
+  }
+  .lib-count b{ color:var(--emerald); font-size:15px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  .toast{
+    position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(20px);
+    background:var(--emerald); color:#FCF8EF; font-weight:600; font-size:14px;
+    padding:11px 20px; border-radius:999px; box-shadow:0 8px 22px rgba(20,84,62,.3);
+    opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; z-index:50;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Boundaries Script Builder</h1>
+    <p class="subtitle">The exact words to say — kind, clear, and unmistakably yours.</p>
+  </header>
+
+  <!-- Welcome -->
+  <section class="card">
+    <div class="welcome">
+      <p>A boundary isn't a wall, sister — it's a door you get to hold. Tell me the moment you're facing, and we'll find the words together.</p>
+      <div class="ref">Gentle, but never unsure</div>
+    </div>
+  </section>
+
+  <!-- 1. The situation -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>The moment you're facing</h2></div>
+    <p class="hint">Pick what's closest. We'll shape the words around it.</p>
+
+    <label class="field-label" for="scenario">What kind of conversation is this?</label>
+    <select id="scenario">
+      <option value="no">Saying no to a request</option>
+      <option value="family">Declining family pressure</option>
+      <option value="respect">Asking to be treated with respect</option>
+      <option value="endconvo">Ending a draining conversation</option>
+      <option value="coparent">A co-parent / ex message</option>
+      <option value="work">Workload / overtime at work</option>
+      <option value="money">Money / lending</option>
+      <option value="advice">Unsolicited advice or criticism</option>
+      <option value="time">Time / availability</option>
+      <option value="custom">Other / something else</option>
+    </select>
+
+    <label class="field-label" for="person">Who is this with? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <input type="text" id="person" placeholder="e.g. my mum, a coworker, my sister…">
+
+    <label class="field-label" for="situation">In a few words, what's happening?</label>
+    <textarea id="situation" placeholder="e.g. she keeps asking me to babysit last-minute…"></textarea>
+
+    <label class="field-label" for="need">What do you need? Where's the line?</label>
+    <textarea id="need" placeholder="e.g. I need more notice, and weekends are my rest time…"></textarea>
+  </section>
+
+  <!-- 2. Tone -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>How does it need to land?</h2></div>
+    <p class="hint">Same boundary, different warmth. Choose your tone.</p>
+    <div class="tone-group" id="toneGroup">
+      <button type="button" class="tone-btn active" data-tone="gentle"><span class="t-emoji">🤍</span>Gentle</button>
+      <button type="button" class="tone-btn" data-tone="clear"><span class="t-emoji">🌿</span>Clear</button>
+      <button type="button" class="tone-btn" data-tone="firm"><span class="t-emoji">🛡️</span>Firm</button>
+    </div>
+
+    <button class="gen-btn" id="genBtn" type="button">Write my script ✍️</button>
+  </section>
+
+  <!-- 3. Results -->
+  <section class="card results" id="results">
+    <div class="results-head">Here are your words 💛</div>
+    <p class="hint">Try each one aloud. Edit until it sounds like you — then copy or save.</p>
+    <div id="scriptList"></div>
+  </section>
+
+  <!-- Library -->
+  <section class="card">
+    <div class="step"><span class="num">★</span><h2>Your saved scripts</h2></div>
+    <p class="hint">The words you'll reach for again. Mark the ones you actually used.</p>
+    <div id="libList"></div>
+    <p class="empty-note" id="libEmpty">Nothing saved yet. Build a script above and tap “Save” to keep it here. 💛</p>
+    <div class="lib-count">
+      <span><b id="usedCount">0</b> boundaries held · <b id="savedCount">0</b> scripts saved</span>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_boundaries_script";
+
+  // ---- Scenario labels (for library tags + script openers) ----
+  var SCENARIOS = {
+    no:       "Saying no",
+    family:   "Family pressure",
+    respect:  "Asking for respect",
+    endconvo: "Ending a conversation",
+    coparent: "Co-parent message",
+    work:     "Workload / overtime",
+    money:    "Money / lending",
+    advice:   "Unsolicited advice",
+    time:     "Time / availability",
+    custom:   "Custom situation"
+  };
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          o.form = o.form || {};
+          o.library = o.library || [];
+          return o;
+        }
+      }
+    }catch(e){}
+    return {
+      form: { scenario:"no", person:"", situation:"", need:"", tone:"gentle" },
+      library: []
+    };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var scenarioEl = $("scenario"), personEl = $("person"),
+      situationEl = $("situation"), needEl = $("need");
+  var toneGroup = $("toneGroup");
+  var resultsEl = $("results"), scriptListEl = $("scriptList");
+  var libListEl = $("libList"), libEmptyEl = $("libEmpty");
+  var toastEl = $("toast");
+
+  // ---- Restore form ----
+  var f = data.form;
+  scenarioEl.value = f.scenario || "no";
+  personEl.value = f.person || "";
+  situationEl.value = f.situation || "";
+  needEl.value = f.need || "";
+  setTone(f.tone || "gentle");
+
+  // ---- Auto-save form on every change ----
+  function wire(el, key){
+    el.addEventListener("input", function(){ data.form[key] = el.value; save(); });
+  }
+  scenarioEl.addEventListener("change", function(){ data.form.scenario = scenarioEl.value; save(); });
+  wire(personEl, "person");
+  wire(situationEl, "situation");
+  wire(needEl, "need");
+
+  // ---- Tone toggle ----
+  function setTone(tone){
+    data.form.tone = tone;
+    var btns = toneGroup.querySelectorAll(".tone-btn");
+    for(var i=0;i<btns.length;i++){
+      btns[i].classList.toggle("active", btns[i].getAttribute("data-tone") === tone);
+    }
+  }
+  toneGroup.addEventListener("click", function(e){
+    var btn = e.target.closest(".tone-btn");
+    if(!btn) return;
+    setTone(btn.getAttribute("data-tone"));
+    save();
+  });
+
+  // ---- Helpers ----
+  function tidy(s){
+    s = (s || "").trim();
+    return s.replace(/\s+/g, " ");
+  }
+  function lower1(s){
+    s = tidy(s);
+    if(!s) return s;
+    return s.charAt(0).toLowerCase() + s.slice(1);
+  }
+  // strip a trailing full stop so we can splice mid-sentence
+  function noDot(s){ return tidy(s).replace(/[.!?]+$/, ""); }
+  function nameOr(fallback){
+    var p = tidy(personEl.value);
+    return p ? p : fallback;
+  }
+
+  // ---- The generator ----
+  // Each variation = acknowledge + state boundary (I-language) + need/consequence.
+  function generate(){
+    var scen = scenarioEl.value;
+    var person = tidy(personEl.value);
+    var sit = tidy(situationEl.value);
+    var need = tidy(needEl.value);
+    var tone = data.form.tone;
+
+    var who = person ? person : "you";
+    // A natural address line for openers
+    var greet = person ? (titleHint(person) + ", ") : "";
+
+    // Reusable fragments
+    var sitClause = sit ? lower1(noDot(sit)) : "this";
+    var needClause = need ? lower1(noDot(need)) : "what works for me";
+
+    // Tone-flavoured connectors
+    var soft = { ack:"I really appreciate", and:"and", close:"Thank you for understanding 💛" };
+    var clear = { ack:"I want to be honest with you —", and:"and", close:"I hope that's okay." };
+    var firm = { ack:"I need to be straight with you.", and:"and", close:"I'm not able to move on this." };
+    var T = tone === "firm" ? firm : (tone === "clear" ? clear : soft);
+
+    var out = [];
+
+    // ---------- Per-scenario templates ----------
+    if(scen === "no"){
+      if(tone === "gentle"){
+        out.push(greet + "thank you so much for thinking of me. I'm not able to say yes to this one — my plate is genuinely full right now, " + T.and + " I'd rather be honest than overpromise. " + T.close);
+        out.push("I've thought about it, " + who + ", and the answer is no for now. It's nothing about " + (person?"you":"the ask") + " — I just don't have the capacity to do it well. I appreciate you asking, truly.");
+        out.push("I'd love to help, but I have to pass this time. I'm learning to only say yes when I can really mean it, " + T.and + " right now that's not me. Thank you for understanding.");
+      } else if(tone === "clear"){
+        out.push(greet + T.ack + " I'm not going to be able to do this. My time is committed elsewhere right now, so I'll have to say no.");
+        out.push("Thanks for asking, but this is a no for me. " + (need ? "I need " + lower1(needClause) + ", and saying yes would cross that. " : "I need to protect my time, and saying yes would cross that. ") + T.close);
+        out.push("I'm going to keep it simple: no this time. I'm being more careful about what I take on, " + T.and + " this isn't something I can commit to.");
+      } else {
+        out.push(greet + T.ack + " The answer is no, and that's not going to change. " + (need ? "I need " + lower1(needClause) + ". " : "I've made my decision. ") + T.close);
+        out.push("No. I've thought about it and I'm not available for this. Please don't ask me again on this one.");
+        out.push("I'm not able to do this, and I won't be explaining it further. I trust you'll respect that.");
+      }
+    }
+    else if(scen === "family"){
+      out.push(greet + "I love this family, " + T.and + " I also need you to hear me on this. " + (sit ? "About " + sitClause + " — " : "") + "this isn't something I can go along with. " + (need ? "I need " + lower1(needClause) + ". " : "") + (tone==="firm" ? "I'm asking you to respect that." : T.close));
+      out.push("I know we don't see this the same way, and I'm not asking you to. " + (sit ? "When it comes to " + sitClause + ", " : "") + "I've made a decision that's right for me, " + T.and + " I'd love your support — but I'm at peace either way.");
+      if(tone === "firm"){
+        out.push((person?titleHint(person)+", ":"") + "I'm an adult making my own choices, and the pressure on this needs to stop. " + (need ? "I need " + lower1(needClause) + ", and that's final." : "My decision stands."));
+      } else {
+        out.push("Can we agree to disagree with love? " + (sit ? "On " + sitClause + ", " : "") + "I'm doing what's healthiest for me. " + T.close);
+      }
+    }
+    else if(scen === "respect"){
+      out.push(greet + "the way " + (sit ? sitClause + " " : "this has been going ") + "isn't sitting right with me, and I care enough about us to say so. I need to be spoken to with respect — that's not negotiable for me. " + (tone==="gentle"?T.close:"Can we reset?"));
+      out.push("I want to keep this relationship, " + T.and + " for that I need something to change. " + (sit ? "When " + sitClause + ", " : "") + "I feel dismissed. I need us to talk to each other kindly, even when we disagree.");
+      out.push((tone==="firm"?"":greet) + "I won't continue conversations where I'm " + (sit ? lower1(noDot(sit)) : "talked down to") + ". I deserve respect, " + T.and + (tone==="firm" ? " I'll step away until I get it." : " I'm asking for it plainly. " + T.close));
+    }
+    else if(scen === "endconvo"){
+      out.push(greet + "I can tell this matters to you, and I want to give it the space it deserves — but I'm done for tonight. Let's pick it back up when we're both calmer. 💛");
+      out.push("I'm going to step away from this conversation now. " + (tone==="firm" ? "I'm not going to keep going in circles. " : "Not because I don't care — because I'm running low and I won't be at my best. ") + (tone==="firm"?"":"We can return to it later."));
+      out.push("I need to pause here. " + (need ? "I need " + lower1(needClause) + ". " : "I've heard you, and I need a moment to sit with it. ") + (tone==="firm" ? "I'm ending the call now." : "Thank you for understanding."));
+    }
+    else if(scen === "coparent"){
+      out.push("Thanks for the message. " + (sit ? "Regarding " + sitClause + " — " : "") + "I'd like us to keep things focused on the kids. " + (need ? "I need " + lower1(needClause) + ". " : "") + (tone==="firm"?"Please keep communication to logistics.":"I appreciate working through this together."));
+      out.push("I want to co-parent as smoothly as we can. " + (sit ? "On " + sitClause + ", " : "") + "here's where I stand: " + (need ? lower1(needClause) + ". " : "I need clear plans, not last-minute changes. ") + (tone==="firm"?"Going forward I'll only respond to messages about the children.":"Let me know what works for you."));
+      out.push("I'm keeping this brief and kind. " + (need ? "I need " + lower1(needClause) + ". " : "") + (tone==="firm" ? "I won't be discussing anything beyond the kids." : "I'd appreciate the same in return. Thank you."));
+    }
+    else if(scen === "work"){
+      out.push(greet + "I want to do great work here, " + T.and + " to do that I have to be honest about capacity. " + (sit ? "With " + sitClause + ", " : "") + "I'm at my limit. " + (need ? "I need " + lower1(needClause) + ". " : "I can take this on if we move something else off my plate. ") + (tone==="firm"?"Which would you like me to prioritise?":"Can we look at priorities together?"));
+      out.push("Thanks for trusting me with this. Realistically, I can't add it without dropping the ball elsewhere. " + (need ? "I need " + lower1(needClause) + ". " : "I'd need more time or fewer competing deadlines. ") + (tone==="firm"?"I won't be working through my evenings to absorb it.":"How would you like to proceed?"));
+      out.push("I'm not able to take on extra hours on this one. " + (sit ? "Given " + sitClause + ", " : "") + (tone==="firm" ? "My day ends at a set time, and I need that protected for my wellbeing. " : "I protect my evenings so I can show up fully the next day. ") + (need ? "I need " + lower1(needClause) + "." : ""));
+    }
+    else if(scen === "money"){
+      out.push(greet + "I care about you, and money is the one place I keep firm boundaries — so I'm going to pass on lending this time. It's not about trust; it's a rule I hold for my own peace. 💛");
+      out.push("I'm not able to lend money right now. " + (sit ? "I know " + sitClause + " is hard, " : "I know that might be disappointing, ") + T.and + " I'd still love to support you in other ways. " + (tone==="firm"?"But the loan is a no.":"What else could help?"));
+      out.push((tone==="firm"?"":greet) + "I've made it a rule not to mix money with our relationship. " + (need ? "I need " + lower1(needClause) + ". " : "") + (tone==="firm" ? "So this is a no, and please don't ask again." : "I hope you understand it's to protect us both."));
+    }
+    else if(scen === "advice"){
+      out.push(greet + "I know this comes from a caring place, " + T.and + " right now I'm not looking for advice — just a little support. " + (need ? "What I really need is " + lower1(needClause) + ". " : "Could you just listen for now? ") + (tone==="gentle"?"💛":""));
+      out.push("Thank you for caring enough to weigh in. I've got this handled in my own way, though. " + (tone==="firm" ? "I'd ask you to trust me and let it rest." : "I'll come to you if I want input — promise."));
+      out.push((tone==="firm"?"":greet) + "I hear you, but I'm going to do this my way. " + (sit ? "On " + sitClause + ", " : "") + (tone==="firm" ? "I don't need feedback on this, and I'd like us to move on." : "I'd love for you to back me, even if you'd choose differently. " + T.close));
+    }
+    else if(scen === "time"){
+      out.push(greet + "I want to show up for the people I love, " + T.and + " to do that well I have to guard my time. " + (need ? "I need " + lower1(needClause) + ". " : "I'm not available outside of set times right now. ") + (tone==="firm"?"That's where I'm holding the line.":"Thank you for understanding. 💛"));
+      out.push("I'd love to, but my schedule is full and I'm protecting my rest. " + (sit ? "With " + sitClause + ", " : "") + (need ? "I need " + lower1(needClause) + ". " : "") + (tone==="firm" ? "Please check with me before assuming I'm free." : "Let's find a time that actually works for us both."));
+      out.push("I'm not available then, and that's okay. " + (tone==="firm" ? "My time is committed, and I won't be rearranging it. " : "I'm learning that 'no' to over-extending is a 'yes' to being present where it counts. ") + (need ? "I need " + lower1(needClause) + "." : ""));
+    }
+    else { // custom
+      out.push(greet + (sit ? "about " + sitClause + " — " : "") + "I want to be honest with you. " + (need ? "I need " + lower1(needClause) + ", " : "I've reached a limit, ") + T.and + " I'm holding that boundary with love. " + (tone==="gentle"?T.close:"I hope you can respect it."));
+      out.push((sit ? "When it comes to " + sitClause + ", " : "On this, ") + "here's where I stand: " + (need ? lower1(needClause) + ". " : "I need things to change. ") + (tone==="firm" ? "This isn't up for negotiation." : "I'd really value your understanding."));
+      out.push("I've thought about this carefully. " + (need ? "I need " + lower1(needClause) + ". " : "I need to protect my peace here. ") + (tone==="firm" ? "I'm saying it plainly so there's no confusion." : "Saying it out loud feels scary, but it's true and it's kind. " + T.close));
+    }
+
+    // Clean up double spaces / stray spacing
+    return out.map(function(s){ return s.replace(/\s+/g, " ").replace(/\s+([.,!?])/g, "$1").trim(); });
+  }
+
+  // Capitalise a person reference for use as an address (e.g. "mum" -> "Mum")
+  function titleHint(p){
+    p = tidy(p);
+    if(!p) return p;
+    return p.charAt(0).toUpperCase() + p.slice(1);
+  }
+
+  var VARIATION_NAMES = ["The warm open", "The honest middle", "The clean close"];
+
+  // ---- Render generated scripts ----
+  function renderResults(scripts){
+    scriptListEl.innerHTML = "";
+    var scen = scenarioEl.value;
+    scripts.forEach(function(text, idx){
+      var box = document.createElement("div");
+      box.className = "script";
+
+      var label = document.createElement("div");
+      label.className = "script-label";
+      var vnum = document.createElement("span");
+      vnum.className = "vnum"; vnum.textContent = (idx+1);
+      var vname = document.createElement("span");
+      vname.className = "vname"; vname.textContent = VARIATION_NAMES[idx] || ("Option " + (idx+1));
+      label.appendChild(vnum); label.appendChild(vname);
+
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("aria-label", "Script option " + (idx+1) + " — edit before copying");
+
+      var actions = document.createElement("div");
+      actions.className = "script-actions";
+
+      var copyBtn = document.createElement("button");
+      copyBtn.type = "button"; copyBtn.className = "mini-btn copy-btn";
+      copyBtn.innerHTML = "📋 Copy";
+      copyBtn.addEventListener("click", function(){
+        copyText(ta.value);
+        copyBtn.classList.add("copied"); copyBtn.innerHTML = "✓ Copied";
+        setTimeout(function(){ copyBtn.classList.remove("copied"); copyBtn.innerHTML = "📋 Copy"; }, 1600);
+      });
+
+      var saveBtn = document.createElement("button");
+      saveBtn.type = "button"; saveBtn.className = "mini-btn save-btn";
+      saveBtn.innerHTML = "♡ Save";
+      saveBtn.addEventListener("click", function(){
+        if(saveBtn.classList.contains("saved")) return;
+        addToLibrary(scen, ta.value);
+        saveBtn.classList.add("saved"); saveBtn.innerHTML = "✓ Saved";
+        showToast("Saved to your library 💛");
+      });
+
+      actions.appendChild(copyBtn); actions.appendChild(saveBtn);
+      box.appendChild(label); box.appendChild(ta); box.appendChild(actions);
+      scriptListEl.appendChild(box);
+    });
+    resultsEl.classList.add("show");
+  }
+
+  $("genBtn").addEventListener("click", function(){
+    var scripts = generate();
+    renderResults(scripts);
+    resultsEl.scrollIntoView({ behavior:"smooth", block:"start" });
+  });
+
+  // ---- Library ----
+  function addToLibrary(scen, text){
+    data.library.unshift({
+      id: Date.now() + "_" + Math.random().toString(36).slice(2,7),
+      scenario: scen,
+      text: text,
+      used: false,
+      created: Date.now()
+    });
+    save();
+    renderLibrary();
+  }
+
+  function prettyDate(ts){
+    var d = new Date(ts);
+    return d.toLocaleDateString(undefined, { month:"short", day:"numeric" });
+  }
+
+  function renderLibrary(){
+    libListEl.innerHTML = "";
+    var lib = data.library || [];
+    if(lib.length === 0){
+      libEmptyEl.style.display = "block";
+    } else {
+      libEmptyEl.style.display = "none";
+    }
+    lib.forEach(function(item){
+      var box = document.createElement("div");
+      box.className = "lib-item";
+
+      var top = document.createElement("div");
+      top.className = "lib-top";
+      var tag = document.createElement("span");
+      tag.className = "lib-tag";
+      tag.textContent = SCENARIOS[item.scenario] || "Script";
+      var date = document.createElement("span");
+      date.className = "lib-date";
+      date.textContent = prettyDate(item.created);
+      top.appendChild(tag); top.appendChild(date);
+
+      var txt = document.createElement("div");
+      txt.className = "lib-text";
+      txt.textContent = item.text;
+
+      var actions = document.createElement("div");
+      actions.className = "lib-actions";
+
+      var copyBtn = document.createElement("button");
+      copyBtn.type = "button"; copyBtn.className = "mini-btn copy-btn";
+      copyBtn.innerHTML = "📋 Copy";
+      copyBtn.addEventListener("click", function(){
+        copyText(item.text);
+        copyBtn.innerHTML = "✓ Copied";
+        setTimeout(function(){ copyBtn.innerHTML = "📋 Copy"; }, 1600);
+      });
+
+      var usedBtn = document.createElement("button");
+      usedBtn.type = "button";
+      usedBtn.className = "mini-btn used-btn" + (item.used ? " is-used" : "");
+      usedBtn.innerHTML = item.used ? "✓ I used this" : "I used this";
+      usedBtn.addEventListener("click", function(){
+        item.used = !item.used;
+        save();
+        renderLibrary();
+        if(item.used) showToast("Boundary held. Proud of you 💛");
+      });
+
+      var delBtn = document.createElement("button");
+      delBtn.type = "button"; delBtn.className = "mini-btn del-btn";
+      delBtn.innerHTML = "🗑 Delete";
+      delBtn.addEventListener("click", function(){
+        if(confirm("Delete this saved script? This can't be undone, sister.")){
+          data.library = data.library.filter(function(x){ return x.id !== item.id; });
+          save();
+          renderLibrary();
+        }
+      });
+
+      actions.appendChild(copyBtn);
+      actions.appendChild(usedBtn);
+      actions.appendChild(delBtn);
+
+      box.appendChild(top); box.appendChild(txt); box.appendChild(actions);
+      libListEl.appendChild(box);
+    });
+
+    var lib2 = data.library || [];
+    $("savedCount").textContent = lib2.length;
+    $("usedCount").textContent = lib2.filter(function(x){ return x.used; }).length;
+  }
+
+  // ---- Copy with graceful fallback ----
+  function copyText(text){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        showToast("Copied!");
+      }, function(){ fallbackCopy(text); });
+    } else {
+      fallbackCopy(text);
+    }
+  }
+  function fallbackCopy(text){
+    try{
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed"; ta.style.top = "-1000px";
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      showToast("Copied!");
+    }catch(e){
+      showToast("Press and hold to copy");
+    }
+  }
+
+  // ---- Toast ----
+  var toastTimer = null;
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    if(toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove("show"); }, 1800);
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Boundaries Script Builder data — including your saved library? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = {
+        form: { scenario:"no", person:"", situation:"", need:"", tone:"gentle" },
+        library: []
+      };
+      scenarioEl.value = "no";
+      personEl.value = ""; situationEl.value = ""; needEl.value = "";
+      setTone("gentle");
+      scriptListEl.innerHTML = "";
+      resultsEl.classList.remove("show");
+      renderLibrary();
+    }
+  });
+
+  // ---- Initial render ----
+  renderLibrary();
+
+})();
+</script>
+</body>
+</html>

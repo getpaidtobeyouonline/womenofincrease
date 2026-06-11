@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Glow Up Evidence Board · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Momentum / score ---------- */
+  .momentum{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+    text-align:center;
+  }
+  .momentum::before{
+    content:"\2728"; position:absolute; top:8px; right:14px; font-size:26px; opacity:.4;
+  }
+  .momentum .score{
+    font-family:'Fraunces',serif; font-weight:600; font-size:46px; line-height:1; position:relative; z-index:1;
+  }
+  .momentum .score small{ font-size:18px; font-weight:500; opacity:.8; }
+  .momentum .label{
+    margin-top:6px; font-weight:600; font-size:12.5px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--gold-soft);
+  }
+  .momentum .msg{
+    margin-top:12px; font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:16px; line-height:1.45; position:relative; z-index:1;
+  }
+  .balance{
+    display:flex; gap:8px; margin-top:16px; position:relative; z-index:1;
+  }
+  .bal-col{ flex:1; text-align:center; }
+  .bal-bar{
+    height:46px; background:rgba(252,248,239,.14); border-radius:8px;
+    display:flex; align-items:flex-end; overflow:hidden;
+  }
+  .bal-fill{
+    width:100%; background:var(--gold-soft); border-radius:8px 8px 0 0;
+    transition:height .4s ease; min-height:3px;
+  }
+  .bal-col .bal-name{ margin-top:6px; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:#FCF8EF; opacity:.85; }
+  .bal-col .bal-num{ font-weight:700; font-size:13px; color:var(--gold-soft); }
+
+  .glow-most{
+    display:flex; flex-direction:column; gap:6px; margin-top:14px;
+  }
+  .glow-row{
+    display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--ink);
+  }
+  .glow-row .pill{
+    font-weight:600; font-size:12px; padding:3px 10px; border-radius:999px;
+  }
+  .pill.most{ background:var(--gold-soft); color:var(--emerald); }
+  .pill.love{ background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.15); }
+
+  /* ---------- Add evidence ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  .prompt-line{
+    font-family:'Fraunces',serif; font-style:italic; color:var(--emerald);
+    font-size:15.5px; margin-bottom:4px;
+  }
+  select, input[type="text"], input[type="date"]{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; min-height:48px; transition:border-color .15s, box-shadow .15s;
+  }
+  select:focus, input:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder{ color:#A7A095; }
+  .add-grid{ display:flex; gap:10px; }
+  .add-grid > div{ flex:1; }
+
+  .add-btn{
+    width:100%; margin-top:14px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .add-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .add-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Board ---------- */
+  .area{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:18px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+    border-left:4px solid var(--gold);
+  }
+  .area-head{
+    display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px;
+  }
+  .area-head .a-title{
+    display:flex; align-items:center; gap:9px;
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:18px;
+  }
+  .area-head .a-icon{ font-size:19px; }
+  .area-head .a-count{
+    flex:none; background:var(--emerald-soft); color:var(--emerald);
+    font-weight:700; font-size:12.5px; padding:4px 11px; border-radius:999px;
+    border:1px solid rgba(20,84,62,.12);
+  }
+  .ev-list{ list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .ev-card{
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:11px 12px; display:flex; align-items:flex-start; gap:10px;
+  }
+  .ev-card .ev-body{ flex:1; min-width:0; }
+  .ev-card .ev-text{ font-size:14.5px; color:var(--ink); line-height:1.45; word-break:break-word; }
+  .ev-card .ev-date{ color:var(--muted); font-size:12px; margin-top:3px; }
+  .ev-del{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:18px; line-height:1; width:44px; min-height:44px; margin:-11px -8px -11px 0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .ev-del:hover{ color:#a23b2e; }
+  .area-empty{ color:var(--muted); font-size:13.5px; font-style:italic; padding:4px 0; }
+
+  /* ---------- Read my glow up ---------- */
+  .read-btn{
+    width:100%; margin-top:6px; min-height:48px;
+    background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.2); border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    transition:transform .08s ease;
+  }
+  .read-btn:active{ transform:translateY(1px); }
+  .affirm{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:20px 16px; color:var(--emerald);
+  }
+  .affirm.show{ display:block; animation:rise .4s ease; }
+  .affirm .big{ font-family:'Fraunces',serif; font-weight:600; font-size:19px; line-height:1.35; margin-bottom:6px; }
+  .affirm .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Welcome / empty ---------- */
+  .welcome{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:20px; margin-top:16px; color:var(--emerald);
+  }
+  .welcome h3{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:6px; }
+  .welcome p{ font-size:14px; color:var(--ink); line-height:1.5; }
+  .welcome p + p{ margin-top:8px; color:var(--muted); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>The Glow Up Evidence Board</h1>
+    <p class="subtitle">Proof you're leveling up — body, spirit, heart, and pocket.</p>
+  </header>
+
+  <!-- Momentum -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Glow Up Momentum</h2></div>
+    <p class="hint">Every entry is receipts. Watch the evidence stack up, sister.</p>
+    <div class="momentum">
+      <div class="score" id="scoreNum">0<small> proofs</small></div>
+      <div class="label">Evidence logged</div>
+      <div class="msg" id="momentumMsg">The glow up is an inside job first. Add your first proof below. 💛</div>
+      <div class="balance" id="balance"></div>
+    </div>
+    <div class="glow-most" id="glowMost"></div>
+  </section>
+
+  <!-- Add evidence -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Log Today's Glow Up</h2></div>
+    <p class="prompt-line" id="promptLine">What's one small proof you're leveling up today?</p>
+    <p class="hint">No win is too small. Showing up <em>is</em> the glow up.</p>
+
+    <label class="field-label" for="areaSelect">Which area is glowing?</label>
+    <select id="areaSelect">
+      <option value="physical">🌿 Physical</option>
+      <option value="spiritual">🙏 Spiritual</option>
+      <option value="emotional">💛 Emotional</option>
+      <option value="financial">💰 Financial</option>
+    </select>
+
+    <label class="field-label" for="evText">Your evidence</label>
+    <input type="text" id="evText" placeholder="e.g. prayed before I reacted" maxlength="140">
+
+    <label class="field-label" for="evDate">Date</label>
+    <input type="date" id="evDate">
+
+    <button class="add-btn" id="addBtn" type="button">Add to my board ✨</button>
+  </section>
+
+  <!-- Welcome / empty -->
+  <section class="welcome" id="welcome">
+    <h3>Welcome to your evidence board 💛</h3>
+    <p>This is where you keep the receipts on yourself — the quiet, daily proof that you're growing. The glow up isn't only what shows on the outside; it starts on the inside and works its way out.</p>
+    <p>Add one small piece of evidence above and watch your board fill up.</p>
+  </section>
+
+  <!-- Board: four areas -->
+  <div id="board"></div>
+
+  <!-- Read my glow up -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Read My Glow Up</h2></div>
+    <p class="hint">Take a breath and receive it. This is who you're becoming.</p>
+    <button class="read-btn" id="readBtn" type="button">Read my glow up 🌟</button>
+    <div class="affirm" id="affirm">
+      <div class="big" id="affirmBig">Look at you. 💛</div>
+      <div class="sm" id="affirmSm">The evidence doesn't lie — you're rising.</div>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_glow_up_evidence";
+
+  var AREAS = [
+    { id:"physical",  name:"Physical",  icon:"🌿", placeholder:"e.g. moved my body 4 days this week" },
+    { id:"spiritual", name:"Spiritual", icon:"🙏", placeholder:"e.g. prayed before I reacted" },
+    { id:"emotional", name:"Emotional", icon:"💛", placeholder:"e.g. didn't spiral after the criticism" },
+    { id:"financial", name:"Financial", icon:"💰", placeholder:"e.g. saved $50 this week" }
+  ];
+  function areaById(id){ for(var i=0;i<AREAS.length;i++){ if(AREAS[i].id===id) return AREAS[i]; } return AREAS[0]; }
+
+  // ---- Rotating prompts to add one piece of evidence ----
+  var PROMPTS = [
+    "What's one small proof you're leveling up today?",
+    "Where did you choose growth over comfort lately?",
+    "What did you do this week that past-you couldn't?",
+    "Name one quiet win nobody clapped for.",
+    "How did you honour your body, spirit, heart, or money today?",
+    "What boundary, prayer, or dollar saved is worth remembering?",
+    "Where did you respond instead of react?",
+    "What proof do you have that you're becoming her?"
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    var diff = d - start;
+    return Math.floor(diff / 86400000);
+  }
+  function prettyDate(key){
+    if(!key) return "";
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    if(isNaN(d.getTime())) return key;
+    return d.toLocaleDateString(undefined,{month:"short", day:"numeric", year:"numeric"});
+  }
+
+  // ---- State ----
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.items) return o; }
+    }catch(e){}
+    return { items:[] }; // each: {id, area, text, date}
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  var data = load();
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var areaSelect = $("areaSelect"), evText = $("evText"), evDate = $("evDate");
+  var addBtn = $("addBtn"), board = $("board"), welcome = $("welcome");
+  var scoreNum = $("scoreNum"), momentumMsg = $("momentumMsg"), balanceEl = $("balance");
+  var glowMost = $("glowMost"), promptLine = $("promptLine");
+  var readBtn = $("readBtn"), affirm = $("affirm"), affirmBig = $("affirmBig"), affirmSm = $("affirmSm");
+
+  // ---- Init add form ----
+  evDate.value = todayKey();
+  promptLine.textContent = PROMPTS[dayOfYear(new Date()) % PROMPTS.length];
+  function syncPlaceholder(){ evText.placeholder = areaById(areaSelect.value).placeholder; }
+  areaSelect.addEventListener("change", syncPlaceholder);
+  syncPlaceholder();
+
+  // ---- Add evidence ----
+  function addEvidence(){
+    var text = evText.value.trim();
+    if(!text){ evText.focus(); return; }
+    data.items.push({
+      id: "e" + Date.now() + Math.random().toString(36).slice(2,6),
+      area: areaSelect.value,
+      text: text,
+      date: evDate.value || todayKey()
+    });
+    save();
+    evText.value = "";
+    evDate.value = todayKey();
+    render();
+    evText.focus();
+  }
+  addBtn.addEventListener("click", addEvidence);
+  evText.addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); addEvidence(); } });
+
+  // ---- Delete evidence ----
+  function deleteEvidence(id){
+    if(!confirm("Remove this piece of evidence? It's still true, even off the board.")) return;
+    data.items = data.items.filter(function(it){ return it.id !== id; });
+    save();
+    render();
+  }
+
+  // ---- Counts ----
+  function countsByArea(){
+    var c = { physical:0, spiritual:0, emotional:0, financial:0 };
+    data.items.forEach(function(it){ if(c[it.area] !== undefined) c[it.area]++; });
+    return c;
+  }
+
+  // ---- Render momentum + balance + glow-most ----
+  function renderMomentum(){
+    var total = data.items.length;
+    var c = countsByArea();
+    scoreNum.innerHTML = total + "<small> proof" + (total === 1 ? "" : "s") + "</small>";
+
+    if(total === 0){
+      momentumMsg.textContent = "The glow up is an inside job first. Add your first proof below. 💛";
+    } else if(total < 4){
+      momentumMsg.textContent = "It's starting. Keep catching yourself doing the work.";
+    } else if(total < 10){
+      momentumMsg.textContent = "Look at the receipts stacking up. You're in motion.";
+    } else if(total < 20){
+      momentumMsg.textContent = "This is undeniable momentum. She's becoming, daily.";
+    } else {
+      momentumMsg.textContent = "A whole body of evidence. You are the proof, sister. ✨";
+    }
+
+    // balance bars
+    var max = Math.max(c.physical, c.spiritual, c.emotional, c.financial, 1);
+    balanceEl.innerHTML = "";
+    AREAS.forEach(function(a){
+      var n = c[a.id];
+      var pct = Math.round((n / max) * 100);
+      var col = document.createElement("div");
+      col.className = "bal-col";
+      col.innerHTML =
+        '<div class="bal-bar"><div class="bal-fill" style="height:' + (n ? Math.max(pct,8) : 0) + '%"></div></div>' +
+        '<div class="bal-num">' + n + '</div>' +
+        '<div class="bal-name">' + a.name.slice(0,4) + '</div>';
+      balanceEl.appendChild(col);
+    });
+
+    // which is glowing most / which needs love
+    glowMost.innerHTML = "";
+    if(total > 0){
+      var sorted = AREAS.slice().sort(function(a,b){ return c[b.id] - c[a.id]; });
+      var most = sorted[0];
+      var least = sorted[sorted.length - 1];
+
+      var r1 = document.createElement("div");
+      r1.className = "glow-row";
+      r1.innerHTML = '<span class="pill most">Glowing most</span> ' +
+        most.icon + ' <strong>' + most.name + '</strong> — ' + c[most.id] + ' proof' + (c[most.id]===1?'':'s') + '. Keep going.';
+      glowMost.appendChild(r1);
+
+      if(c[least.id] < c[most.id]){
+        var r2 = document.createElement("div");
+        r2.className = "glow-row";
+        var loveMsg = c[least.id] === 0
+          ? "no entries yet — gently give it some attention this week."
+          : "could use a little love. You've got " + c[least.id] + " here.";
+        r2.innerHTML = '<span class="pill love">Needs love</span> ' +
+          least.icon + ' <strong>' + least.name + '</strong> — ' + loveMsg;
+        glowMost.appendChild(r2);
+      }
+    }
+  }
+
+  // ---- Render the four-area board ----
+  function renderBoard(){
+    board.innerHTML = "";
+    welcome.style.display = data.items.length === 0 ? "block" : "none";
+
+    AREAS.forEach(function(a){
+      var items = data.items.filter(function(it){ return it.area === a.id; })
+        .sort(function(x,y){ return (y.date||"").localeCompare(x.date||""); });
+
+      var section = document.createElement("section");
+      section.className = "area";
+
+      var head = document.createElement("div");
+      head.className = "area-head";
+      head.innerHTML =
+        '<div class="a-title"><span class="a-icon">' + a.icon + '</span>' + a.name + '</div>' +
+        '<span class="a-count">' + items.length + '</span>';
+      section.appendChild(head);
+
+      if(items.length === 0){
+        var empty = document.createElement("div");
+        empty.className = "area-empty";
+        empty.textContent = "No evidence yet — your first " + a.name.toLowerCase() + " win goes here. 💛";
+        section.appendChild(empty);
+      } else {
+        var ul = document.createElement("ul");
+        ul.className = "ev-list";
+        items.forEach(function(it){
+          var li = document.createElement("li");
+          li.className = "ev-card";
+
+          var body = document.createElement("div");
+          body.className = "ev-body";
+          var t = document.createElement("div");
+          t.className = "ev-text";
+          t.textContent = it.text;
+          var d = document.createElement("div");
+          d.className = "ev-date";
+          d.textContent = prettyDate(it.date);
+          body.appendChild(t); body.appendChild(d);
+
+          var del = document.createElement("button");
+          del.className = "ev-del";
+          del.type = "button";
+          del.setAttribute("aria-label", "Delete this evidence");
+          del.textContent = "×";
+          (function(id){ del.addEventListener("click", function(){ deleteEvidence(id); }); })(it.id);
+
+          li.appendChild(body); li.appendChild(del);
+          ul.appendChild(li);
+        });
+        section.appendChild(ul);
+      }
+      board.appendChild(section);
+    });
+  }
+
+  function render(){
+    renderMomentum();
+    renderBoard();
+  }
+
+  // ---- Read my glow up (affirmation moment) ----
+  var AFFIRMATIONS = [
+    ["Look at you. 💛", "The evidence doesn't lie — you're rising, one quiet choice at a time."],
+    ["This is your proof. ✨", "You are not the same woman you were. Receive that."],
+    ["She's becoming. 🌿", "Every entry here is you keeping a promise to yourself."],
+    ["You did that. 💛", "Growth that's documented is growth you can trust."],
+    ["Bold but soft. 🌟", "You're leveling up gently, faithfully, and on purpose."],
+    ["Heaven sees it too. 🙏", "The work you do in private is building the woman you're praying to become."]
+  ];
+  readBtn.addEventListener("click", function(){
+    var total = data.items.length;
+    var pick;
+    if(total === 0){
+      affirmBig.textContent = "It begins with one. 💛";
+      affirmSm.textContent = "Add your first piece of evidence — the glow up is already underway in you.";
+    } else {
+      pick = AFFIRMATIONS[Math.floor(Math.random() * AFFIRMATIONS.length)];
+      var c = countsByArea();
+      var sorted = AREAS.slice().sort(function(a,b){ return c[b.id]-c[a.id]; });
+      var most = sorted[0];
+      affirmBig.textContent = pick[0];
+      affirmSm.textContent = pick[1] + " " + total + " proof" + (total===1?"":"s") + " logged — strongest in " + most.name.toLowerCase() + ".";
+    }
+    affirm.classList.add("show");
+  });
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Glow Up Evidence? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { items:[] };
+      affirm.classList.remove("show");
+      evText.value = "";
+      evDate.value = todayKey();
+      render();
+    }
+  });
+
+  // ---- First paint ----
+  render();
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comparison Detox Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Prompt banner ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .verse-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:72px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  .flip-label{
+    display:flex; align-items:center; gap:8px; font-weight:600; font-size:13.5px;
+    color:var(--emerald); margin:16px 0 6px;
+  }
+  .flip-label .pill{
+    flex:none; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.15);
+    border-radius:999px; padding:3px 9px;
+  }
+
+  /* ---------- Primary button ---------- */
+  .complete-btn{
+    width:100%; margin-top:16px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+
+  .blessing{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:16px; color:var(--emerald);
+  }
+  .blessing.show{ display:block; animation:rise .4s ease; }
+  .blessing .big{ font-family:'Fraunces',serif; font-weight:600; font-size:17px; margin-bottom:4px; }
+  .blessing .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Stats ---------- */
+  .stats{ display:flex; gap:10px; margin-top:2px; }
+  .stat{
+    flex:1; text-align:center; background:var(--cream);
+    border:1px solid var(--line); border-radius:13px; padding:14px 8px;
+  }
+  .stat .n{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:26px; line-height:1; }
+  .stat .l{ display:block; margin-top:6px; color:var(--muted); font-size:12px; line-height:1.3; }
+
+  /* ---------- Celebrate her ---------- */
+  .celebrate-row{ display:flex; align-items:center; gap:10px; }
+  .celebrate-row input{ flex:1; }
+  .celebrate-btn{
+    flex:none; min-height:48px; padding:0 16px;
+    background:var(--emerald); color:#FCF8EF; border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:14px; cursor:pointer;
+    transition:transform .08s ease;
+  }
+  .celebrate-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Contentment practices ---------- */
+  .practice{
+    display:flex; align-items:flex-start; gap:12px; padding:12px 2px;
+    border-bottom:1px solid var(--line); cursor:pointer;
+  }
+  .practice:last-child{ border-bottom:none; }
+  .practice input{ position:absolute; opacity:0; width:0; height:0; }
+  .practice .box{
+    flex:none; width:24px; height:24px; margin-top:1px; border-radius:7px;
+    border:2px solid var(--line); background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; color:#fff; transition:all .15s;
+  }
+  .practice input:checked + .box{ background:var(--emerald); border-color:var(--emerald); }
+  .practice input:checked + .box::after{ content:"✓"; }
+  .practice input:focus-visible + .box{ box-shadow:0 0 0 3px rgba(200,160,74,.3); }
+  .practice .ptext{ font-size:15px; color:var(--ink); padding-top:2px; }
+  .practice input:checked ~ .ptext{ color:var(--muted); }
+
+  /* ---------- Reframe cards ---------- */
+  .entry{
+    border:1px solid var(--line); border-radius:14px; padding:16px; margin-top:12px;
+    background:var(--cream);
+  }
+  .entry .e-head{
+    display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:10px;
+  }
+  .entry .e-date{ color:var(--muted); font-size:12px; font-weight:600; letter-spacing:.03em; }
+  .entry .e-block{ margin-bottom:10px; }
+  .entry .e-block:last-of-type{ margin-bottom:0; }
+  .entry .e-tag{
+    display:inline-block; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .entry .e-tag.was{ color:var(--muted); }
+  .entry .e-tag.flip{ color:var(--emerald); }
+  .entry .e-text{ font-size:14.5px; line-height:1.5; }
+  .entry .e-text.was{ color:var(--ink); }
+  .entry .e-text.feel{ color:var(--muted); font-style:italic; font-size:13.5px; margin-top:3px; }
+  .entry .e-text.celebrate{ color:var(--emerald); font-family:'Fraunces',serif; font-style:italic; font-size:16px; }
+  .entry .arrow{
+    text-align:center; color:var(--gold); font-size:18px; margin:6px 0; line-height:1;
+  }
+  .del-btn{
+    background:none; border:none; color:var(--muted); font-family:inherit;
+    font-size:13px; cursor:pointer; padding:6px 4px; min-height:44px;
+    display:inline-flex; align-items:center;
+  }
+  .del-btn:hover{ color:#a23b2e; }
+
+  .celeb-item{
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+    padding:11px 2px; border-bottom:1px solid var(--line); font-size:14px;
+  }
+  .celeb-item:last-child{ border-bottom:none; }
+  .celeb-item .c-name{ color:var(--emerald); font-family:'Fraunces',serif; font-style:italic; flex:1; }
+  .celeb-item .c-date{ color:var(--muted); font-size:12px; font-weight:600; flex:none; }
+
+  .section-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 4px;
+  }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    text-align:center; padding:8px 4px 4px;
+  }
+  .welcome .big{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:21px; font-weight:600; margin-bottom:8px;
+  }
+  .welcome p{ color:var(--muted); font-size:14.5px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Comparison Detox</h1>
+    <p class="subtitle">Trade comparison for celebration — and run your own beautiful race.</p>
+  </header>
+
+  <!-- Daily contentment prompt -->
+  <section class="card">
+    <div class="verse">
+      <p id="promptText">—</p>
+      <div class="ref">A Word for You</div>
+    </div>
+    <div class="verse-actions">
+      <button class="link-btn" id="anotherPrompt" type="button">↻ Another</button>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="card">
+    <div class="stats">
+      <div class="stat"><span class="n" id="statReframed">0</span><span class="l">comparisons reframed</span></div>
+      <div class="stat"><span class="n" id="statCelebrated">0</span><span class="l">women celebrated</span></div>
+      <div class="stat"><span class="n" id="statPractices">0</span><span class="l">practices active</span></div>
+    </div>
+  </section>
+
+  <!-- 1. Catch a comparison -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Catch a Comparison</h2></div>
+    <p class="hint">Caught yourself comparing? Name it gently — then we'll flip it into freedom.</p>
+
+    <label class="field-label" for="cmpWho">Who or what did you compare yourself to?</label>
+    <input type="text" id="cmpWho" placeholder="A friend's milestone, an account online, a season she's in…">
+
+    <label class="field-label" for="cmpFelt">What did it make you feel?</label>
+    <input type="text" id="cmpFelt" placeholder="Behind, not enough, envious, small…">
+
+    <div class="flip-label"><span class="pill">Flip</span> Celebrate her — genuine goodwill</div>
+    <textarea id="cmpCelebrate" placeholder="I'm genuinely happy she has this. Her win is not my loss…"></textarea>
+
+    <div class="flip-label"><span class="pill">Flip</span> Contentment in your own journey</div>
+    <textarea id="cmpGratitude" placeholder="I'm grateful for where I am. My path is unfolding right on time…"></textarea>
+
+    <button class="complete-btn" id="saveCmpBtn" type="button">Reframe it 🌿</button>
+    <div class="blessing" id="cmpBlessing">
+      <div class="big">Flipped beautifully. 💛</div>
+      <div class="sm">You just chose freedom over comparison, sister.</div>
+    </div>
+  </section>
+
+  <!-- Reframe cards -->
+  <section class="card">
+    <div class="section-title">Your reframes</div>
+    <p class="empty-note" id="cmpEmpty">Each comparison you flip will land here as a card — proof you're growing free. 💛</p>
+    <div id="cmpList"></div>
+  </section>
+
+  <!-- 2. Celebrate her -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Celebrate Her</h2></div>
+    <p class="hint">Increase isn't a competition. Log a woman you genuinely celebrated today.</p>
+    <div class="celebrate-row">
+      <input type="text" id="celebName" placeholder="Her name, or what you celebrated…">
+      <button class="celebrate-btn" id="celebBtn" type="button">Celebrate 🎉</button>
+    </div>
+    <div class="section-title" style="margin-top:18px;">Women you've celebrated</div>
+    <p class="empty-note" id="celebEmpty">There's room at the table for every woman to rise. Cheer one on. 💛</p>
+    <div id="celebList"></div>
+  </section>
+
+  <!-- 3. Contentment practices -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Contentment Practices</h2></div>
+    <p class="hint">Small, freeing habits. Switch on the ones you're living right now.</p>
+    <div id="practiceList"></div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_comparison_detox";
+
+  // ---- Daily contentment / gratitude prompts ----
+  var PROMPTS = [
+    "Comparison is the thief of joy. Today, you get to keep yours.",
+    "Her blessing is not subtracted from yours. There is more than enough.",
+    "You are not behind. You are exactly on your own timeline.",
+    "Run your own race — the only finish line that matters is yours.",
+    "What if you celebrated her as freely as you'd want to be celebrated?",
+    "Contentment is not settling. It's trusting you have what you need for today.",
+    "The woman you envy is also fighting battles you cannot see.",
+    "Your story is still being written. Don't compare your draft to her highlight.",
+    "Increase is not a competition. There's room for every woman to rise.",
+    "When you celebrate another woman, you make room for your own increase.",
+    "Gratitude turns what you have into enough.",
+    "You were not made to be a copy. Your becoming is one of a kind.",
+    "Peace is worth more than the approval comparison promises.",
+    "Look up, not sideways. Your eyes weren't made to track her race.",
+    "Today, bless someone you would have once envied."
+  ];
+
+  // ---- Default contentment practices ----
+  var DEFAULT_PRACTICES = [
+    "Unfollow accounts that steal my peace",
+    "Set a daily social media boundary",
+    "Run my own race — stop tracking hers",
+    "Celebrate one woman out loud today",
+    "Practice gratitude before I pick up my phone",
+    "Mute, don't compare — protect my morning",
+    "Send encouragement instead of comparing",
+    "Notice the comparison, then bless and release"
+  ];
+
+  // ---- Date helpers ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    return Math.floor((d - start) / 86400000);
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{month:"short", day:"numeric", year:"numeric"});
+  }
+
+  // ---- State ----
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o) return migrate(o); }
+    }catch(e){}
+    return migrate({});
+  }
+  function migrate(o){
+    o.reframes = o.reframes || [];
+    o.celebrations = o.celebrations || [];
+    o.practices = o.practices || {};
+    if(typeof o.prompt !== "number"){ o.prompt = dayOfYear(new Date()) % PROMPTS.length; }
+    return o;
+  }
+  var data = load();
+
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Prompt ----
+  function renderPrompt(){ $("promptText").textContent = PROMPTS[data.prompt]; }
+  $("anotherPrompt").addEventListener("click", function(){
+    data.prompt = (data.prompt + 1) % PROMPTS.length;
+    renderPrompt(); save();
+  });
+
+  // ---- Stats ----
+  function renderStats(){
+    $("statReframed").textContent = data.reframes.length;
+    $("statCelebrated").textContent = data.celebrations.length;
+    var active = 0;
+    for(var k in data.practices){ if(data.practices[k]) active++; }
+    $("statPractices").textContent = active;
+  }
+
+  // ---- Catch a comparison ----
+  var whoEl=$("cmpWho"), feltEl=$("cmpFelt"), celEl=$("cmpCelebrate"), gratEl=$("cmpGratitude");
+  $("saveCmpBtn").addEventListener("click", function(){
+    var who = whoEl.value.trim();
+    var celebrate = celEl.value.trim();
+    var gratitude = gratEl.value.trim();
+    if(!who && !celebrate && !gratitude){
+      alert("Add what you compared yourself to, then flip it with a celebration or a word of contentment. 💛");
+      return;
+    }
+    data.reframes.unshift({
+      id: Date.now(),
+      date: todayKey(),
+      who: who,
+      felt: feltEl.value.trim(),
+      celebrate: celebrate,
+      gratitude: gratitude
+    });
+    save();
+    whoEl.value=""; feltEl.value=""; celEl.value=""; gratEl.value="";
+    var b = $("cmpBlessing");
+    b.classList.add("show");
+    setTimeout(function(){ b.classList.remove("show"); }, 3200);
+    renderReframes(); renderStats();
+  });
+
+  function renderReframes(){
+    var list = $("cmpList"), empty = $("cmpEmpty");
+    list.innerHTML = "";
+    if(data.reframes.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+    data.reframes.forEach(function(r){
+      var el = document.createElement("div");
+      el.className = "entry";
+
+      var head = document.createElement("div");
+      head.className = "e-head";
+      var dt = document.createElement("span");
+      dt.className = "e-date";
+      dt.textContent = prettyDate(r.date);
+      var del = document.createElement("button");
+      del.className = "del-btn";
+      del.type = "button";
+      del.textContent = "Delete";
+      del.addEventListener("click", function(){
+        if(confirm("Delete this reframe, sister?")){
+          data.reframes = data.reframes.filter(function(x){ return x.id !== r.id; });
+          save(); renderReframes(); renderStats();
+        }
+      });
+      head.appendChild(dt); head.appendChild(del);
+      el.appendChild(head);
+
+      if(r.who){
+        var b1 = document.createElement("div");
+        b1.className = "e-block";
+        var t1 = document.createElement("span"); t1.className="e-tag was"; t1.textContent="I compared myself to";
+        var p1 = document.createElement("div"); p1.className="e-text was"; p1.textContent=r.who;
+        b1.appendChild(t1); b1.appendChild(p1);
+        if(r.felt){
+          var f = document.createElement("div"); f.className="e-text feel"; f.textContent="It made me feel "+r.felt+".";
+          b1.appendChild(f);
+        }
+        el.appendChild(b1);
+      }
+
+      if(r.celebrate || r.gratitude){
+        var arrow = document.createElement("div");
+        arrow.className = "arrow"; arrow.textContent = "↓";
+        el.appendChild(arrow);
+      }
+
+      if(r.celebrate){
+        var b2 = document.createElement("div");
+        b2.className = "e-block";
+        var t2 = document.createElement("span"); t2.className="e-tag flip"; t2.textContent="I celebrate her";
+        var p2 = document.createElement("div"); p2.className="e-text celebrate"; p2.textContent=r.celebrate;
+        b2.appendChild(t2); b2.appendChild(p2);
+        el.appendChild(b2);
+      }
+
+      if(r.gratitude){
+        var b3 = document.createElement("div");
+        b3.className = "e-block";
+        var t3 = document.createElement("span"); t3.className="e-tag flip"; t3.textContent="And I'm content because";
+        var p3 = document.createElement("div"); p3.className="e-text celebrate"; p3.textContent=r.gratitude;
+        b3.appendChild(t3); b3.appendChild(p3);
+        el.appendChild(b3);
+      }
+
+      list.appendChild(el);
+    });
+  }
+
+  // ---- Celebrate her ----
+  var celebNameEl = $("celebName");
+  function addCelebration(){
+    var name = celebNameEl.value.trim();
+    if(!name){
+      alert("Add her name, or what you celebrated about her. 💛");
+      celebNameEl.focus();
+      return;
+    }
+    data.celebrations.unshift({ id: Date.now(), date: todayKey(), name: name });
+    save();
+    celebNameEl.value="";
+    renderCelebrations(); renderStats();
+  }
+  $("celebBtn").addEventListener("click", addCelebration);
+  celebNameEl.addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); addCelebration(); }
+  });
+
+  function renderCelebrations(){
+    var list = $("celebList"), empty = $("celebEmpty");
+    list.innerHTML = "";
+    if(data.celebrations.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+    data.celebrations.forEach(function(c){
+      var item = document.createElement("div");
+      item.className = "celeb-item";
+      var nm = document.createElement("span"); nm.className="c-name"; nm.textContent="🎉 "+c.name;
+      var rt = document.createElement("span");
+      var dt = document.createElement("span"); dt.className="c-date"; dt.textContent=prettyDate(c.date);
+      var del = document.createElement("button");
+      del.className="del-btn"; del.type="button"; del.textContent="✕";
+      del.setAttribute("aria-label","Delete celebration");
+      del.style.marginLeft="6px";
+      del.addEventListener("click", function(){
+        if(confirm("Remove this celebration?")){
+          data.celebrations = data.celebrations.filter(function(x){ return x.id !== c.id; });
+          save(); renderCelebrations(); renderStats();
+        }
+      });
+      rt.style.display="flex"; rt.style.alignItems="center"; rt.style.gap="2px"; rt.style.flex="none";
+      rt.appendChild(dt); rt.appendChild(del);
+      item.appendChild(nm); item.appendChild(rt);
+      list.appendChild(item);
+    });
+  }
+
+  // ---- Contentment practices ----
+  function renderPractices(){
+    var list = $("practiceList");
+    list.innerHTML = "";
+    DEFAULT_PRACTICES.forEach(function(text, i){
+      var id = "practice_" + i;
+      var label = document.createElement("label");
+      label.className = "practice";
+      label.setAttribute("for", id);
+
+      var cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.id = id;
+      cb.checked = !!data.practices[text];
+      cb.addEventListener("change", function(){
+        data.practices[text] = cb.checked;
+        save(); renderStats();
+      });
+
+      var box = document.createElement("span"); box.className = "box";
+      var span = document.createElement("span"); span.className = "ptext"; span.textContent = text;
+
+      label.appendChild(cb); label.appendChild(box); label.appendChild(span);
+      list.appendChild(label);
+    });
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Comparison Detox data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = migrate({});
+      data.prompt = dayOfYear(new Date()) % PROMPTS.length;
+      whoEl.value=""; feltEl.value=""; celEl.value=""; gratEl.value=""; celebNameEl.value="";
+      $("cmpBlessing").classList.remove("show");
+      renderPrompt(); renderStats(); renderReframes(); renderCelebrations(); renderPractices();
+    }
+  });
+
+  // ---- Init ----
+  renderPrompt();
+  renderStats();
+  renderReframes();
+  renderCelebrations();
+  renderPractices();
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confidence Evidence Journal · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Daily nudge ---------- */
+  .nudge{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .nudge::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .nudge .label{
+    font-family:'Hanken Grotesk'; font-weight:600; font-size:11.5px;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--gold-soft);
+    position:relative; z-index:1; margin-bottom:8px;
+  }
+  .nudge p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .nudge-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label:first-of-type{ margin-top:0; }
+  input[type="text"], input[type="date"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="date"], select{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  select{ -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236B655C' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:38px;
+  }
+
+  /* ---------- Log button ---------- */
+  .log-btn{
+    width:100%; margin-top:16px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .log-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .log-btn:active{ transform:translateY(1px); }
+
+  .ack{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .ack.show{ display:block; animation:rise .4s ease; }
+  .ack .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .ack .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Stats strip ---------- */
+  .stats{
+    display:flex; gap:12px; margin-top:16px;
+  }
+  .stat{
+    flex:1; background:#fff; border:1px solid var(--line); border-radius:14px;
+    padding:16px 12px; text-align:center; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .stat .n{
+    font-family:'Fraunces',serif; color:var(--emerald); font-weight:600; font-size:28px; line-height:1;
+  }
+  .stat .l{ color:var(--muted); font-size:12px; margin-top:6px; letter-spacing:.02em; }
+  .stats-note{
+    text-align:center; color:var(--muted); font-size:13px; font-style:italic;
+    margin:14px 4px 0;
+  }
+  .stats-note b{ color:var(--emerald); font-style:normal; font-weight:600; }
+
+  /* ---------- Library / proof ---------- */
+  .lib-head{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    margin-bottom:6px;
+  }
+  .lib-head h2{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:19px; font-weight:600;
+  }
+  .proof-card{
+    background:var(--cream); border:1px solid var(--line); border-left:4px solid var(--gold);
+    border-radius:12px; padding:14px 14px 12px; margin-top:12px;
+    animation:rise .35s ease;
+  }
+  .proof-top{
+    display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:8px;
+  }
+  .tag{
+    display:inline-block; font-size:11px; font-weight:700; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--emerald); background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.14); border-radius:999px; padding:4px 11px;
+  }
+  .proof-date{ color:var(--muted); font-size:12.5px; font-weight:600; }
+  .proof-text{ color:var(--ink); font-size:15.5px; line-height:1.5; }
+  .proof-actions{ display:flex; justify-content:flex-end; margin-top:6px; }
+  .del-btn{
+    background:none; border:none; color:var(--muted); font-family:inherit;
+    font-size:12.5px; cursor:pointer; min-height:44px; padding:8px 4px;
+  }
+  .del-btn:hover{ color:#9a3b2e; }
+
+  .empty-state{
+    text-align:center; padding:24px 10px 6px;
+  }
+  .empty-state .em-art{
+    font-size:30px; margin-bottom:8px;
+  }
+  .empty-state .em-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-weight:600; font-size:18px; margin-bottom:6px;
+  }
+  .empty-state .em-sub{ color:var(--muted); font-size:14px; line-height:1.5; }
+
+  /* ---------- Read my proof ---------- */
+  .proof-list{ margin-top:4px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Confidence Evidence Journal</h1>
+    <p class="subtitle">Confidence isn't born — it's built. Collect the proof.</p>
+  </header>
+
+  <!-- Daily nudge -->
+  <section class="card">
+    <div class="nudge">
+      <div class="label">Today's nudge</div>
+      <p id="nudgeText">—</p>
+    </div>
+    <div class="nudge-actions">
+      <button class="link-btn" id="anotherNudge" type="button">↻ Spark another</button>
+    </div>
+  </section>
+
+  <!-- Log evidence -->
+  <section class="card">
+    <div class="step"><span class="num">+</span><h2>Log today's evidence</h2></div>
+    <p class="hint">Something you did, handled, survived, kept a promise on, or were brave about. It counts.</p>
+
+    <form id="logForm">
+      <label class="field-label" for="winText">The evidence</label>
+      <textarea id="winText" placeholder="I spoke up in the meeting even though my voice shook…" required></textarea>
+
+      <label class="field-label" for="category">What kind of proof is this? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+      <select id="category">
+        <option value="">Choose a tag…</option>
+        <option value="Brave">Brave</option>
+        <option value="Capable">Capable</option>
+        <option value="Kept my word">Kept my word</option>
+        <option value="Growth">Growth</option>
+        <option value="Showed up">Showed up</option>
+        <option value="Handled it">Handled it</option>
+      </select>
+
+      <label class="field-label" for="winDate">Date</label>
+      <input type="date" id="winDate">
+
+      <button class="log-btn" type="submit">Add to my proof 🪶</button>
+    </form>
+
+    <div class="ack" id="ack">
+      <div class="big" id="ackBig">That's proof. 💛</div>
+      <div class="sm" id="ackSm">Another piece of evidence that you're more capable than fear says.</div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section>
+    <div class="stats">
+      <div class="stat"><div class="n" id="statTotal">0</div><div class="l">pieces of proof</div></div>
+      <div class="stat"><div class="n" id="statWeek">0</div><div class="l">this week</div></div>
+    </div>
+    <p class="stats-note">Your confidence is the proof you've collected. <b id="statSentence">Keep building, sister.</b></p>
+  </section>
+
+  <!-- Library of proof -->
+  <section class="card">
+    <div class="lib-head">
+      <h2>Your library of proof</h2>
+      <button class="link-btn" id="readProof" type="button" style="display:none;">📖 Read my proof</button>
+    </div>
+    <div class="proof-list" id="proofList"></div>
+    <div class="empty-state" id="emptyState">
+      <div class="em-art">🌱</div>
+      <div class="em-title">Your proof starts here.</div>
+      <div class="em-sub">Confidence is built one kept promise at a time.<br>Log your first piece of evidence above — something you handled, survived, or were brave about today.</div>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_confidence_evidence";
+
+  // ---- Rotating nudges to spark evidence ----
+  var NUDGES = [
+    "What did you handle today that you weren't sure you could?",
+    "Where did you show up, even tired, even scared?",
+    "Name one promise — to yourself or someone else — you kept.",
+    "What hard thing did you do anyway?",
+    "Where were you a little braver than yesterday?",
+    "What did you survive that's now behind you?",
+    "Who did you help, and what did that take from you to give?",
+    "What boundary did you hold this week?",
+    "What did you finish that you'd been avoiding?",
+    "Where did you choose growth over comfort?",
+    "What did you say 'no' to that protected your peace?",
+    "What small win are you tempted to dismiss? Log it anyway.",
+    "When did you trust yourself today, even a little?",
+    "What did you do scared?",
+    "Where did you keep going when it would've been easier to quit?"
+  ];
+
+  var ACKS = [
+    ["That's proof. 💛", "Another piece of evidence that you're more capable than fear says."],
+    ["Logged. 🪶", "Your future self will read this on a hard day and remember."],
+    ["See that? 🌿", "That didn't happen by accident — that was you."],
+    ["Beautiful. ✨", "Brick by brick, this is how confidence gets built."],
+    ["Noted, sister. 💛", "You're not imagining your growth. Here's the receipt."],
+    ["Yes. 🌱", "One more reason to trust yourself a little more."],
+    ["Held. 🤲", "The proof is piling up. So is the woman behind it."]
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    var diff = d - start;
+    return Math.floor(diff / 86400000);
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"short", month:"short", day:"numeric"});
+  }
+  function withinWeek(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    var now = new Date();
+    now.setHours(0,0,0,0);
+    var diff = (now - d) / 86400000;
+    return diff >= 0 && diff < 7;
+  }
+
+  // ---- Deterministic-by-date shuffle for the nudge ----
+  // Pick a starting index from the day-of-year, then let user cycle.
+  function dailyNudgeIndex(){
+    return dayOfYear(new Date()) % NUDGES.length;
+  }
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && Array.isArray(o.proof)) return o;
+      }
+    }catch(e){}
+    return { proof:[], nudge: dailyNudgeIndex() };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var nudgeTextEl = $("nudgeText");
+  var winTextEl = $("winText"), categoryEl = $("category"), winDateEl = $("winDate");
+  var formEl = $("logForm"), ackEl = $("ack"), ackBigEl = $("ackBig"), ackSmEl = $("ackSm");
+  var proofListEl = $("proofList"), emptyStateEl = $("emptyState"), readProofBtn = $("readProof");
+
+  // ---- Nudge: deterministic daily default, user can cycle ----
+  if(typeof data.nudge !== "number"){ data.nudge = dailyNudgeIndex(); }
+  function renderNudge(){
+    nudgeTextEl.textContent = NUDGES[data.nudge];
+  }
+  $("anotherNudge").addEventListener("click", function(){
+    data.nudge = (data.nudge + 1) % NUDGES.length;
+    renderNudge(); save();
+  });
+
+  // ---- Init date default to today ----
+  winDateEl.value = todayKey();
+
+  // ---- Add evidence ----
+  formEl.addEventListener("submit", function(e){
+    e.preventDefault();
+    var text = winTextEl.value.trim();
+    if(!text){ winTextEl.focus(); return; }
+    var item = {
+      id: Date.now() + "-" + Math.floor(Math.random()*1000),
+      text: text,
+      category: categoryEl.value || "",
+      date: winDateEl.value || todayKey()
+    };
+    data.proof.push(item);
+    save();
+
+    // Encouraging dynamic acknowledgment
+    var a = ACKS[Math.floor(Math.random()*ACKS.length)];
+    ackBigEl.textContent = a[0];
+    ackSmEl.textContent = a[1];
+    ackEl.classList.add("show");
+
+    // Reset form (keep date on today)
+    winTextEl.value = "";
+    categoryEl.value = "";
+    winDateEl.value = todayKey();
+    winTextEl.focus();
+
+    renderProof();
+    renderStats();
+  });
+
+  // ---- Render the library (most recent first) ----
+  function sortedProof(){
+    return data.proof.slice().sort(function(a,b){
+      // by date desc, then by id (insertion) desc
+      if(a.date !== b.date) return a.date < b.date ? 1 : -1;
+      return a.id < b.id ? 1 : -1;
+    });
+  }
+
+  function renderProof(){
+    var items = sortedProof();
+    proofListEl.innerHTML = "";
+    if(items.length === 0){
+      emptyStateEl.style.display = "block";
+      readProofBtn.style.display = "none";
+      return;
+    }
+    emptyStateEl.style.display = "none";
+    readProofBtn.style.display = items.length >= 3 ? "inline-flex" : "none";
+
+    items.forEach(function(it){
+      var card = document.createElement("div");
+      card.className = "proof-card";
+
+      var top = document.createElement("div");
+      top.className = "proof-top";
+
+      var tagWrap = document.createElement("span");
+      if(it.category){
+        var tag = document.createElement("span");
+        tag.className = "tag";
+        tag.textContent = it.category;
+        tagWrap.appendChild(tag);
+      }
+      var dateEl = document.createElement("span");
+      dateEl.className = "proof-date";
+      dateEl.textContent = prettyDate(it.date);
+
+      top.appendChild(tagWrap);
+      top.appendChild(dateEl);
+
+      var textEl = document.createElement("div");
+      textEl.className = "proof-text";
+      textEl.textContent = it.text;
+
+      var actions = document.createElement("div");
+      actions.className = "proof-actions";
+      var del = document.createElement("button");
+      del.className = "del-btn";
+      del.type = "button";
+      del.textContent = "Remove";
+      del.addEventListener("click", function(){
+        if(confirm("Remove this piece of proof? It still happened — but it'll leave your journal.")){
+          data.proof = data.proof.filter(function(p){ return p.id !== it.id; });
+          save();
+          renderProof();
+          renderStats();
+        }
+      });
+      actions.appendChild(del);
+
+      card.appendChild(top);
+      card.appendChild(textEl);
+      card.appendChild(actions);
+      proofListEl.appendChild(card);
+    });
+  }
+
+  // ---- Read my proof: gently scroll the library ----
+  readProofBtn.addEventListener("click", function(){
+    proofListEl.scrollIntoView({ behavior:"smooth", block:"start" });
+  });
+
+  // ---- Stats ----
+  function renderStats(){
+    var total = data.proof.length;
+    var week = data.proof.filter(function(p){ return withinWeek(p.date); }).length;
+    $("statTotal").textContent = total;
+    $("statWeek").textContent = week;
+
+    var note = $("statSentence");
+    if(total === 0){
+      note.textContent = "It starts with one.";
+    }else if(week === 0){
+      note.textContent = "Add one today — your proof is waiting.";
+    }else if(week >= 5){
+      note.textContent = "Look at the week you've built.";
+    }else{
+      note.textContent = "Keep building, sister.";
+    }
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Confidence Evidence? This can't be undone, sister — and that proof is real.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { proof:[], nudge: dailyNudgeIndex() };
+      winTextEl.value = ""; categoryEl.value = ""; winDateEl.value = todayKey();
+      ackEl.classList.remove("show");
+      renderNudge(); renderProof(); renderStats();
+    }
+  });
+
+  // ---- First render ----
+  renderNudge();
+  renderProof();
+  renderStats();
+
+})();
+</script>
+</body>
+</html>

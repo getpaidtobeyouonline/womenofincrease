@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visibility Challenge Tracker · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.22);
+  }
+  .welcome p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .welcome .sub{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:500;
+    font-size:14px; line-height:1.5; color:var(--gold-soft);
+  }
+
+  /* ---------- Progress ---------- */
+  .progress-head{
+    display:flex; align-items:baseline; justify-content:space-between; margin-bottom:10px;
+  }
+  .progress-head .count{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:24px;
+  }
+  .progress-head .count span{ color:var(--muted); font-size:16px; font-weight:500; }
+  .progress-head .pct{ color:var(--muted); font-size:13.5px; font-weight:600; }
+  .bar{
+    height:12px; background:var(--emerald-soft); border-radius:999px; overflow:hidden;
+    border:1px solid rgba(20,84,62,.1);
+  }
+  .bar .fill{
+    height:100%; width:0%; border-radius:999px;
+    background:linear-gradient(90deg, var(--gold-soft), var(--gold));
+    transition:width .4s ease;
+  }
+  .streak{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:16px; color:var(--muted); font-size:14px;
+  }
+  .streak b{ color:var(--emerald); font-size:15px; }
+  .flame{ font-size:16px; }
+
+  .milestone{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .milestone.show{ display:block; animation:rise .4s ease; }
+  .milestone .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .milestone .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Day grid ---------- */
+  .grid{
+    display:grid; grid-template-columns:repeat(6, 1fr); gap:8px;
+  }
+  .daycell{
+    aspect-ratio:1/1; min-height:44px; border:1px solid var(--line); border-radius:12px;
+    background:var(--cream); color:var(--ink); cursor:pointer;
+    font-family:'Fraunces',serif; font-weight:600; font-size:16px;
+    display:flex; align-items:center; justify-content:center; position:relative;
+    transition:transform .08s ease, border-color .15s ease, background .15s ease;
+  }
+  .daycell:hover{ border-color:var(--gold); }
+  .daycell:active{ transform:translateY(1px); }
+  .daycell:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(200,160,74,.35); }
+  .daycell.done{
+    background:var(--emerald); color:#FCF8EF; border-color:var(--emerald);
+    box-shadow:0 4px 10px rgba(20,84,62,.22);
+  }
+  .daycell.done::after{
+    content:"✓"; position:absolute; top:3px; right:6px; font-size:11px;
+    font-family:'Hanken Grotesk'; color:var(--gold-soft); font-weight:700;
+  }
+  .daycell.today{ border:2px solid var(--gold); }
+  .daycell.has-note:not(.done)::before{
+    content:""; position:absolute; bottom:6px; left:50%; transform:translateX(-50%);
+    width:5px; height:5px; border-radius:50%; background:var(--gold);
+  }
+  .legend{
+    display:flex; flex-wrap:wrap; gap:14px; margin-top:14px;
+    color:var(--muted); font-size:12.5px;
+  }
+  .legend span{ display:inline-flex; align-items:center; gap:6px; }
+  .legend .sw{ width:14px; height:14px; border-radius:5px; border:1px solid var(--line); }
+  .legend .sw.done{ background:var(--emerald); border-color:var(--emerald); }
+  .legend .sw.tdy{ border:2px solid var(--gold); background:var(--cream); }
+
+  /* ---------- Day detail panel ---------- */
+  .panel{
+    display:none; margin-top:16px; border:1px solid var(--line); border-radius:14px;
+    padding:18px; background:var(--cream);
+  }
+  .panel.show{ display:block; animation:rise .3s ease; }
+  .panel-head{
+    display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:6px;
+  }
+  .panel-head h3{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:20px; font-weight:600;
+  }
+  .panel-close{
+    background:none; border:none; color:var(--muted); font-size:22px; line-height:1;
+    cursor:pointer; min-width:44px; min-height:44px; border-radius:10px;
+  }
+  .panel-close:hover{ color:var(--ink); }
+  .prompt{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12); border-radius:12px;
+    padding:14px; color:var(--emerald); font-size:15px; margin:8px 0 4px;
+  }
+  .prompt .lbl{
+    display:block; font-family:'Hanken Grotesk'; font-weight:700; font-size:11px;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--gold); margin-bottom:6px;
+  }
+  .prompt .txt{ font-family:'Fraunces',serif; font-style:italic; font-size:16px; line-height:1.4; }
+
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:16px 0 6px;
+  }
+  textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:#fff; border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; min-height:84px; line-height:1.5;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  textarea::placeholder{ color:#A7A095; }
+
+  .complete-btn{
+    width:100%; margin-top:14px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+  .complete-btn.done{
+    background:var(--emerald-soft); color:var(--emerald); box-shadow:none;
+    border:1px solid rgba(20,84,62,.2);
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Visibility Challenge</h1>
+    <p class="subtitle">30 days. One small, brave act of being seen at a time.</p>
+  </header>
+
+  <!-- Welcome / intro -->
+  <section class="card" id="welcomeCard">
+    <div class="welcome">
+      <p>You were never meant to shrink. Being seen is not vanity — it's stewardship of the gift inside you.</p>
+      <div class="sub">For the next 30 days, you'll do one small visible act each day: share a thought, show your face, voice an opinion without softening it. Tiny steps. Real courage. Let's begin, sister.</div>
+    </div>
+  </section>
+
+  <!-- Progress -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Progress</h2></div>
+    <div class="progress-head">
+      <div class="count"><b id="doneCount">0</b><span>/30 days</span></div>
+      <div class="pct" id="pctText">0% seen</div>
+    </div>
+    <div class="bar"><div class="fill" id="barFill"></div></div>
+    <div class="streak">
+      <span class="flame">🔥</span>
+      <span><b id="streakCount">0</b> day streak · keep showing up</span>
+    </div>
+    <div class="milestone" id="milestone">
+      <div class="big" id="milestoneBig"></div>
+      <div class="sm" id="milestoneSm"></div>
+    </div>
+  </section>
+
+  <!-- Day grid -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Your 30 Days</h2></div>
+    <p class="hint">Tap a day to see today's idea, mark it done, and jot what you did + how it felt.</p>
+    <div class="grid" id="grid" role="list"></div>
+    <div class="legend">
+      <span><span class="sw done"></span> Completed</span>
+      <span><span class="sw tdy"></span> Today</span>
+      <span><span class="sw" style="background:var(--cream);position:relative;"></span> To do</span>
+    </div>
+
+    <!-- Day detail panel -->
+    <div class="panel" id="panel">
+      <div class="panel-head">
+        <h3 id="panelTitle">Day 1</h3>
+        <button class="panel-close" id="panelClose" type="button" aria-label="Close day">×</button>
+      </div>
+      <div class="prompt">
+        <span class="lbl">Today's small brave act</span>
+        <span class="txt" id="promptText">—</span>
+      </div>
+      <label class="field-label" for="noteBox">What did you do, and how did it feel? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+      <textarea id="noteBox" placeholder="I shared my real opinion in the group chat. My heart raced — but I felt proud."></textarea>
+      <button class="complete-btn" id="dayCompleteBtn" type="button">Mark this day complete ✨</button>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_visibility_challenge";
+
+  // ---- 30 gentle, building visibility ideas (one per day) ----
+  var PROMPTS = [
+    "Share one honest sentence about your day with someone.",
+    "Let someone see your real opinion — answer a question truthfully.",
+    "Post or send a photo that includes your face.",
+    "Speak up first in a conversation today, before you talk yourself out of it.",
+    "Tell one person about something you're working on or proud of.",
+    "Voice a preference out loud — where to eat, what to watch — don't say 'whatever'.",
+    "Comment publicly on something you genuinely loved.",
+    "Ask a question in a room or group instead of staying quiet.",
+    "Share a thought, photo, or idea on social media — just one.",
+    "Compliment someone to their face and let them see you mean it.",
+    "Say 'I disagree' once today, kindly and without apologizing.",
+    "Raise your hand (literally or figuratively) to offer help or an idea.",
+    "Tell someone what you actually want — name the desire out loud.",
+    "Record a short voice or video note and send it to someone.",
+    "Post your work, your writing, or your art where others can see it.",
+    "Introduce yourself first to someone new.",
+    "Share a win — big or small — and let yourself be celebrated.",
+    "Express an unpopular-feeling opinion without softening every word.",
+    "Take up space in a meeting or chat: speak for a full minute.",
+    "Ask for something you need — feedback, support, or help.",
+    "Show a piece of yourself you usually hide — a hobby, a belief, a hope.",
+    "Go live, post a story, or speak on camera, even for 15 seconds.",
+    "Say 'no' clearly to one thing that isn't yours to carry.",
+    "Share your real answer to 'how are you?' with one safe person.",
+    "Offer your idea in a group before anyone else fills the silence.",
+    "Publicly thank or shout out someone who shaped you.",
+    "Tell the world (or your circle) what you're building or dreaming of.",
+    "Set a boundary out loud and don't explain it away.",
+    "Ask for what you're worth — a rate, a raise, a seat at the table.",
+    "Declare one bold thing you believe about your future — and let people hear it."
+  ];
+
+  // ---- Date helpers ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+
+  // ---- State ----
+  // data.days = array(30) of { done:bool, note:str, date:str|null }
+  // data.startKey = date the challenge began (first interaction)
+  var data = load();
+  var current = -1; // currently open day index
+
+  function freshDays(){
+    var arr = [];
+    for(var i=0;i<30;i++){ arr.push({ done:false, note:"", date:null }); }
+    return arr;
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && o.days && o.days.length === 30) return o;
+      }
+    }catch(e){}
+    return { days: freshDays(), startKey: null, seenMilestones: [] };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Which day is "today"? ----
+  // Day index = days since startKey (capped 0..29). If not started, today = first incomplete-ish day 0.
+  function todayIndex(){
+    if(!data.startKey) return 0;
+    var p = data.startKey.split("-");
+    var start = new Date(p[0], p[1]-1, p[2]);
+    var now = new Date();
+    var sd = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var diff = Math.round((sd - start) / 86400000);
+    if(diff < 0) diff = 0;
+    if(diff > 29) diff = 29;
+    return diff;
+  }
+
+  // ---- Build grid ----
+  var gridEl = $("grid");
+  function buildGrid(){
+    gridEl.innerHTML = "";
+    var tIdx = todayIndex();
+    for(var i=0;i<30;i++){
+      (function(i){
+        var cell = document.createElement("button");
+        cell.type = "button";
+        cell.className = "daycell";
+        cell.setAttribute("role","listitem");
+        cell.textContent = (i+1);
+        var d = data.days[i];
+        if(d.done) cell.classList.add("done");
+        if(!d.done && d.note) cell.classList.add("has-note");
+        if(i === tIdx) cell.classList.add("today");
+        cell.setAttribute("aria-label",
+          "Day " + (i+1) + (d.done ? ", completed" : ", not yet") + (i===tIdx ? ", today" : ""));
+        cell.addEventListener("click", function(){ openDay(i); });
+        gridEl.appendChild(cell);
+      })(i);
+    }
+  }
+
+  // ---- Day panel ----
+  var panel = $("panel"), panelTitle = $("panelTitle"), promptText = $("promptText"),
+      noteBox = $("noteBox"), dayCompleteBtn = $("dayCompleteBtn");
+
+  function openDay(i){
+    current = i;
+    var d = data.days[i];
+    panelTitle.textContent = "Day " + (i+1);
+    promptText.textContent = PROMPTS[i];
+    noteBox.value = d.note || "";
+    renderDayBtn();
+    panel.classList.add("show");
+    panel.scrollIntoView({ behavior:"smooth", block:"nearest" });
+  }
+  function renderDayBtn(){
+    var d = data.days[current];
+    if(d.done){
+      dayCompleteBtn.textContent = "Completed — tap to undo";
+      dayCompleteBtn.classList.add("done");
+    }else{
+      dayCompleteBtn.textContent = "Mark this day complete ✨";
+      dayCompleteBtn.classList.remove("done");
+    }
+  }
+
+  $("panelClose").addEventListener("click", function(){
+    panel.classList.remove("show"); current = -1;
+  });
+
+  // auto-save note on every keystroke
+  noteBox.addEventListener("input", function(){
+    if(current < 0) return;
+    ensureStarted();
+    data.days[current].note = noteBox.value;
+    save();
+    buildGrid(); // reflect has-note dot
+  });
+
+  dayCompleteBtn.addEventListener("click", function(){
+    if(current < 0) return;
+    ensureStarted();
+    var d = data.days[current];
+    d.done = !d.done;
+    if(d.done){ d.date = todayKey(); }
+    else{ d.date = null; }
+    save();
+    renderDayBtn();
+    buildGrid();
+    renderProgress();
+  });
+
+  function ensureStarted(){
+    if(!data.startKey){
+      data.startKey = todayKey();
+      save();
+      buildGrid();
+    }
+  }
+
+  // ---- Progress + streak ----
+  function countDone(){
+    var n=0; for(var i=0;i<30;i++){ if(data.days[i].done) n++; } return n;
+  }
+  function renderProgress(){
+    var done = countDone();
+    var pct = Math.round((done/30)*100);
+    $("doneCount").textContent = done;
+    $("pctText").textContent = pct + "% seen";
+    $("barFill").style.width = pct + "%";
+    renderStreak();
+    renderMilestone(done);
+  }
+
+  // streak = consecutive completed days ending at the latest completed day index
+  function renderStreak(){
+    var streak = 0;
+    for(var i=0;i<30;i++){
+      if(data.days[i].done) streak++;
+      else streak = 0;
+    }
+    // count trailing run of completed days from the most recent completed onward
+    var run = 0;
+    for(var j=29;j>=0;j--){
+      if(data.days[j].done){ run++; }
+      else if(run>0){ break; }
+    }
+    $("streakCount").textContent = run;
+  }
+
+  var MILESTONES = {
+    7:  ["One week of showing up. 💛", "Seven brave moments most people never take. You're building real muscle, sister."],
+    14: ["Halfway. Look at you. 🌿", "Two weeks of being seen. The fear is getting quieter, and your voice is getting clearer."],
+    21: ["21 days — a new habit forming. ✨", "Visibility is becoming who you are, not just what you do. Keep going."],
+    30: ["You did it. All 30 days. 👑", "You showed up, fully and on purpose. You are seen — and the world is better for it. Now go and increase."]
+  };
+  function renderMilestone(done){
+    var box = $("milestone");
+    var m = MILESTONES[done];
+    if(m){
+      $("milestoneBig").textContent = m[0];
+      $("milestoneSm").textContent = m[1];
+      box.classList.add("show");
+    }else{
+      box.classList.remove("show");
+    }
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Start a fresh 30 days? This clears all your visibility progress and notes, sister. It can't be undone.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { days: freshDays(), startKey: null, seenMilestones: [] };
+      current = -1;
+      panel.classList.remove("show");
+      buildGrid();
+      renderProgress();
+    }
+  });
+
+  // ---- Init ----
+  buildGrid();
+  renderProgress();
+
+})();
+</script>
+</body>
+</html>
