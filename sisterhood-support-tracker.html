@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sisterhood Support Tracker · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Stats banner ---------- */
+  .stats{
+    display:flex; gap:12px; margin-top:16px;
+  }
+  .stat{
+    flex:1; background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:16px 14px; text-align:center;
+  }
+  .stat .n{ font-family:'Fraunces',serif; font-weight:600; font-size:28px; line-height:1; }
+  .stat .l{ font-size:12px; margin-top:6px; color:var(--gold-soft); letter-spacing:.02em; }
+  .stats-note{ text-align:center; color:var(--muted); font-size:13px; margin-top:12px; font-style:italic; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="date"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="date"], select{ min-height:48px; }
+  textarea{ min-height:72px; line-height:1.5; }
+  select{ -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236B655C' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:40px;
+  }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  .add-btn{
+    width:100%; margin-top:16px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .add-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .add-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Nudge ---------- */
+  .nudge{
+    display:none; margin-top:16px; background:var(--gold-soft);
+    border:1px solid rgba(200,160,74,.4); border-radius:14px; padding:16px 18px;
+    color:var(--ink);
+  }
+  .nudge.show{ display:block; }
+  .nudge .big{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:16px; margin-bottom:6px; }
+  .nudge .sm{ font-size:14px; color:#5e5640; }
+  .nudge .names{ font-weight:600; color:var(--emerald); }
+
+  /* ---------- Sister cards ---------- */
+  .sister{
+    background:#fff; border:1px solid var(--line); border-radius:14px;
+    padding:16px; margin-top:14px; box-shadow:0 4px 12px rgba(28,27,26,.04);
+  }
+  .sister.overdue{ border-color:var(--gold-soft); }
+  .sister-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+  .sister-name{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:19px; line-height:1.2; }
+  .role-tag{
+    display:inline-block; margin-top:6px; font-size:11.5px; font-weight:600;
+    letter-spacing:.04em; text-transform:uppercase; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.14);
+    padding:4px 10px; border-radius:999px;
+  }
+  .del-btn{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:18px; line-height:1; min-width:44px; min-height:44px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .del-btn:hover{ color:#a3431f; background:#fbeae3; }
+  .sister-notes{ font-size:14px; color:var(--ink); margin-top:10px; }
+  .sister-notes .lbl{ color:var(--muted); font-weight:600; }
+  .pour{ margin-top:10px; }
+  .pour label{ display:block; font-size:12.5px; font-weight:600; color:var(--muted); margin-bottom:5px; }
+  .pour textarea{ min-height:56px; }
+
+  .connect-row{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    margin-top:12px; padding-top:12px; border-top:1px solid var(--line); flex-wrap:wrap;
+  }
+  .last-connected{ font-size:13px; color:var(--muted); }
+  .last-connected b{ color:var(--ink); }
+  .last-connected .warn{ color:#a3431f; }
+  .connect-btn{
+    min-height:44px; background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.2); border-radius:11px; padding:10px 16px;
+    font-family:inherit; font-weight:700; font-size:14px; cursor:pointer;
+    transition:background .15s;
+  }
+  .connect-btn:hover{ background:#d7e4dd; }
+
+  /* ---------- Reflection ---------- */
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+  .welcome{
+    text-align:center; padding:8px 4px;
+  }
+  .welcome .big{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:18px; margin-bottom:8px; }
+  .welcome .sm{ color:var(--muted); font-size:14px; line-height:1.6; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Sisterhood Support Tracker</h1>
+    <p class="subtitle">Identify, build, and nurture the circle that carries you.</p>
+  </header>
+
+  <!-- Stats -->
+  <section class="card">
+    <div class="stats">
+      <div class="stat"><div class="n" id="statCircle">0</div><div class="l">in your circle</div></div>
+      <div class="stat"><div class="n" id="statWeek">0</div><div class="l">nurtured this week</div></div>
+    </div>
+    <p class="stats-note" id="statsNote">You weren't meant to do life alone — sisterhood is strength.</p>
+  </section>
+
+  <!-- Gentle nudge -->
+  <div class="nudge" id="nudge">
+    <div class="big">A gentle nudge 💛</div>
+    <div class="sm">It's been a little while since you connected with <span class="names" id="nudgeNames"></span>. No guilt — just a soft reminder that she's worth a text today.</div>
+  </div>
+
+  <!-- Add a sister -->
+  <section class="card">
+    <div class="step"><span class="num">+</span><h2>Add a sister to your circle</h2></div>
+    <p class="hint">Real sisterhood is built on purpose, one woman at a time.</p>
+
+    <label class="field-label" for="addName">Her name</label>
+    <input type="text" id="addName" placeholder="First name or nickname" maxlength="60">
+
+    <label class="field-label" for="addRole">Her role in your life</label>
+    <select id="addRole">
+      <option value="Encourager">Encourager</option>
+      <option value="Prayer sister">Prayer sister</option>
+      <option value="Truth-teller">Truth-teller</option>
+      <option value="Fun / joy">Fun / joy</option>
+      <option value="Mentor">Mentor</option>
+      <option value="Someone I support">Someone I support</option>
+    </select>
+
+    <label class="field-label" for="addNotes">What she brings / how you support each other <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <textarea id="addNotes" placeholder="She prays me through hard seasons… she keeps me honest… we make each other laugh…"></textarea>
+
+    <button class="add-btn" id="addBtn" type="button">Add to my circle 🤍</button>
+  </section>
+
+  <!-- The circle -->
+  <section class="card" id="circleCard">
+    <div class="step"><span class="num">○</span><h2>Your circle</h2></div>
+    <div id="welcome" class="welcome">
+      <div class="big">Welcome, sister. 💛</div>
+      <div class="sm">This is your space to build real sisterhood — the kind that prays for you, tells you the truth, celebrates you, and reminds you that you're never doing this alone. Add your first sister above and start nurturing the circle that carries you.</div>
+    </div>
+    <div id="sisterList"></div>
+  </section>
+
+  <!-- Reflection -->
+  <section class="card">
+    <div class="step"><span class="num">♡</span><h2>Heart check</h2></div>
+    <p class="hint">Support flows both ways. Let's name what's true for you right now.</p>
+
+    <label class="field-label" for="needNow">What kind of support do I need right now?</label>
+    <textarea id="needNow" placeholder="Prayer, honesty, encouragement, rest, someone to just listen…"></textarea>
+
+    <label class="field-label" for="gaps">Where might my circle have gaps?</label>
+    <textarea id="gaps" placeholder="Maybe I need a mentor… or a sister who's further along… or someone I can pour into…"></textarea>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_sisterhood_support";
+  var NUDGE_DAYS = 21; // gentle threshold
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function parseKey(key){
+    var p = key.split("-");
+    return new Date(+p[0], p[1]-1, +p[2]);
+  }
+  function prettyDate(key){
+    if(!key) return null;
+    return parseKey(key).toLocaleDateString(undefined,{month:"short", day:"numeric", year:"numeric"});
+  }
+  function daysSince(key){
+    if(!key) return null;
+    var now = parseKey(todayKey());
+    var then = parseKey(key);
+    return Math.round((now - then) / 86400000);
+  }
+  function uid(){
+    return "s" + Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+  }
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && Array.isArray(o.sisters)) return {
+          sisters:o.sisters,
+          reflection: o.reflection || {needNow:"", gaps:""}
+        };
+      }
+    }catch(e){}
+    return { sisters:[], reflection:{needNow:"", gaps:""} };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var addName=$("addName"), addRole=$("addRole"), addNotes=$("addNotes"), addBtn=$("addBtn");
+  var sisterList=$("sisterList"), welcome=$("welcome");
+  var needNow=$("needNow"), gaps=$("gaps");
+
+  // ---- Restore reflection ----
+  needNow.value = data.reflection.needNow || "";
+  gaps.value = data.reflection.gaps || "";
+  needNow.addEventListener("input", function(){ data.reflection.needNow = needNow.value; save(); });
+  gaps.addEventListener("input", function(){ data.reflection.gaps = gaps.value; save(); });
+
+  // ---- Add a sister ----
+  addBtn.addEventListener("click", function(){
+    var name = addName.value.trim();
+    if(!name){
+      addName.focus();
+      addName.style.borderColor = "#C8A04A";
+      return;
+    }
+    data.sisters.push({
+      id: uid(),
+      name: name,
+      role: addRole.value,
+      notes: addNotes.value.trim(),
+      pour: "",
+      lastConnected: null
+    });
+    save();
+    addName.value=""; addNotes.value=""; addRole.value="Encourager";
+    addName.style.borderColor="";
+    render();
+  });
+
+  // ---- Render everything ----
+  function render(){
+    renderStats();
+    renderNudge();
+    renderList();
+  }
+
+  function nurturedThisWeek(){
+    var count = 0;
+    data.sisters.forEach(function(s){
+      var d = daysSince(s.lastConnected);
+      if(d !== null && d <= 7) count++;
+    });
+    return count;
+  }
+
+  function renderStats(){
+    $("statCircle").textContent = data.sisters.length;
+    $("statWeek").textContent = nurturedThisWeek();
+    var note = $("statsNote");
+    if(data.sisters.length === 0){
+      note.textContent = "You weren't meant to do life alone — sisterhood is strength.";
+    }else if(nurturedThisWeek() > 0){
+      note.textContent = "Look at you, showing up for your people. This is what carries you.";
+    }else{
+      note.textContent = "Your circle is your strength — reach out to one sister this week.";
+    }
+  }
+
+  function renderNudge(){
+    var overdue = data.sisters.filter(function(s){
+      var d = daysSince(s.lastConnected);
+      return d === null ? false : d >= NUDGE_DAYS;
+    });
+    // Also gently surface sisters who've never been logged, if circle is established
+    var nudgeBox = $("nudge");
+    var names = overdue.map(function(s){ return s.name; });
+    if(names.length === 0){ nudgeBox.classList.remove("show"); return; }
+    var text;
+    if(names.length === 1){ text = names[0]; }
+    else if(names.length === 2){ text = names[0] + " and " + names[1]; }
+    else { text = names.slice(0,2).join(", ") + " and " + (names.length-2) + " other" + (names.length-2>1?"s":""); }
+    $("nudgeNames").textContent = text;
+    nudgeBox.classList.add("show");
+  }
+
+  function renderList(){
+    sisterList.innerHTML = "";
+    if(data.sisters.length === 0){
+      welcome.style.display = "block";
+      return;
+    }
+    welcome.style.display = "none";
+
+    data.sisters.forEach(function(s){
+      var d = daysSince(s.lastConnected);
+      var overdue = (d !== null && d >= NUDGE_DAYS);
+
+      var card = document.createElement("div");
+      card.className = "sister" + (overdue ? " overdue" : "");
+
+      var head = document.createElement("div");
+      head.className = "sister-head";
+
+      var left = document.createElement("div");
+      var nm = document.createElement("div");
+      nm.className = "sister-name";
+      nm.textContent = s.name;
+      var tag = document.createElement("span");
+      tag.className = "role-tag";
+      tag.textContent = s.role;
+      left.appendChild(nm); left.appendChild(tag);
+
+      var del = document.createElement("button");
+      del.className = "del-btn";
+      del.type = "button";
+      del.setAttribute("aria-label", "Remove " + s.name + " from your circle");
+      del.textContent = "✕";
+      del.addEventListener("click", function(){
+        if(confirm("Remove " + s.name + " from your circle? You can always add her back, sister.")){
+          data.sisters = data.sisters.filter(function(x){ return x.id !== s.id; });
+          save(); render();
+        }
+      });
+
+      head.appendChild(left); head.appendChild(del);
+      card.appendChild(head);
+
+      if(s.notes){
+        var notes = document.createElement("div");
+        notes.className = "sister-notes";
+        var lbl = document.createElement("span");
+        lbl.className = "lbl";
+        lbl.textContent = "She brings: ";
+        notes.appendChild(lbl);
+        notes.appendChild(document.createTextNode(s.notes));
+        card.appendChild(notes);
+      }
+
+      // pour-into note
+      var pour = document.createElement("div");
+      pour.className = "pour";
+      var plabel = document.createElement("label");
+      var pid = "pour-" + s.id;
+      plabel.setAttribute("for", pid);
+      plabel.textContent = "How I can pour into her";
+      var pta = document.createElement("textarea");
+      pta.id = pid;
+      pta.placeholder = "Check in on her dream, pray for her, send encouragement…";
+      pta.value = s.pour || "";
+      pta.addEventListener("input", function(){ s.pour = pta.value; save(); });
+      pour.appendChild(plabel); pour.appendChild(pta);
+      card.appendChild(pour);
+
+      // connect row
+      var row = document.createElement("div");
+      row.className = "connect-row";
+      var lc = document.createElement("div");
+      lc.className = "last-connected";
+      if(s.lastConnected){
+        var when = prettyDate(s.lastConnected);
+        var ago = (d === 0) ? "today" : (d === 1 ? "yesterday" : d + " days ago");
+        lc.innerHTML = "Last connected: <b>" + when + "</b> " +
+          "<span class='" + (overdue ? "warn" : "") + "'>(" + ago + ")</span>";
+      }else{
+        lc.innerHTML = "<span class='warn'>Not connected yet</span> — when did you last reach out?";
+      }
+      var cbtn = document.createElement("button");
+      cbtn.className = "connect-btn";
+      cbtn.type = "button";
+      cbtn.textContent = "We connected ✓";
+      cbtn.addEventListener("click", function(){
+        s.lastConnected = todayKey();
+        save(); render();
+      });
+      row.appendChild(lc); row.appendChild(cbtn);
+      card.appendChild(row);
+
+      sisterList.appendChild(card);
+    });
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Sisterhood Support data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { sisters:[], reflection:{needNow:"", gaps:""} };
+      needNow.value=""; gaps.value="";
+      render();
+    }
+  });
+
+  // ---- First paint ----
+  render();
+
+})();
+</script>
+</body>
+</html>

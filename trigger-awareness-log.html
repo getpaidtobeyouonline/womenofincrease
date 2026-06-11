@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trigger Awareness Log · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:0 0 12px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  .field-label .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:72px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Feeling chips ---------- */
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:2px; }
+  .chip{
+    min-height:44px; padding:9px 15px; border-radius:999px;
+    background:var(--cream); border:1px solid var(--line); color:var(--ink);
+    font-family:inherit; font-size:14px; font-weight:500; cursor:pointer;
+    transition:background .12s, border-color .12s, color .12s;
+  }
+  .chip:hover{ border-color:var(--gold); }
+  .chip.active{
+    background:var(--emerald); border-color:var(--emerald); color:#FCF8EF; font-weight:600;
+  }
+  .custom-feel{ margin-top:10px; }
+
+  /* ---------- Intensity ---------- */
+  .intensity{ display:flex; gap:8px; margin-top:2px; }
+  .int-btn{
+    flex:1; min-height:48px; border-radius:11px;
+    background:var(--cream); border:1px solid var(--line); color:var(--ink);
+    font-family:'Fraunces',serif; font-size:18px; font-weight:600; cursor:pointer;
+    transition:background .12s, border-color .12s, color .12s;
+  }
+  .int-btn:hover{ border-color:var(--gold); }
+  .int-btn.active{
+    background:var(--gold); border-color:var(--gold); color:var(--ink);
+    box-shadow:0 4px 12px rgba(200,160,74,.3);
+  }
+  .int-scale{
+    display:flex; justify-content:space-between; color:var(--muted);
+    font-size:12px; margin-top:6px;
+  }
+
+  /* ---------- Save button ---------- */
+  .save-btn{
+    width:100%; margin-top:18px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .save-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .save-btn:active{ transform:translateY(1px); }
+
+  .saved-note{
+    display:none; margin-top:12px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:14px 16px; color:var(--emerald);
+  }
+  .saved-note.show{ display:block; animation:rise .4s ease; }
+  .saved-note .big{ font-family:'Fraunces',serif; font-weight:600; font-size:17px; margin-bottom:2px; }
+  .saved-note .sm{ font-size:13.5px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Section titles ---------- */
+  .sec-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:20px; font-weight:600;
+    margin-bottom:4px;
+  }
+
+  /* ---------- Insights ---------- */
+  .insight-intro{ color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .insight-grid{ display:flex; flex-wrap:wrap; gap:10px; }
+  .insight{
+    flex:1 1 calc(50% - 5px); background:var(--cream); border:1px solid var(--line);
+    border-radius:13px; padding:14px;
+  }
+  .insight .ilabel{
+    font-size:11.5px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--muted); font-weight:600; margin-bottom:6px;
+  }
+  .insight .ival{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:19px; font-weight:600;
+    line-height:1.2;
+  }
+  .insight .isub{ color:var(--muted); font-size:12.5px; margin-top:2px; }
+
+  /* ---------- Log entries ---------- */
+  .log-card{
+    background:var(--cream); border:1px solid var(--line); border-radius:14px;
+    padding:14px 16px; margin-top:12px;
+  }
+  .log-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .log-time{ color:var(--muted); font-size:12.5px; font-weight:600; letter-spacing:.02em; }
+  .log-trigger{
+    font-family:'Fraunces',serif; color:var(--ink); font-size:16.5px; font-weight:500;
+    margin:6px 0 8px; line-height:1.35;
+  }
+  .log-meta{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .feel-tag{
+    background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.14);
+    font-size:12.5px; font-weight:600; padding:4px 11px; border-radius:999px;
+  }
+  .int-tag{
+    background:var(--gold-soft); color:var(--ink); font-size:12.5px; font-weight:600;
+    padding:4px 11px; border-radius:999px;
+  }
+  .log-detail{ color:var(--muted); font-size:13.5px; margin-top:10px; line-height:1.5; }
+  .log-detail b{ color:var(--ink); font-weight:600; }
+  .log-actions{ display:flex; justify-content:space-between; align-items:center; margin-top:10px; gap:8px; }
+  .reflect-btn, .del-btn{
+    background:none; border:none; font-family:inherit; font-weight:600; font-size:13px;
+    cursor:pointer; min-height:44px; padding:8px 4px; display:inline-flex; align-items:center; gap:5px;
+  }
+  .reflect-btn{ color:var(--emerald); }
+  .reflect-btn:hover{ color:var(--gold); }
+  .del-btn{ color:var(--muted); }
+  .del-btn:hover{ color:#9b4a3f; }
+  .reflect-box{ display:none; margin-top:10px; }
+  .reflect-box.show{ display:block; }
+  .reflect-box textarea{ min-height:64px; background:#fff; }
+
+  .empty-note{
+    color:var(--muted); font-size:14.5px; line-height:1.6; text-align:center;
+    padding:18px 8px;
+  }
+  .empty-note b{ color:var(--emerald); font-family:'Fraunces',serif; font-weight:600; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Trigger Awareness Log</h1>
+    <p class="subtitle">Notice what stirs you — gently, in the moment — and let patterns rise to the surface.</p>
+  </header>
+
+  <!-- Log a trigger -->
+  <section class="card">
+    <div class="step"><span class="num">+</span><h2>Log a moment</h2></div>
+    <p class="hint">Something just touched a nerve? Capture it now, without judgment. Awareness is the first step toward freedom.</p>
+
+    <label class="field-label" for="trigger">What happened? <span class="opt">(the trigger)</span></label>
+    <textarea id="trigger" placeholder="A comment, a memory, a tone of voice, a moment…"></textarea>
+
+    <label class="field-label">What did it bring up in you?</label>
+    <div class="chips" id="feelChips">
+      <button type="button" class="chip" data-feel="Anger">Anger</button>
+      <button type="button" class="chip" data-feel="Fear">Fear</button>
+      <button type="button" class="chip" data-feel="Shame">Shame</button>
+      <button type="button" class="chip" data-feel="Sadness">Sadness</button>
+      <button type="button" class="chip" data-feel="Anxiety">Anxiety</button>
+      <button type="button" class="chip" data-feel="Hurt">Hurt</button>
+    </div>
+    <input type="text" class="custom-feel" id="customFeel" placeholder="Or name it yourself…">
+
+    <label class="field-label" for="body">Where did you feel it in your body? <span class="opt">(optional)</span></label>
+    <input type="text" id="body" placeholder="Tight chest, clenched jaw, knot in stomach…">
+
+    <label class="field-label" for="response">How did you respond? <span class="opt">(optional)</span></label>
+    <textarea id="response" placeholder="What you did, said, or felt pulled to do…"></textarea>
+
+    <label class="field-label">How intense did it feel?</label>
+    <div class="intensity" id="intensity">
+      <button type="button" class="int-btn" data-int="1">1</button>
+      <button type="button" class="int-btn" data-int="2">2</button>
+      <button type="button" class="int-btn" data-int="3">3</button>
+      <button type="button" class="int-btn" data-int="4">4</button>
+      <button type="button" class="int-btn" data-int="5">5</button>
+    </div>
+    <div class="int-scale"><span>Barely a ripple</span><span>Overwhelming</span></div>
+
+    <button class="save-btn" id="saveBtn" type="button">Save this entry 🌿</button>
+    <div class="saved-note" id="savedNote">
+      <div class="big">Noticed and held. 💛</div>
+      <div class="sm">You met yourself with honesty. That's where healing begins.</div>
+    </div>
+  </section>
+
+  <!-- Pattern insights -->
+  <section class="card" id="insightsCard" style="display:none;">
+    <div class="sec-title">What your log is showing you</div>
+    <p class="insight-intro">Gently, no pressure — just patterns surfacing so you can see yourself more clearly.</p>
+    <div class="insight-grid" id="insightGrid"></div>
+  </section>
+
+  <!-- Log -->
+  <section class="card">
+    <div class="sec-title">Your log</div>
+    <p class="hint" id="logCount"></p>
+    <div id="logList"></div>
+    <div class="empty-note" id="logEmpty">
+      <p><b>Welcome, sister.</b></p>
+      <p style="margin-top:8px;">This is a soft place to notice what stirs you. Your triggers aren't failures — they're information, little doorways into what your heart is still tending to. When something touches a nerve, come here and log it. Over time, the patterns will show you the way forward. 💛</p>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_trigger_awareness";
+
+  // ---- State ----
+  var data = load();          // { entries: [ {id,ts,trigger,feeling,body,response,intensity,reflection} ] }
+  var draft = { feeling:"", intensity:0 };   // current selections in the form
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && Array.isArray(o.entries)) return o; }
+    }catch(e){}
+    return { entries:[] };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var triggerEl = $("trigger"), customFeelEl = $("customFeel"),
+      bodyEl = $("body"), responseEl = $("response"),
+      saveBtn = $("saveBtn"), savedNote = $("savedNote"),
+      feelChips = $("feelChips"), intensityEl = $("intensity");
+
+  // ---- Feeling chips ----
+  function clearChips(){
+    var cs = feelChips.querySelectorAll(".chip");
+    for(var i=0;i<cs.length;i++){ cs[i].classList.remove("active"); }
+  }
+  feelChips.addEventListener("click", function(e){
+    var btn = e.target.closest(".chip");
+    if(!btn) return;
+    var f = btn.getAttribute("data-feel");
+    if(draft.feeling === f && customFeelEl.value.trim()===""){
+      // toggle off
+      draft.feeling = "";
+      btn.classList.remove("active");
+    }else{
+      clearChips();
+      btn.classList.add("active");
+      draft.feeling = f;
+      customFeelEl.value = "";
+    }
+  });
+  customFeelEl.addEventListener("input", function(){
+    if(customFeelEl.value.trim() !== ""){
+      clearChips();
+      draft.feeling = customFeelEl.value.trim();
+    }else{
+      draft.feeling = "";
+    }
+  });
+
+  // ---- Intensity ----
+  intensityEl.addEventListener("click", function(e){
+    var btn = e.target.closest(".int-btn");
+    if(!btn) return;
+    var v = parseInt(btn.getAttribute("data-int"),10);
+    var bs = intensityEl.querySelectorAll(".int-btn");
+    for(var i=0;i<bs.length;i++){ bs[i].classList.remove("active"); }
+    if(draft.intensity === v){
+      draft.intensity = 0;
+    }else{
+      draft.intensity = v;
+      btn.classList.add("active");
+    }
+  });
+
+  // ---- Save entry ----
+  saveBtn.addEventListener("click", function(){
+    var feeling = customFeelEl.value.trim() !== "" ? customFeelEl.value.trim() : draft.feeling;
+    var trigger = triggerEl.value.trim();
+    if(trigger === "" && feeling === ""){
+      // nothing meaningful to log — nudge gently by focusing the field
+      triggerEl.focus();
+      return;
+    }
+    var e = {
+      id: Date.now() + "-" + Math.floor(Math.random()*1000),
+      ts: Date.now(),
+      trigger: trigger,
+      feeling: feeling,
+      body: bodyEl.value.trim(),
+      response: responseEl.value.trim(),
+      intensity: draft.intensity,
+      reflection: ""
+    };
+    data.entries.push(e);
+    save();
+    clearForm();
+    render();
+    savedNote.classList.add("show");
+    setTimeout(function(){ savedNote.classList.remove("show"); }, 3200);
+  });
+
+  function clearForm(){
+    triggerEl.value = ""; customFeelEl.value = "";
+    bodyEl.value = ""; responseEl.value = "";
+    draft = { feeling:"", intensity:0 };
+    clearChips();
+    var bs = intensityEl.querySelectorAll(".int-btn");
+    for(var i=0;i<bs.length;i++){ bs[i].classList.remove("active"); }
+  }
+
+  // ---- Date / time formatting ----
+  function fmtTime(ts){
+    var d = new Date(ts);
+    var datePart = d.toLocaleDateString(undefined,{weekday:"short", month:"short", day:"numeric"});
+    var timePart = d.toLocaleTimeString(undefined,{hour:"numeric", minute:"2-digit"});
+    return datePart + " · " + timePart;
+  }
+
+  // ---- Insights ----
+  function tally(arr){
+    var m = {};
+    arr.forEach(function(v){ if(v){ m[v] = (m[v]||0)+1; } });
+    return m;
+  }
+  function topOf(map){
+    var best=null, n=0;
+    for(var k in map){ if(map.hasOwnProperty(k) && map[k]>n){ best=k; n=map[k]; } }
+    return best ? { label:best, count:n } : null;
+  }
+  function renderInsights(){
+    var card = $("insightsCard"), grid = $("insightGrid");
+    var es = data.entries;
+    if(es.length < 2){ card.style.display = "none"; return; }
+    card.style.display = "block";
+    grid.innerHTML = "";
+
+    // most common feeling
+    var feelTop = topOf(tally(es.map(function(e){ return e.feeling; })));
+    // most common trigger by first significant word
+    function firstWord(t){
+      if(!t) return "";
+      var words = t.toLowerCase().replace(/[^a-z\s']/g," ").split(/\s+/).filter(Boolean);
+      var stop = {"the":1,"a":1,"an":1,"my":1,"i":1,"to":1,"of":1,"and":1,"in":1,"it":1,"was":1,"is":1,"when":1,"with":1,"on":1,"at":1,"for":1,"he":1,"she":1,"they":1,"that":1,"this":1,"me":1};
+      for(var i=0;i<words.length;i++){ if(!stop[words[i]] && words[i].length>2){ return words[i]; } }
+      return words[0] || "";
+    }
+    var trigTop = topOf(tally(es.map(function(e){ return firstWord(e.trigger); })));
+
+    // average intensity (only rated)
+    var rated = es.filter(function(e){ return e.intensity > 0; });
+    var avg = rated.length ? (rated.reduce(function(s,e){ return s+e.intensity; },0)/rated.length) : 0;
+
+    // most common day-part
+    function dayPart(ts){
+      var h = new Date(ts).getHours();
+      if(h < 5) return "Late night";
+      if(h < 12) return "Mornings";
+      if(h < 17) return "Afternoons";
+      if(h < 21) return "Evenings";
+      return "Nights";
+    }
+    var timeTop = topOf(tally(es.map(function(e){ return dayPart(e.ts); })));
+
+    function add(label, val, sub){
+      var d = document.createElement("div");
+      d.className = "insight";
+      var l = document.createElement("div"); l.className="ilabel"; l.textContent = label;
+      var v = document.createElement("div"); v.className="ival"; v.textContent = val;
+      d.appendChild(l); d.appendChild(v);
+      if(sub){ var s = document.createElement("div"); s.className="isub"; s.textContent = sub; d.appendChild(s); }
+      grid.appendChild(d);
+    }
+
+    add("Feeling that visits most", feelTop ? feelTop.label : "—",
+        feelTop ? ("Came up " + feelTop.count + " time" + (feelTop.count>1?"s":"")) : "Add a feeling to your entries");
+    add("A word that keeps surfacing", trigTop ? trigTop.label : "—",
+        trigTop ? ("Appeared " + trigTop.count + " time" + (trigTop.count>1?"s":"")) : "Keep logging triggers");
+    add("Average intensity", avg ? (Math.round(avg*10)/10) + " / 5" : "—",
+        rated.length ? ("Across " + rated.length + " rated moment" + (rated.length>1?"s":"")) : "Rate intensity to see this");
+    add("When it tends to rise", timeTop ? timeTop.label : "—",
+        timeTop ? ("Most often noticed then") : "");
+  }
+
+  // ---- Render log ----
+  function render(){
+    var list = $("logList"), empty = $("logEmpty"), count = $("logCount");
+    list.innerHTML = "";
+    var es = data.entries.slice().sort(function(a,b){ return b.ts - a.ts; });
+
+    if(es.length === 0){
+      empty.style.display = "block";
+      count.textContent = "";
+      renderInsights();
+      return;
+    }
+    empty.style.display = "none";
+    count.textContent = es.length + " moment" + (es.length>1?"s":"") + " noticed so far.";
+
+    es.forEach(function(e){
+      var card = document.createElement("div");
+      card.className = "log-card";
+
+      var top = document.createElement("div");
+      top.className = "log-top";
+      var time = document.createElement("span");
+      time.className = "log-time";
+      time.textContent = fmtTime(e.ts);
+      top.appendChild(time);
+      card.appendChild(top);
+
+      if(e.trigger){
+        var trig = document.createElement("div");
+        trig.className = "log-trigger";
+        trig.textContent = e.trigger;
+        card.appendChild(trig);
+      }
+
+      var meta = document.createElement("div");
+      meta.className = "log-meta";
+      if(e.feeling){
+        var ft = document.createElement("span");
+        ft.className = "feel-tag";
+        ft.textContent = e.feeling;
+        meta.appendChild(ft);
+      }
+      if(e.intensity > 0){
+        var it = document.createElement("span");
+        it.className = "int-tag";
+        it.textContent = "Intensity " + e.intensity + "/5";
+        meta.appendChild(it);
+      }
+      if(meta.children.length){ card.appendChild(meta); }
+
+      if(e.body || e.response){
+        var det = document.createElement("div");
+        det.className = "log-detail";
+        var parts = [];
+        if(e.body){ parts.push("In your body: " + e.body); }
+        if(e.response){ parts.push("You responded: " + e.response); }
+        det.innerHTML = parts.map(function(p){
+          var idx = p.indexOf(":");
+          return "<b>" + escapeHtml(p.slice(0,idx)) + ":</b>" + escapeHtml(p.slice(idx+1));
+        }).join("<br>");
+        card.appendChild(det);
+      }
+
+      // reflection (existing shown, toggle to add/edit)
+      var reflectBox = document.createElement("div");
+      reflectBox.className = "reflect-box";
+      var rTa = document.createElement("textarea");
+      rTa.placeholder = "What might this really be about? What older story does it touch?";
+      rTa.value = e.reflection || "";
+      rTa.addEventListener("input", function(){
+        e.reflection = rTa.value;
+        save();
+      });
+      reflectBox.appendChild(rTa);
+      if(e.reflection){ reflectBox.classList.add("show"); }
+
+      var actions = document.createElement("div");
+      actions.className = "log-actions";
+
+      var reflectBtn = document.createElement("button");
+      reflectBtn.type = "button";
+      reflectBtn.className = "reflect-btn";
+      reflectBtn.textContent = e.reflection ? "✎ Reflection" : "✎ What might this be about?";
+      reflectBtn.addEventListener("click", function(){
+        reflectBox.classList.toggle("show");
+        if(reflectBox.classList.contains("show")){ rTa.focus(); }
+      });
+
+      var delBtn = document.createElement("button");
+      delBtn.type = "button";
+      delBtn.className = "del-btn";
+      delBtn.textContent = "Delete";
+      delBtn.addEventListener("click", function(){
+        if(confirm("Let this entry go? It'll be removed from your log.")){
+          data.entries = data.entries.filter(function(x){ return x.id !== e.id; });
+          save();
+          render();
+        }
+      });
+
+      actions.appendChild(reflectBtn);
+      actions.appendChild(delBtn);
+      card.appendChild(actions);
+      card.appendChild(reflectBox);
+
+      list.appendChild(card);
+    });
+
+    renderInsights();
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Trigger Awareness Log entries? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { entries:[] };
+      clearForm();
+      render();
+    }
+  });
+
+  // ---- Init ----
+  render();
+
+})();
+</script>
+</body>
+</html>

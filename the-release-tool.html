@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Release Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .welcome p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .welcome .sm{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:400;
+    font-size:14px; color:var(--gold-soft); position:relative; z-index:1;
+  }
+
+  /* ---------- Category chips ---------- */
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    flex:1 1 auto; min-height:44px; padding:10px 14px;
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    font-family:inherit; font-size:14.5px; font-weight:600; color:var(--ink);
+    cursor:pointer; transition:border-color .15s, background .15s, color .15s;
+  }
+  .chip:hover{ border-color:var(--gold); }
+  .chip.sel{
+    background:var(--emerald); border-color:var(--emerald); color:#FCF8EF;
+    box-shadow:0 4px 12px rgba(20,84,62,.22);
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:88px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Faith line toggle ---------- */
+  .faith-row{
+    display:flex; align-items:flex-start; gap:10px; margin-top:14px;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:11px; padding:12px 14px;
+  }
+  .faith-row input[type="checkbox"]{
+    flex:none; width:20px; height:20px; margin-top:2px; accent-color:var(--emerald); cursor:pointer;
+  }
+  .faith-row label{ font-size:14px; color:var(--emerald); cursor:pointer; }
+  .faith-row label b{ font-weight:600; }
+
+  /* ---------- Keep / delete choice ---------- */
+  .keep-choice{ margin-top:16px; }
+  .keep-choice .opts{ display:flex; gap:8px; margin-top:8px; }
+  .keep-choice .opt{
+    flex:1; min-height:44px; padding:11px 12px; text-align:center;
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    font-family:inherit; font-size:13.5px; font-weight:600; color:var(--ink); cursor:pointer;
+    transition:border-color .15s, background .15s, color .15s;
+  }
+  .keep-choice .opt:hover{ border-color:var(--gold); }
+  .keep-choice .opt.sel{
+    background:var(--gold-soft); border-color:var(--gold); color:var(--emerald);
+  }
+  .keep-choice .opt small{ display:block; font-weight:400; color:var(--muted); font-size:11.5px; margin-top:2px; }
+  .keep-choice .opt.sel small{ color:var(--emerald); }
+
+  /* ---------- Release button ---------- */
+  .release-btn{
+    width:100%; margin-top:18px; min-height:54px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease, opacity .15s ease;
+  }
+  .release-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .release-btn:active{ transform:translateY(1px); }
+  .release-btn:disabled{ opacity:.5; cursor:not-allowed; box-shadow:none; }
+
+  /* ---------- Release animation overlay ---------- */
+  .release-fade{ transition:opacity 2.2s ease, transform 2.2s ease, filter 2.2s ease; }
+  .release-fade.lifting{ opacity:0; transform:translateY(-30px); filter:blur(4px); }
+
+  .moment{
+    display:none; margin-top:16px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:24px 18px; color:var(--emerald);
+  }
+  .moment.show{ display:block; animation:rise .5s ease; }
+  .moment .dove{ font-size:34px; display:block; margin-bottom:8px; animation:floatUp 2.4s ease infinite alternate; }
+  .moment .big{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin-bottom:6px; }
+  .moment .sm{ font-size:14.5px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes floatUp{ from{transform:translateY(0);} to{transform:translateY(-7px);} }
+
+  /* ---------- Count / encouragement ---------- */
+  .count-band{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:18px; color:var(--muted); font-size:14px; text-align:center;
+  }
+  .count-band b{ color:var(--emerald); font-size:15px; }
+  .lightness{ text-align:center; color:var(--emerald); font-family:'Fraunces',serif; font-style:italic; font-size:15px; margin-top:6px; }
+
+  /* ---------- Records ---------- */
+  .records-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:17px; font-weight:600;
+    margin:2px 0 2px;
+  }
+  .records-sub{ color:var(--muted); font-size:13px; margin-bottom:8px; }
+  .record{
+    border:1px solid var(--line); border-radius:13px; padding:14px 15px; margin-top:12px;
+    background:var(--cream);
+  }
+  .record .r-top{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .record .r-cat{
+    font-family:'Hanken Grotesk'; font-weight:700; font-size:11.5px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    padding:4px 10px; border-radius:999px;
+  }
+  .record .r-date{ color:var(--muted); font-size:12.5px; font-weight:600; }
+  .record .r-name{ font-family:'Fraunces',serif; color:var(--ink); font-size:16px; margin:9px 0 2px; }
+  .record .r-text{ color:var(--muted); font-size:13.5px; font-style:italic; }
+  .record .r-private{ color:var(--gold); font-size:13px; font-style:italic; margin:6px 0 2px; }
+  .record .del-btn{
+    background:none; border:none; color:var(--muted); font-family:inherit; cursor:pointer;
+    font-size:13px; min-height:44px; padding:8px 6px; min-width:44px;
+  }
+  .record .del-btn:hover{ color:var(--gold); }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>The Release Tool</h1>
+    <p class="subtitle">Name it, feel it, and gently set it down. You weren't made to carry it all.</p>
+  </header>
+
+  <!-- Welcome / first-run -->
+  <section class="card" id="welcomeCard">
+    <div class="welcome">
+      <p>Whatever you've been holding — the grief, the resentment, the disappointment, the shame — you can lay it down here. This is a soft place to be honest.</p>
+      <div class="sm">Take a breath. There's no rush. When you're ready, begin below.</div>
+    </div>
+  </section>
+
+  <!-- 1. Name it -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>What are you releasing?</h2></div>
+    <p class="hint">Choose what this is. Naming it honestly is the first act of freedom.</p>
+    <div class="chips" id="catChips"></div>
+    <label class="field-label" for="releaseName">Give it a name</label>
+    <input type="text" id="releaseName" placeholder="e.g. The way that conversation ended…">
+  </section>
+
+  <!-- 2. Feel it -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Feel it fully</h2></div>
+    <p class="hint">What has carrying this been costing you? Where do you feel it in your body?</p>
+    <label class="field-label" for="releaseCost">What it's been costing you</label>
+    <textarea id="releaseCost" placeholder="It's been heavy in my chest… it's kept me from…"></textarea>
+  </section>
+
+  <!-- 3. What you wish -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>What you wish had been different</h2></div>
+    <p class="hint">Let yourself say the truth you haven't said out loud. No one is judging you here.</p>
+    <label class="field-label" for="releaseWish">I wish…</label>
+    <textarea id="releaseWish" placeholder="I wish it had gone differently… I wish I had…"></textarea>
+  </section>
+
+  <!-- 4. Release it -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Now, release it</h2></div>
+    <p class="hint">You've named it and felt it. You don't have to keep holding it.</p>
+
+    <div class="faith-row">
+      <input type="checkbox" id="faithLine">
+      <label for="faithLine"><b>Hand it to God</b> — add a quiet line: "I trust You with what I can't fix. I'm letting go." <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    </div>
+
+    <div class="keep-choice">
+      <label class="field-label">After you release it, would you like to…</label>
+      <div class="opts" id="keepOpts">
+        <button type="button" class="opt sel" data-keep="keep" id="optKeep">Keep a record<small>A dated list of things you've set down</small></button>
+        <button type="button" class="opt" data-keep="erase" id="optErase">Let it go fully<small>Release without keeping the words</small></button>
+      </div>
+    </div>
+
+    <button class="release-btn" id="releaseBtn" type="button" disabled>Release this 🕊️</button>
+
+    <div class="moment" id="moment">
+      <span class="dove">🕊️</span>
+      <div class="big" id="momentBig">You don't have to carry this anymore.</div>
+      <div class="sm" id="momentSm">It's set down. You are lighter than you were a moment ago.</div>
+    </div>
+  </section>
+
+  <!-- Records -->
+  <section class="card" id="recordsCard">
+    <div class="records-title">Things I've set down</div>
+    <p class="records-sub">A record of your freedom — every line here is something you no longer carry.</p>
+
+    <div class="count-band" id="countBand"></div>
+    <div class="lightness" id="lightness"></div>
+
+    <div id="recordsList"></div>
+    <p class="empty-note" id="recordsEmpty">Nothing here yet — and that's okay. When you release something, it'll rest here as proof of your lightness. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_release_tool";
+
+  var CATEGORIES = ["Grief","Resentment","Disappointment","Shame","Anger","Fear","Other"];
+
+  // ---- State ----
+  var data = load();          // { records:[], draft:{...} }
+  var draft = data.draft || newDraft();
+
+  function newDraft(){
+    return { category:"", name:"", cost:"", wish:"", faith:false, keep:"keep" };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && Array.isArray(o.records)) return o;
+      }
+    }catch(e){}
+    return { records:[], draft:newDraft() };
+  }
+  function save(){
+    data.draft = draft;
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  function prettyDate(iso){
+    var d = new Date(iso);
+    return d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric", year:"numeric"});
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var catChips = $("catChips");
+  var nameEl = $("releaseName"), costEl = $("releaseCost"), wishEl = $("releaseWish");
+  var faithEl = $("faithLine");
+  var optKeep = $("optKeep"), optErase = $("optErase");
+  var releaseBtn = $("releaseBtn"), momentEl = $("moment");
+  var momentBig = $("momentBig"), momentSm = $("momentSm");
+
+  // ---- Build category chips ----
+  CATEGORIES.forEach(function(cat){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.textContent = cat;
+    b.setAttribute("aria-pressed","false");
+    b.addEventListener("click", function(){
+      draft.category = cat;
+      renderChips();
+      save();
+      refreshReleaseBtn();
+    });
+    catChips.appendChild(b);
+  });
+  function renderChips(){
+    Array.prototype.forEach.call(catChips.children, function(b){
+      var on = b.textContent === draft.category;
+      b.classList.toggle("sel", on);
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
+
+  // ---- Restore inputs ----
+  nameEl.value = draft.name || "";
+  costEl.value = draft.cost || "";
+  wishEl.value = draft.wish || "";
+  faithEl.checked = !!draft.faith;
+  renderChips();
+  renderKeepChoice();
+  renderRecords();
+  refreshReleaseBtn();
+
+  // ---- Auto-save on every change ----
+  function wire(el, fn){
+    el.addEventListener("input", function(){ fn(el.value); save(); refreshReleaseBtn(); });
+  }
+  wire(nameEl, function(v){ draft.name = v; });
+  wire(costEl, function(v){ draft.cost = v; });
+  wire(wishEl, function(v){ draft.wish = v; });
+  faithEl.addEventListener("change", function(){ draft.faith = faithEl.checked; save(); });
+
+  // ---- Keep / erase choice ----
+  function renderKeepChoice(){
+    optKeep.classList.toggle("sel", draft.keep !== "erase");
+    optErase.classList.toggle("sel", draft.keep === "erase");
+  }
+  optKeep.addEventListener("click", function(){ draft.keep = "keep"; renderKeepChoice(); save(); });
+  optErase.addEventListener("click", function(){ draft.keep = "erase"; renderKeepChoice(); save(); });
+
+  // ---- Enable release only when there's something real to release ----
+  function refreshReleaseBtn(){
+    var ready = !!draft.category && (draft.name.trim() || draft.cost.trim() || draft.wish.trim());
+    releaseBtn.disabled = !ready;
+  }
+
+  // ---- Release interaction ----
+  releaseBtn.addEventListener("click", function(){
+    if(releaseBtn.disabled) return;
+
+    // Build the record
+    var keep = draft.keep === "erase" ? "erase" : "keep";
+    var rec = {
+      id: Date.now() + "-" + Math.random().toString(36).slice(2,7),
+      date: new Date().toISOString(),
+      category: draft.category || "Other",
+      kept: keep === "keep"
+    };
+    if(keep === "keep"){
+      rec.name = draft.name.trim();
+      rec.cost = draft.cost.trim();
+      rec.wish = draft.wish.trim();
+      rec.faith = !!draft.faith;
+    }
+    data.records.unshift(rec);
+
+    // Gentle cathartic moment
+    momentBig.textContent = "You don't have to carry this anymore.";
+    if(keep === "erase"){
+      momentSm.textContent = "The words are gone. The weight is gone. Only you remain — lighter, freer.";
+    }else if(draft.faith){
+      momentSm.textContent = "You've set it down and handed it over. Rest now — it's no longer yours to fix.";
+    }else{
+      momentSm.textContent = "It's set down. You are lighter than you were a moment ago.";
+    }
+
+    // Fade the written burden up and away
+    var fadeEls = [nameEl, costEl, wishEl];
+    fadeEls.forEach(function(el){ el.classList.add("release-fade"); el.classList.add("lifting"); });
+
+    setTimeout(function(){
+      // clear the form fields
+      nameEl.value = ""; costEl.value = ""; wishEl.value = "";
+      faithEl.checked = false;
+      fadeEls.forEach(function(el){ el.classList.remove("lifting"); el.classList.remove("release-fade"); });
+      // reset draft (keep their last keep-preference)
+      var lastKeep = draft.keep;
+      draft = newDraft();
+      draft.keep = lastKeep;
+      renderChips();
+      renderKeepChoice();
+      save();
+      refreshReleaseBtn();
+      renderRecords();
+    }, 2200);
+
+    momentEl.classList.add("show");
+    save();
+
+    // soften the moment away after a while
+    setTimeout(function(){ momentEl.classList.remove("show"); }, 7000);
+  });
+
+  // ---- Records ----
+  function renderRecords(){
+    var list = $("recordsList"), empty = $("recordsEmpty");
+    var countBand = $("countBand"), lightness = $("lightness");
+    list.innerHTML = "";
+
+    var n = data.records.length;
+    if(n === 0){
+      empty.style.display = "block";
+      countBand.innerHTML = "";
+      lightness.textContent = "";
+      return;
+    }
+    empty.style.display = "none";
+
+    countBand.innerHTML = "You've set down <b>" + n + "</b> " + (n === 1 ? "thing" : "things") + ".";
+    lightness.textContent = n >= 3
+      ? "Look how much lighter you're becoming."
+      : "Every one of these is a little more room to breathe.";
+
+    data.records.forEach(function(rec){
+      var el = document.createElement("div");
+      el.className = "record";
+
+      var top = document.createElement("div");
+      top.className = "r-top";
+
+      var cat = document.createElement("span");
+      cat.className = "r-cat";
+      cat.textContent = rec.category;
+
+      var right = document.createElement("div");
+      right.style.display = "flex";
+      right.style.alignItems = "center";
+      right.style.gap = "4px";
+
+      var date = document.createElement("span");
+      date.className = "r-date";
+      date.textContent = prettyDate(rec.date);
+
+      var del = document.createElement("button");
+      del.className = "del-btn";
+      del.type = "button";
+      del.setAttribute("aria-label","Remove this record");
+      del.textContent = "✕";
+      del.addEventListener("click", function(){
+        if(confirm("Remove this from your record? You've already released it — this just clears the note.")){
+          data.records = data.records.filter(function(r){ return r.id !== rec.id; });
+          save();
+          renderRecords();
+        }
+      });
+
+      right.appendChild(date);
+      right.appendChild(del);
+      top.appendChild(cat);
+      top.appendChild(right);
+      el.appendChild(top);
+
+      if(rec.kept){
+        if(rec.name){
+          var nm = document.createElement("div");
+          nm.className = "r-name";
+          nm.textContent = rec.name;
+          el.appendChild(nm);
+        }
+        var detail = rec.cost || rec.wish;
+        if(detail){
+          var tx = document.createElement("div");
+          tx.className = "r-text";
+          tx.textContent = "“" + detail + "”";
+          el.appendChild(tx);
+        }
+        if(rec.faith){
+          var fa = document.createElement("div");
+          fa.className = "r-private";
+          fa.textContent = "Handed to God. 🙏";
+          el.appendChild(fa);
+        }
+      }else{
+        var pr = document.createElement("div");
+        pr.className = "r-private";
+        pr.textContent = "Released and let go — the words were set free, not kept.";
+        el.appendChild(pr);
+      }
+
+      list.appendChild(el);
+    });
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Release Tool data — every record and your current draft? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { records:[], draft:newDraft() };
+      draft = data.draft;
+      nameEl.value = ""; costEl.value = ""; wishEl.value = "";
+      faithEl.checked = false;
+      momentEl.classList.remove("show");
+      renderChips();
+      renderKeepChoice();
+      renderRecords();
+      refreshReleaseBtn();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

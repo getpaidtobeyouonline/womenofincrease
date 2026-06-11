@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Love Daily Practice Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\2665"; font-family:'Fraunces',serif; position:absolute;
+    top:-6px; right:14px; font-size:64px; color:rgba(231,211,161,.22);
+  }
+  .welcome p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .welcome .sm{
+    margin-top:10px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:500;
+    font-size:14px; line-height:1.5; color:var(--gold-soft);
+  }
+
+  /* ---------- Affirmation ---------- */
+  .affirm{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .affirm::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .affirm p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:20px; line-height:1.45; position:relative; z-index:1;
+  }
+  .affirm-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Claim affirmation ---------- */
+  .claim-btn{
+    width:100%; margin-top:12px; min-height:48px;
+    background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.2); border-radius:12px;
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    transition:background .15s, border-color .15s;
+  }
+  .claim-btn:hover{ border-color:var(--gold); }
+  .claim-btn.claimed{
+    background:var(--gold-soft); color:var(--ink); border-color:var(--gold);
+  }
+
+  /* ---------- Action library ---------- */
+  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; margin:2px 0 14px; }
+  .chip{
+    background:var(--cream); border:1px solid var(--line); color:var(--ink);
+    border-radius:999px; padding:9px 14px; min-height:44px; cursor:pointer;
+    font-family:inherit; font-size:13.5px; display:inline-flex; align-items:center;
+    transition:border-color .15s, background .15s, color .15s;
+  }
+  .chip:hover{ border-color:var(--gold); }
+  .chip.active{ background:var(--emerald); color:#FCF8EF; border-color:var(--emerald); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Action done checkbox ---------- */
+  .done-row{
+    display:flex; align-items:center; gap:12px; margin-top:14px;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:12px; padding:12px 14px; cursor:pointer;
+  }
+  .done-row input[type="checkbox"]{
+    flex:none; width:24px; height:24px; accent-color:var(--emerald); cursor:pointer;
+  }
+  .done-row label{ font-weight:600; font-size:14.5px; color:var(--emerald); cursor:pointer; }
+
+  /* ---------- Complete button ---------- */
+  .complete-btn{
+    width:100%; margin-top:8px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+  .complete-btn.done{
+    background:var(--emerald-soft); color:var(--emerald); box-shadow:none;
+    border:1px solid rgba(20,84,62,.2);
+  }
+
+  .blessing{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .blessing.show{ display:block; animation:rise .4s ease; }
+  .blessing .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .blessing .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Streak ---------- */
+  .streak{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:18px; color:var(--muted); font-size:14px;
+  }
+  .streak b{ color:var(--emerald); font-size:15px; }
+  .flame{ font-size:16px; }
+
+  /* ---------- History ---------- */
+  .history-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 4px;
+  }
+  .history-list{ list-style:none; }
+  .history-list li{
+    border-bottom:1px solid var(--line); padding:4px 0;
+  }
+  .history-list li:last-child{ border-bottom:none; }
+  .h-head{
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+    padding:10px 2px; cursor:pointer;
+  }
+  .h-date{ color:var(--ink); font-weight:600; font-size:14px; }
+  .h-meta{ display:flex; align-items:center; gap:8px; }
+  .h-check{ color:var(--gold); font-size:14px; }
+  .h-toggle{ color:var(--muted); font-size:13px; transition:transform .15s; }
+  .h-head.open .h-toggle{ transform:rotate(180deg); }
+  .h-body{ display:none; padding:0 2px 12px; }
+  .h-body.show{ display:block; }
+  .h-body .lbl{
+    font-weight:600; font-size:12px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--muted); margin:8px 0 2px;
+  }
+  .h-body .val{ font-size:14px; color:var(--ink); }
+  .h-body .val.empty{ color:var(--muted); font-style:italic; }
+  .h-del{
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:9px; padding:8px 14px; min-height:40px; margin-top:12px;
+    font-family:inherit; font-size:12.5px; cursor:pointer;
+  }
+  .h-del:hover{ border-color:var(--gold); color:var(--ink); }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Self-Love Daily Practice</h1>
+    <p class="subtitle">One gentle action, one affirmation, one kind reflection — daily.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- First-run welcome -->
+  <section class="card" id="welcomeCard" style="display:none;">
+    <div class="welcome">
+      <p>You can't pour from an empty cup, sister. This is you filling yours.</p>
+      <p class="sm">No streak to chase yet — just one small, loving choice today. Begin below, and watch your practice grow.</p>
+    </div>
+  </section>
+
+  <!-- 1. Action -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>One Loving Action</h2></div>
+    <p class="hint">Pick something gentle for today — or tap one of these to begin.</p>
+    <div class="chip-row" id="actionChips"></div>
+    <label class="field-label" for="actionInput">My self-love action today</label>
+    <input type="text" id="actionInput" placeholder="e.g. Rest without guilt">
+    <div class="done-row" id="doneRow">
+      <input type="checkbox" id="actionDone">
+      <label for="actionDone">I gave this to myself today 💛</label>
+    </div>
+  </section>
+
+  <!-- 2. Affirmation -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Today's Affirmation</h2></div>
+    <p class="hint">Say it out loud. Let it land — you are worthy of these words.</p>
+    <div class="affirm">
+      <p id="affirmText">—</p>
+    </div>
+    <div class="affirm-actions">
+      <button class="link-btn" id="anotherAffirm" type="button">↻ Show me another</button>
+    </div>
+    <label class="field-label" for="ownAffirm">Or write your own <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <input type="text" id="ownAffirm" placeholder="I am…">
+    <button class="claim-btn" id="claimBtn" type="button"><span id="claimIcon">○</span> I claim this affirmation</button>
+  </section>
+
+  <!-- 3. Reflection -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>A Kind Reflection</h2></div>
+    <p class="hint">One kind thing you did for yourself — or one thing you appreciate about you today.</p>
+    <label class="field-label" for="reflection">Today, I'm proud of / grateful for myself because…</label>
+    <textarea id="reflection" placeholder="One kind thing I did for myself… one thing I love about me…"></textarea>
+
+    <button class="complete-btn" id="completeBtn" type="button">Complete today's practice 🌷</button>
+    <div class="blessing" id="blessing">
+      <div class="big">Look at you, loving yourself well. 💛</div>
+      <div class="sm">Your cup is fuller than it was this morning. You are doing the work, sister.</div>
+    </div>
+
+    <div class="streak">
+      <span class="flame">🔥</span>
+      <span><b id="streakCount">0</b> day streak · <b id="totalCount">0</b> days practiced</span>
+    </div>
+  </section>
+
+  <!-- History -->
+  <section class="card">
+    <div class="history-title">Your practice, day by day</div>
+    <ul class="history-list" id="historyList"></ul>
+    <p class="empty-note" id="historyEmpty">Complete today's practice and your loving days will gather here. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_self_love_practice";
+
+  // ---- Gentle self-love action ideas ----
+  var ACTIONS = [
+    "Rest without guilt",
+    "Speak to yourself like a friend",
+    "Say no to one thing",
+    "Drink water slowly",
+    "Take 5 deep breaths",
+    "Move your body kindly",
+    "Eat something nourishing",
+    "Step outside for fresh air",
+    "Forgive yourself for one thing",
+    "Let one task wait",
+    "Put your phone down for an hour",
+    "Wear something that feels good",
+    "Celebrate one small win",
+    "Ask for help and receive it",
+    "Go to bed earlier tonight"
+  ];
+
+  // ---- Self-love affirmation library ----
+  var AFFIRMATIONS = [
+    "I am worthy of the love I so freely give to others.",
+    "I am allowed to rest. My worth is not earned by doing.",
+    "I speak to myself with the gentleness I deserve.",
+    "I am becoming, and that is more than enough.",
+    "My body carries me through this life, and I thank it.",
+    "I release the need to be perfect to be loved.",
+    "I am safe to set boundaries that protect my peace.",
+    "I forgive myself, and I begin again with grace.",
+    "I am whole, even on the days I feel undone.",
+    "I trust myself to make loving choices for me.",
+    "I am proud of how far I've quietly come.",
+    "My needs matter, and I am allowed to honor them.",
+    "I am healing at exactly the right pace.",
+    "I deserve softness, patience, and kindness — from me first.",
+    "I am chosen, treasured, and never alone.",
+    "I let go of who I thought I should be and embrace who I am.",
+    "There is nothing about me that needs to be fixed to be loved.",
+    "I am a good and loving steward of my own heart.",
+    "I am allowed to take up space and shine.",
+    "I meet myself today with compassion, not criticism."
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    var diff = d - start;
+    return Math.floor(diff / 86400000);
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+  }
+
+  // ---- State ----
+  var data = load();
+  var TODAY = todayKey();
+  var entry = data.entries[TODAY] || {
+    action:"", actionDone:false,
+    affirm:null, ownAffirm:"", claimed:false,
+    reflection:"", completed:false
+  };
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.entries) return o; }
+    }catch(e){}
+    return { entries:{} };
+  }
+  function save(){
+    data.entries[TODAY] = entry;
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var actionChipsEl = $("actionChips");
+  var actionInputEl = $("actionInput"), actionDoneEl = $("actionDone");
+  var affirmTextEl = $("affirmText"), ownAffirmEl = $("ownAffirm");
+  var claimBtn = $("claimBtn"), claimIcon = $("claimIcon");
+  var reflectionEl = $("reflection");
+  var completeBtn = $("completeBtn"), blessingEl = $("blessing");
+
+  // ---- Affirmation: deterministic daily default, user can cycle ----
+  if(entry.affirm === null || entry.affirm === undefined){
+    entry.affirm = dayOfYear(new Date()) % AFFIRMATIONS.length;
+  }
+  function renderAffirm(){
+    affirmTextEl.textContent = AFFIRMATIONS[entry.affirm];
+  }
+  $("anotherAffirm").addEventListener("click", function(){
+    entry.affirm = (entry.affirm + 1) % AFFIRMATIONS.length;
+    renderAffirm(); save();
+  });
+
+  // ---- Action chips ----
+  function renderChips(){
+    actionChipsEl.innerHTML = "";
+    ACTIONS.forEach(function(a){
+      var chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "chip" + (entry.action === a ? " active" : "");
+      chip.textContent = a;
+      chip.addEventListener("click", function(){
+        entry.action = a;
+        actionInputEl.value = a;
+        save();
+        renderChips();
+      });
+      actionChipsEl.appendChild(chip);
+    });
+  }
+
+  // ---- Restore inputs ----
+  $("todayDate").textContent = prettyDate(TODAY);
+  actionInputEl.value = entry.action || "";
+  actionDoneEl.checked = !!entry.actionDone;
+  ownAffirmEl.value = entry.ownAffirm || "";
+  reflectionEl.value = entry.reflection || "";
+  renderAffirm();
+  renderChips();
+  renderClaim();
+  renderCompleted();
+  renderWelcome();
+
+  // ---- Auto-save on every change ----
+  actionInputEl.addEventListener("input", function(){
+    entry.action = actionInputEl.value; save(); renderChips();
+  });
+  actionDoneEl.addEventListener("change", function(){
+    entry.actionDone = actionDoneEl.checked; save();
+  });
+  ownAffirmEl.addEventListener("input", function(){
+    entry.ownAffirm = ownAffirmEl.value; save();
+  });
+  reflectionEl.addEventListener("input", function(){
+    entry.reflection = reflectionEl.value; save();
+  });
+
+  // ---- Claim affirmation ----
+  function renderClaim(){
+    if(entry.claimed){
+      claimBtn.classList.add("claimed");
+      claimIcon.textContent = "✓";
+      claimBtn.childNodes[1].nodeValue = " Claimed — it's yours";
+    }else{
+      claimBtn.classList.remove("claimed");
+      claimIcon.textContent = "○";
+      claimBtn.childNodes[1].nodeValue = " I claim this affirmation";
+    }
+  }
+  claimBtn.addEventListener("click", function(){
+    entry.claimed = !entry.claimed; save(); renderClaim();
+  });
+
+  // ---- Complete ----
+  function renderCompleted(){
+    if(entry.completed){
+      completeBtn.textContent = "Practiced today ✓";
+      completeBtn.classList.add("done");
+    }else{
+      completeBtn.textContent = "Complete today's practice 🌷";
+      completeBtn.classList.remove("done");
+    }
+    renderStreak();
+    renderHistory();
+  }
+  completeBtn.addEventListener("click", function(){
+    entry.completed = !entry.completed;
+    save();
+    if(entry.completed){ blessingEl.classList.add("show"); }
+    else{ blessingEl.classList.remove("show"); }
+    renderCompleted();
+    renderWelcome();
+  });
+
+  // ---- Welcome (first run only) ----
+  function renderWelcome(){
+    var any = Object.keys(data.entries).some(function(k){ return data.entries[k].completed; });
+    $("welcomeCard").style.display = any ? "none" : "block";
+  }
+
+  // ---- Streak + totals ----
+  function renderStreak(){
+    var keys = Object.keys(data.entries).filter(function(k){ return data.entries[k].completed; });
+    $("totalCount").textContent = keys.length;
+    var streak = 0;
+    var d = new Date();
+    while(true){
+      var m = String(d.getMonth()+1).padStart(2,"0");
+      var day = String(d.getDate()).padStart(2,"0");
+      var k = d.getFullYear()+"-"+m+"-"+day;
+      if(data.entries[k] && data.entries[k].completed){ streak++; d.setDate(d.getDate()-1); }
+      else break;
+    }
+    $("streakCount").textContent = streak;
+  }
+
+  // ---- History (all completed days, newest first, expandable) ----
+  function bestAffirm(e){
+    if(e.ownAffirm && e.ownAffirm.trim()) return e.ownAffirm.trim();
+    if(e.affirm !== null && e.affirm !== undefined) return AFFIRMATIONS[e.affirm];
+    return "";
+  }
+  function renderHistory(){
+    var list = $("historyList"), empty = $("historyEmpty");
+    var keys = Object.keys(data.entries)
+      .filter(function(k){ return data.entries[k].completed; })
+      .sort().reverse();
+    list.innerHTML = "";
+    if(keys.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+
+    keys.forEach(function(k){
+      var e = data.entries[k];
+      var li = document.createElement("li");
+
+      var head = document.createElement("div");
+      head.className = "h-head";
+
+      var left = document.createElement("span");
+      left.className = "h-date";
+      left.textContent = prettyDate(k);
+
+      var meta = document.createElement("span");
+      meta.className = "h-meta";
+      if(e.actionDone){
+        var chk = document.createElement("span");
+        chk.className = "h-check";
+        chk.textContent = "✓ action";
+        meta.appendChild(chk);
+      }
+      var tog = document.createElement("span");
+      tog.className = "h-toggle";
+      tog.textContent = "▾";
+      meta.appendChild(tog);
+
+      head.appendChild(left);
+      head.appendChild(meta);
+
+      var body = document.createElement("div");
+      body.className = "h-body";
+
+      body.appendChild(makeBlock("Action", e.action));
+      body.appendChild(makeBlock("Affirmation", bestAffirm(e)));
+      body.appendChild(makeBlock("Reflection", e.reflection));
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "h-del";
+      del.textContent = "Delete this day";
+      del.addEventListener("click", function(ev){
+        ev.stopPropagation();
+        if(confirm("Delete your practice from " + prettyDate(k) + "? This can't be undone, sister.")){
+          delete data.entries[k];
+          try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+          renderCompleted();
+          renderWelcome();
+        }
+      });
+      body.appendChild(del);
+
+      head.addEventListener("click", function(){
+        head.classList.toggle("open");
+        body.classList.toggle("show");
+      });
+
+      li.appendChild(head);
+      li.appendChild(body);
+      list.appendChild(li);
+    });
+  }
+  function makeBlock(label, value){
+    var wrap = document.createElement("div");
+    var l = document.createElement("div");
+    l.className = "lbl"; l.textContent = label;
+    var v = document.createElement("div");
+    if(value && String(value).trim()){
+      v.className = "val"; v.textContent = value;
+    }else{
+      v.className = "val empty"; v.textContent = "—";
+    }
+    wrap.appendChild(l); wrap.appendChild(v);
+    return wrap;
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Self-Love Practice data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { entries:{} };
+      entry = {
+        action:"", actionDone:false,
+        affirm: dayOfYear(new Date()) % AFFIRMATIONS.length, ownAffirm:"", claimed:false,
+        reflection:"", completed:false
+      };
+      actionInputEl.value=""; actionDoneEl.checked=false;
+      ownAffirmEl.value=""; reflectionEl.value="";
+      blessingEl.classList.remove("show");
+      renderAffirm(); renderChips(); renderClaim(); renderCompleted(); renderWelcome();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

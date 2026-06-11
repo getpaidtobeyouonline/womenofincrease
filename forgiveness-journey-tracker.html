@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forgiveness Journey Tracker · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Scripture ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .verse-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Buttons ---------- */
+  .complete-btn{
+    width:100%; margin-top:8px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Journey list ---------- */
+  .journeys{ display:flex; flex-direction:column; gap:0; }
+  .j-card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .j-card.freedom{ border-color:var(--gold-soft); box-shadow:0 8px 22px rgba(200,160,74,.16); }
+  .j-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+  .j-title{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:21px; line-height:1.18; word-break:break-word;
+  }
+  .freedom-tag{
+    display:inline-flex; align-items:center; gap:5px; margin-top:6px;
+    background:var(--gold-soft); color:#6b531c; border-radius:999px;
+    font-weight:700; font-size:11.5px; letter-spacing:.05em; text-transform:uppercase;
+    padding:5px 11px;
+  }
+  .del-btn{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:18px; min-width:44px; min-height:44px; border-radius:10px;
+    display:flex; align-items:center; justify-content:center; line-height:1;
+  }
+  .del-btn:hover{ color:#9a3b2e; background:var(--emerald-soft); }
+
+  .j-block{ margin-top:14px; }
+  .j-block .lbl{
+    font-weight:700; font-size:11.5px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:4px;
+  }
+  .j-block .body{ font-size:14.5px; color:var(--ink); white-space:pre-wrap; word-break:break-word; }
+  .j-block .body.muted{ color:var(--muted); font-style:italic; }
+  .freedom-note{
+    margin-top:14px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:11px; padding:11px 13px; color:var(--emerald);
+    font-family:'Fraunces',serif; font-style:italic; font-size:14.5px;
+  }
+
+  /* ---------- Progress ---------- */
+  .prog-wrap{ margin-top:16px; }
+  .prog-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:7px; }
+  .prog-top .l{ font-weight:600; font-size:13px; color:var(--ink); }
+  .prog-top .r{ font-size:12.5px; color:var(--muted); }
+  .prog-bar{ height:9px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .prog-fill{ height:100%; background:linear-gradient(90deg, var(--gold) 0%, var(--gold-soft) 100%); border-radius:999px; transition:width .35s ease; }
+
+  /* ---------- Stages ---------- */
+  .stages{ list-style:none; margin-top:14px; }
+  .stage{
+    border:1px solid var(--line); border-radius:12px; padding:12px 13px; margin-bottom:10px;
+    background:var(--cream); transition:border-color .15s, background .15s;
+  }
+  .stage.done{ background:var(--emerald-soft); border-color:rgba(20,84,62,.22); }
+  .stage-head{ display:flex; align-items:flex-start; gap:11px; }
+  .stage-check{
+    flex:none; appearance:none; -webkit-appearance:none; cursor:pointer;
+    width:24px; height:24px; border-radius:7px; border:2px solid var(--gold);
+    background:#fff; margin-top:1px; position:relative; transition:background .15s, border-color .15s;
+  }
+  .stage-check:checked{ background:var(--emerald); border-color:var(--emerald); }
+  .stage-check:checked::after{
+    content:"✓"; color:#FCF8EF; font-size:14px; font-weight:700;
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  }
+  .stage-check:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(200,160,74,.3); }
+  .stage-label{ cursor:pointer; flex:1; }
+  .stage-name{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:16px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .stage-name .sn{ flex:none; color:var(--gold); font-size:14px; }
+  .stage-desc{ color:var(--muted); font-size:13px; margin-top:2px; }
+  .stage-note{ margin-top:10px; }
+  .stage-note textarea{ min-height:58px; font-size:14.5px; }
+
+  /* ---------- Release counter ---------- */
+  .release-box{
+    margin-top:16px; border:1px solid var(--line); border-radius:13px; padding:15px;
+    display:flex; align-items:center; gap:14px;
+  }
+  .release-num{
+    flex:none; width:54px; height:54px; border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-family:'Fraunces',serif; font-weight:600; font-size:24px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .release-text{ flex:1; }
+  .release-text .rt-1{ font-weight:600; font-size:14px; color:var(--ink); }
+  .release-text .rt-2{ font-size:12.5px; color:var(--muted); margin-top:2px; }
+  .release-btn{
+    margin-top:12px; width:100%; min-height:48px;
+    background:var(--emerald); color:#FCF8EF; border:none; border-radius:12px;
+    font-family:inherit; font-weight:600; font-size:15px; cursor:pointer;
+    transition:transform .08s ease, box-shadow .15s ease;
+    box-shadow:0 4px 14px rgba(20,84,62,.2);
+  }
+  .release-btn:hover{ box-shadow:0 6px 18px rgba(20,84,62,.28); }
+  .release-btn:active{ transform:translateY(1px); }
+
+  .freedom-toggle{
+    margin-top:12px; width:100%; min-height:48px;
+    background:none; border:1px solid var(--gold); color:var(--emerald);
+    border-radius:12px; font-family:inherit; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  .freedom-toggle:hover{ background:var(--cream); }
+  .freedom-toggle.on{ background:var(--gold); color:var(--ink); border-color:var(--gold); }
+
+  /* ---------- Blessing ---------- */
+  .toast{
+    position:fixed; left:50%; bottom:22px; transform:translateX(-50%) translateY(20px);
+    background:var(--emerald); color:#FCF8EF; padding:13px 20px; border-radius:999px;
+    font-weight:600; font-size:14px; box-shadow:0 8px 24px rgba(20,84,62,.32);
+    opacity:0; pointer-events:none; transition:opacity .3s, transform .3s; z-index:50; text-align:center;
+    max-width:90%;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  .empty-note{
+    text-align:center; color:var(--muted); font-size:14.5px; padding:8px 4px 4px;
+  }
+  .empty-note .big{ font-family:'Fraunces',serif; color:var(--emerald); font-size:18px; display:block; margin-bottom:6px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Forgiveness Journey</h1>
+    <p class="subtitle">Forgiveness is a process, not a single moment — and it's for your freedom.</p>
+  </header>
+
+  <!-- Scripture / reflection -->
+  <section class="card">
+    <div class="step"><span class="num">✦</span><h2>A gentle word</h2></div>
+    <div class="verse">
+      <p id="verseText">—</p>
+      <div class="ref" id="verseRef"></div>
+    </div>
+    <div class="verse-actions">
+      <button class="link-btn" id="anotherVerse" type="button">↻ Show me another</button>
+    </div>
+  </section>
+
+  <!-- Start a journey -->
+  <section class="card">
+    <div class="step"><span class="num">+</span><h2>Begin a journey</h2></div>
+    <p class="hint">You can't forgive what you won't admit is real. Name it honestly here — gently, and at your pace.</p>
+
+    <label class="field-label" for="who">Who or what are you forgiving?</label>
+    <input type="text" id="who" placeholder="A person, a situation… or yourself" maxlength="120">
+
+    <label class="field-label" for="hurt">Name the hurt &amp; what it cost you</label>
+    <textarea id="hurt" placeholder="What happened, and how it affected you. Honesty is not bitterness — it's the start of healing."></textarea>
+
+    <label class="field-label" for="freedom-why">Why this is for your freedom <span class="opt">(optional)</span></label>
+    <textarea id="freedom-why" placeholder="Forgiveness isn't excusing what happened or saying it didn't hurt. It's you choosing to set down what's weighing you. What do you want to be free of?"></textarea>
+
+    <button class="complete-btn" id="addBtn" type="button">Start this journey 🕊️</button>
+  </section>
+
+  <!-- Active journeys -->
+  <div class="journeys" id="journeys"></div>
+
+  <section class="card" id="emptyCard">
+    <p class="empty-note">
+      <span class="big">Nothing here yet — and that's okay. 💛</span>
+      Forgiveness is layered. It's not pretending the hurt didn't happen, and it's not a finish line you cross once.
+      When you're ready, name your first journey above. There's no rush, sister.
+    </p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_forgiveness_journey";
+
+  // ---- The forgiveness path (stages) ----
+  var STAGES = [
+    ["Name the hurt honestly", "You can't release what you won't admit is real."],
+    ["Feel it &amp; grieve it", "Let yourself feel what you feel. Numbing isn't forgiving."],
+    ["Separate forgiveness from trust", "Forgiveness frees you; boundaries keep you safe. They work together."],
+    ["Choose to release", "Not because it didn't matter — because you refuse to carry it any longer."],
+    ["Release again as needed", "If it resurfaces, releasing again isn't failure. It's faithfulness to your peace."],
+    ["Reclaim my peace", "Take back what the hurt tried to keep. This part of you belongs to you."]
+  ];
+
+  // ---- Gentle scripture / reflections on forgiveness ----
+  var VERSES = [
+    ["Be kind and compassionate to one another, forgiving each other, just as in Christ God forgave you.", "Ephesians 4:32"],
+    ["Bear with each other and forgive one another. Forgive as the Lord forgave you.", "Colossians 3:13"],
+    ["The Lord is close to the brokenhearted and saves those who are crushed in spirit.", "Psalm 34:18"],
+    ["He heals the brokenhearted and binds up their wounds.", "Psalm 147:3"],
+    ["Cast all your anxiety on Him, because He cares for you.", "1 Peter 5:7"],
+    ["Above all else, guard your heart, for everything you do flows from it.", "Proverbs 4:23"],
+    ["Do not let the sun go down while you are still angry.", "Ephesians 4:26"],
+    ["You intended to harm me, but God intended it for good.", "Genesis 50:20"],
+    ["Forgiveness sets a prisoner free — and then you discover the prisoner was you.", "A Word for You"],
+    ["Releasing it doesn't mean it was okay. It means you're done letting it own your peace.", "A Word for You"],
+    ["Boundaries are not the opposite of forgiveness. They're how you forgive and stay free.", "A Word for You"],
+    ["You can forgive and still walk away. Both can be holy.", "A Word for You"]
+  ];
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && Array.isArray(o.journeys)) return o;
+      }
+    }catch(e){}
+    return { journeys:[], verse:null };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Toast ----
+  var toastEl = $("toast"), toastTimer = null;
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove("show"); }, 2600);
+  }
+
+  // ---- Verse ----
+  if(data.verse === null || data.verse === undefined){
+    data.verse = Math.floor(Math.random() * VERSES.length);
+  }
+  function renderVerse(){
+    var v = VERSES[data.verse];
+    $("verseText").textContent = v[0].replace(/&amp;/g,"&");
+    $("verseRef").textContent = v[1];
+  }
+  $("anotherVerse").addEventListener("click", function(){
+    data.verse = (data.verse + 1) % VERSES.length;
+    renderVerse(); save();
+  });
+  renderVerse();
+
+  // ---- Add a journey ----
+  $("addBtn").addEventListener("click", function(){
+    var who = $("who").value.trim();
+    var hurt = $("hurt").value.trim();
+    var why = $("freedom-why").value.trim();
+    if(!who){
+      toast("Name who or what you're forgiving to begin 💛");
+      $("who").focus();
+      return;
+    }
+    var j = {
+      id: "j" + Date.now() + Math.floor(Math.random()*1000),
+      who: who,
+      hurt: hurt,
+      why: why,
+      stages: STAGES.map(function(){ return { done:false, note:"" }; }),
+      releases: 0,
+      freedom: false,
+      created: Date.now()
+    };
+    data.journeys.unshift(j);
+    save();
+    $("who").value = ""; $("hurt").value = ""; $("freedom-why").value = "";
+    render();
+    toast("Journey started. Be gentle with yourself. 🕊️");
+  });
+
+  // ---- Helpers ----
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+  function findJourney(id){
+    for(var i=0;i<data.journeys.length;i++){ if(data.journeys[i].id===id) return data.journeys[i]; }
+    return null;
+  }
+  function doneCount(j){
+    var n=0; for(var i=0;i<j.stages.length;i++){ if(j.stages[i].done) n++; } return n;
+  }
+
+  // ---- Render ----
+  var listEl = $("journeys"), emptyCard = $("emptyCard");
+
+  function render(){
+    listEl.innerHTML = "";
+    if(data.journeys.length === 0){
+      emptyCard.style.display = "block";
+      return;
+    }
+    emptyCard.style.display = "none";
+
+    data.journeys.forEach(function(j){
+      var done = doneCount(j);
+      var pct = Math.round((done / STAGES.length) * 100);
+
+      var card = document.createElement("section");
+      card.className = "j-card" + (j.freedom ? " freedom" : "");
+
+      // Head
+      var head = document.createElement("div");
+      head.className = "j-head";
+      var titleWrap = document.createElement("div");
+      var title = document.createElement("div");
+      title.className = "j-title";
+      title.textContent = j.who;
+      titleWrap.appendChild(title);
+      if(j.freedom){
+        var tag = document.createElement("span");
+        tag.className = "freedom-tag";
+        tag.textContent = "✨ I've found freedom here";
+        titleWrap.appendChild(tag);
+      }
+      var del = document.createElement("button");
+      del.className = "del-btn";
+      del.type = "button";
+      del.setAttribute("aria-label", "Delete this journey");
+      del.textContent = "🗑";
+      del.addEventListener("click", function(){
+        if(confirm('Delete this forgiveness journey for "' + j.who + '"? This can\'t be undone, sister.')){
+          data.journeys = data.journeys.filter(function(x){ return x.id !== j.id; });
+          save(); render();
+        }
+      });
+      head.appendChild(titleWrap);
+      head.appendChild(del);
+      card.appendChild(head);
+
+      // Hurt
+      if(j.hurt){
+        card.appendChild(block("The hurt &amp; what it cost", j.hurt));
+      }
+      if(j.why){
+        var fn = document.createElement("div");
+        fn.className = "freedom-note";
+        fn.textContent = "For my freedom: " + j.why;
+        card.appendChild(fn);
+      }
+
+      // Progress
+      var pw = document.createElement("div");
+      pw.className = "prog-wrap";
+      var pt = document.createElement("div");
+      pt.className = "prog-top";
+      var pl = document.createElement("span"); pl.className = "l"; pl.textContent = "Your path";
+      var pr = document.createElement("span"); pr.className = "r";
+      pr.textContent = done + " of " + STAGES.length + " · " + pct + "%";
+      pt.appendChild(pl); pt.appendChild(pr);
+      var bar = document.createElement("div"); bar.className = "prog-bar";
+      var fill = document.createElement("div"); fill.className = "prog-fill"; fill.style.width = pct + "%";
+      bar.appendChild(fill);
+      pw.appendChild(pt); pw.appendChild(bar);
+      card.appendChild(pw);
+
+      // Stages
+      var ul = document.createElement("ul");
+      ul.className = "stages";
+      j.stages.forEach(function(st, idx){
+        ul.appendChild(stageRow(j, st, idx));
+      });
+      card.appendChild(ul);
+
+      // Release counter
+      var rb = document.createElement("div");
+      rb.className = "release-box";
+      var rn = document.createElement("div");
+      rn.className = "release-num";
+      rn.textContent = j.releases;
+      var rt = document.createElement("div");
+      rt.className = "release-text";
+      var rt1 = document.createElement("div"); rt1.className = "rt-1";
+      rt1.textContent = j.releases === 1 ? "You've chosen to release this once" : "You've chosen to release this " + j.releases + " times";
+      var rt2 = document.createElement("div"); rt2.className = "rt-2";
+      rt2.textContent = j.releases === 0
+        ? "When you're ready, choosing to release counts — even the first time."
+        : "Each release is honest work, never failure. Repeat it as often as you need.";
+      rt.appendChild(rt1); rt.appendChild(rt2);
+      rb.appendChild(rn); rb.appendChild(rt);
+      card.appendChild(rb);
+
+      var relBtn = document.createElement("button");
+      relBtn.className = "release-btn";
+      relBtn.type = "button";
+      relBtn.textContent = j.releases === 0 ? "I choose to release this 🕊️" : "I release this again 🕊️";
+      relBtn.addEventListener("click", function(){
+        var cur = findJourney(j.id);
+        cur.releases++;
+        save(); render();
+        toast(cur.releases === 1 ? "Released. You set something down today. 💛" : "Released again — that's faithfulness, not failure. 💛");
+      });
+      card.appendChild(relBtn);
+
+      // Freedom toggle
+      var ft = document.createElement("button");
+      ft.className = "freedom-toggle" + (j.freedom ? " on" : "");
+      ft.type = "button";
+      ft.setAttribute("aria-pressed", j.freedom ? "true" : "false");
+      ft.textContent = j.freedom ? "✨ Freedom found — tap if it resurfaces" : "Mark: I've found freedom here";
+      ft.addEventListener("click", function(){
+        var cur = findJourney(j.id);
+        cur.freedom = !cur.freedom;
+        save(); render();
+        if(cur.freedom){ toast("Look how far you've come. Celebrate this, sister. ✨"); }
+        else { toast("It's okay — healing isn't always linear. Keep going. 💛"); }
+      });
+      card.appendChild(ft);
+
+      listEl.appendChild(card);
+    });
+  }
+
+  function block(label, text){
+    var b = document.createElement("div");
+    b.className = "j-block";
+    var l = document.createElement("div"); l.className = "lbl"; l.textContent = label.replace(/&amp;/g,"&");
+    var body = document.createElement("div"); body.className = "body"; body.textContent = text;
+    b.appendChild(l); b.appendChild(body);
+    return b;
+  }
+
+  function stageRow(j, st, idx){
+    var li = document.createElement("li");
+    li.className = "stage" + (st.done ? " done" : "");
+
+    var sh = document.createElement("div");
+    sh.className = "stage-head";
+
+    var cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.className = "stage-check";
+    cb.checked = st.done;
+    var cbId = j.id + "_s" + idx;
+    cb.id = cbId;
+
+    var labelWrap = document.createElement("label");
+    labelWrap.className = "stage-label";
+    labelWrap.setAttribute("for", cbId);
+    var name = document.createElement("div");
+    name.className = "stage-name";
+    var sn = document.createElement("span"); sn.className = "sn"; sn.textContent = (idx+1) + ".";
+    var nt = document.createElement("span"); nt.textContent = STAGES[idx][0].replace(/&amp;/g,"&");
+    name.appendChild(sn); name.appendChild(nt);
+    var desc = document.createElement("div");
+    desc.className = "stage-desc";
+    desc.textContent = STAGES[idx][1];
+    labelWrap.appendChild(name); labelWrap.appendChild(desc);
+
+    cb.addEventListener("change", function(){
+      var cur = findJourney(j.id);
+      cur.stages[idx].done = cb.checked;
+      save();
+      li.classList.toggle("done", cb.checked);
+      // update progress bar + count without full rerender for smoothness
+      var card = li.closest(".j-card");
+      var done = doneCount(cur);
+      var pct = Math.round((done / STAGES.length) * 100);
+      var fill = card.querySelector(".prog-fill");
+      var pr = card.querySelector(".prog-top .r");
+      if(fill) fill.style.width = pct + "%";
+      if(pr) pr.textContent = done + " of " + STAGES.length + " · " + pct + "%";
+    });
+
+    sh.appendChild(cb);
+    sh.appendChild(labelWrap);
+    li.appendChild(sh);
+
+    // Stage note
+    var noteWrap = document.createElement("div");
+    noteWrap.className = "stage-note";
+    var ta = document.createElement("textarea");
+    ta.placeholder = "A few words for this stage… (optional)";
+    ta.value = st.note || "";
+    ta.setAttribute("aria-label", "Note for stage " + (idx+1));
+    ta.addEventListener("input", function(){
+      var cur = findJourney(j.id);
+      cur.stages[idx].note = ta.value;
+      save();
+    });
+    noteWrap.appendChild(ta);
+    li.appendChild(noteWrap);
+
+    return li;
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your forgiveness journeys? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { journeys:[], verse: Math.floor(Math.random()*VERSES.length) };
+      renderVerse();
+      render();
+      toast("Cleared. A fresh, gentle start whenever you're ready. 💛");
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

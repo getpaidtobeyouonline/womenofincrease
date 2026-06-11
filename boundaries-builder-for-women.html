@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boundaries Builder for Women · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Stats line ---------- */
+  .stats{
+    display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap;
+    margin-top:16px; color:var(--muted); font-size:14px; text-align:center;
+  }
+  .stats b{ color:var(--emerald); font-size:15px; }
+  .stats .pip{ color:var(--gold); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  select{ min-height:48px; -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2314543E' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:40px;
+  }
+  textarea{ min-height:74px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Tone toggle ---------- */
+  .tone-row{ display:flex; gap:8px; margin:4px 0 4px; }
+  .tone-btn{
+    flex:1; min-height:44px; cursor:pointer; font-family:inherit; font-size:13.5px; font-weight:600;
+    background:var(--cream); color:var(--muted); border:1px solid var(--line); border-radius:11px;
+    transition:all .15s ease; padding:8px 4px;
+  }
+  .tone-btn.active{
+    background:var(--emerald-soft); color:var(--emerald); border-color:rgba(20,84,62,.3);
+  }
+
+  /* ---------- Script box ---------- */
+  .script-box{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+    margin-top:6px;
+  }
+  .script-box::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .script-box p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.5; position:relative; z-index:1; white-space:pre-wrap;
+  }
+  .script-edit{
+    width:100%; margin-top:6px; font-family:'Fraunces',serif; font-style:italic; font-size:16px;
+    color:var(--ink); background:var(--cream); border:1px dashed var(--gold-soft); border-radius:11px;
+    padding:13px 14px; line-height:1.5; min-height:96px; resize:vertical; display:none;
+  }
+  .script-actions{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+  .ghost-btn{
+    flex:1; min-width:120px; min-height:44px; cursor:pointer; font-family:inherit;
+    font-size:13.5px; font-weight:600; background:none; color:var(--emerald);
+    border:1px solid var(--line); border-radius:11px; padding:10px 12px;
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    transition:all .15s ease;
+  }
+  .ghost-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .copied-note{
+    display:none; text-align:center; margin-top:10px; color:var(--emerald);
+    font-weight:600; font-size:13.5px;
+  }
+  .copied-note.show{ display:block; animation:rise .3s ease; }
+
+  /* ---------- Primary button ---------- */
+  .save-btn{
+    width:100%; margin-top:14px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .save-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .save-btn:active{ transform:translateY(1px); }
+  .save-btn:disabled{ opacity:.5; cursor:not-allowed; box-shadow:none; }
+
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Saved list ---------- */
+  .list-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 4px;
+  }
+  .b-item{
+    border:1px solid var(--line); border-radius:14px; padding:16px; margin-top:12px;
+    background:var(--cream);
+  }
+  .b-item.is-set{ border-color:rgba(20,84,62,.3); background:var(--emerald-soft); }
+  .b-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+  .b-area{
+    display:inline-block; font-weight:600; font-size:11.5px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:2px;
+  }
+  .b-need{ font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600; line-height:1.25; }
+  .b-script{
+    font-family:'Fraunces',serif; font-style:italic; color:var(--ink); font-size:15px;
+    line-height:1.5; margin-top:10px; white-space:pre-wrap;
+  }
+  .b-set-badge{
+    display:inline-flex; align-items:center; gap:5px; margin-top:10px;
+    font-size:12.5px; font-weight:700; color:var(--emerald); letter-spacing:.02em;
+  }
+  .b-actions{ display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; }
+  .mini-btn{
+    flex:1; min-width:110px; min-height:44px; cursor:pointer; font-family:inherit;
+    font-size:13px; font-weight:600; border-radius:10px; padding:8px 10px;
+    border:1px solid var(--line); background:#fff; color:var(--emerald);
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    transition:all .15s ease;
+  }
+  .mini-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .mini-btn.set-toggle{ background:var(--gold); color:var(--ink); border-color:var(--gold); }
+  .mini-btn.set-toggle.on{ background:var(--emerald); color:#FCF8EF; border-color:var(--emerald); }
+  .mini-btn.del:hover{ border-color:#b14b3a; color:#b14b3a; }
+
+  .empty-note{
+    color:var(--muted); font-size:14px; font-style:italic; text-align:center;
+    padding:10px 6px;
+  }
+  .empty-note .lead{ font-family:'Fraunces',serif; font-style:normal; color:var(--emerald);
+    font-size:16px; display:block; margin-bottom:4px; }
+
+  /* ---------- Footer / reset ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Boundaries Builder</h1>
+    <p class="subtitle">Name where you need a boundary — and build the words to set it, with grace.</p>
+  </header>
+
+  <!-- 1. Identify the need -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Where is a boundary needed?</h2></div>
+    <p class="hint">A boundary isn't a wall, sister. It's you honouring your peace. Start by naming it.</p>
+
+    <label class="field-label" for="area">Who or what area is this with?</label>
+    <select id="area">
+      <option value="">Choose an area…</option>
+      <option value="Family">Family</option>
+      <option value="Partner/Ex">Partner / Ex</option>
+      <option value="Friends">Friends</option>
+      <option value="Work">Work</option>
+      <option value="Kids">Kids</option>
+      <option value="Yourself / time">Yourself / your time</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label class="field-label" for="person">Name or label <span class="opt">(optional — e.g. "my mum", "my manager")</span></label>
+    <input type="text" id="person" placeholder="Who is this with?">
+
+    <label class="field-label" for="drain">What's happening that drains or hurts you?</label>
+    <textarea id="drain" placeholder="When I'm called late at night about every little problem…"></textarea>
+
+    <label class="field-label" for="need">What do you need instead? <span class="opt">(the limit)</span></label>
+    <textarea id="need" placeholder="I need calls kept to daytime, unless it's a real emergency."></textarea>
+  </section>
+
+  <!-- 2. Build the script -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Your boundary script</h2></div>
+    <p class="hint">Kind. Clear. Firm. Choose a tone and we'll shape the words you can actually say.</p>
+
+    <div class="tone-row" id="toneRow">
+      <button type="button" class="tone-btn active" data-tone="gentle">Gentle</button>
+      <button type="button" class="tone-btn" data-tone="clear">Clear</button>
+      <button type="button" class="tone-btn" data-tone="firm">Firm</button>
+    </div>
+
+    <div class="script-box">
+      <p id="scriptText">Fill in step 1 and your script will appear here. 💛</p>
+    </div>
+    <textarea class="script-edit" id="scriptEdit" placeholder="Make it sound like you…"></textarea>
+
+    <div class="script-actions">
+      <button type="button" class="ghost-btn" id="editBtn">✎ Edit wording</button>
+      <button type="button" class="ghost-btn" id="copyBtn">⧉ Copy</button>
+    </div>
+    <div class="copied-note" id="copiedNote">Copied — now go speak it, sister. 💛</div>
+
+    <button type="button" class="save-btn" id="saveBtn" disabled>Save this boundary</button>
+  </section>
+
+  <!-- 3. Your boundaries -->
+  <section class="card">
+    <div class="list-title">Your boundaries</div>
+    <div class="stats" id="stats">
+      <span class="pip">◆</span>
+      <span><b id="identCount">0</b> identified · <b id="setCount">0</b> set ✓</span>
+    </div>
+    <div id="boundaryList"></div>
+    <p class="empty-note" id="listEmpty">
+      <span class="lead">Your boundaries will live here.</span>
+      Every limit you set is an act of self-respect — not selfishness. Build your first one above. 💛
+    </p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_boundaries_builder";
+
+  // ---- State ----
+  var data = load();          // { boundaries:[], draft:{...} }
+  var tone = (data.draft && data.draft.tone) || "gentle";
+  var editing = false;
+
+  function blankDraft(){
+    return { area:"", person:"", drain:"", need:"", tone:"gentle", scriptOverride:"" };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && Array.isArray(o.boundaries)){
+          if(!o.draft) o.draft = blankDraft();
+          return o;
+        }
+      }
+    }catch(e){}
+    return { boundaries:[], draft: blankDraft() };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var areaEl=$("area"), personEl=$("person"), drainEl=$("drain"), needEl=$("need");
+  var toneRow=$("toneRow"), scriptTextEl=$("scriptText"), scriptEditEl=$("scriptEdit");
+  var editBtn=$("editBtn"), copyBtn=$("copyBtn"), copiedNote=$("copiedNote"), saveBtn=$("saveBtn");
+
+  // ---- Restore draft ----
+  var d = data.draft;
+  areaEl.value = d.area || "";
+  personEl.value = d.person || "";
+  drainEl.value = d.drain || "";
+  needEl.value = d.need || "";
+  setTone(tone, true);
+
+  // ---- Script generation from inputs ----
+  function whoLabel(){
+    var p = (d.person || "").trim();
+    if(p) return p;
+    var map = {
+      "Family":"you", "Partner/Ex":"you", "Friends":"you", "Work":"you",
+      "Kids":"you", "Yourself / time":"myself", "Other":"you"
+    };
+    return map[d.area] || "you";
+  }
+  function lower(s){ s=(s||"").trim(); return s ? s.charAt(0).toLowerCase()+s.slice(1) : ""; }
+  function clean(s){ s=(s||"").trim(); return s.replace(/[.\s]+$/,""); }
+
+  function buildScript(t){
+    var drain = clean(d.drain);
+    var need = clean(d.need);
+    var who = whoLabel();
+    var self = (d.area === "Yourself / time");
+
+    if(self){
+      // Boundary with yourself / your time
+      if(t === "gentle"){
+        return "I'm learning to protect my time. "
+          + (drain ? "When " + lower(drain) + ", I lose myself a little. " : "")
+          + (need ? "So from now on, I'm gently choosing: " + lower(need) + ". " : "")
+          + "I deserve this peace.";
+      }
+      if(t === "clear"){
+        return (drain ? "I've noticed that " + lower(drain) + ". " : "")
+          + (need ? "Going forward, my limit is clear: " + lower(need) + ". " : "")
+          + "This is me keeping a promise to myself.";
+      }
+      // firm
+      return (need ? "My time is not up for negotiation: " + lower(need) + ". " : "This is my limit. ")
+        + (drain ? "No more " + lower(drain) + ". " : "")
+        + "I honour this without apology.";
+    }
+
+    // Boundary with another person — calm "I" statement
+    var name = (who === "you") ? "" : who;
+    var opener;
+    if(t === "gentle"){
+      opener = name ? (name + ", I want to share something with care. ") : "I want to share something with care. ";
+      return opener
+        + (drain ? "When " + lower(drain) + ", it really drains me. " : "")
+        + (need ? "What I need is: " + lower(need) + ". " : "")
+        + "I'm asking because this relationship matters to me. 💛";
+    }
+    if(t === "clear"){
+      opener = name ? (name + ", I need to be clear about something. ") : "I need to be clear about something. ";
+      return opener
+        + (drain ? "When " + lower(drain) + ", it doesn't work for me. " : "")
+        + (need ? "Going forward, I need " + lower(need) + ". " : "")
+        + "Thank you for hearing me.";
+    }
+    // firm
+    opener = name ? (name + ", I need to set a boundary. ") : "I need to set a boundary. ";
+    return opener
+      + (drain ? "I will no longer accept " + lower(drain) + ". " : "")
+      + (need ? "From now on, " + lower(need) + ". " : "")
+      + "If that's not respected, I'll step back to protect my peace.";
+  }
+
+  function hasCore(){
+    return (d.drain && d.drain.trim()) || (d.need && d.need.trim());
+  }
+
+  function renderScript(){
+    var text;
+    if(d.scriptOverride && d.scriptOverride.trim()){
+      text = d.scriptOverride;
+    }else if(hasCore()){
+      text = buildScript(tone);
+    }else{
+      text = "Fill in step 1 and your script will appear here. 💛";
+    }
+    scriptTextEl.textContent = text;
+    if(editing){ scriptEditEl.value = text; }
+    saveBtn.disabled = !hasCore();
+  }
+
+  function currentScriptText(){
+    if(d.scriptOverride && d.scriptOverride.trim()) return d.scriptOverride.trim();
+    if(hasCore()) return buildScript(tone);
+    return "";
+  }
+
+  // ---- Tone ----
+  function setTone(t, silent){
+    tone = t; d.tone = t;
+    var btns = toneRow.querySelectorAll(".tone-btn");
+    for(var i=0;i<btns.length;i++){
+      btns[i].classList.toggle("active", btns[i].getAttribute("data-tone")===t);
+    }
+    if(!silent){
+      // changing tone regenerates from inputs (drops manual override)
+      d.scriptOverride = "";
+      if(editing){ closeEdit(); }
+      renderScript(); save();
+    }
+  }
+  toneRow.addEventListener("click", function(e){
+    var b = e.target.closest(".tone-btn");
+    if(b) setTone(b.getAttribute("data-tone"));
+  });
+
+  // ---- Input wiring (auto-save every change) ----
+  function wire(el, key){
+    el.addEventListener("input", function(){
+      d[key] = el.value;
+      // typing in the inputs invalidates a manual override so the script stays in sync
+      d.scriptOverride = "";
+      if(editing){ closeEdit(); }
+      renderScript(); save();
+    });
+  }
+  areaEl.addEventListener("change", function(){
+    d.area = areaEl.value; d.scriptOverride = "";
+    if(editing){ closeEdit(); }
+    renderScript(); save();
+  });
+  wire(personEl, "person");
+  wire(drainEl, "drain");
+  wire(needEl, "need");
+
+  // ---- Edit wording ----
+  function openEdit(){
+    editing = true;
+    scriptEditEl.value = currentScriptText();
+    scriptEditEl.style.display = "block";
+    editBtn.textContent = "✓ Done editing";
+    scriptEditEl.focus();
+  }
+  function closeEdit(){
+    editing = false;
+    scriptEditEl.style.display = "none";
+    editBtn.textContent = "✎ Edit wording";
+  }
+  editBtn.addEventListener("click", function(){
+    if(!hasCore() && !editing) return;
+    if(editing){ closeEdit(); } else { openEdit(); }
+  });
+  scriptEditEl.addEventListener("input", function(){
+    d.scriptOverride = scriptEditEl.value;
+    scriptTextEl.textContent = scriptEditEl.value || "…";
+    save();
+  });
+
+  // ---- Copy ----
+  function flashCopied(){
+    copiedNote.classList.add("show");
+    setTimeout(function(){ copiedNote.classList.remove("show"); }, 1900);
+  }
+  copyBtn.addEventListener("click", function(){
+    var text = currentScriptText();
+    if(!text) return;
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(flashCopied, fallbackCopy);
+    }else{
+      fallbackCopy();
+    }
+    function fallbackCopy(){
+      try{
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.setAttribute("readonly","");
+        ta.style.position="absolute"; ta.style.left="-9999px";
+        document.body.appendChild(ta);
+        ta.select(); document.execCommand("copy");
+        document.body.removeChild(ta);
+        flashCopied();
+      }catch(e){}
+    }
+  });
+
+  // ---- Save a boundary to the list ----
+  saveBtn.addEventListener("click", function(){
+    var script = currentScriptText();
+    if(!hasCore()) return;
+    data.boundaries.unshift({
+      id: Date.now() + "" + Math.floor(Math.random()*1000),
+      area: d.area || "Other",
+      person: (d.person||"").trim(),
+      drain: (d.drain||"").trim(),
+      need: (d.need||"").trim(),
+      script: script,
+      set: false
+    });
+    // reset draft for the next one
+    data.draft = blankDraft();
+    d = data.draft; tone = "gentle";
+    areaEl.value=""; personEl.value=""; drainEl.value=""; needEl.value="";
+    closeEdit(); setTone("gentle", true);
+    renderScript(); renderList(); save();
+    // gentle scroll to the freshly saved boundary
+    var list = $("boundaryList");
+    if(list.firstChild && list.firstChild.scrollIntoView){
+      list.firstChild.scrollIntoView({behavior:"smooth", block:"center"});
+    }
+  });
+
+  // ---- Render the saved list + stats ----
+  function renderList(){
+    var list = $("boundaryList"), empty = $("listEmpty");
+    list.innerHTML = "";
+    var total = data.boundaries.length;
+    var setN = data.boundaries.filter(function(b){ return b.set; }).length;
+    $("identCount").textContent = total;
+    $("setCount").textContent = setN;
+
+    if(total === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+
+    data.boundaries.forEach(function(b){
+      var item = document.createElement("div");
+      item.className = "b-item" + (b.set ? " is-set" : "");
+
+      var head = document.createElement("div");
+      head.className = "b-head";
+      var headLeft = document.createElement("div");
+
+      var area = document.createElement("span");
+      area.className = "b-area";
+      area.textContent = b.area + (b.person ? " · " + b.person : "");
+      headLeft.appendChild(area);
+
+      var need = document.createElement("div");
+      need.className = "b-need";
+      need.textContent = b.need ? b.need : (b.drain || "My boundary");
+      headLeft.appendChild(need);
+      head.appendChild(headLeft);
+      item.appendChild(head);
+
+      if(b.script){
+        var scr = document.createElement("div");
+        scr.className = "b-script";
+        scr.textContent = "“" + b.script + "”";
+        item.appendChild(scr);
+      }
+
+      if(b.set){
+        var badge = document.createElement("div");
+        badge.className = "b-set-badge";
+        badge.textContent = "✓ You set this. Proud of you.";
+        item.appendChild(badge);
+      }
+
+      var actions = document.createElement("div");
+      actions.className = "b-actions";
+
+      var setBtn = document.createElement("button");
+      setBtn.type = "button";
+      setBtn.className = "mini-btn set-toggle" + (b.set ? " on" : "");
+      setBtn.textContent = b.set ? "Set ✓" : "Mark as set";
+      setBtn.addEventListener("click", function(){
+        b.set = !b.set; save(); renderList();
+      });
+
+      var copyB = document.createElement("button");
+      copyB.type = "button";
+      copyB.className = "mini-btn";
+      copyB.textContent = "⧉ Copy";
+      copyB.addEventListener("click", function(){
+        copyItem(b.script, copyB);
+      });
+
+      var delB = document.createElement("button");
+      delB.type = "button";
+      delB.className = "mini-btn del";
+      delB.textContent = "Delete";
+      delB.addEventListener("click", function(){
+        if(confirm("Delete this boundary? This can't be undone, sister.")){
+          data.boundaries = data.boundaries.filter(function(x){ return x.id !== b.id; });
+          save(); renderList();
+        }
+      });
+
+      actions.appendChild(setBtn);
+      actions.appendChild(copyB);
+      actions.appendChild(delB);
+      item.appendChild(actions);
+
+      list.appendChild(item);
+    });
+  }
+
+  function copyItem(text, btn){
+    if(!text) return;
+    var prev = btn.textContent;
+    function done(){ btn.textContent = "Copied!"; setTimeout(function(){ btn.textContent = prev; }, 1500); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, fb);
+    }else{ fb(); }
+    function fb(){
+      try{
+        var ta=document.createElement("textarea"); ta.value=text; ta.setAttribute("readonly","");
+        ta.style.position="absolute"; ta.style.left="-9999px";
+        document.body.appendChild(ta); ta.select(); document.execCommand("copy");
+        document.body.removeChild(ta); done();
+      }catch(e){}
+    }
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your boundaries and drafts? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { boundaries:[], draft: blankDraft() };
+      d = data.draft; tone = "gentle";
+      areaEl.value=""; personEl.value=""; drainEl.value=""; needEl.value="";
+      closeEdit(); setTone("gentle", true);
+      renderScript(); renderList();
+    }
+  });
+
+  // ---- First paint ----
+  renderScript();
+  renderList();
+
+})();
+</script>
+</body>
+</html>

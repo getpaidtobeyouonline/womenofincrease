@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Values Alignment Checker · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .welcome p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .welcome .sm{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:500;
+    font-size:13.5px; color:var(--gold-soft); line-height:1.5;
+  }
+
+  /* ---------- Value chips ---------- */
+  .chips{ display:flex; flex-wrap:wrap; gap:9px; margin-bottom:6px; }
+  .chip{
+    font-family:inherit; font-size:14px; font-weight:600; cursor:pointer;
+    min-height:44px; padding:9px 15px; border-radius:999px;
+    background:var(--cream); color:var(--ink); border:1px solid var(--line);
+    transition:all .12s ease; display:inline-flex; align-items:center; gap:6px;
+  }
+  .chip:hover{ border-color:var(--gold); }
+  .chip.on{
+    background:var(--emerald); color:#FCF8EF; border-color:var(--emerald);
+  }
+  .chip.on::after{ content:"✓"; font-size:13px; color:var(--gold-soft); }
+
+  .add-row{ display:flex; gap:9px; margin-top:14px; }
+  .add-row input{ flex:1; }
+  .add-btn{
+    flex:none; min-height:48px; padding:0 18px;
+    background:var(--gold-soft); color:var(--emerald); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+  }
+  .add-btn:hover{ background:var(--gold); color:var(--ink); }
+
+  .count-note{ color:var(--muted); font-size:13px; margin-top:12px; }
+  .count-note b{ color:var(--emerald); }
+
+  /* ---------- Inputs ---------- */
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:64px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Rating blocks ---------- */
+  .rate-block{
+    border:1px solid var(--line); border-radius:14px; padding:16px;
+    margin-bottom:14px; background:var(--cream);
+  }
+  .rate-block:last-child{ margin-bottom:0; }
+  .rate-head{
+    display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:4px;
+  }
+  .rate-name{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:18px;
+  }
+  .rate-val{ font-size:13px; font-weight:600; color:var(--gold); white-space:nowrap; }
+  .rate-label{ display:block; font-size:12.5px; color:var(--muted); margin:8px 0 4px; font-weight:600; }
+  input[type="range"]{
+    -webkit-appearance:none; appearance:none; width:100%; height:8px;
+    background:var(--gold-soft); border-radius:999px; outline:none; margin:8px 0 2px;
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none; width:26px; height:26px; border-radius:50%;
+    background:var(--emerald); border:3px solid #fff; cursor:pointer;
+    box-shadow:0 2px 6px rgba(20,84,62,.35);
+  }
+  input[type="range"]::-moz-range-thumb{
+    width:26px; height:26px; border-radius:50%;
+    background:var(--emerald); border:3px solid #fff; cursor:pointer;
+    box-shadow:0 2px 6px rgba(20,84,62,.35);
+  }
+  .scale-ends{ display:flex; justify-content:space-between; font-size:11.5px; color:var(--muted); margin-top:2px; }
+  .gap-note{ margin-top:12px; }
+
+  /* ---------- Overview ---------- */
+  .score-ring{
+    text-align:center; padding:6px 0 14px;
+  }
+  .score-big{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:48px; line-height:1;
+  }
+  .score-big span{ font-size:24px; color:var(--gold); }
+  .score-cap{ color:var(--muted); font-size:14px; margin-top:4px; }
+  .score-msg{
+    margin-top:10px; font-family:'Fraunces',serif; font-style:italic; font-size:16px; color:var(--emerald);
+  }
+
+  .bar-row{ margin-bottom:14px; }
+  .bar-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px; }
+  .bar-name{ font-weight:600; font-size:14.5px; color:var(--ink); }
+  .bar-tag{ font-size:11.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; }
+  .bar-tag.lived{ color:var(--emerald); }
+  .bar-tag.growing{ color:var(--gold); }
+  .bar-tag.gap{ color:#B06A2C; }
+  .bar-track{ height:11px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .bar-fill{ height:100%; border-radius:999px; transition:width .4s ease; }
+  .bar-fill.lived{ background:var(--emerald); }
+  .bar-fill.growing{ background:var(--gold); }
+  .bar-fill.gap{ background:#D89A5C; }
+
+  .gaps-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:17px; font-weight:600;
+    margin:18px 0 4px;
+  }
+  .action-row{
+    display:flex; align-items:flex-start; gap:11px; padding:12px 0; border-bottom:1px solid var(--line);
+  }
+  .action-row:last-child{ border-bottom:none; }
+  .action-check{
+    flex:none; width:26px; height:26px; margin-top:2px; border-radius:7px;
+    border:2px solid var(--gold); background:#fff; cursor:pointer; appearance:none; -webkit-appearance:none;
+    position:relative; transition:all .12s ease;
+  }
+  .action-check:checked{ background:var(--emerald); border-color:var(--emerald); }
+  .action-check:checked::after{
+    content:"✓"; color:var(--gold-soft); font-size:15px; font-weight:700;
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  }
+  .action-body{ flex:1; }
+  .action-body .av{ font-weight:600; font-size:14px; color:var(--emerald); margin-bottom:5px; }
+  .action-body.checked .av-text{ text-decoration:line-through; color:var(--muted); }
+  .action-body input{ font-size:15px; min-height:44px; }
+
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  .hidden{ display:none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Values Alignment Checker</h1>
+    <p class="subtitle">See where your daily life and your deepest values want to come closer.</p>
+    <div class="date" id="lastCheck"></div>
+  </header>
+
+  <!-- Welcome (first run) -->
+  <section class="card" id="welcomeCard">
+    <div class="welcome">
+      <p>Your values are the quiet compass underneath every choice. This isn't about getting it all right — it's a gentle look at where your life and your values want to come closer.</p>
+      <div class="sm">No judgement here, sister. Just awareness, honesty, and one small step at a time. Start by naming what matters most to you below.</div>
+    </div>
+  </section>
+
+  <!-- 1. Name your values -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Name Your Core Values</h2></div>
+    <p class="hint">Tap the ones that feel true. Add your own. Keep your top 5–8 — the ones you'd never want to lose.</p>
+    <div class="chips" id="chips"></div>
+    <div class="add-row">
+      <input type="text" id="addInput" placeholder="Add your own value…" maxlength="24" aria-label="Add your own value">
+      <button class="add-btn" id="addBtn" type="button">Add</button>
+    </div>
+    <p class="count-note"><b id="selCount">0</b> values chosen <span id="countTip"></span></p>
+  </section>
+
+  <!-- 2. Rate alignment -->
+  <section class="card" id="rateCard">
+    <div class="step"><span class="num">2</span><h2>Rate Your Alignment</h2></div>
+    <p class="hint">For each value, how aligned is your <em>current</em> daily life — not your intentions, just how you're actually living? Be honest and kind.</p>
+    <div id="rateList"></div>
+    <p class="empty-note" id="rateEmpty">Choose a few values above and they'll appear here to rate. 💛</p>
+  </section>
+
+  <!-- 3. Overview -->
+  <section class="card" id="overviewCard">
+    <div class="step"><span class="num">3</span><h2>Your Alignment Overview</h2></div>
+    <p class="hint">A snapshot of where you're living your values fully — and where they're gently asking for more of you.</p>
+
+    <div class="score-ring">
+      <div class="score-big"><span id="scoreNum">0</span><span>%</span></div>
+      <div class="score-cap">overall alignment, today</div>
+      <div class="score-msg" id="scoreMsg"></div>
+    </div>
+
+    <div id="barList"></div>
+  </section>
+
+  <!-- Aligning actions -->
+  <section class="card" id="actionsCard">
+    <div class="gaps-title">Where you can come closer</div>
+    <p class="hint">For each value asking for more, write one small, doable step. Check it off when you've taken it.</p>
+    <div id="actionList"></div>
+    <p class="empty-note" id="actionEmpty">When your values are strongly lived, there's nothing flagged here — beautiful. 💛 Otherwise, your aligning actions will appear here.</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_values_alignment";
+
+  var STARTERS = ["Faith","Family","Freedom","Integrity","Growth","Peace","Generosity","Health","Authenticity","Rest"];
+
+  var SCALE_LABELS = {
+    1:"Far from it right now",
+    2:"Rarely shows up",
+    3:"Sometimes lived",
+    4:"Mostly aligned",
+    5:"Fully lived out"
+  };
+
+  // ---- State ----
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.values) return o; }
+    }catch(e){}
+    return { values:[], lastCheck:null };
+  }
+  // value shape: { name, score(1-5), gap(note), action(text), done(bool) }
+  var data = load();
+
+  function save(){
+    data.lastCheck = todayKey();
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+    renderDate();
+  }
+
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function prettyDate(key){
+    if(!key) return null;
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  function findValue(name){
+    for(var i=0;i<data.values.length;i++){ if(data.values[i].name===name) return data.values[i]; }
+    return null;
+  }
+  function isSelected(name){ return !!findValue(name); }
+
+  // ---- Header date ----
+  function renderDate(){
+    var el = $("lastCheck");
+    var p = prettyDate(data.lastCheck);
+    el.textContent = p ? ("Last checked · " + p) : "Your first check-in";
+  }
+
+  // ---- Welcome visibility ----
+  function renderWelcome(){
+    $("welcomeCard").classList.toggle("hidden", data.values.length > 0);
+  }
+
+  // ---- Step 1: chips ----
+  function renderChips(){
+    var box = $("chips");
+    box.innerHTML = "";
+    // union of starters + any custom selected values, preserving order
+    var names = STARTERS.slice();
+    data.values.forEach(function(v){
+      if(names.indexOf(v.name) === -1) names.push(v.name);
+    });
+    names.forEach(function(name){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip" + (isSelected(name) ? " on" : "");
+      b.textContent = name;
+      b.setAttribute("aria-pressed", isSelected(name) ? "true" : "false");
+      b.addEventListener("click", function(){ toggleValue(name); });
+      box.appendChild(b);
+    });
+    var n = data.values.length;
+    $("selCount").textContent = n;
+    var tip = $("countTip");
+    if(n === 0) tip.textContent = "· tap a few that matter most";
+    else if(n < 5) tip.textContent = "· a couple more if they fit";
+    else if(n <= 8) tip.textContent = "· lovely — that's a clear set";
+    else tip.textContent = "· that's a lot; trimming to ~8 keeps it focused";
+  }
+
+  function toggleValue(name){
+    var existing = findValue(name);
+    if(existing){
+      data.values = data.values.filter(function(v){ return v.name !== name; });
+    }else{
+      data.values.push({ name:name, score:3, gap:"", action:"", done:false });
+    }
+    save();
+    renderAll();
+  }
+
+  $("addBtn").addEventListener("click", addCustom);
+  $("addInput").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); addCustom(); }
+  });
+  function addCustom(){
+    var inp = $("addInput");
+    var name = inp.value.trim();
+    if(!name) return;
+    // case-insensitive dedupe
+    var lower = name.toLowerCase();
+    var dup = data.values.some(function(v){ return v.name.toLowerCase()===lower; })
+      || STARTERS.some(function(s){ return s.toLowerCase()===lower; });
+    if(!dup){
+      data.values.push({ name:name, score:3, gap:"", action:"", done:false });
+      save();
+    }else if(!isSelected(name)){
+      // starter exists but not selected — select it
+      // find canonical casing
+      var canon = STARTERS.filter(function(s){ return s.toLowerCase()===lower; })[0] || name;
+      if(!findValue(canon)){ data.values.push({ name:canon, score:3, gap:"", action:"", done:false }); save(); }
+    }
+    inp.value = "";
+    renderAll();
+  }
+
+  // ---- Step 2: rating sliders ----
+  function renderRatings(){
+    var list = $("rateList");
+    var empty = $("rateEmpty");
+    list.innerHTML = "";
+    if(data.values.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+
+    data.values.forEach(function(v, idx){
+      var block = document.createElement("div");
+      block.className = "rate-block";
+
+      var head = document.createElement("div");
+      head.className = "rate-head";
+      var nm = document.createElement("span");
+      nm.className = "rate-name";
+      nm.textContent = v.name;
+      var val = document.createElement("span");
+      val.className = "rate-val";
+      val.textContent = SCALE_LABELS[v.score];
+      head.appendChild(nm); head.appendChild(val);
+
+      var slLabel = document.createElement("label");
+      slLabel.className = "rate-label";
+      var slId = "score_" + idx;
+      slLabel.setAttribute("for", slId);
+      slLabel.textContent = "How aligned is your daily life with " + v.name + "?";
+
+      var slider = document.createElement("input");
+      slider.type = "range";
+      slider.min = "1"; slider.max = "5"; slider.step = "1";
+      slider.value = v.score;
+      slider.id = slId;
+      slider.setAttribute("aria-label", "Alignment with " + v.name);
+      slider.addEventListener("input", function(){
+        v.score = parseInt(slider.value, 10);
+        val.textContent = SCALE_LABELS[v.score];
+        save();
+        renderOverview();
+        renderActions();
+      });
+
+      var ends = document.createElement("div");
+      ends.className = "scale-ends";
+      var e1 = document.createElement("span"); e1.textContent = "Not yet";
+      var e2 = document.createElement("span"); e2.textContent = "Fully lived";
+      ends.appendChild(e1); ends.appendChild(e2);
+
+      var gapWrap = document.createElement("div");
+      gapWrap.className = "gap-note";
+      var gapLabel = document.createElement("label");
+      gapLabel.className = "rate-label";
+      var gapId = "gap_" + idx;
+      gapLabel.setAttribute("for", gapId);
+      gapLabel.textContent = "Where's the gap? (optional)";
+      var gapTa = document.createElement("textarea");
+      gapTa.id = gapId;
+      gapTa.placeholder = "e.g. I say " + v.name + " matters, but my week doesn't show it…";
+      gapTa.value = v.gap || "";
+      gapTa.addEventListener("input", function(){ v.gap = gapTa.value; save(); });
+      gapWrap.appendChild(gapLabel); gapWrap.appendChild(gapTa);
+
+      block.appendChild(head);
+      block.appendChild(slLabel);
+      block.appendChild(slider);
+      block.appendChild(ends);
+      block.appendChild(gapWrap);
+      list.appendChild(block);
+    });
+  }
+
+  // ---- Tier helper ----
+  function tier(score){
+    if(score >= 4) return "lived";
+    if(score === 3) return "growing";
+    return "gap";
+  }
+  function tierTag(score){
+    if(score >= 4) return "Strongly lived";
+    if(score === 3) return "Growing";
+    return "Asking for more";
+  }
+
+  // ---- Step 3: overview ----
+  function renderOverview(){
+    var n = data.values.length;
+    var scoreNum = $("scoreNum");
+    var msg = $("scoreMsg");
+    var bars = $("barList");
+    bars.innerHTML = "";
+
+    if(n === 0){
+      scoreNum.textContent = "0";
+      msg.textContent = "Name a few values and your overview will bloom here.";
+      return;
+    }
+
+    var sum = 0;
+    data.values.forEach(function(v){ sum += v.score; });
+    var pct = Math.round((sum / (n*5)) * 100);
+    scoreNum.textContent = pct;
+
+    if(pct >= 80) msg.textContent = "You're living in deep alignment. Honour that.";
+    else if(pct >= 60) msg.textContent = "Mostly aligned — and a few places are calling you closer.";
+    else if(pct >= 40) msg.textContent = "There's a gap between your values and your days. That's okay — now you can see it.";
+    else msg.textContent = "Your life and your values want to reconnect. One small step is enough to begin.";
+
+    data.values.forEach(function(v){
+      var row = document.createElement("div");
+      row.className = "bar-row";
+      var top = document.createElement("div");
+      top.className = "bar-top";
+      var nm = document.createElement("span");
+      nm.className = "bar-name";
+      nm.textContent = v.name;
+      var tg = document.createElement("span");
+      tg.className = "bar-tag " + tier(v.score);
+      tg.textContent = tierTag(v.score);
+      top.appendChild(nm); top.appendChild(tg);
+
+      var track = document.createElement("div");
+      track.className = "bar-track";
+      var fill = document.createElement("div");
+      fill.className = "bar-fill " + tier(v.score);
+      fill.style.width = ((v.score/5)*100) + "%";
+      track.appendChild(fill);
+
+      row.appendChild(top); row.appendChild(track);
+      bars.appendChild(row);
+    });
+  }
+
+  // ---- Aligning actions (for gaps: score <= 3) ----
+  function renderActions(){
+    var list = $("actionList");
+    var empty = $("actionEmpty");
+    list.innerHTML = "";
+    var gaps = data.values.filter(function(v){ return v.score <= 3; });
+    if(gaps.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+
+    gaps.forEach(function(v, idx){
+      var row = document.createElement("div");
+      row.className = "action-row";
+
+      var chk = document.createElement("input");
+      chk.type = "checkbox";
+      chk.className = "action-check";
+      chk.checked = !!v.done;
+      chk.id = "done_" + idx;
+      chk.setAttribute("aria-label", "Mark aligning action for " + v.name + " complete");
+
+      var body = document.createElement("div");
+      body.className = "action-body" + (v.done ? " checked" : "");
+      var av = document.createElement("div");
+      av.className = "av";
+      av.textContent = "Coming closer to " + v.name;
+      var ta = document.createElement("input");
+      ta.type = "text";
+      ta.className = "av-text";
+      ta.placeholder = "One small step I'll take…";
+      ta.value = v.action || "";
+      ta.setAttribute("aria-label", "Aligning action for " + v.name);
+      ta.addEventListener("input", function(){ v.action = ta.value; save(); });
+
+      chk.addEventListener("change", function(){
+        v.done = chk.checked;
+        body.classList.toggle("checked", v.done);
+        save();
+      });
+
+      body.appendChild(av); body.appendChild(ta);
+      row.appendChild(chk); row.appendChild(body);
+      list.appendChild(row);
+    });
+  }
+
+  // ---- Render all ----
+  function renderAll(){
+    renderWelcome();
+    renderChips();
+    renderRatings();
+    renderOverview();
+    renderActions();
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Values Alignment data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { values:[], lastCheck:null };
+      $("addInput").value = "";
+      renderDate();
+      renderAll();
+    }
+  });
+
+  // ---- Init ----
+  renderDate();
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

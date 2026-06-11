@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healing Affirmation Generator · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Chips ---------- */
+  .chips{ display:flex; flex-wrap:wrap; gap:9px; }
+  .chip{
+    font-family:inherit; font-size:14px; font-weight:600;
+    background:var(--cream); color:var(--ink);
+    border:1px solid var(--line); border-radius:999px;
+    padding:11px 15px; min-height:44px; cursor:pointer;
+    transition:background .15s, border-color .15s, color .15s, box-shadow .15s;
+  }
+  .chip:hover{ border-color:var(--gold); }
+  .chip[aria-pressed="true"]{
+    background:var(--emerald); color:#FCF8EF; border-color:var(--emerald);
+    box-shadow:0 4px 12px rgba(20,84,62,.22);
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:18px 0 6px;
+  }
+  input[type="text"]{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; min-height:48px; transition:border-color .15s, box-shadow .15s;
+  }
+  input:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder{ color:#A7A095; }
+  .feel-input{ text-align:center; font-family:'Fraunces',serif; font-size:22px; color:var(--emerald); font-weight:500; }
+
+  /* ---------- Primary / secondary buttons ---------- */
+  .primary-btn{
+    width:100%; margin-top:18px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .primary-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .primary-btn:active{ transform:translateY(1px); }
+
+  .ghost-btn{
+    width:100%; margin-top:10px; min-height:48px;
+    background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.2); border-radius:12px;
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    transition:background .15s, box-shadow .15s;
+  }
+  .ghost-btn:hover{ box-shadow:0 4px 12px rgba(20,84,62,.12); }
+
+  /* ---------- Affirmation list ---------- */
+  .aff-list{ list-style:none; margin-top:4px; }
+  .aff{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:20px 18px; margin-top:14px;
+    position:relative; overflow:hidden;
+  }
+  .aff::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.22);
+  }
+  .aff p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:19px; line-height:1.45; position:relative; z-index:1;
+  }
+  .aff-actions{
+    display:flex; gap:6px; justify-content:flex-end; margin-top:12px;
+    position:relative; z-index:1;
+  }
+  .aff-btn{
+    background:rgba(252,248,239,.1); border:1px solid rgba(231,211,161,.3);
+    color:var(--gold-soft); font-family:inherit; font-weight:600; font-size:13px;
+    border-radius:9px; padding:9px 12px; min-height:44px; cursor:pointer;
+    display:inline-flex; align-items:center; gap:6px;
+    transition:background .15s, color .15s;
+  }
+  .aff-btn:hover{ background:rgba(252,248,239,.18); color:#FCF8EF; }
+  .aff-btn.saved{ background:var(--gold); color:var(--ink); border-color:var(--gold); }
+
+  /* ---------- Saved collection ---------- */
+  .saved-list{ list-style:none; }
+  .saved-item{
+    display:flex; align-items:flex-start; gap:10px;
+    padding:14px 2px; border-bottom:1px solid var(--line);
+  }
+  .saved-item:last-child{ border-bottom:none; }
+  .saved-item .star{ flex:none; color:var(--gold); font-size:16px; line-height:1.5; }
+  .saved-item .txt{
+    flex:1; font-family:'Fraunces',serif; font-style:italic; font-size:16px;
+    color:var(--emerald); line-height:1.4;
+  }
+  .saved-item .del{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-family:inherit; font-size:13px; font-weight:600; min-height:44px;
+    min-width:44px; padding:0 4px;
+  }
+  .saved-item .del:hover{ color:#9b2e2e; }
+
+  .row-btns{ display:flex; gap:10px; margin-top:14px; }
+  .row-btns button{ flex:1; }
+
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Toast ---------- */
+  .toast{
+    position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px);
+    background:var(--emerald); color:#FCF8EF; font-weight:600; font-size:14px;
+    padding:11px 20px; border-radius:999px; box-shadow:0 8px 22px rgba(20,84,62,.3);
+    opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; z-index:50;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  /* ---------- Read mode overlay ---------- */
+  .read-overlay{
+    display:none; position:fixed; inset:0; z-index:60;
+    background:linear-gradient(180deg, var(--emerald) 0%, #0c3324 100%);
+    color:#FCF8EF; padding:28px 22px; overflow-y:auto;
+  }
+  .read-overlay.show{ display:block; animation:rise .35s ease; }
+  .read-close{
+    position:sticky; top:0; margin-left:auto; display:block;
+    background:rgba(252,248,239,.12); border:1px solid rgba(231,211,161,.35);
+    color:#FCF8EF; font-family:inherit; font-weight:700; font-size:14px;
+    border-radius:999px; padding:10px 18px; min-height:44px; cursor:pointer;
+  }
+  .read-inner{ max-width:520px; margin:18px auto 0; }
+  .read-inner .lead{
+    font-family:'Hanken Grotesk'; font-weight:600; font-size:12.5px;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+    text-align:center; margin-bottom:24px;
+  }
+  .read-aff{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:26px; line-height:1.4; text-align:center; margin:0 0 32px;
+  }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Healing Affirmation Generator</h1>
+    <p class="subtitle">Speak life over the places that are still mending.</p>
+  </header>
+
+  <!-- 1. Choose areas -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>What are you healing?</h2></div>
+    <p class="hint">Tap every area that's true for you right now. There's no wrong answer here.</p>
+    <div class="chips" id="areaChips" role="group" aria-label="Areas you're healing"></div>
+  </section>
+
+  <!-- 2. Specifics -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Make it yours <span style="color:var(--muted);font-weight:400;font-size:14px;">(optional)</span></h2></div>
+    <p class="hint">A little detail helps your words land closer to home.</p>
+    <label class="field-label" for="wound">A specific wound or situation</label>
+    <input type="text" id="wound" placeholder="e.g. the way it ended, what they said…">
+    <label class="field-label" for="feel" style="text-align:center;">A word for how you want to feel</label>
+    <input type="text" class="feel-input" id="feel" placeholder="safe" maxlength="24">
+
+    <button class="primary-btn" id="generateBtn" type="button">Generate my affirmations ✨</button>
+  </section>
+
+  <!-- 3. Affirmations -->
+  <section class="card" id="resultCard" style="display:none;">
+    <div class="step"><span class="num">3</span><h2>Speak these over yourself</h2></div>
+    <p class="hint">Present tense, on purpose. Your healing is already underway.</p>
+    <ul class="aff-list" id="affList"></ul>
+    <button class="ghost-btn" id="moreBtn" type="button">↻ Give me more</button>
+    <div class="row-btns">
+      <button class="ghost-btn" id="copyAllBtn" type="button" style="margin-top:0;">Copy all</button>
+      <button class="ghost-btn" id="readGenBtn" type="button" style="margin-top:0;">Read mode</button>
+    </div>
+  </section>
+
+  <!-- First-run welcome -->
+  <section class="card" id="welcomeCard">
+    <div class="step"><span class="num">♡</span><h2>Welcome, sister</h2></div>
+    <p style="font-size:15px;color:var(--ink);">
+      Healing isn't a straight line, and you don't have to do it loudly. This is a gentle place
+      to put words to what you're carrying — and to begin speaking gentler ones back.
+    </p>
+    <p style="font-size:15px;color:var(--muted);margin-top:10px;">
+      Choose an area or two above, then tap <b style="color:var(--emerald);">Generate</b>. Keep the
+      ones that feel like home. 💛
+    </p>
+  </section>
+
+  <!-- My healing affirmations -->
+  <section class="card">
+    <div class="step"><span class="num">♥</span><h2>My healing affirmations</h2></div>
+    <p class="hint" id="savedHint">The ones you favorite will gather here, ready for you to return to.</p>
+    <ul class="saved-list" id="savedList"></ul>
+    <p class="empty-note" id="savedEmpty">No saved affirmations yet — tap the ♡ on any you love. 💛</p>
+    <button class="ghost-btn" id="readSavedBtn" type="button" style="display:none;">📖 Read my saved affirmations</button>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">Copied!</div>
+
+<div class="read-overlay" id="readOverlay" aria-hidden="true">
+  <button class="read-close" id="readClose" type="button">Close ✕</button>
+  <div class="read-inner">
+    <div class="lead">Read these slowly, out loud</div>
+    <div id="readBody"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_healing_affirmation";
+
+  // ---- Areas (chips) ----
+  var AREAS = [
+    {id:"self-worth", label:"Self-worth"},
+    {id:"breakup",    label:"A breakup/heartbreak"},
+    {id:"grief",      label:"Grief"},
+    {id:"anxiety",    label:"Anxiety/fear"},
+    {id:"people",     label:"People-pleasing"},
+    {id:"past",       label:"A past wound"},
+    {id:"money",      label:"Money/scarcity"},
+    {id:"body",       label:"Her body"},
+    {id:"trust",      label:"Trust"}
+  ];
+
+  // ---- Affirmation templates per area (present tense, faith-centered, soft) ----
+  var TEMPLATES = {
+    "self-worth":[
+      "I am worthy of love simply because I exist; my worth was never up for debate.",
+      "I am chosen, valued, and enough — exactly as I am today.",
+      "I no longer shrink to make others comfortable; I take up the space I was made for.",
+      "I speak to myself with the same tenderness I give to those I love.",
+      "I am fearfully and wonderfully made, and I am learning to believe it."
+    ],
+    "breakup":[
+      "I am allowed to grieve what was while I trust what's coming.",
+      "I release who I thought they were, and I welcome who I am becoming.",
+      "My heart is not broken beyond repair; it is opening, softly, again.",
+      "I am whole on my own, and my peace does not depend on anyone staying.",
+      "What was meant for me cannot be lost; I am not behind, I am healing."
+    ],
+    "grief":[
+      "I am allowed to heal at my own pace; my heart is mending.",
+      "I carry love and loss together, and both are welcome here.",
+      "There is no timeline on my grief, and I give myself the grace of slowness.",
+      "I honor what I've lost by continuing to live, gently, fully.",
+      "Even in the ache, I am held, and I am not walking this alone."
+    ],
+    "anxiety":[
+      "I am safe in this moment; my breath is slow and my body can rest.",
+      "I release what I cannot control and trust that I am being carried.",
+      "My fears do not get the final word over my life.",
+      "I am steady; my peace is not louder than the noise, but it is stronger.",
+      "I am allowed to feel afraid and move forward anyway."
+    ],
+    "people":[
+      "I am allowed to say no without explaining, apologizing, or earning it.",
+      "My worth is not measured by how much I give away.",
+      "I honor my own needs as gently as I honor everyone else's.",
+      "I am loved for who I am, not for how useful I can be.",
+      "I set boundaries with love, and I let them protect my peace."
+    ],
+    "past":[
+      "I am not who I was on my worst day; I am who I am becoming.",
+      "I release the weight of what happened to me; it does not define me.",
+      "I forgive myself for surviving the only way I knew how.",
+      "The past lives behind me now, and I am walking toward something kinder.",
+      "I am rewriting the story; this chapter belongs to my healing."
+    ],
+    "money":[
+      "I am provided for, and there is always enough for today.",
+      "I release the fear of lack and open my hands to receive.",
+      "My value is not tied to my bank account; I am rich in ways money can't measure.",
+      "I trust that my needs are met and my future is being built.",
+      "Abundance flows to me, and I am learning to receive it without guilt."
+    ],
+    "body":[
+      "I thank my body for carrying me this far, exactly as it is.",
+      "I am beautiful in a way that needs no one's permission.",
+      "I treat my body as a home, not a project to fix.",
+      "I am at peace with my reflection; I am made on purpose.",
+      "My body is worthy of rest, nourishment, and gentleness today."
+    ],
+    "trust":[
+      "I am learning to trust again, one small, safe step at a time.",
+      "I can be open without being unguarded; my softness is not weakness.",
+      "I trust myself to know what is safe and to walk away from what is not.",
+      "Not everyone will hurt me; I let the right ones in, slowly.",
+      "I am held by something faithful, even when people have not been."
+    ]
+  };
+
+  // ---- Feeling-based affirmations (when she types a desired feeling) ----
+  function feelLine(feel){
+    var f = (feel || "").trim();
+    if(!f) return null;
+    var lower = f.toLowerCase();
+    var map = {
+      "safe":"I am safe; my body can soften and my heart can rest.",
+      "enough":"I am enough — not someday, but right now, as I am.",
+      "free":"I am free; nothing from my past gets to hold me captive.",
+      "calm":"I am calm; peace settles over me like quiet morning light.",
+      "whole":"I am whole; no person and no loss can take that from me.",
+      "strong":"I am strong in a soft way — steady, rooted, unshakeable.",
+      "loved":"I am loved completely, exactly as I am today.",
+      "peaceful":"I am peaceful; my mind is quiet and my heart is still.",
+      "worthy":"I am worthy of every good thing I am praying for."
+    };
+    if(map[lower]) return map[lower];
+    return "I am becoming " + lower + ", and I feel it growing in me a little more each day.";
+  }
+
+  // ---- Wound-personalized line ----
+  function woundLine(wound){
+    var w = (wound || "").trim();
+    if(!w) return null;
+    return "Even with " + w + ", I am held, I am healing, and I am not defined by it.";
+  }
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          o.areas = o.areas || [];
+          o.wound = o.wound || "";
+          o.feel  = o.feel  || "";
+          o.current = o.current || [];
+          o.saved = o.saved || [];
+          return o;
+        }
+      }
+    }catch(e){}
+    return { areas:[], wound:"", feel:"", current:[], saved:[] };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var areaChipsEl = $("areaChips");
+  var woundEl = $("wound"), feelEl = $("feel");
+  var resultCard = $("resultCard"), affListEl = $("affList");
+  var welcomeCard = $("welcomeCard");
+  var savedListEl = $("savedList"), savedEmptyEl = $("savedEmpty"), readSavedBtn = $("readSavedBtn");
+  var toastEl = $("toast");
+
+  // ---- Build chips ----
+  AREAS.forEach(function(a){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.textContent = a.label;
+    b.setAttribute("data-id", a.id);
+    b.setAttribute("aria-pressed", data.areas.indexOf(a.id) > -1 ? "true" : "false");
+    b.addEventListener("click", function(){
+      var idx = data.areas.indexOf(a.id);
+      if(idx > -1){ data.areas.splice(idx,1); b.setAttribute("aria-pressed","false"); }
+      else{ data.areas.push(a.id); b.setAttribute("aria-pressed","true"); }
+      save();
+    });
+    areaChipsEl.appendChild(b);
+  });
+
+  // ---- Restore inputs ----
+  woundEl.value = data.wound || "";
+  feelEl.value  = data.feel  || "";
+
+  woundEl.addEventListener("input", function(){ data.wound = woundEl.value; save(); });
+  feelEl.addEventListener("input",  function(){ data.feel  = feelEl.value;  save(); });
+
+  // ---- Utilities ----
+  function shuffle(arr){
+    var a = arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var t = a[i]; a[i]=a[j]; a[j]=t;
+    }
+    return a;
+  }
+
+  // ---- Generate ----
+  function buildAffirmations(){
+    var picks = [];
+
+    // Wound + feeling lines lead, if provided
+    var wl = woundLine(data.wound);
+    var fl = feelLine(data.feel);
+    if(wl) picks.push(wl);
+    if(fl) picks.push(fl);
+
+    // Areas: pull from each selected area, mixed
+    var areas = data.areas.length ? data.areas : ["self-worth"]; // gentle default
+    var pools = {};
+    areas.forEach(function(id){ pools[id] = shuffle(TEMPLATES[id] || []); });
+
+    // Round-robin across selected areas so output reflects all her choices
+    var target = Math.min(8, Math.max(3, picks.length + areas.length * 2));
+    var safety = 0;
+    while(picks.length < target && safety < 80){
+      safety++;
+      var added = false;
+      for(var i=0;i<areas.length && picks.length<target;i++){
+        var pool = pools[areas[i]];
+        if(pool && pool.length){
+          var line = pool.shift();
+          if(picks.indexOf(line) === -1){ picks.push(line); added = true; }
+        }
+      }
+      if(!added) break;
+    }
+
+    // Ensure at least 3
+    if(picks.length < 3){
+      var filler = shuffle(TEMPLATES["self-worth"]);
+      while(picks.length < 3 && filler.length){
+        var f = filler.shift();
+        if(picks.indexOf(f) === -1) picks.push(f);
+      }
+    }
+    return picks.slice(0,8);
+  }
+
+  function generate(){
+    data.current = buildAffirmations();
+    save();
+    renderResults();
+    welcomeCard.style.display = "none";
+    resultCard.style.display = "block";
+    resultCard.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  $("generateBtn").addEventListener("click", generate);
+  $("moreBtn").addEventListener("click", generate);
+
+  function isSaved(text){
+    return data.saved.indexOf(text) > -1;
+  }
+
+  function renderResults(){
+    affListEl.innerHTML = "";
+    data.current.forEach(function(text){
+      var li = document.createElement("li");
+      li.className = "aff";
+
+      var p = document.createElement("p");
+      p.textContent = text;
+
+      var actions = document.createElement("div");
+      actions.className = "aff-actions";
+
+      var favBtn = document.createElement("button");
+      favBtn.type = "button";
+      favBtn.className = "aff-btn" + (isSaved(text) ? " saved" : "");
+      favBtn.innerHTML = isSaved(text) ? "♥ Saved" : "♡ Save";
+      favBtn.setAttribute("aria-label", isSaved(text) ? "Remove from saved" : "Save this affirmation");
+      favBtn.addEventListener("click", function(){
+        var idx = data.saved.indexOf(text);
+        if(idx > -1){ data.saved.splice(idx,1); }
+        else{ data.saved.push(text); showToast("Saved 💛"); }
+        save();
+        renderResults();
+        renderSaved();
+      });
+
+      var copyBtn = document.createElement("button");
+      copyBtn.type = "button";
+      copyBtn.className = "aff-btn";
+      copyBtn.innerHTML = "⧉ Copy";
+      copyBtn.setAttribute("aria-label", "Copy this affirmation");
+      copyBtn.addEventListener("click", function(){ copyText(text); });
+
+      actions.appendChild(favBtn);
+      actions.appendChild(copyBtn);
+      li.appendChild(p);
+      li.appendChild(actions);
+      affListEl.appendChild(li);
+    });
+  }
+
+  // ---- Saved collection ----
+  function renderSaved(){
+    savedListEl.innerHTML = "";
+    if(data.saved.length === 0){
+      savedEmptyEl.style.display = "block";
+      readSavedBtn.style.display = "none";
+      return;
+    }
+    savedEmptyEl.style.display = "none";
+    readSavedBtn.style.display = "block";
+    data.saved.forEach(function(text, i){
+      var li = document.createElement("li");
+      li.className = "saved-item";
+
+      var star = document.createElement("span");
+      star.className = "star";
+      star.textContent = "♥";
+
+      var txt = document.createElement("span");
+      txt.className = "txt";
+      txt.textContent = text;
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "del";
+      del.textContent = "Remove";
+      del.setAttribute("aria-label", "Remove this affirmation");
+      del.addEventListener("click", function(){
+        if(confirm("Remove this affirmation from your collection, sister?")){
+          data.saved.splice(i,1);
+          save();
+          renderSaved();
+          renderResults();
+        }
+      });
+
+      li.appendChild(star);
+      li.appendChild(txt);
+      li.appendChild(del);
+      savedListEl.appendChild(li);
+    });
+  }
+
+  // ---- Copy helpers ----
+  function copyText(text){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ showToast("Copied!"); }, fallbackCopy.bind(null, text));
+    }else{
+      fallbackCopy(text);
+    }
+  }
+  function fallbackCopy(text){
+    try{
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      showToast("Copied!");
+    }catch(e){ showToast("Couldn't copy — select and copy manually."); }
+  }
+  $("copyAllBtn").addEventListener("click", function(){
+    if(!data.current.length){ return; }
+    copyText(data.current.join("\n\n"));
+  });
+
+  // ---- Toast ----
+  var toastTimer = null;
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    if(toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove("show"); }, 1600);
+  }
+
+  // ---- Read mode ----
+  var readOverlay = $("readOverlay"), readBody = $("readBody");
+  function openRead(lines){
+    if(!lines || !lines.length){ return; }
+    readBody.innerHTML = "";
+    lines.forEach(function(t){
+      var p = document.createElement("p");
+      p.className = "read-aff";
+      p.textContent = t;
+      readBody.appendChild(p);
+    });
+    readOverlay.classList.add("show");
+    readOverlay.setAttribute("aria-hidden","false");
+    document.body.style.overflow = "hidden";
+  }
+  function closeRead(){
+    readOverlay.classList.remove("show");
+    readOverlay.setAttribute("aria-hidden","true");
+    document.body.style.overflow = "";
+  }
+  $("readGenBtn").addEventListener("click", function(){ openRead(data.current); });
+  $("readSavedBtn").addEventListener("click", function(){ openRead(data.saved); });
+  $("readClose").addEventListener("click", closeRead);
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && readOverlay.classList.contains("show")) closeRead();
+  });
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your healing affirmations and saved collection? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { areas:[], wound:"", feel:"", current:[], saved:[] };
+      woundEl.value = ""; feelEl.value = "";
+      var chips = areaChipsEl.querySelectorAll(".chip");
+      for(var i=0;i<chips.length;i++){ chips[i].setAttribute("aria-pressed","false"); }
+      affListEl.innerHTML = "";
+      resultCard.style.display = "none";
+      welcomeCard.style.display = "block";
+      renderSaved();
+      showToast("Cleared — a fresh start 💛");
+    }
+  });
+
+  // ---- First paint ----
+  if(data.current && data.current.length){
+    renderResults();
+    welcomeCard.style.display = "none";
+    resultCard.style.display = "block";
+  }
+  renderSaved();
+
+})();
+</script>
+</body>
+</html>

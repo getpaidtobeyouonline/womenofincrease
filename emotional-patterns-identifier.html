@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emotional Patterns Identifier · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:0 0 8px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:72px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Add button ---------- */
+  .add-btn{
+    width:100%; margin-top:18px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .add-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .add-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Summary ---------- */
+  .summary{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:20px;
+  }
+  .summary .s-row{ display:flex; gap:14px; }
+  .summary .s-stat{ flex:1; text-align:center; }
+  .summary .s-num{ font-family:'Fraunces',serif; font-weight:600; font-size:30px; line-height:1; color:var(--gold-soft); }
+  .summary .s-label{ font-size:12px; letter-spacing:.04em; margin-top:6px; color:rgba(252,248,239,.85); }
+  .summary .s-note{
+    margin-top:16px; font-family:'Fraunces',serif; font-style:italic; font-size:15px;
+    line-height:1.4; color:#FCF8EF; text-align:center;
+  }
+
+  /* ---------- Pattern cards ---------- */
+  .section-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:20px; font-weight:600;
+    margin:30px 2px 2px;
+  }
+  .section-sub{ color:var(--muted); font-size:13.5px; margin:2px 2px 0; }
+
+  .pattern{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:18px; margin-top:14px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .p-top{ display:flex; align-items:flex-start; gap:10px; }
+  .p-emotion{
+    flex:1; font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:18px; line-height:1.3;
+  }
+  .p-del{
+    flex:none; background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:9px; min-width:44px; min-height:44px; cursor:pointer; font-size:15px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .p-del:hover{ border-color:var(--gold); color:var(--ink); }
+
+  .p-block{ margin-top:12px; }
+  .p-lab{
+    font-weight:700; font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:3px;
+  }
+  .p-text{ font-size:14.5px; color:var(--ink); line-height:1.5; white-space:pre-wrap; }
+  .p-text.empty{ color:var(--muted); font-style:italic; }
+
+  .p-new{
+    margin-top:14px; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.18); border-left:4px solid var(--emerald);
+    border-radius:12px; padding:13px 14px;
+  }
+  .p-new .p-lab{ color:var(--emerald); }
+  .p-new .p-text{ color:var(--emerald); font-weight:600; }
+
+  /* ---------- Tally ---------- */
+  .tally{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    margin-top:14px; padding-top:14px; border-top:1px solid var(--line);
+  }
+  .tally-info{ font-size:13px; color:var(--muted); line-height:1.35; }
+  .tally-info b{ color:var(--emerald); font-size:15px; }
+  .tally-btn{
+    flex:none; min-width:44px; min-height:44px; padding:0 16px;
+    background:var(--gold-soft); color:var(--emerald); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:14px; cursor:pointer;
+    display:inline-flex; align-items:center; gap:6px;
+    transition:transform .08s ease, background .15s ease;
+  }
+  .tally-btn:hover{ background:var(--gold); color:var(--ink); }
+  .tally-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Empty state ---------- */
+  .empty-state{
+    text-align:center; padding:30px 16px;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; margin-top:14px;
+  }
+  .empty-state .es-emoji{ font-size:30px; }
+  .empty-state .es-title{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px; margin:8px 0 6px;
+  }
+  .empty-state .es-text{ color:var(--muted); font-size:14px; line-height:1.5; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Emotional Patterns Identifier</h1>
+    <p class="subtitle">Notice what keeps repeating — and gently trace it back to where it began.</p>
+  </header>
+
+  <!-- Add a pattern -->
+  <section class="card">
+    <div class="step"><span class="num">+</span><h2>Name a pattern</h2></div>
+    <p class="hint">No shame here — just curiosity. The moment you can see it, you can start to soften it.</p>
+
+    <label class="field-label" for="emotion">The recurring emotion or reaction</label>
+    <input type="text" id="emotion" placeholder="e.g. I shut down when I'm criticized">
+
+    <label class="field-label" for="triggers">What sets it off? <span class="opt">(situations / triggers)</span></label>
+    <textarea id="triggers" placeholder="e.g. Feedback at work, raised voices, feeling unseen…"></textarea>
+
+    <label class="field-label" for="root">Where might it come from? <span class="opt">(the root)</span></label>
+    <textarea id="root" placeholder="Whose voice is this? What early experience taught you to respond this way? What is it trying to protect?"></textarea>
+
+    <label class="field-label" for="response">The gentler response you want to practice</label>
+    <textarea id="response" placeholder="e.g. I'll pause, breathe, and remind myself feedback isn't rejection."></textarea>
+
+    <button class="add-btn" id="addBtn" type="button">Add this pattern 🌿</button>
+  </section>
+
+  <!-- Summary -->
+  <section class="card summary" id="summaryCard">
+    <div class="s-row">
+      <div class="s-stat">
+        <div class="s-num" id="statPatterns">0</div>
+        <div class="s-label">patterns you're working on</div>
+      </div>
+      <div class="s-stat">
+        <div class="s-num" id="statAware">0</div>
+        <div class="s-label">awareness moments logged</div>
+      </div>
+    </div>
+    <p class="s-note" id="summaryNote">You can't change what you won't see — and you're seeing it now. 💛</p>
+  </section>
+
+  <!-- Patterns -->
+  <h2 class="section-title">Your patterns</h2>
+  <p class="section-sub">Each time one shows up in real life, tap “noticed it” — awareness builds in the noticing.</p>
+  <div id="patternList"></div>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_emotional_patterns";
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && Array.isArray(o.patterns)) return o; }
+    }catch(e){}
+    return { patterns:[] };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function uid(){
+    return "p" + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var emotionEl = $("emotion"), triggersEl = $("triggers"),
+      rootEl = $("root"), responseEl = $("response");
+  var listEl = $("patternList");
+
+  // ---- Add a pattern ----
+  $("addBtn").addEventListener("click", function(){
+    var emotion = emotionEl.value.trim();
+    if(!emotion){
+      emotionEl.focus();
+      emotionEl.style.borderColor = "var(--gold)";
+      emotionEl.placeholder = "Start here — name the feeling or reaction…";
+      return;
+    }
+    data.patterns.unshift({
+      id: uid(),
+      emotion: emotion,
+      triggers: triggersEl.value.trim(),
+      root: rootEl.value.trim(),
+      response: responseEl.value.trim(),
+      noticed: 0,
+      created: Date.now()
+    });
+    save();
+    emotionEl.value = ""; triggersEl.value = "";
+    rootEl.value = ""; responseEl.value = "";
+    emotionEl.style.borderColor = "";
+    render();
+  });
+
+  // ---- Increment "noticed" tally ----
+  function notice(id){
+    for(var i=0;i<data.patterns.length;i++){
+      if(data.patterns[i].id === id){ data.patterns[i].noticed++; break; }
+    }
+    save();
+    render();
+  }
+
+  // ---- Delete a pattern ----
+  function del(id){
+    if(!confirm("Let go of this pattern entry? This can't be undone, sister.")) return;
+    data.patterns = data.patterns.filter(function(p){ return p.id !== id; });
+    save();
+    render();
+  }
+
+  // ---- Render summary ----
+  function renderSummary(){
+    var count = data.patterns.length;
+    var aware = data.patterns.reduce(function(sum,p){ return sum + (p.noticed||0); }, 0);
+    $("statPatterns").textContent = count;
+    $("statAware").textContent = aware;
+
+    var note;
+    if(count === 0){
+      note = "You can't change what you won't see — and you're here to see. 💛";
+    }else if(aware === 0){
+      note = "Naming it is the brave first step. Now simply notice when it shows up. 💛";
+    }else if(aware < 5){
+      note = "Every time you catch it, you're loosening its grip. Keep noticing. 💛";
+    }else{
+      note = "Look at your awareness growing. This is how patterns quietly heal. 💛";
+    }
+    $("summaryNote").textContent = note;
+  }
+
+  // ---- Build a text block ----
+  function block(label, text, placeholder){
+    var wrap = document.createElement("div");
+    wrap.className = "p-block";
+    var lab = document.createElement("div");
+    lab.className = "p-lab";
+    lab.textContent = label;
+    var t = document.createElement("div");
+    if(text){
+      t.className = "p-text";
+      t.textContent = text;
+    }else{
+      t.className = "p-text empty";
+      t.textContent = placeholder;
+    }
+    wrap.appendChild(lab); wrap.appendChild(t);
+    return wrap;
+  }
+
+  // ---- Render patterns ----
+  function render(){
+    renderSummary();
+    listEl.innerHTML = "";
+
+    if(data.patterns.length === 0){
+      var es = document.createElement("div");
+      es.className = "empty-state";
+      es.innerHTML =
+        '<div class="es-emoji">🌱</div>' +
+        '<div class="es-title">Nothing logged yet — and that\'s okay</div>' +
+        '<div class="es-text">When you\'re ready, name one reaction that keeps repeating in your life. ' +
+        'There\'s no wrong answer and no judgement here. You\'re simply learning to see yourself with kinder eyes.</div>';
+      listEl.appendChild(es);
+      return;
+    }
+
+    data.patterns.forEach(function(p){
+      var card = document.createElement("div");
+      card.className = "pattern";
+
+      // top: emotion + delete
+      var top = document.createElement("div");
+      top.className = "p-top";
+      var em = document.createElement("div");
+      em.className = "p-emotion";
+      em.textContent = p.emotion;
+      var delBtn = document.createElement("button");
+      delBtn.className = "p-del";
+      delBtn.type = "button";
+      delBtn.setAttribute("aria-label", "Delete this pattern");
+      delBtn.textContent = "🗑";
+      delBtn.addEventListener("click", function(){ del(p.id); });
+      top.appendChild(em); top.appendChild(delBtn);
+      card.appendChild(top);
+
+      card.appendChild(block("Triggers", p.triggers, "Not noted yet."));
+      card.appendChild(block("Traced root", p.root, "Still gently exploring."));
+
+      // new response highlighted
+      var nw = document.createElement("div");
+      nw.className = "p-new";
+      var nwLab = document.createElement("div");
+      nwLab.className = "p-lab";
+      nwLab.textContent = "New response I'm practising";
+      var nwText = document.createElement("div");
+      if(p.response){
+        nwText.className = "p-text";
+        nwText.textContent = p.response;
+      }else{
+        nwText.className = "p-text empty";
+        nwText.textContent = "A gentler way is waiting for you here.";
+      }
+      nw.appendChild(nwLab); nw.appendChild(nwText);
+      card.appendChild(nw);
+
+      // tally
+      var tally = document.createElement("div");
+      tally.className = "tally";
+      var info = document.createElement("div");
+      info.className = "tally-info";
+      var n = p.noticed || 0;
+      info.innerHTML = "Noticed <b>" + n + "</b> time" + (n === 1 ? "" : "s") +
+        "<br>each one a moment of awareness";
+      var tBtn = document.createElement("button");
+      tBtn.className = "tally-btn";
+      tBtn.type = "button";
+      tBtn.textContent = "+ noticed it";
+      tBtn.addEventListener("click", function(){ notice(p.id); });
+      tally.appendChild(info); tally.appendChild(tBtn);
+      card.appendChild(tally);
+
+      listEl.appendChild(card);
+    });
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your emotional patterns? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { patterns:[] };
+      emotionEl.value = ""; triggersEl.value = "";
+      rootEl.value = ""; responseEl.value = "";
+      render();
+    }
+  });
+
+  // ---- Init ----
+  render();
+
+})();
+</script>
+</body>
+</html>

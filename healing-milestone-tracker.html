@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healing Milestone Tracker · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:15px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Stats strip ---------- */
+  .stats{
+    display:flex; gap:12px; margin-top:16px;
+  }
+  .stat{
+    flex:1; background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:16px 14px; text-align:center;
+  }
+  .stat .big{
+    font-family:'Fraunces',serif; font-weight:600; font-size:30px; line-height:1;
+    color:var(--gold-soft);
+  }
+  .stat .lbl{
+    margin-top:6px; font-size:12px; letter-spacing:.04em; color:#E9E2D2; line-height:1.3;
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], input[type="date"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="date"], select{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  select{ -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%2314543E' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 16px center; padding-right:38px;
+  }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Add button ---------- */
+  .complete-btn{
+    width:100%; margin-top:18px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+
+  .blessing{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .blessing.show{ display:block; animation:rise .4s ease; }
+  .blessing .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .blessing .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Timeline ---------- */
+  .timeline-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 4px;
+  }
+  .milestone{
+    position:relative; background:#fff; border:1px solid var(--line); border-radius:14px;
+    padding:16px 16px 16px 18px; margin-top:14px; overflow:hidden;
+    box-shadow:0 4px 14px rgba(28,27,26,.04);
+  }
+  .milestone::before{
+    content:""; position:absolute; left:0; top:0; bottom:0; width:5px;
+    background:linear-gradient(180deg, var(--gold) 0%, var(--gold-soft) 100%);
+  }
+  .ms-top{ display:flex; align-items:flex-start; gap:8px; }
+  .ms-leaf{ font-size:20px; flex:none; line-height:1.2; }
+  .ms-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-weight:600;
+    font-size:18px; line-height:1.25; flex:1;
+  }
+  .ms-meta{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:10px 0 0; }
+  .ms-date{
+    color:var(--emerald); background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:12px; letter-spacing:.03em; padding:4px 10px; border-radius:999px;
+  }
+  .ms-tag{
+    color:var(--ink); background:var(--gold-soft); font-weight:600;
+    font-size:12px; letter-spacing:.03em; padding:4px 10px; border-radius:999px;
+  }
+  .ms-note{ color:var(--muted); font-size:14px; margin-top:12px; line-height:1.5; }
+  .ms-actions{ display:flex; justify-content:flex-end; margin-top:8px; }
+  .link-btn{
+    background:none; border:none; color:var(--muted); font-family:inherit;
+    font-weight:600; font-size:13px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  .empty-note{
+    color:var(--muted); font-size:14.5px; font-style:italic; line-height:1.6;
+    text-align:center; padding:14px 8px 6px;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Healing Milestone Tracker</h1>
+    <p class="subtitle">Mark the moments you grew — and let them prove how far you've come.</p>
+  </header>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <div class="big" id="statTotal">0</div>
+      <div class="lbl">milestones celebrated</div>
+    </div>
+    <div class="stat">
+      <div class="big" id="statMonth">0</div>
+      <div class="lbl">this month</div>
+    </div>
+  </div>
+
+  <!-- Add a milestone -->
+  <section class="card">
+    <div class="step"><span class="num">🌱</span><h2>Mark a milestone</h2></div>
+    <p class="hint">Big or small, it counts. Healing isn't a deadline — it's a direction.</p>
+
+    <label class="field-label" for="msTitle">The milestone you reached</label>
+    <input type="text" id="msTitle" placeholder="e.g. Set a boundary with my mom" maxlength="120">
+
+    <label class="field-label" for="msDate">When did it happen?</label>
+    <input type="date" id="msDate">
+
+    <label class="field-label" for="msCategory">Category <span class="opt">(optional)</span></label>
+    <select id="msCategory">
+      <option value="">Choose one…</option>
+      <option value="Emotional">Emotional</option>
+      <option value="Relational">Relational</option>
+      <option value="Spiritual">Spiritual</option>
+      <option value="Self-worth">Self-worth</option>
+      <option value="Behavioral">Behavioral</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label class="field-label" for="msNote">Why this matters <span class="opt">(the evidence of your growth)</span></label>
+    <textarea id="msNote" placeholder="What did this take? What does it tell you about who you're becoming?"></textarea>
+
+    <button class="complete-btn" id="addBtn" type="button">Celebrate this milestone 💛</button>
+    <div class="blessing" id="blessing">
+      <div class="big" id="blessingBig">Look at you. 💛</div>
+      <div class="sm" id="blessingSm">That took real courage. It's on your timeline now.</div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="card">
+    <div class="timeline-title">Your healing timeline</div>
+    <div id="timeline"></div>
+    <p class="empty-note" id="emptyNote">
+      Nothing here yet — and that's okay. 🌱<br>
+      Healing is non-linear. Every small step counts, and this is where you'll watch them add up.
+    </p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_healing_milestone";
+
+  // ---- Encouraging lines on adding ----
+  var AFFIRMATIONS = [
+    ["Look at you. 💛", "That took real courage. It's on your timeline now."],
+    ["This is growth. 🌱", "The version of you from a year ago is so proud."],
+    ["Proof of how far you've come.", "Soft and strong — you're doing the brave work."],
+    ["She did the hard thing.", "Honor it. This is evidence, not an accident."],
+    ["One more step forward.", "Healing isn't linear, but you are moving. Beautifully."],
+    ["Witnessed and celebrated. 💛", "You're allowed to be proud of this, sister."]
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{month:"long", day:"numeric", year:"numeric"});
+  }
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && Array.isArray(o.milestones)) return o; }
+    }catch(e){}
+    return { milestones:[] };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var titleEl = $("msTitle"), dateEl = $("msDate"), catEl = $("msCategory"), noteEl = $("msNote");
+  var addBtn = $("addBtn"), blessingEl = $("blessing");
+  var blessingBig = $("blessingBig"), blessingSm = $("blessingSm");
+  var timelineEl = $("timeline"), emptyNote = $("emptyNote");
+
+  // default date = today
+  dateEl.value = todayKey();
+
+  // ---- Add a milestone ----
+  addBtn.addEventListener("click", function(){
+    var title = titleEl.value.trim();
+    if(!title){
+      titleEl.focus();
+      titleEl.style.borderColor = "var(--gold)";
+      return;
+    }
+    titleEl.style.borderColor = "";
+    var m = {
+      id: "m" + Date.now() + Math.random().toString(36).slice(2,6),
+      title: title,
+      date: dateEl.value || todayKey(),
+      category: catEl.value || "",
+      note: noteEl.value.trim()
+    };
+    data.milestones.push(m);
+    save();
+
+    // celebrate
+    var a = AFFIRMATIONS[Math.floor(Math.random()*AFFIRMATIONS.length)];
+    blessingBig.textContent = a[0];
+    blessingSm.textContent = a[1];
+    blessingEl.classList.remove("show");
+    void blessingEl.offsetWidth; // restart animation
+    blessingEl.classList.add("show");
+
+    // clear inputs for the next one
+    titleEl.value = ""; noteEl.value = ""; catEl.value = "";
+    dateEl.value = todayKey();
+
+    render();
+  });
+
+  // ---- Delete ----
+  function deleteMilestone(id){
+    var m = null;
+    for(var i=0;i<data.milestones.length;i++){ if(data.milestones[i].id===id){ m=data.milestones[i]; break; } }
+    var label = m ? '"' + m.title + '"' : "this milestone";
+    if(confirm("Remove " + label + " from your timeline? This can't be undone, sister.")){
+      data.milestones = data.milestones.filter(function(x){ return x.id !== id; });
+      save();
+      render();
+    }
+  }
+
+  // ---- Stats ----
+  function renderStats(){
+    $("statTotal").textContent = data.milestones.length;
+    var now = new Date();
+    var ym = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0");
+    var thisMonth = data.milestones.filter(function(m){
+      return (m.date || "").slice(0,7) === ym;
+    }).length;
+    $("statMonth").textContent = thisMonth;
+  }
+
+  // ---- Timeline (most recent first) ----
+  function render(){
+    renderStats();
+    timelineEl.innerHTML = "";
+    if(data.milestones.length === 0){
+      emptyNote.style.display = "block";
+      return;
+    }
+    emptyNote.style.display = "none";
+
+    var sorted = data.milestones.slice().sort(function(a,b){
+      if(a.date === b.date) return 0;
+      return a.date < b.date ? 1 : -1; // most recent first
+    });
+
+    sorted.forEach(function(m){
+      var card = document.createElement("div");
+      card.className = "milestone";
+
+      var top = document.createElement("div");
+      top.className = "ms-top";
+      var leaf = document.createElement("span");
+      leaf.className = "ms-leaf";
+      leaf.textContent = "🌱";
+      var t = document.createElement("div");
+      t.className = "ms-title";
+      t.textContent = m.title;
+      top.appendChild(leaf); top.appendChild(t);
+      card.appendChild(top);
+
+      var meta = document.createElement("div");
+      meta.className = "ms-meta";
+      var dt = document.createElement("span");
+      dt.className = "ms-date";
+      dt.textContent = prettyDate(m.date);
+      meta.appendChild(dt);
+      if(m.category){
+        var tag = document.createElement("span");
+        tag.className = "ms-tag";
+        tag.textContent = m.category;
+        meta.appendChild(tag);
+      }
+      card.appendChild(meta);
+
+      if(m.note){
+        var note = document.createElement("p");
+        note.className = "ms-note";
+        note.textContent = m.note;
+        card.appendChild(note);
+      }
+
+      var actions = document.createElement("div");
+      actions.className = "ms-actions";
+      var del = document.createElement("button");
+      del.className = "link-btn";
+      del.type = "button";
+      del.textContent = "Remove";
+      del.addEventListener("click", function(){ deleteMilestone(m.id); });
+      actions.appendChild(del);
+      card.appendChild(actions);
+
+      timelineEl.appendChild(card);
+    });
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your healing milestones? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { milestones:[] };
+      titleEl.value = ""; noteEl.value = ""; catEl.value = "";
+      dateEl.value = todayKey();
+      blessingEl.classList.remove("show");
+      render();
+    }
+  });
+
+  // ---- Init ----
+  render();
+
+})();
+</script>
+</body>
+</html>

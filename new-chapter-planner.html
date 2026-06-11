@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Chapter Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .chapter-badge{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px; max-width:90%;
+  }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:16px; padding:24px 20px; margin-top:18px;
+    position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\2728"; position:absolute; top:-6px; right:14px; font-size:46px; opacity:.18;
+  }
+  .welcome h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:21px; margin-bottom:8px;
+  }
+  .welcome p{ font-size:14.5px; color:#EDE6D6; line-height:1.5; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:2px 0 12px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:78px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  .title-input{ text-align:center; font-family:'Fraunces',serif; font-size:22px; color:var(--emerald); font-weight:500; }
+  .word-input{ text-align:center; font-family:'Fraunces',serif; font-size:22px; color:var(--emerald); font-weight:500; }
+
+  /* ---------- Vision rows ---------- */
+  .vision-row{ margin-bottom:12px; }
+  .vision-row:last-child{ margin-bottom:0; }
+  .vision-label{
+    display:flex; align-items:center; gap:8px;
+    font-weight:600; font-size:13.5px; color:var(--ink); margin:0 0 6px;
+  }
+  .vision-label .ico{ font-size:15px; }
+
+  /* ---------- First steps ---------- */
+  .add-row{ display:flex; gap:8px; margin-bottom:14px; }
+  .add-row input{ flex:1; }
+  .add-btn{
+    flex:none; min-width:48px; min-height:48px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:22px; line-height:1; cursor:pointer;
+    box-shadow:0 4px 12px rgba(200,160,74,.3);
+  }
+  .add-btn:active{ transform:translateY(1px); }
+
+  .steps-list{ list-style:none; }
+  .steps-list li{
+    display:flex; align-items:flex-start; gap:11px;
+    padding:11px 2px; border-bottom:1px solid var(--line);
+  }
+  .steps-list li:last-child{ border-bottom:none; }
+  .check{
+    flex:none; width:24px;height:24px;margin-top:1px;border-radius:7px;
+    border:2px solid var(--gold-soft); background:var(--cream); cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    color:#fff; font-size:14px; font-weight:700; line-height:1;
+    transition:background .12s, border-color .12s;
+  }
+  .check.on{ background:var(--emerald); border-color:var(--emerald); }
+  .step-text{ flex:1; font-size:15px; color:var(--ink); padding-top:1px; word-break:break-word; }
+  .step-text.done{ color:var(--muted); text-decoration:line-through; }
+  .del-btn{
+    flex:none; background:none; border:none; color:#B9B1A4; cursor:pointer;
+    font-size:18px; line-height:1; padding:4px 6px; min-height:32px; min-width:32px;
+  }
+  .del-btn:hover{ color:var(--gold); }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; padding:4px 2px; }
+
+  /* ---------- Progress ---------- */
+  .progress-wrap{ margin-top:14px; }
+  .progress-top{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-size:13.5px; color:var(--muted); margin-bottom:7px;
+  }
+  .progress-top b{ color:var(--emerald); font-weight:600; }
+  .bar{
+    height:10px; background:var(--emerald-soft); border-radius:999px; overflow:hidden;
+  }
+  .bar-fill{
+    height:100%; width:0%; border-radius:999px;
+    background:linear-gradient(90deg, var(--gold-soft), var(--gold));
+    transition:width .35s ease;
+  }
+  .progress-msg{ text-align:center; font-size:13.5px; color:var(--emerald); margin-top:10px; font-weight:600; }
+
+  /* ---------- Scripture / affirmation ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1; min-height:26px;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .verse-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  .saved-note{ text-align:center; font-size:12.5px; color:var(--muted); margin-top:6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>New Chapter Planner</h1>
+    <p class="subtitle">Starting over? Plan the next chapter — with intention and grace.</p>
+    <div class="chapter-badge" id="chapterBadge">Your next chapter</div>
+  </header>
+
+  <!-- Welcome / first-run -->
+  <section class="welcome" id="welcome">
+    <h2>Every ending is a beginning. 🌿</h2>
+    <p>Whatever closed the last chapter, you're still here — and that's holy. This space is yours to dream the next one on purpose. Take it gently. There's no wrong way to begin again.</p>
+  </section>
+
+  <!-- 1. Name this chapter -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Name This Chapter</h2></div>
+    <p class="hint">Give it a name — the way you'd title a story you're proud to live.</p>
+    <input type="text" class="title-input" id="chapterTitle" placeholder="The Rebuilding" maxlength="48">
+
+    <label class="field-label" for="leaving">What I'm leaving behind / closing</label>
+    <textarea id="leaving" placeholder="The weight I'm setting down as I walk forward…"></textarea>
+
+    <label class="field-label" for="grateful">What I'm grateful the last chapter taught me</label>
+    <textarea id="grateful" placeholder="Even the hard pages held a lesson…"></textarea>
+
+    <label class="field-label" for="becoming">The woman I want to be in this chapter</label>
+    <textarea id="becoming" placeholder="She is…"></textarea>
+
+    <label class="field-label" for="feeling" style="text-align:center;">The feeling or word this chapter holds</label>
+    <input type="text" class="word-input" id="feeling" placeholder="Peace" maxlength="22">
+  </section>
+
+  <!-- 2. Vision -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Vision for This Chapter</h2></div>
+    <p class="hint">A gentle picture of where you're headed across the parts of your life.</p>
+
+    <div class="vision-row">
+      <div class="vision-label"><span class="ico">🕊️</span><label for="vFaith">Faith</label></div>
+      <input type="text" id="vFaith" placeholder="How I want to walk with God…">
+    </div>
+    <div class="vision-row">
+      <div class="vision-label"><span class="ico">🌸</span><label for="vSelf">Self</label></div>
+      <input type="text" id="vSelf" placeholder="How I want to feel in my own skin…">
+    </div>
+    <div class="vision-row">
+      <div class="vision-label"><span class="ico">🤝</span><label for="vRel">Relationships</label></div>
+      <input type="text" id="vRel" placeholder="The connection I'm growing toward…">
+    </div>
+    <div class="vision-row">
+      <div class="vision-label"><span class="ico">💼</span><label for="vWork">Work / Money</label></div>
+      <input type="text" id="vWork" placeholder="What I'm building and stewarding…">
+    </div>
+    <div class="vision-row">
+      <div class="vision-label"><span class="ico">🏡</span><label for="vHome">Home / Health</label></div>
+      <input type="text" id="vHome" placeholder="The space and body I'm tending…">
+    </div>
+  </section>
+
+  <!-- 3. First steps -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>First Steps</h2></div>
+    <p class="hint">Small, brave actions to walk into the new chapter. One step is enough to begin.</p>
+
+    <div class="add-row">
+      <input type="text" id="stepInput" placeholder="One small step I can take…" maxlength="120">
+      <button class="add-btn" id="addStep" type="button" aria-label="Add step">+</button>
+    </div>
+
+    <ul class="steps-list" id="stepsList"></ul>
+    <p class="empty-note" id="stepsEmpty">No steps yet — add the first one above. 💛</p>
+
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span>Steps taken</span>
+        <span><b id="stepCount">0</b> of <b id="stepTotal">0</b></span>
+      </div>
+      <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+      <div class="progress-msg" id="progressMsg"></div>
+    </div>
+  </section>
+
+  <!-- 4. Scripture / affirmation -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>A Word to Carry</h2></div>
+    <p class="hint">A scripture or affirmation for beginning again. Keep one of these — or write your own.</p>
+    <div class="verse">
+      <p id="verseText">—</p>
+      <div class="ref" id="verseRef"></div>
+    </div>
+    <div class="verse-actions">
+      <button class="link-btn" id="anotherVerse" type="button">↻ Show me another</button>
+    </div>
+    <label class="field-label" for="ownWord">Or write your own <span class="opt">(optional)</span></label>
+    <textarea id="ownWord" placeholder="The words I want to hold onto as I begin…"></textarea>
+  </section>
+
+  <p class="saved-note" id="savedNote">Everything saves automatically. 💛</p>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_new_chapter";
+
+  // ---- Gentle words for starting over ----
+  var VERSES = [
+    ["See, I am doing a new thing! Now it springs up; do you not perceive it?", "Isaiah 43:19"],
+    ["Forget the former things; do not dwell on the past.", "Isaiah 43:18"],
+    ["He has made everything beautiful in its time.", "Ecclesiastes 3:11"],
+    ["For I know the plans I have for you — plans to prosper you and not to harm you, plans to give you hope and a future.", "Jeremiah 29:11"],
+    ["His mercies are new every morning; great is your faithfulness.", "Lamentations 3:23"],
+    ["Therefore, if anyone is in Christ, the new creation has come: the old has gone, the new is here!", "2 Corinthians 5:17"],
+    ["She is clothed with strength and dignity, and she laughs without fear of the future.", "Proverbs 31:25"],
+    ["Those who hope in the Lord will renew their strength.", "Isaiah 40:31"],
+    ["Being confident of this, that He who began a good work in you will carry it on to completion.", "Philippians 1:6"],
+    ["Weeping may stay for the night, but rejoicing comes in the morning.", "Psalm 30:5"],
+    ["You are allowed to begin again. The page is blank, and your hand is steady.", "A Word for You"],
+    ["Starting over isn't failure — it's faith with its sleeves rolled up.", "A Word for You"],
+    ["The woman you're becoming is worth every brave step it takes to get there.", "A Word for You"],
+    ["You did not lose your way; you are finding a truer one.", "A Word for You"]
+  ];
+
+  // ---- Field ids that are simple text/textarea ----
+  var TEXT_FIELDS = [
+    "chapterTitle","leaving","grateful","becoming","feeling",
+    "vFaith","vSelf","vRel","vWork","vHome","ownWord"
+  ];
+
+  // ---- State ----
+  var data = load();
+
+  function blankData(){
+    return {
+      fields:{}, steps:[], verse: 0, ownVerse:false
+    };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          if(!o.fields) o.fields = {};
+          if(!Array.isArray(o.steps)) o.steps = [];
+          if(typeof o.verse !== "number") o.verse = 0;
+          return o;
+        }
+      }
+    }catch(e){}
+    return blankData();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Restore text fields ----
+  TEXT_FIELDS.forEach(function(id){
+    var el = $(id);
+    if(!el) return;
+    el.value = data.fields[id] || "";
+    el.addEventListener("input", function(){
+      data.fields[id] = el.value;
+      save();
+      if(id === "chapterTitle") renderBadge();
+      updateWelcome();
+    });
+  });
+
+  // ---- Chapter badge in header ----
+  function renderBadge(){
+    var t = (data.fields.chapterTitle || "").trim();
+    $("chapterBadge").textContent = t ? "“" + t + "”" : "Your next chapter";
+  }
+
+  // ---- Welcome hides once she's begun ----
+  function hasStarted(){
+    if(data.steps.length) return true;
+    for(var k in data.fields){
+      if(data.fields[k] && String(data.fields[k]).trim()) return true;
+    }
+    return false;
+  }
+  function updateWelcome(){
+    $("welcome").style.display = hasStarted() ? "none" : "block";
+  }
+
+  // ---- First steps ----
+  function renderSteps(){
+    var list = $("stepsList"), empty = $("stepsEmpty");
+    list.innerHTML = "";
+    if(data.steps.length === 0){
+      empty.style.display = "block";
+    }else{
+      empty.style.display = "none";
+      data.steps.forEach(function(s, idx){
+        var li = document.createElement("li");
+
+        var box = document.createElement("button");
+        box.type = "button";
+        box.className = "check" + (s.done ? " on" : "");
+        box.setAttribute("aria-pressed", s.done ? "true" : "false");
+        box.setAttribute("aria-label", s.done ? "Mark step not done" : "Mark step done");
+        box.textContent = s.done ? "✓" : "";
+        box.addEventListener("click", function(){
+          data.steps[idx].done = !data.steps[idx].done;
+          save(); renderSteps(); renderProgress();
+        });
+
+        var txt = document.createElement("span");
+        txt.className = "step-text" + (s.done ? " done" : "");
+        txt.textContent = s.text;
+
+        var del = document.createElement("button");
+        del.type = "button";
+        del.className = "del-btn";
+        del.setAttribute("aria-label", "Remove step");
+        del.innerHTML = "&times;";
+        del.addEventListener("click", function(){
+          data.steps.splice(idx, 1);
+          save(); renderSteps(); renderProgress(); updateWelcome();
+        });
+
+        li.appendChild(box);
+        li.appendChild(txt);
+        li.appendChild(del);
+        list.appendChild(li);
+      });
+    }
+    renderProgress();
+  }
+
+  function renderProgress(){
+    var total = data.steps.length;
+    var done = data.steps.filter(function(s){ return s.done; }).length;
+    $("stepTotal").textContent = total;
+    $("stepCount").textContent = done;
+    var pct = total ? Math.round((done/total)*100) : 0;
+    $("barFill").style.width = pct + "%";
+    var msg = $("progressMsg");
+    if(total === 0){ msg.textContent = "Add your first brave step. 🌿"; }
+    else if(done === 0){ msg.textContent = "The plan is set. One step begins it. 💛"; }
+    else if(done < total){ msg.textContent = "You're walking it out, sister. Keep going. ✨"; }
+    else{ msg.textContent = "Every step taken. Look how far you've come. 🌿"; }
+  }
+
+  function addStep(){
+    var inp = $("stepInput");
+    var v = inp.value.trim();
+    if(!v) return;
+    data.steps.push({ text:v, done:false });
+    inp.value = "";
+    save(); renderSteps(); updateWelcome();
+    inp.focus();
+  }
+  $("addStep").addEventListener("click", addStep);
+  $("stepInput").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); addStep(); }
+  });
+
+  // ---- Scripture / affirmation ----
+  function renderVerse(){
+    var v = VERSES[data.verse % VERSES.length];
+    $("verseText").textContent = v[0];
+    $("verseRef").textContent = v[1];
+  }
+  $("anotherVerse").addEventListener("click", function(){
+    data.verse = (data.verse + 1) % VERSES.length;
+    save(); renderVerse();
+  });
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear your entire New Chapter Planner? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = blankData();
+      TEXT_FIELDS.forEach(function(id){ var el = $(id); if(el) el.value = ""; });
+      renderBadge(); renderSteps(); renderVerse(); updateWelcome();
+    }
+  });
+
+  // ---- Initial render ----
+  renderBadge();
+  renderSteps();
+  renderVerse();
+  updateWelcome();
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rest Without Guilt Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    display:none; margin-top:16px;
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:16px; padding:24px 20px; text-align:center;
+  }
+  .welcome.show{ display:block; animation:rise .4s ease; }
+  .welcome h2{ font-family:'Fraunces',serif; font-weight:600; font-size:22px; margin-bottom:10px; }
+  .welcome p{ font-size:14.5px; line-height:1.6; color:#F1E9D6; }
+  .welcome p + p{ margin-top:10px; }
+  .welcome .dismiss{
+    margin-top:16px; min-height:44px; background:var(--gold); color:var(--ink);
+    border:none; border-radius:11px; padding:11px 22px; font-family:inherit;
+    font-weight:700; font-size:14.5px; cursor:pointer;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Rest type tabs ---------- */
+  .types{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+  .type-btn{
+    min-height:44px; padding:9px 14px; border-radius:999px; cursor:pointer;
+    background:var(--cream); border:1px solid var(--line); color:var(--ink);
+    font-family:inherit; font-weight:600; font-size:13.5px;
+    transition:all .12s ease;
+  }
+  .type-btn:hover{ border-color:var(--gold); }
+  .type-btn.active{
+    background:var(--emerald); border-color:var(--emerald); color:#FCF8EF;
+    box-shadow:0 4px 12px rgba(20,84,62,.22);
+  }
+  .type-desc{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:12px; padding:12px 14px; color:var(--emerald);
+    font-size:13.5px; line-height:1.5; margin-bottom:14px;
+  }
+
+  /* ---------- Library chips ---------- */
+  .lib-label{ display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:4px 0 8px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+  .chip{
+    min-height:44px; padding:9px 13px; border-radius:11px; cursor:pointer;
+    background:var(--cream); border:1px dashed var(--line); color:var(--ink);
+    font-family:inherit; font-weight:500; font-size:14px;
+    transition:all .12s ease; display:inline-flex; align-items:center; gap:6px;
+  }
+  .chip:hover{ border-color:var(--gold); border-style:solid; }
+  .chip.picked{
+    background:var(--gold-soft); border-style:solid; border-color:var(--gold);
+    color:var(--emerald); font-weight:600;
+  }
+  .chip .tick{ font-size:13px; }
+
+  .add-own{ display:flex; gap:8px; margin-bottom:6px; }
+  .add-own input{ flex:1; }
+  .add-own button{
+    flex:none; min-height:48px; padding:0 16px; border-radius:11px; cursor:pointer;
+    background:var(--emerald); color:#FCF8EF; border:none; font-family:inherit;
+    font-weight:600; font-size:14px;
+  }
+  .add-own button:hover{ background:#0f3f2e; }
+
+  /* ---------- Plan list ---------- */
+  .plan-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 4px;
+  }
+  .plan-list{ list-style:none; }
+  .plan-row{
+    display:flex; align-items:center; gap:12px;
+    padding:12px 2px; border-bottom:1px solid var(--line);
+  }
+  .plan-row:last-child{ border-bottom:none; }
+  .plan-check{
+    flex:none; width:30px; height:30px; border-radius:50%; cursor:pointer;
+    border:2px solid var(--gold); background:#fff; color:var(--emerald);
+    display:flex; align-items:center; justify-content:center; font-size:15px;
+    transition:all .12s ease;
+  }
+  .plan-check.done{ background:var(--emerald); border-color:var(--emerald); color:#FCF8EF; }
+  .plan-main{ flex:1; min-width:0; }
+  .plan-act{ font-size:15px; font-weight:600; color:var(--ink); }
+  .plan-act.done{ text-decoration:line-through; color:var(--muted); }
+  .plan-meta{ font-size:12.5px; color:var(--muted); margin-top:2px; }
+  .plan-meta .tag{
+    display:inline-block; background:var(--emerald-soft); color:var(--emerald);
+    border-radius:999px; padding:1px 9px; font-weight:600; font-size:11.5px;
+    letter-spacing:.03em; margin-right:6px;
+  }
+  .plan-del{
+    flex:none; background:none; border:none; color:#B9AF9C; cursor:pointer;
+    font-size:18px; min-width:44px; min-height:44px; line-height:1;
+  }
+  .plan-del:hover{ color:var(--gold); }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Counter ---------- */
+  .counter{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:16px; padding:14px; border-radius:14px;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    color:var(--emerald); font-size:14px; text-align:center;
+  }
+  .counter b{ font-size:18px; }
+  .counter .leaf{ font-size:18px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Truths / reframe ---------- */
+  .truth{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .truth::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .truth p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:19px; line-height:1.45; position:relative; z-index:1;
+  }
+  .truth-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  .reframe-pair{ margin-top:14px; }
+  .pair-saved{
+    margin-top:12px; background:var(--cream); border:1px solid var(--line);
+    border-radius:12px; padding:12px 14px;
+  }
+  .pair-saved .guilty{ font-size:14px; color:var(--muted); }
+  .pair-saved .guilty b{ color:var(--ink); font-weight:600; }
+  .pair-saved .arrow{ color:var(--gold); font-weight:700; margin:6px 0; font-size:13px; }
+  .pair-saved .truthline{
+    font-family:'Fraunces',serif; font-style:italic; color:var(--emerald);
+    font-size:15px; line-height:1.45;
+  }
+  .pair-saved .pdate{ font-size:11.5px; color:var(--muted); margin-top:8px; }
+
+  /* ---------- Buttons ---------- */
+  .save-btn{
+    width:100%; margin-top:8px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .save-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .save-btn:active{ transform:translateY(1px); }
+
+  .saved-flash{
+    display:none; margin-top:10px; text-align:center; color:var(--emerald);
+    font-weight:600; font-size:13.5px;
+  }
+  .saved-flash.show{ display:block; animation:rise .4s ease; }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Rest Without Guilt</h1>
+    <p class="subtitle">Plan rest as a sacred strategy — not a reward you have to earn.</p>
+  </header>
+
+  <!-- Welcome (first run) -->
+  <section class="welcome" id="welcome">
+    <h2>You are allowed to rest. 🌿</h2>
+    <p>Rest isn't the prize you get after you've done enough. It's how you're carried — how you keep showing up sustained, soft, and whole.</p>
+    <p>Plan a few gentle ways to rest below, then come back and mark them when you've taken them. No guilt required. Just permission.</p>
+    <button class="dismiss" id="welcomeDismiss" type="button">I'm ready to rest</button>
+  </section>
+
+  <!-- 1. Plan rest -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Plan Your Rest</h2></div>
+    <p class="hint">Choose a kind of rest, then tap the ways you'd like to receive it.</p>
+
+    <div class="types" id="types"></div>
+    <div class="type-desc" id="typeDesc"></div>
+
+    <span class="lib-label">Gentle ways to rest</span>
+    <div class="chips" id="chips"></div>
+
+    <label class="field-label" for="ownInput">Add your own way to rest</label>
+    <div class="add-own">
+      <input type="text" id="ownInput" placeholder="Something that restores you…">
+      <button id="ownAdd" type="button">Add</button>
+    </div>
+    <p class="hint" style="margin:8px 0 0;">Tap a way above to add it to your plan. It's yours to keep or release anytime.</p>
+  </section>
+
+  <!-- 2. Your rest plan -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Your Rest Plan</h2></div>
+    <p class="hint">Commit to these. When you've taken one, tap the circle — proof that you rested.</p>
+
+    <ul class="plan-list" id="planList"></ul>
+    <p class="empty-note" id="planEmpty">Nothing planned yet. Tap a way to rest above — start with just one. 💛</p>
+
+    <div class="counter" id="counter">
+      <span class="leaf">🌿</span>
+      <span>You rested <b id="weekCount">0</b> time<span id="weekPlural">s</span> this week · <b id="totalRest">0</b> total. Well done, sister.</span>
+    </div>
+  </section>
+
+  <!-- 3. Guilt reframe -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>When Guilt Shows Up</h2></div>
+    <p class="hint">Let one of these truths settle in before the guilt does.</p>
+
+    <div class="truth">
+      <p id="truthText">—</p>
+    </div>
+    <div class="truth-actions">
+      <button class="link-btn" id="anotherTruth" type="button">↻ Show me another</button>
+    </div>
+
+    <div class="reframe-pair">
+      <label class="field-label" for="guiltyThought">Name the guilty thought <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+      <input type="text" id="guiltyThought" placeholder="I should be doing more…">
+      <label class="field-label" for="reframeText">Pair it with a truth</label>
+      <textarea id="reframeText" placeholder="The truth above, or your own…"></textarea>
+      <button class="save-btn" id="savePair" type="button">Reframe it 💛</button>
+      <div class="saved-flash" id="pairFlash">Reframed. That guilt doesn't get to drive.</div>
+
+      <div id="pairSaved"></div>
+    </div>
+  </section>
+
+  <!-- 4. Reflection -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>What Restores You</h2></div>
+    <p class="hint">Learning your own rhythms is holy work. These save automatically.</p>
+
+    <label class="field-label" for="restores">What truly restores me?</label>
+    <textarea id="restores" placeholder="The things that fill me back up…"></textarea>
+
+    <label class="field-label" for="drains">What drains me that I can release?</label>
+    <textarea id="drains" placeholder="What I can set down, say no to, or let go of…"></textarea>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_rest_without_guilt";
+
+  // ---- Rest types + their descriptions + gentle idea libraries ----
+  var TYPES = [
+    {
+      id:"physical", label:"Physical",
+      desc:"Your body has carried so much. Let it be still, slow, and tended to.",
+      ideas:["A nap","A slow walk","Stretch & breathe","An early night","A warm bath","Sit in the sun","Put your feet up","A gentle meal"]
+    },
+    {
+      id:"mental", label:"Mental",
+      desc:"A tired mind isn't lazy — it's full. Give it quiet to clear.",
+      ideas:["A screen break","Brain dump on paper","Single-task one thing","Step away from the to-do list","Five minutes of silence","Let it be unfinished"]
+    },
+    {
+      id:"emotional", label:"Emotional",
+      desc:"You don't have to hold it all. Make space to feel and be held.",
+      ideas:["Cry if you need to","Call a safe friend","Journal it out","Let yourself not be okay","Speak kindly to yourself","Release the comparison"]
+    },
+    {
+      id:"spiritual", label:"Spiritual",
+      desc:"Come back to the One who sustains you. Be filled, not just emptied.",
+      ideas:["Time with God","Sit in His presence","Worship quietly","Pray without fixing","Read a psalm","Be still and know"]
+    },
+    {
+      id:"social", label:"Social / Sensory",
+      desc:"Sometimes rest is fewer voices and softer inputs. Protect your peace.",
+      ideas:["Say no to one thing","A quiet space","Dim the lights","Mute the noise","Time alone","Leave the group chat for a bit","Soft music"]
+    }
+  ];
+
+  // ---- Built-in truths to counter rest-guilt ----
+  var TRUTHS = [
+    "Rest is not a reward I earn; it's how I'm sustained.",
+    "I can't pour from empty — so I let myself be filled.",
+    "Even God rested. My rest is not weakness; it's worship.",
+    "My worth was never measured by my output.",
+    "Saying no to one thing is saying yes to my peace.",
+    "I am a daughter of the King, not a machine.",
+    "Resting now is how I keep showing up later.",
+    "The world will keep turning while I breathe.",
+    "I am allowed to be a human being, not just a human doing.",
+    "Slowing down is not falling behind.",
+    "My rest blesses the people I love, too.",
+    "He gives to His beloved even in her sleep.",
+    "I don't have to finish everything to be enough.",
+    "Rest is a strategy, not a luxury.",
+    "I release the guilt. It was never mine to carry."
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"short", month:"short", day:"numeric"});
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    return Math.floor((d - start) / 86400000);
+  }
+  // Sunday-start week key for "this week" counting
+  function weekStartTime(){
+    var d = new Date();
+    d.setHours(0,0,0,0);
+    d.setDate(d.getDate() - d.getDay());
+    return d.getTime();
+  }
+  function keyToTime(key){
+    var p = key.split("-");
+    return new Date(p[0], p[1]-1, p[2]).getTime();
+  }
+
+  // ---- State ----
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o) return o; }
+    }catch(e){}
+    return null;
+  }
+  function freshData(){
+    return {
+      plan:[],            // {id, type, label, doneDate(null|key)}
+      pairs:[],           // {guilty, reframe, date}
+      reflection:{ restores:"", drains:"" },
+      truth:null,
+      welcomed:false
+    };
+  }
+  var data = load() || freshData();
+  // backfill any missing keys
+  if(!data.plan) data.plan = [];
+  if(!data.pairs) data.pairs = [];
+  if(!data.reflection) data.reflection = { restores:"", drains:"" };
+  if(data.truth === undefined || data.truth === null){
+    data.truth = dayOfYear(new Date()) % TRUTHS.length;
+  }
+
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+  var activeType = TYPES[0].id;
+  var uid = 0;
+
+  // ---- Welcome (first run = nothing planned and not yet welcomed) ----
+  if(!data.welcomed && data.plan.length === 0){
+    $("welcome").classList.add("show");
+  }
+  $("welcomeDismiss").addEventListener("click", function(){
+    data.welcomed = true; save();
+    $("welcome").classList.remove("show");
+  });
+
+  // ---- Render type tabs ----
+  function renderTypes(){
+    var c = $("types"); c.innerHTML = "";
+    TYPES.forEach(function(t){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "type-btn" + (t.id===activeType ? " active":"");
+      b.textContent = t.label;
+      b.addEventListener("click", function(){
+        activeType = t.id; renderTypes(); renderTypeDesc(); renderChips();
+      });
+      c.appendChild(b);
+    });
+  }
+  function curType(){
+    for(var i=0;i<TYPES.length;i++){ if(TYPES[i].id===activeType) return TYPES[i]; }
+    return TYPES[0];
+  }
+  function renderTypeDesc(){
+    $("typeDesc").textContent = curType().desc;
+  }
+
+  // ---- Render idea chips for active type ----
+  function isPicked(type, label){
+    return data.plan.some(function(p){ return p.type===type && p.label===label; });
+  }
+  function renderChips(){
+    var c = $("chips"); c.innerHTML = "";
+    curType().ideas.forEach(function(idea){
+      var chip = document.createElement("button");
+      chip.type = "button";
+      var picked = isPicked(activeType, idea);
+      chip.className = "chip" + (picked ? " picked":"");
+      chip.innerHTML = (picked ? '<span class="tick">✓</span>' : '') + escapeHtml(idea);
+      chip.addEventListener("click", function(){ togglePlanItem(activeType, idea); });
+      c.appendChild(chip);
+    });
+  }
+
+  function togglePlanItem(type, label){
+    var idx = -1;
+    for(var i=0;i<data.plan.length;i++){
+      if(data.plan[i].type===type && data.plan[i].label===label){ idx=i; break; }
+    }
+    if(idx >= 0){
+      data.plan.splice(idx,1);
+    }else{
+      data.plan.push({ uid:"u"+(Date.now())+"_"+(uid++), type:type, label:label, doneDate:null });
+    }
+    save(); renderChips(); renderPlan();
+  }
+
+  // ---- Add own ----
+  $("ownAdd").addEventListener("click", addOwn);
+  $("ownInput").addEventListener("keydown", function(e){ if(e.key==="Enter"){ addOwn(); } });
+  function addOwn(){
+    var v = $("ownInput").value.trim();
+    if(!v) return;
+    if(!isPicked(activeType, v)){
+      data.plan.push({ uid:"u"+(Date.now())+"_"+(uid++), type:activeType, label:v, doneDate:null });
+      save();
+    }
+    $("ownInput").value = "";
+    renderChips(); renderPlan();
+  }
+
+  // ---- Render plan list ----
+  function typeLabel(id){
+    for(var i=0;i<TYPES.length;i++){ if(TYPES[i].id===id) return TYPES[i].label; }
+    return id;
+  }
+  function renderPlan(){
+    var list = $("planList"), empty = $("planEmpty");
+    list.innerHTML = "";
+    if(data.plan.length === 0){
+      empty.style.display = "block"; renderCounter(); return;
+    }
+    empty.style.display = "none";
+    data.plan.forEach(function(item){
+      var li = document.createElement("li");
+      li.className = "plan-row";
+
+      var check = document.createElement("button");
+      check.type = "button";
+      check.className = "plan-check" + (item.doneDate ? " done":"");
+      check.setAttribute("aria-label", item.doneDate ? "Mark as not taken" : "Mark this rest as taken");
+      check.textContent = item.doneDate ? "✓" : "";
+      check.addEventListener("click", function(){ toggleDone(item); });
+
+      var main = document.createElement("div");
+      main.className = "plan-main";
+      var act = document.createElement("div");
+      act.className = "plan-act" + (item.doneDate ? " done":"");
+      act.textContent = item.label;
+      var meta = document.createElement("div");
+      meta.className = "plan-meta";
+      var tag = '<span class="tag">'+escapeHtml(typeLabel(item.type))+'</span>';
+      meta.innerHTML = tag + (item.doneDate ? ("Rested " + prettyDate(item.doneDate)) : "Planned");
+      main.appendChild(act); main.appendChild(meta);
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "plan-del";
+      del.setAttribute("aria-label", "Remove from plan");
+      del.textContent = "×";
+      del.addEventListener("click", function(){ removeItem(item); });
+
+      li.appendChild(check); li.appendChild(main); li.appendChild(del);
+      list.appendChild(li);
+    });
+    renderCounter();
+  }
+
+  function toggleDone(item){
+    item.doneDate = item.doneDate ? null : todayKey();
+    save(); renderPlan();
+  }
+  function removeItem(item){
+    var idx = data.plan.indexOf(item);
+    if(idx >= 0){ data.plan.splice(idx,1); save(); renderChips(); renderPlan(); }
+  }
+
+  // ---- Counter ----
+  function renderCounter(){
+    var total = 0, week = 0;
+    var ws = weekStartTime();
+    data.plan.forEach(function(p){
+      if(p.doneDate){
+        total++;
+        if(keyToTime(p.doneDate) >= ws) week++;
+      }
+    });
+    $("weekCount").textContent = week;
+    $("weekPlural").style.display = (week === 1) ? "none" : "inline";
+    $("totalRest").textContent = total;
+  }
+
+  // ---- Truth / reframe ----
+  function renderTruth(){
+    $("truthText").textContent = TRUTHS[data.truth];
+  }
+  $("anotherTruth").addEventListener("click", function(){
+    data.truth = (data.truth + 1) % TRUTHS.length;
+    renderTruth(); save();
+  });
+
+  $("savePair").addEventListener("click", function(){
+    var guilty = $("guiltyThought").value.trim();
+    var reframe = $("reframeText").value.trim();
+    if(!reframe){ reframe = TRUTHS[data.truth]; }
+    if(!guilty && !reframe) return;
+    data.pairs.unshift({ guilty:guilty, reframe:reframe, date:todayKey() });
+    if(data.pairs.length > 12) data.pairs = data.pairs.slice(0,12);
+    save();
+    $("guiltyThought").value = ""; $("reframeText").value = "";
+    var flash = $("pairFlash");
+    flash.classList.add("show");
+    setTimeout(function(){ flash.classList.remove("show"); }, 2600);
+    renderPairs();
+  });
+
+  function renderPairs(){
+    var wrap = $("pairSaved");
+    wrap.innerHTML = "";
+    data.pairs.forEach(function(p){
+      var div = document.createElement("div");
+      div.className = "pair-saved";
+      var inner = "";
+      if(p.guilty){ inner += '<div class="guilty">The thought: <b>'+escapeHtml(p.guilty)+'</b></div><div class="arrow">↓ the truth ↓</div>'; }
+      inner += '<div class="truthline">'+escapeHtml(p.reframe)+'</div>';
+      inner += '<div class="pdate">'+prettyDate(p.date)+'</div>';
+      div.innerHTML = inner;
+      wrap.appendChild(div);
+    });
+  }
+
+  // ---- Reflection (auto-save) ----
+  $("restores").value = data.reflection.restores || "";
+  $("drains").value = data.reflection.drains || "";
+  $("restores").addEventListener("input", function(){ data.reflection.restores = this.value; save(); });
+  $("drains").addEventListener("input", function(){ data.reflection.drains = this.value; save(); });
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Rest Without Guilt data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = freshData();
+      data.truth = dayOfYear(new Date()) % TRUTHS.length;
+      activeType = TYPES[0].id;
+      $("restores").value = ""; $("drains").value = "";
+      $("guiltyThought").value = ""; $("reframeText").value = "";
+      $("welcome").classList.add("show");
+      renderAll();
+    }
+  });
+
+  // ---- Helpers ----
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  function renderAll(){
+    renderTypes(); renderTypeDesc(); renderChips();
+    renderPlan(); renderTruth(); renderPairs();
+  }
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

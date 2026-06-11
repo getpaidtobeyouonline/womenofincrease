@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inner Child Healing Journal · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome / first-run ---------- */
+  .welcome{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:20px; margin-top:16px; color:var(--emerald);
+  }
+  .welcome p{ font-size:14.5px; line-height:1.6; color:var(--ink); }
+  .welcome p+p{ margin-top:10px; }
+  .welcome .lead{
+    font-family:'Fraunces',serif; font-weight:600; font-size:18px;
+    color:var(--emerald); margin-bottom:8px;
+  }
+
+  /* ---------- Prompt of the session ---------- */
+  .prompt{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .prompt::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .prompt p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:19px; line-height:1.45; position:relative; z-index:1;
+  }
+  .prompt .label{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .prompt-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  textarea.tall{ min-height:120px; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Promises list ---------- */
+  .promise-row{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .promise-row .dot{
+    flex:none; width:9px;height:9px;border-radius:50%;background:var(--gold);
+  }
+  .promise-row input{ flex:1; }
+  .promise-row .del{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:20px; line-height:1; min-width:44px; min-height:44px; border-radius:10px;
+  }
+  .promise-row .del:hover{ color:var(--emerald); }
+  .add-promise{
+    margin-top:4px; background:none; border:1px dashed var(--line); color:var(--emerald);
+    border-radius:11px; padding:11px 14px; min-height:46px; width:100%;
+    font-family:inherit; font-weight:600; font-size:14px; cursor:pointer;
+  }
+  .add-promise:hover{ border-color:var(--gold); }
+
+  /* ---------- Save button ---------- */
+  .complete-btn{
+    width:100%; margin-top:8px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+
+  .blessing{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .blessing.show{ display:block; animation:rise .4s ease; }
+  .blessing .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .blessing .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- History ---------- */
+  .history-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 4px;
+  }
+  .history-list{ list-style:none; }
+  .h-item{
+    border-bottom:1px solid var(--line); padding:4px 0;
+  }
+  .h-item:last-child{ border-bottom:none; }
+  .h-head{
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+    padding:10px 2px; cursor:pointer;
+  }
+  .h-head .h-date{ color:var(--ink); font-weight:600; font-size:14px; }
+  .h-head .h-toggle{ color:var(--muted); font-size:13px; flex:none; }
+  .h-body{ display:none; padding:2px 2px 14px; }
+  .h-body.show{ display:block; }
+  .h-q{
+    font-weight:600; font-size:13px; color:var(--emerald); margin:10px 0 2px;
+  }
+  .h-a{
+    font-size:14px; color:var(--ink); white-space:pre-wrap; line-height:1.55;
+  }
+  .h-a.empty{ color:var(--muted); font-style:italic; }
+  .h-del{
+    margin-top:12px; background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:9px 14px; min-height:44px; font-family:inherit;
+    font-size:13px; cursor:pointer;
+  }
+  .h-del:hover{ border-color:var(--gold); color:var(--ink); }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Inner Child Healing Journal</h1>
+    <p class="subtitle">What she needed, what she missed — and the love you can give her now.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- First-run welcome -->
+  <section class="welcome" id="welcome" style="display:none;">
+    <div class="lead">Welcome, gently. 💛</div>
+    <p>This is a soft, safe place — just for you and the little girl you once were. There's no right way to do this, and nothing you write has to be perfect or finished.</p>
+    <p>Go slow. Breathe. Write a word, a sentence, or a whole letter. She's been waiting a long time to be heard, and so have you. Whatever rises is welcome here.</p>
+  </section>
+
+  <!-- 1. Today's tender prompt -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>A Word for Little You</h2></div>
+    <p class="hint">Sit with this for a moment before you begin. Let it meet you where you are.</p>
+    <div class="prompt">
+      <p id="promptText">—</p>
+      <div class="label">Gentle prompt for today</div>
+    </div>
+    <div class="prompt-actions">
+      <button class="link-btn" id="anotherPrompt" type="button">↻ Give me another</button>
+    </div>
+  </section>
+
+  <!-- 2. The guided entry -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Today's Entry</h2></div>
+    <p class="hint">Answer only what calls to you. Empty spaces are okay too.</p>
+
+    <label class="field-label" for="needed">What did little you need to hear?</label>
+    <textarea id="needed" placeholder="The words she longed for… &quot;You are safe.&quot; &quot;It wasn't your fault.&quot; &quot;You are so loved.&quot;"></textarea>
+
+    <label class="field-label" for="missed">What did she not get that she deserved?</label>
+    <textarea id="missed" placeholder="Name it softly. She deserved so much more, and it's okay to grieve that."></textarea>
+
+    <label class="field-label" for="giveNow">What can I give myself now that she needed then?</label>
+    <textarea id="giveNow" placeholder="A boundary, rest, gentleness, a yes, a no… What can you offer her today?"></textarea>
+
+    <label class="field-label" for="letter">A letter to my younger self <span style="color:var(--muted);font-weight:400;">(free-write)</span></label>
+    <textarea id="letter" class="tall" placeholder="Dear little one,&#10;&#10;I see you. I'm here now…"></textarea>
+
+    <button class="complete-btn" id="saveBtn" type="button">Save this entry 🤍</button>
+    <div class="blessing" id="blessing">
+      <div class="big">Held and saved. 💛</div>
+      <div class="sm">You showed up for her today — that's the healing. Be tender with yourself now.</div>
+    </div>
+  </section>
+
+  <!-- 3. Promises to little me -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Promises to Little Me</h2></div>
+    <p class="hint">Small, keepable promises you're making to her — to return to anytime.</p>
+    <div id="promiseList"></div>
+    <button class="add-promise" id="addPromise" type="button">+ Add a promise</button>
+  </section>
+
+  <!-- History -->
+  <section class="card">
+    <div class="history-title">Your record of self-compassion</div>
+    <p class="hint" style="margin-top:6px;">Tap any date to re-read. A gentle record of how far you've come.</p>
+    <ul class="history-list" id="historyList"></ul>
+    <p class="empty-note" id="historyEmpty">Your saved entries will gather here, most recent first. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_inner_child_healing";
+
+  // ---- A small, tender inner-child prompt library ----
+  var PROMPTS = [
+    "What did little you most want to hear from a grown-up who loved her?",
+    "If you could sit beside her right now, what would you whisper first?",
+    "What made her feel safe — and how can you offer that to yourself today?",
+    "What was she so brave about, even though no one noticed?",
+    "What did she carry that was never hers to carry?",
+    "What would it mean for her to hear, “It wasn't your fault”?",
+    "What small joy did she love? Could you give it to yourself this week?",
+    "What did she need permission to feel — and didn't get it?",
+    "If she cried, who held her? If no one did, can you hold her now?",
+    "What did she dream of becoming before the world got loud?",
+    "What gentle promise could you keep to her, starting today?",
+    "Where did she learn to be “too much” or “not enough” — and is that even true?",
+    "What does she deserve to know about how loved she is by God?",
+    "What did she hush about herself that's beautiful and allowed to take up space?",
+    "If she were standing in front of you, what would your eyes say to her?",
+    "What rest, softness, or care did she go without that you can offer now?",
+    "What would you thank her for — for surviving, for hoping, for holding on?",
+    "What story did she believe about herself that you're ready to set down?"
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    var diff = d - start;
+    return Math.floor(diff / 86400000);
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+  }
+
+  // ---- State ----
+  var data = load();
+  var TODAY = todayKey();
+  var entry = data.entries[TODAY] || { needed:"", missed:"", giveNow:"", letter:"", saved:false };
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && o.entries){
+          if(!o.promises) o.promises = [];
+          return o;
+        }
+      }
+    }catch(e){}
+    return { entries:{}, promises:[], prompt:null };
+  }
+  function save(){
+    data.entries[TODAY] = entry;
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var promptTextEl = $("promptText");
+  var neededEl=$("needed"), missedEl=$("missed"), giveNowEl=$("giveNow"), letterEl=$("letter");
+  var saveBtn=$("saveBtn"), blessingEl=$("blessing");
+
+  // ---- Prompt: deterministic daily default, user can cycle ----
+  if(data.prompt === null || data.prompt === undefined){
+    data.prompt = dayOfYear(new Date()) % PROMPTS.length;
+  }
+  function renderPrompt(){
+    promptTextEl.textContent = PROMPTS[data.prompt];
+  }
+  $("anotherPrompt").addEventListener("click", function(){
+    data.prompt = (data.prompt + 1) % PROMPTS.length;
+    renderPrompt(); save();
+  });
+
+  // ---- Restore inputs ----
+  $("todayDate").textContent = prettyDate(TODAY);
+  neededEl.value = entry.needed || "";
+  missedEl.value = entry.missed || "";
+  giveNowEl.value = entry.giveNow || "";
+  letterEl.value = entry.letter || "";
+  renderPrompt();
+
+  // ---- Auto-save on every change ----
+  function wire(el, fn){
+    el.addEventListener("input", function(){ fn(el.value); save(); });
+  }
+  wire(neededEl, function(v){ entry.needed=v; });
+  wire(missedEl, function(v){ entry.missed=v; });
+  wire(giveNowEl, function(v){ entry.giveNow=v; });
+  wire(letterEl, function(v){ entry.letter=v; });
+
+  // ---- Save this entry ----
+  saveBtn.addEventListener("click", function(){
+    var hasContent = (entry.needed||entry.missed||entry.giveNow||entry.letter).trim() !== "";
+    entry.saved = true;
+    entry.promptShown = PROMPTS[data.prompt];
+    save();
+    blessingEl.classList.add("show");
+    renderHistory();
+    renderWelcome();
+    if(!hasContent){
+      blessingEl.querySelector(".sm").textContent = "Even arriving here is enough. Come back whenever she needs you.";
+    }
+  });
+
+  // ---- Promises to little me ----
+  function renderPromises(){
+    var wrap = $("promiseList");
+    wrap.innerHTML = "";
+    data.promises.forEach(function(text, idx){
+      var row = document.createElement("div");
+      row.className = "promise-row";
+
+      var dot = document.createElement("span");
+      dot.className = "dot";
+
+      var input = document.createElement("input");
+      input.type = "text";
+      input.value = text;
+      input.placeholder = "I promise little me…";
+      input.setAttribute("aria-label", "Promise to little me");
+      input.addEventListener("input", function(){
+        data.promises[idx] = input.value; save();
+      });
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "del";
+      del.setAttribute("aria-label", "Remove this promise");
+      del.textContent = "×";
+      del.addEventListener("click", function(){
+        data.promises.splice(idx,1); save(); renderPromises();
+      });
+
+      row.appendChild(dot); row.appendChild(input); row.appendChild(del);
+      wrap.appendChild(row);
+    });
+  }
+  $("addPromise").addEventListener("click", function(){
+    data.promises.push(""); save(); renderPromises();
+    var inputs = $("promiseList").querySelectorAll("input");
+    if(inputs.length){ inputs[inputs.length-1].focus(); }
+  });
+
+  // ---- History (saved entries, most recent first) ----
+  function renderHistory(){
+    var list = $("historyList"), empty = $("historyEmpty");
+    var keys = Object.keys(data.entries)
+      .filter(function(k){ return data.entries[k].saved; })
+      .sort().reverse();
+    list.innerHTML = "";
+    if(keys.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+
+    var Q = [
+      ["What did little you need to hear?", "needed"],
+      ["What did she not get that she deserved?", "missed"],
+      ["What can I give myself now that she needed then?", "giveNow"],
+      ["A letter to my younger self", "letter"]
+    ];
+
+    keys.forEach(function(k){
+      var e = data.entries[k];
+      var li = document.createElement("li");
+      li.className = "h-item";
+
+      var head = document.createElement("div");
+      head.className = "h-head";
+      head.setAttribute("role","button");
+      head.setAttribute("tabindex","0");
+      var dateSpan = document.createElement("span");
+      dateSpan.className = "h-date";
+      dateSpan.textContent = prettyDate(k);
+      var toggle = document.createElement("span");
+      toggle.className = "h-toggle";
+      toggle.textContent = "Read ▸";
+      head.appendChild(dateSpan); head.appendChild(toggle);
+
+      var body = document.createElement("div");
+      body.className = "h-body";
+
+      if(e.promptShown){
+        var pq = document.createElement("div");
+        pq.className = "h-q";
+        pq.textContent = "Prompt that day";
+        var pa = document.createElement("div");
+        pa.className = "h-a";
+        pa.textContent = e.promptShown;
+        body.appendChild(pq); body.appendChild(pa);
+      }
+
+      Q.forEach(function(q){
+        var ans = (e[q[1]]||"").trim();
+        var qEl = document.createElement("div");
+        qEl.className = "h-q";
+        qEl.textContent = q[0];
+        var aEl = document.createElement("div");
+        aEl.className = "h-a" + (ans ? "" : " empty");
+        aEl.textContent = ans ? ans : "(left gently blank)";
+        body.appendChild(qEl); body.appendChild(aEl);
+      });
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "h-del";
+      del.textContent = "Delete this entry";
+      del.addEventListener("click", function(ev){
+        ev.stopPropagation();
+        if(confirm("Gently let go of this entry from " + prettyDate(k) + "? This can't be undone.")){
+          delete data.entries[k];
+          if(k === TODAY){
+            entry = { needed:"", missed:"", giveNow:"", letter:"", saved:false };
+            neededEl.value=""; missedEl.value=""; giveNowEl.value=""; letterEl.value="";
+            blessingEl.classList.remove("show");
+          }
+          save(); renderHistory(); renderWelcome();
+        }
+      });
+      body.appendChild(del);
+
+      function toggleBody(){
+        var open = body.classList.toggle("show");
+        toggle.textContent = open ? "Close ▾" : "Read ▸";
+      }
+      head.addEventListener("click", toggleBody);
+      head.addEventListener("keydown", function(ev){
+        if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); toggleBody(); }
+      });
+
+      li.appendChild(head); li.appendChild(body);
+      list.appendChild(li);
+    });
+  }
+
+  // ---- First-run welcome (show until first entry saved) ----
+  function renderWelcome(){
+    var anySaved = Object.keys(data.entries).some(function(k){ return data.entries[k].saved; });
+    $("welcome").style.display = anySaved ? "none" : "block";
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Inner Child Healing Journal entries and promises? This can't be undone, sister. Be sure you're ready.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { entries:{}, promises:[], prompt: dayOfYear(new Date()) % PROMPTS.length };
+      entry = { needed:"", missed:"", giveNow:"", letter:"", saved:false };
+      neededEl.value=""; missedEl.value=""; giveNowEl.value=""; letterEl.value="";
+      blessingEl.classList.remove("show");
+      renderPrompt(); renderPromises(); renderHistory(); renderWelcome();
+    }
+  });
+
+  // ---- Initial render ----
+  renderPromises();
+  renderHistory();
+  renderWelcome();
+
+})();
+</script>
+</body>
+</html>

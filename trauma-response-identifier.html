@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trauma Response Identifier · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Care note ---------- */
+  .care{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:16px 16px; margin-top:16px; color:var(--emerald);
+  }
+  .care .care-head{
+    font-family:'Fraunces',serif; font-weight:600; font-size:15px; margin-bottom:5px;
+    display:flex; align-items:center; gap:7px;
+  }
+  .care p{ font-size:13.5px; color:#33564a; line-height:1.5; }
+  .care.footer-care{ margin-top:0; }
+
+  /* ---------- Response options ---------- */
+  .resp{
+    border:1px solid var(--line); border-radius:13px; padding:14px 14px;
+    margin-bottom:12px; background:var(--cream); transition:border-color .15s, box-shadow .15s;
+  }
+  .resp.on{ border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,160,74,.16); background:#fff; }
+  .resp-top{ display:flex; align-items:flex-start; gap:12px; cursor:pointer; min-height:44px; }
+  .resp-check{
+    flex:none; width:24px; height:24px; margin-top:2px; border-radius:7px;
+    border:2px solid var(--gold-soft); background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; color:#fff; font-weight:700;
+  }
+  .resp.on .resp-check{ background:var(--gold); border-color:var(--gold); color:var(--ink); }
+  .resp-body{ flex:1; }
+  .resp-name{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:18px;
+    display:flex; align-items:center; gap:7px;
+  }
+  .resp-tag{ font-weight:400; color:var(--muted); font-size:13px; font-family:'Hanken Grotesk'; }
+  .resp-desc{ color:var(--muted); font-size:13.5px; margin-top:3px; }
+
+  .resp-expand{ margin-top:12px; display:none; }
+  .resp.on .resp-expand{ display:block; }
+  .resp-expand .field-label{ margin-top:4px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  .resp.on textarea{ background:var(--cream); }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:74px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Prompts ---------- */
+  .prompt-list{ list-style:none; }
+  .prompt-list li{
+    display:flex; gap:9px; align-items:flex-start; padding:8px 2px;
+    color:var(--ink); font-size:14px; border-bottom:1px solid var(--line);
+  }
+  .prompt-list li:last-child{ border-bottom:none; }
+  .prompt-list .q{ flex:none; color:var(--gold); font-family:'Fraunces',serif; font-style:italic; font-weight:600; }
+
+  /* ---------- Grounding tools ---------- */
+  .tool-row{
+    display:flex; align-items:flex-start; gap:11px; padding:11px 2px;
+    border-bottom:1px solid var(--line);
+  }
+  .tool-row:last-child{ border-bottom:none; }
+  .tool-text{ flex:1; font-size:14px; line-height:1.45; }
+  .fav-btn{
+    flex:none; min-width:44px; min-height:44px; border:none; background:none; cursor:pointer;
+    font-size:19px; color:var(--gold-soft); display:flex; align-items:center; justify-content:center;
+    border-radius:10px; transition:transform .08s ease, color .15s;
+  }
+  .fav-btn:hover{ color:var(--gold); }
+  .fav-btn:active{ transform:scale(.9); }
+  .fav-btn.on{ color:var(--gold); }
+  .tool-group-name{
+    font-family:'Fraunces',serif; color:var(--emerald); font-weight:600; font-size:15px;
+    margin:14px 0 2px;
+  }
+  .tool-group-name:first-child{ margin-top:0; }
+
+  /* ---------- Toolkit ---------- */
+  .toolkit-item{
+    display:flex; align-items:flex-start; gap:10px; padding:11px 0;
+    border-bottom:1px solid var(--line); font-size:14px;
+  }
+  .toolkit-item:last-child{ border-bottom:none; }
+  .toolkit-item .leaf{ flex:none; color:var(--gold); }
+  .toolkit-item .remove{
+    flex:none; min-width:44px; min-height:44px; margin-left:auto; border:none; background:none;
+    color:var(--muted); cursor:pointer; font-size:13px; border-radius:8px;
+  }
+  .toolkit-item .remove:hover{ color:var(--ink); }
+  .toolkit-text{ flex:1; }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Save reflection button ---------- */
+  .save-btn{
+    width:100%; margin-top:8px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .save-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .save-btn:active{ transform:translateY(1px); }
+
+  .saved-note{
+    display:none; margin-top:12px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:14px 16px; color:var(--emerald);
+  }
+  .saved-note.show{ display:block; animation:rise .4s ease; }
+  .saved-note .big{ font-family:'Fraunces',serif; font-weight:600; font-size:17px; margin-bottom:2px; }
+  .saved-note .sm{ font-size:13.5px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Saved reflections ---------- */
+  .ref-item{
+    padding:12px 0; border-bottom:1px solid var(--line);
+  }
+  .ref-item:last-child{ border-bottom:none; }
+  .ref-meta{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:4px; }
+  .ref-date{ color:var(--ink); font-weight:600; font-size:13px; }
+  .ref-pill{
+    color:var(--emerald); background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:11.5px; letter-spacing:.03em; padding:2px 9px; border-radius:999px;
+  }
+  .ref-text{ font-size:14px; color:var(--ink); }
+  .ref-remove{
+    border:none; background:none; color:var(--muted); cursor:pointer; font-size:13px;
+    min-height:44px; padding:4px 0;
+  }
+  .ref-remove:hover{ color:var(--ink); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  .history-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:0 0 4px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Trauma Response Identifier</h1>
+    <p class="subtitle">A gentle look at how you protect yourself under stress — and how to come back to calm.</p>
+  </header>
+
+  <!-- Care note (top) -->
+  <div class="care">
+    <div class="care-head">🤍 A gentle word before you begin</div>
+    <p>This is a space for self-understanding, not a diagnosis. Nothing here is medical or therapeutic advice. If any of this stirs something heavy, please know that reaching out to a licensed therapist or counselor is a wise and brave step — not a weakness. You are worth that kind of care, sister.</p>
+  </div>
+
+  <!-- 1. Explore the four responses -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>How do you protect yourself?</h2></div>
+    <p class="hint">When we feel unsafe or overwhelmed, our bodies reach for an old way of coping. None of these are wrong — they kept you safe. Read each with kindness and gently select the one(s) you most relate to.</p>
+
+    <div class="resp" data-key="fight">
+      <div class="resp-top" role="button" tabindex="0" aria-pressed="false">
+        <span class="resp-check" aria-hidden="true">✓</span>
+        <span class="resp-body">
+          <span class="resp-name">Fight <span class="resp-tag">· stand my ground</span></span>
+          <span class="resp-desc">Stress can show up as irritation, control, or pushing back — your protector says "I'll meet this head-on."</span>
+        </span>
+      </div>
+      <div class="resp-expand">
+        <label class="field-label" for="note-fight">How does this show up for you? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+        <textarea id="note-fight" placeholder="I notice I get sharp or controlling when…"></textarea>
+      </div>
+    </div>
+
+    <div class="resp" data-key="flight">
+      <div class="resp-top" role="button" tabindex="0" aria-pressed="false">
+        <span class="resp-check" aria-hidden="true">✓</span>
+        <span class="resp-body">
+          <span class="resp-name">Flight <span class="resp-tag">· keep moving</span></span>
+          <span class="resp-desc">Stress can show up as restlessness, over-busyness, or the urge to escape — your protector says "let's get out of here."</span>
+        </span>
+      </div>
+      <div class="resp-expand">
+        <label class="field-label" for="note-flight">How does this show up for you? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+        <textarea id="note-flight" placeholder="I notice I stay busy or want to flee when…"></textarea>
+      </div>
+    </div>
+
+    <div class="resp" data-key="freeze">
+      <div class="resp-top" role="button" tabindex="0" aria-pressed="false">
+        <span class="resp-check" aria-hidden="true">✓</span>
+        <span class="resp-body">
+          <span class="resp-name">Freeze <span class="resp-tag">· go still</span></span>
+          <span class="resp-desc">Stress can show up as numbness, shutting down, or feeling stuck — your protector says "if I'm still, this will pass."</span>
+        </span>
+      </div>
+      <div class="resp-expand">
+        <label class="field-label" for="note-freeze">How does this show up for you? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+        <textarea id="note-freeze" placeholder="I notice I go blank or frozen when…"></textarea>
+      </div>
+    </div>
+
+    <div class="resp" data-key="fawn">
+      <div class="resp-top" role="button" tabindex="0" aria-pressed="false">
+        <span class="resp-check" aria-hidden="true">✓</span>
+        <span class="resp-body">
+          <span class="resp-name">Fawn <span class="resp-tag">· keep the peace</span></span>
+          <span class="resp-desc">Stress can show up as people-pleasing, over-apologizing, or losing yourself in others' needs — your protector says "if I keep everyone happy, I'll be safe."</span>
+        </span>
+      </div>
+      <div class="resp-expand">
+        <label class="field-label" for="note-fawn">How does this show up for you? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+        <textarea id="note-fawn" placeholder="I notice I please or over-give when…"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Gentle prompts -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>A few gentle prompts</h2></div>
+    <p class="hint">No right answers — just notice what's true. These can help you sense your pattern.</p>
+    <ul class="prompt-list">
+      <li><span class="q">?</span><span>When something hard happens, what does my body want to do first — fight back, leave, freeze, or smooth it over?</span></li>
+      <li><span class="q">?</span><span>After a tense moment, do I feel angry, anxious, numb, or guilty?</span></li>
+      <li><span class="q">?</span><span>What was rewarded or kept me safe when I was younger?</span></li>
+      <li><span class="q">?</span><span>Where in my body do I feel stress — my chest, jaw, stomach, shoulders?</span></li>
+      <li><span class="q">?</span><span>What would it feel like to let myself be safe right now?</span></li>
+    </ul>
+  </section>
+
+  <!-- 3. Grounding tools -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Grounding tools for you</h2></div>
+    <p class="hint">As you select a response above, simple regulation tools appear here. Tap the ☆ to save the ones that help into your toolkit.</p>
+    <div id="toolsArea"></div>
+    <p class="empty-note" id="toolsEmpty">Select a response in step 1 and your grounding tools will gather here. 🌿</p>
+  </section>
+
+  <!-- 4. Save reflection -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Save this reflection</h2></div>
+    <p class="hint">Capture where you are today. You can return to it whenever you need a reminder of how far you've come.</p>
+    <label class="field-label" for="overallNote">What did you notice about yourself today? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <textarea id="overallNote" placeholder="Today I'm noticing…"></textarea>
+    <button class="save-btn" id="saveBtn" type="button">Save my reflection 💛</button>
+    <div class="saved-note" id="savedNote">
+      <div class="big">Saved with care. 🤍</div>
+      <div class="sm">Noticing is the brave first step toward healing.</div>
+    </div>
+  </section>
+
+  <!-- My toolkit -->
+  <section class="card">
+    <div class="history-title">My toolkit · grounding I can return to</div>
+    <div id="toolkitList"></div>
+    <p class="empty-note" id="toolkitEmpty">Your saved grounding tools will live here, ready for the hard moments. 💛</p>
+  </section>
+
+  <!-- Saved reflections -->
+  <section class="card">
+    <div class="history-title">My saved reflections</div>
+    <div id="reflectionList"></div>
+    <p class="empty-note" id="reflectionEmpty">When you save a reflection above, it'll appear here. 🌿</p>
+  </section>
+
+  <!-- Care note (bottom) -->
+  <div class="card" style="padding:0;border:none;box-shadow:none;background:none;">
+    <div class="care footer-care">
+      <div class="care-head">🤍 You don't have to do this alone</div>
+      <p>Understanding your patterns is powerful — and you deserve real support too. A licensed therapist or counselor can walk this road with you. Reaching out isn't giving up; it's one of the bravest, wisest things you can do. If you're ever in crisis, please contact your local emergency services or a crisis line right away.</p>
+    </div>
+  </div>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_trauma_response";
+
+  // ---- Response meta + grounding tools ----
+  var RESPONSES = {
+    fight: { name:"Fight", tools:[
+      "Take one slow breath in for 4, out for 6 — let the exhale be longer than the inhale.",
+      "Give yourself permission to step away for 90 seconds before responding.",
+      "Press your feet firmly into the floor and unclench your jaw and hands.",
+      "Ask gently: \"What am I really needing to feel safe right now?\""
+    ]},
+    flight: { name:"Flight", tools:[
+      "Feel your feet on the ground — name the surface beneath you out loud.",
+      "Slow your exhale: breathe out as if cooling a warm cup of tea.",
+      "Place a hand on your chest and remind yourself: \"I am safe in this moment.\"",
+      "Pick one small thing in the room and describe it in detail to slow your mind."
+    ]},
+    freeze: { name:"Freeze", tools:[
+      "Try gentle movement — wiggle your fingers, roll your shoulders, sway side to side.",
+      "Name 5 things you can see, 4 you can hear, 3 you can touch.",
+      "Sip cool water or hold something with texture to reconnect with your senses.",
+      "Whisper one tiny next step: \"I'll just stand up,\" then honor it."
+    ]},
+    fawn: { name:"Fawn", tools:[
+      "Pause before saying yes — take one breath and ask, \"Do I actually want this?\"",
+      "Check in with your own needs first: \"What do I need right now?\"",
+      "Practice a kind, complete sentence: \"Let me think about that and get back to you.\"",
+      "Place a hand on your heart and remember: your needs matter as much as anyone's."
+    ]}
+  };
+  var ORDER = ["fight","flight","freeze","fawn"];
+
+  // ---- State ----
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.selected){ return o; } }
+    }catch(e){}
+    return { selected:{}, notes:{}, overall:"", favorites:[], reflections:[] };
+  }
+  var data = load();
+  // normalize
+  data.selected = data.selected || {};
+  data.notes = data.notes || {};
+  data.overall = data.overall || "";
+  data.favorites = data.favorites || [];
+  data.reflections = data.reflections || [];
+
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Date helper ----
+  function prettyNow(ts){
+    var d = new Date(ts);
+    return d.toLocaleDateString(undefined,{month:"long", day:"numeric", year:"numeric"});
+  }
+
+  // ---- Wire response cards ----
+  var cards = document.querySelectorAll(".resp");
+  cards.forEach(function(card){
+    var key = card.getAttribute("data-key");
+    var top = card.querySelector(".resp-top");
+    var note = card.querySelector("textarea");
+
+    // restore
+    if(data.selected[key]){ card.classList.add("on"); top.setAttribute("aria-pressed","true"); }
+    note.value = data.notes[key] || "";
+
+    function toggle(){
+      var on = !card.classList.contains("on");
+      card.classList.toggle("on", on);
+      top.setAttribute("aria-pressed", on ? "true" : "false");
+      data.selected[key] = on;
+      save();
+      renderTools();
+    }
+    top.addEventListener("click", toggle);
+    top.addEventListener("keydown", function(e){
+      if(e.key === "Enter" || e.key === " "){ e.preventDefault(); toggle(); }
+    });
+    note.addEventListener("input", function(){ data.notes[key] = note.value; save(); });
+  });
+
+  // ---- Overall note ----
+  var overallEl = $("overallNote");
+  overallEl.value = data.overall;
+  overallEl.addEventListener("input", function(){ data.overall = overallEl.value; save(); });
+
+  // ---- Favorites helpers ----
+  function isFav(text){ return data.favorites.indexOf(text) !== -1; }
+  function toggleFav(text){
+    var i = data.favorites.indexOf(text);
+    if(i === -1){ data.favorites.push(text); }
+    else{ data.favorites.splice(i,1); }
+    save();
+    renderTools();
+    renderToolkit();
+  }
+
+  // ---- Render grounding tools for selected responses ----
+  function renderTools(){
+    var area = $("toolsArea");
+    var empty = $("toolsEmpty");
+    area.innerHTML = "";
+    var anySelected = false;
+
+    ORDER.forEach(function(key){
+      if(!data.selected[key]) return;
+      anySelected = true;
+      var grp = RESPONSES[key];
+      var head = document.createElement("div");
+      head.className = "tool-group-name";
+      head.textContent = "For " + grp.name;
+      area.appendChild(head);
+
+      grp.tools.forEach(function(text){
+        var row = document.createElement("div");
+        row.className = "tool-row";
+
+        var t = document.createElement("div");
+        t.className = "tool-text";
+        t.textContent = text;
+
+        var fav = document.createElement("button");
+        fav.type = "button";
+        fav.className = "fav-btn" + (isFav(text) ? " on" : "");
+        fav.textContent = isFav(text) ? "★" : "☆";
+        fav.setAttribute("aria-label", isFav(text) ? "Remove from my toolkit" : "Save to my toolkit");
+        fav.addEventListener("click", function(){ toggleFav(text); });
+
+        row.appendChild(fav);
+        row.appendChild(t);
+        area.appendChild(row);
+      });
+    });
+
+    empty.style.display = anySelected ? "none" : "block";
+  }
+
+  // ---- Render toolkit (favorites) ----
+  function renderToolkit(){
+    var list = $("toolkitList");
+    var empty = $("toolkitEmpty");
+    list.innerHTML = "";
+    if(data.favorites.length === 0){ empty.style.display = "block"; return; }
+    empty.style.display = "none";
+
+    data.favorites.forEach(function(text){
+      var item = document.createElement("div");
+      item.className = "toolkit-item";
+
+      var leaf = document.createElement("span");
+      leaf.className = "leaf";
+      leaf.textContent = "🌿";
+
+      var t = document.createElement("span");
+      t.className = "toolkit-text";
+      t.textContent = text;
+
+      var rm = document.createElement("button");
+      rm.type = "button";
+      rm.className = "remove";
+      rm.textContent = "Remove";
+      rm.setAttribute("aria-label", "Remove from my toolkit");
+      rm.addEventListener("click", function(){ toggleFav(text); });
+
+      item.appendChild(leaf);
+      item.appendChild(t);
+      item.appendChild(rm);
+      list.appendChild(item);
+    });
+  }
+
+  // ---- Save reflection ----
+  $("saveBtn").addEventListener("click", function(){
+    var selectedNames = ORDER.filter(function(k){ return data.selected[k]; })
+      .map(function(k){ return RESPONSES[k].name; });
+    var hasContent = selectedNames.length > 0 || overallEl.value.trim() !== "";
+    if(!hasContent){
+      // nothing to save yet — gently nudge by showing the note anyway is unhelpful; skip silently
+      return;
+    }
+    data.reflections.unshift({
+      ts: Date.now(),
+      responses: selectedNames,
+      note: overallEl.value.trim()
+    });
+    if(data.reflections.length > 30){ data.reflections = data.reflections.slice(0,30); }
+    save();
+    renderReflections();
+    var note = $("savedNote");
+    note.classList.add("show");
+    setTimeout(function(){ note.classList.remove("show"); }, 3200);
+  });
+
+  // ---- Render saved reflections ----
+  function renderReflections(){
+    var list = $("reflectionList");
+    var empty = $("reflectionEmpty");
+    list.innerHTML = "";
+    if(data.reflections.length === 0){ empty.style.display = "block"; return; }
+    empty.style.display = "none";
+
+    data.reflections.forEach(function(r, idx){
+      var item = document.createElement("div");
+      item.className = "ref-item";
+
+      var meta = document.createElement("div");
+      meta.className = "ref-meta";
+      var d = document.createElement("span");
+      d.className = "ref-date";
+      d.textContent = prettyNow(r.ts);
+      meta.appendChild(d);
+      (r.responses || []).forEach(function(nm){
+        var pill = document.createElement("span");
+        pill.className = "ref-pill";
+        pill.textContent = nm;
+        meta.appendChild(pill);
+      });
+      item.appendChild(meta);
+
+      if(r.note){
+        var txt = document.createElement("div");
+        txt.className = "ref-text";
+        txt.textContent = r.note;
+        item.appendChild(txt);
+      }
+
+      var rm = document.createElement("button");
+      rm.type = "button";
+      rm.className = "ref-remove";
+      rm.textContent = "Remove";
+      rm.addEventListener("click", function(){
+        data.reflections.splice(idx,1);
+        save();
+        renderReflections();
+      });
+      item.appendChild(rm);
+
+      list.appendChild(item);
+    });
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Trauma Response Identifier data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { selected:{}, notes:{}, overall:"", favorites:[], reflections:[] };
+      cards.forEach(function(card){
+        card.classList.remove("on");
+        card.querySelector(".resp-top").setAttribute("aria-pressed","false");
+        card.querySelector("textarea").value = "";
+      });
+      overallEl.value = "";
+      $("savedNote").classList.remove("show");
+      renderTools();
+      renderToolkit();
+      renderReflections();
+    }
+  });
+
+  // ---- First render ----
+  renderTools();
+  renderToolkit();
+  renderReflections();
+
+})();
+</script>
+</body>
+</html>

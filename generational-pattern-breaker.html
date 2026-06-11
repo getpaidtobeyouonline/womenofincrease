@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generational Pattern Breaker · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Stat strip ---------- */
+  .stats{
+    display:flex; gap:10px; margin-top:16px;
+  }
+  .stat{
+    flex:1; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:13px; padding:13px 10px; text-align:center;
+  }
+  .stat b{
+    display:block; font-family:'Fraunces',serif; color:var(--emerald);
+    font-size:24px; font-weight:600; line-height:1.1;
+  }
+  .stat span{ display:block; color:var(--muted); font-size:11.5px; letter-spacing:.02em; margin-top:3px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Affirmation banner ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:70px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Primary button ---------- */
+  .complete-btn{
+    width:100%; margin-top:8px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Pattern cards ---------- */
+  .pattern{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:18px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .pattern.breaking{ border-color:var(--gold); box-shadow:0 6px 20px rgba(200,160,74,.18); }
+  .pattern-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+  .pattern-name{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:20px; font-weight:600;
+    line-height:1.2; flex:1;
+  }
+  .icon-btn{
+    flex:none; background:none; border:none; cursor:pointer; color:var(--muted);
+    min-width:44px; min-height:44px; display:flex; align-items:center; justify-content:center;
+    font-size:18px; border-radius:10px;
+  }
+  .icon-btn:hover{ color:#b04545; background:rgba(176,69,69,.07); }
+
+  .meta-grid{ margin-top:6px; }
+  .meta{ margin-top:10px; }
+  .meta .lab{
+    font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:2px;
+  }
+  .meta .val{ font-size:14.5px; color:var(--ink); }
+  .meta .val.empty{ color:var(--muted); font-style:italic; }
+
+  .legacy{
+    margin-top:14px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.14);
+    border-radius:12px; padding:13px 14px;
+  }
+  .legacy .lab{
+    font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--emerald); margin-bottom:3px;
+  }
+  .legacy .val{ font-family:'Fraunces',serif; font-style:italic; color:var(--emerald); font-size:16px; line-height:1.35; }
+  .legacy .val.empty{ font-style:italic; color:var(--muted); font-family:inherit; font-size:14px; }
+
+  /* ---------- Progress ---------- */
+  .progress-wrap{ margin-top:16px; }
+  .progress-head{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .progress-head .t{ font-weight:600; font-size:13px; color:var(--ink); }
+  .progress-head .c{ font-size:12.5px; color:var(--muted); }
+  .bar{ height:9px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .bar .fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--gold),var(--gold-soft)); border-radius:999px; transition:width .3s ease; }
+
+  /* ---------- Break steps ---------- */
+  .steps-list{ list-style:none; margin-top:10px; }
+  .steps-list li{
+    display:flex; align-items:flex-start; gap:10px; padding:9px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .steps-list li:last-child{ border-bottom:none; }
+  .chk{
+    flex:none; width:24px; height:24px; margin-top:1px; border-radius:7px;
+    border:1.5px solid var(--gold); background:var(--cream); cursor:pointer;
+    appearance:none; -webkit-appearance:none; position:relative; transition:background .12s;
+  }
+  .chk:checked{ background:var(--gold); border-color:var(--gold); }
+  .chk:checked::after{
+    content:"✓"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    color:var(--ink); font-size:14px; font-weight:700;
+  }
+  .chk:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(200,160,74,.3); }
+  .step-text{ flex:1; font-size:14.5px; line-height:1.4; padding-top:2px; }
+  .step-text.done{ color:var(--muted); text-decoration:line-through; }
+  .step-del{
+    flex:none; background:none; border:none; color:#C9BFAD; cursor:pointer;
+    min-width:34px; min-height:34px; font-size:15px; border-radius:8px;
+  }
+  .step-del:hover{ color:#b04545; }
+
+  .add-row{ display:flex; gap:8px; margin-top:12px; }
+  .add-row input{ flex:1; min-height:46px; }
+  .add-btn{
+    flex:none; min-width:46px; min-height:46px; background:var(--emerald); color:#FCF8EF;
+    border:none; border-radius:11px; font-size:22px; font-weight:600; cursor:pointer; line-height:1;
+  }
+  .add-btn:hover{ background:#0f3f2e; }
+
+  /* ---------- "It stops with me" toggle ---------- */
+  .stops{
+    margin-top:16px; width:100%; min-height:50px;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    background:var(--cream); border:1.5px dashed var(--gold); color:var(--emerald);
+    border-radius:12px; font-family:inherit; font-weight:700; font-size:14.5px; cursor:pointer;
+    transition:background .15s, border .15s;
+  }
+  .stops:hover{ background:#fff; }
+  .stops.on{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border:1.5px solid var(--emerald); box-shadow:0 6px 16px rgba(20,84,62,.25);
+  }
+  .heal-note{
+    display:none; margin-top:10px; font-size:13px; line-height:1.5; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.14);
+    border-radius:11px; padding:11px 13px;
+  }
+  .heal-note.show{ display:block; }
+  .heal-note b{ font-weight:700; }
+
+  /* ---------- Empty state ---------- */
+  .empty{
+    text-align:center; padding:30px 18px 26px;
+  }
+  .empty .em-mark{
+    font-size:30px; margin-bottom:6px;
+  }
+  .empty h3{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:21px; font-weight:600; margin-bottom:8px;
+  }
+  .empty p{ color:var(--muted); font-size:14.5px; line-height:1.6; max-width:380px; margin:0 auto; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  .section-label{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:26px 2px 2px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Generational Pattern Breaker</h1>
+    <p class="subtitle">Name what was handed down — and become the one it stops with.</p>
+
+    <div class="stats">
+      <div class="stat"><b id="statBreaking">0</b><span>being broken</span></div>
+      <div class="stat"><b id="statLegacy">0</b><span>new legacies</span></div>
+      <div class="stat"><b id="statSteps">0</b><span>steps kept</span></div>
+    </div>
+  </header>
+
+  <!-- Affirmation -->
+  <section class="verse" style="margin-top:18px;">
+    <p>What was passed to you does not have to pass through you. You can honor where you came from and still choose a different way forward.</p>
+    <div class="ref">Healing Backward & Forward</div>
+  </section>
+
+  <!-- Add a pattern -->
+  <section class="card">
+    <div class="step"><span class="num">+</span><h2>Name a pattern to end</h2></div>
+    <p class="hint">Bravely name a cycle you're choosing to break — then map the new way.</p>
+
+    <label class="field-label" for="pName">The pattern I want to end</label>
+    <input type="text" id="pName" placeholder="e.g. keeping the peace at my own expense">
+
+    <label class="field-label" for="pFrom">Where it came from <span class="opt">(which generation / whose)</span></label>
+    <input type="text" id="pFrom" placeholder="e.g. my mother, and her mother before her">
+
+    <label class="field-label" for="pNow">How it shows up in me now <span class="opt">(optional)</span></label>
+    <textarea id="pNow" placeholder="e.g. I say yes when I mean no, and resent it later…"></textarea>
+
+    <label class="field-label" for="pLegacy">The new legacy I'm choosing instead</label>
+    <textarea id="pLegacy" placeholder="e.g. honesty with love — my children will see me name my needs"></textarea>
+
+    <button class="complete-btn" id="addPattern" type="button">Begin breaking this cycle ✊</button>
+  </section>
+
+  <div class="section-label" id="listLabel" style="display:none;">The cycles you're breaking</div>
+
+  <!-- Patterns render here -->
+  <div id="patternList"></div>
+
+  <!-- Empty state -->
+  <section class="card empty" id="emptyState">
+    <div class="em-mark">🌿</div>
+    <h3>You come from strong women.</h3>
+    <p>They carried what they could with the tools they had — and you can honor them while choosing differently. Name your first pattern above. Every cycle you break frees the children not yet born. You can be the one it stops with.</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_generational_pattern";
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && Array.isArray(o.patterns)) return o; }
+    }catch(e){}
+    return { patterns:[] };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function uid(){
+    return "p" + Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var pName = $("pName"), pFrom = $("pFrom"), pNow = $("pNow"), pLegacy = $("pLegacy");
+  var listEl = $("patternList"), emptyEl = $("emptyState"), listLabel = $("listLabel");
+
+  // ---- Add a pattern ----
+  $("addPattern").addEventListener("click", function(){
+    var name = pName.value.trim();
+    if(!name){
+      pName.focus();
+      pName.style.borderColor = "#b04545";
+      setTimeout(function(){ pName.style.borderColor=""; }, 1200);
+      return;
+    }
+    data.patterns.unshift({
+      id: uid(),
+      name: name,
+      from: pFrom.value.trim(),
+      now: pNow.value.trim(),
+      legacy: pLegacy.value.trim(),
+      breaking: true,            // declaring it begins the breaking
+      steps: []
+    });
+    pName.value=""; pFrom.value=""; pNow.value=""; pLegacy.value="";
+    save(); render();
+  });
+
+  // ---- Render everything ----
+  function render(){
+    renderStats();
+    listEl.innerHTML = "";
+    if(data.patterns.length === 0){
+      emptyEl.style.display = "block";
+      listLabel.style.display = "none";
+      return;
+    }
+    emptyEl.style.display = "none";
+    listLabel.style.display = "block";
+    data.patterns.forEach(function(p){ listEl.appendChild(buildPattern(p)); });
+  }
+
+  function renderStats(){
+    var breaking = 0, legacies = 0, steps = 0;
+    data.patterns.forEach(function(p){
+      if(p.breaking) breaking++;
+      if(p.legacy && p.legacy.trim()) legacies++;
+      p.steps.forEach(function(s){ if(s.done) steps++; });
+    });
+    $("statBreaking").textContent = breaking;
+    $("statLegacy").textContent = legacies;
+    $("statSteps").textContent = steps;
+  }
+
+  function findPattern(id){
+    for(var i=0;i<data.patterns.length;i++){ if(data.patterns[i].id===id) return data.patterns[i]; }
+    return null;
+  }
+
+  function buildPattern(p){
+    var card = document.createElement("section");
+    card.className = "pattern" + (p.breaking ? " breaking" : "");
+
+    // Top row: name + delete
+    var top = document.createElement("div");
+    top.className = "pattern-top";
+    var nm = document.createElement("div");
+    nm.className = "pattern-name";
+    nm.textContent = p.name;
+    var del = document.createElement("button");
+    del.className = "icon-btn";
+    del.type = "button";
+    del.setAttribute("aria-label", "Delete this pattern");
+    del.title = "Delete this pattern";
+    del.textContent = "🗑";
+    del.addEventListener("click", function(){
+      if(confirm('Delete "'+p.name+'" and its break steps? This can’t be undone, sister.')){
+        data.patterns = data.patterns.filter(function(x){ return x.id !== p.id; });
+        save(); render();
+      }
+    });
+    top.appendChild(nm); top.appendChild(del);
+    card.appendChild(top);
+
+    // Meta: from + now
+    var grid = document.createElement("div");
+    grid.className = "meta-grid";
+    grid.appendChild(metaBlock("Where it came from", p.from));
+    if(p.now) grid.appendChild(metaBlock("How it shows up now", p.now));
+    card.appendChild(grid);
+
+    // Legacy
+    var leg = document.createElement("div");
+    leg.className = "legacy";
+    var lLab = document.createElement("div"); lLab.className="lab"; lLab.textContent="The new legacy I'm choosing";
+    var lVal = document.createElement("div");
+    if(p.legacy){ lVal.className="val"; lVal.textContent = p.legacy; }
+    else { lVal.className="val empty"; lVal.textContent = "Not written yet — what will you hand down instead?"; }
+    leg.appendChild(lLab); leg.appendChild(lVal);
+    card.appendChild(leg);
+
+    // Progress bar
+    var total = p.steps.length;
+    var done = p.steps.filter(function(s){ return s.done; }).length;
+    var pct = total ? Math.round(done/total*100) : 0;
+    var pw = document.createElement("div");
+    pw.className = "progress-wrap";
+    var ph = document.createElement("div");
+    ph.className = "progress-head";
+    var pt = document.createElement("span"); pt.className="t"; pt.textContent="Break steps practiced";
+    var pc = document.createElement("span"); pc.className="c"; pc.textContent = done+" of "+total;
+    ph.appendChild(pt); ph.appendChild(pc);
+    var bar = document.createElement("div"); bar.className="bar";
+    var fill = document.createElement("div"); fill.className="fill"; fill.style.width = pct+"%";
+    bar.appendChild(fill);
+    pw.appendChild(ph); pw.appendChild(bar);
+    card.appendChild(pw);
+
+    // Steps list
+    var ul = document.createElement("ul");
+    ul.className = "steps-list";
+    p.steps.forEach(function(s){ ul.appendChild(buildStep(p, s)); });
+    card.appendChild(ul);
+
+    // Add step row
+    var addRow = document.createElement("div");
+    addRow.className = "add-row";
+    var inp = document.createElement("input");
+    inp.type = "text";
+    inp.setAttribute("aria-label", "Add a new break step");
+    inp.placeholder = "New response I'll practice…";
+    var addBtn = document.createElement("button");
+    addBtn.className = "add-btn"; addBtn.type="button"; addBtn.textContent = "+";
+    addBtn.setAttribute("aria-label", "Add break step");
+    function addStep(){
+      var t = inp.value.trim();
+      if(!t) return;
+      var pat = findPattern(p.id);
+      if(!pat) return;
+      pat.steps.push({ id: uid(), text: t, done: false });
+      inp.value = "";
+      save(); render();
+    }
+    addBtn.addEventListener("click", addStep);
+    inp.addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); addStep(); } });
+    addRow.appendChild(inp); addRow.appendChild(addBtn);
+    card.appendChild(addRow);
+
+    // "It stops with me" toggle
+    var stops = document.createElement("button");
+    stops.type = "button";
+    stops.className = "stops" + (p.breaking ? " on" : "");
+    stops.setAttribute("aria-pressed", p.breaking ? "true" : "false");
+    stops.textContent = p.breaking ? "I am the one it stops with ✊💛" : "Declare: it stops with me";
+    stops.addEventListener("click", function(){
+      var pat = findPattern(p.id);
+      if(!pat) return;
+      pat.breaking = !pat.breaking;
+      save(); render();
+    });
+    card.appendChild(stops);
+
+    // Healing note (shown when actively breaking)
+    var note = document.createElement("div");
+    note.className = "heal-note" + (p.breaking ? " show" : "");
+    note.innerHTML = "You are healing <b>backward</b> — honoring those who carried this before you — and <b>forward</b>, freeing children not yet born. This cycle stops with you. 💛";
+    card.appendChild(note);
+
+    return card;
+  }
+
+  function metaBlock(label, value){
+    var m = document.createElement("div");
+    m.className = "meta";
+    var l = document.createElement("div"); l.className="lab"; l.textContent = label;
+    var v = document.createElement("div");
+    if(value){ v.className="val"; v.textContent = value; }
+    else { v.className="val empty"; v.textContent = "—"; }
+    m.appendChild(l); m.appendChild(v);
+    return m;
+  }
+
+  function buildStep(p, s){
+    var li = document.createElement("li");
+    var chk = document.createElement("input");
+    chk.type = "checkbox"; chk.className = "chk"; chk.checked = !!s.done;
+    chk.id = "chk_" + s.id;
+    chk.addEventListener("change", function(){
+      var pat = findPattern(p.id); if(!pat) return;
+      for(var i=0;i<pat.steps.length;i++){ if(pat.steps[i].id===s.id){ pat.steps[i].done = chk.checked; break; } }
+      save(); render();
+    });
+    var lab = document.createElement("label");
+    lab.className = "step-text" + (s.done ? " done" : "");
+    lab.setAttribute("for", "chk_" + s.id);
+    lab.textContent = s.text;
+    var sdel = document.createElement("button");
+    sdel.className = "step-del"; sdel.type="button"; sdel.textContent = "×";
+    sdel.setAttribute("aria-label", "Remove this step");
+    sdel.title = "Remove step";
+    sdel.addEventListener("click", function(){
+      var pat = findPattern(p.id); if(!pat) return;
+      pat.steps = pat.steps.filter(function(x){ return x.id !== s.id; });
+      save(); render();
+    });
+    li.appendChild(chk); li.appendChild(lab); li.appendChild(sdel);
+    return li;
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your patterns and break steps? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { patterns:[] };
+      pName.value=""; pFrom.value=""; pNow.value=""; pLegacy.value="";
+      render();
+    }
+  });
+
+  // ---- Init ----
+  render();
+
+})();
+</script>
+</body>
+</html>
