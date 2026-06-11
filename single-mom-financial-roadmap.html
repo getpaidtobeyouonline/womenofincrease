@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Single Mom Financial Roadmap · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 18px; margin-top:18px; color:var(--emerald);
+  }
+  .welcome .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:6px; }
+  .welcome .sm{ font-size:14px; color:var(--muted); line-height:1.5; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:6px 0 14px; }
+  .group-label{
+    font-weight:700; font-size:12px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--gold); margin:16px 0 8px;
+  }
+  .group-label:first-of-type{ margin-top:4px; }
+
+  /* ---------- Line rows (income / expense) ---------- */
+  .line-row{
+    display:flex; align-items:center; gap:8px; margin-bottom:10px;
+  }
+  .line-row .name-in{ flex:1 1 auto; min-width:0; }
+  .line-row .amt-wrap{ position:relative; flex:0 0 118px; }
+  .line-row .amt-wrap .sym{
+    position:absolute; left:11px; top:50%; transform:translateY(-50%);
+    color:var(--muted); font-size:15px; pointer-events:none;
+  }
+  .line-row .amt-in{ padding-left:24px; text-align:right; }
+  .del-btn{
+    flex:none; width:44px; height:44px; border-radius:10px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    font-size:18px; line-height:1; cursor:pointer; display:flex;
+    align-items:center; justify-content:center;
+  }
+  .del-btn:hover{ border-color:#C97A6A; color:#C97A6A; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="number"]{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; min-height:48px; transition:border-color .15s, box-shadow .15s;
+  }
+  input:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder{ color:#A7A095; }
+  input[type=number]{ -moz-appearance:textfield; }
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+
+  .add-btn{
+    width:100%; margin-top:6px; min-height:48px;
+    background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.2); border-radius:12px;
+    font-family:inherit; font-weight:700; font-size:14.5px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:7px;
+  }
+  .add-btn:hover{ background:#dbe7e0; }
+
+  /* ---------- Summary ---------- */
+  .summary{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px;
+  }
+  .sum-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:9px 0; border-bottom:1px solid rgba(231,211,161,.18);
+  }
+  .sum-row:last-of-type{ border-bottom:none; }
+  .sum-row .lbl{ font-size:14.5px; color:var(--gold-soft); }
+  .sum-row .val{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; }
+  .sum-net{
+    margin-top:14px; padding:16px 16px; border-radius:12px;
+    background:rgba(252,248,239,.08); text-align:center;
+  }
+  .sum-net .nlabel{
+    font-size:12.5px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--gold-soft); font-weight:600;
+  }
+  .sum-net .nval{ font-family:'Fraunces',serif; font-weight:600; font-size:34px; line-height:1.1; margin-top:4px; }
+  .sum-net .nval.short{ color:#F2C9A0; }
+  .sum-net .nval.surplus{ color:#BFE3CF; }
+  .net-note{
+    margin-top:14px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:12px; padding:14px 15px; color:var(--emerald); font-size:13.5px; line-height:1.5;
+  }
+  .net-note b{ color:var(--emerald); }
+
+  /* ---------- Progress bar ---------- */
+  .twocol{ display:flex; gap:12px; }
+  .twocol > div{ flex:1; }
+  .bar-wrap{ margin-top:16px; }
+  .bar-top{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-size:13.5px; color:var(--muted); margin-bottom:7px;
+  }
+  .bar-top b{ color:var(--emerald); font-family:'Fraunces',serif; font-size:16px; }
+  .bar{
+    height:14px; background:var(--emerald-soft); border-radius:999px; overflow:hidden;
+    border:1px solid rgba(20,84,62,.12);
+  }
+  .bar .fill{
+    height:100%; width:0%; border-radius:999px;
+    background:linear-gradient(90deg, var(--gold-soft), var(--gold));
+    transition:width .35s ease;
+  }
+  .bar-msg{ margin-top:9px; font-size:13px; color:var(--muted); font-style:italic; }
+
+  /* ---------- Income goal ---------- */
+  .goal-result{
+    margin-top:14px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:12px; padding:16px 15px; color:var(--emerald);
+  }
+  .goal-result .gnum{ font-family:'Fraunces',serif; font-weight:600; font-size:24px; }
+  .goal-result .gsub{ font-size:13.5px; color:var(--muted); margin-top:6px; line-height:1.5; }
+
+  /* ---------- Checklist ---------- */
+  .check-row{
+    display:flex; align-items:flex-start; gap:12px; padding:12px 4px;
+    border-bottom:1px solid var(--line); cursor:pointer; min-height:44px;
+  }
+  .check-row:last-child{ border-bottom:none; }
+  .check-row input[type="checkbox"]{
+    flex:none; width:22px; height:22px; margin-top:1px; accent-color:var(--emerald); cursor:pointer;
+  }
+  .check-row .ctext{ font-size:14.5px; }
+  .check-row .ctext .ct-title{ font-weight:600; color:var(--ink); }
+  .check-row .ctext .ct-sub{ display:block; color:var(--muted); font-size:13px; margin-top:2px; }
+  .check-row.checked .ct-title{ color:var(--muted); text-decoration:line-through; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Single Mom Financial Roadmap</h1>
+    <p class="subtitle">Your money, your map — income, expenses, and the next faithful step.</p>
+  </header>
+
+  <!-- Welcome (first-run) -->
+  <div class="welcome" id="welcome">
+    <div class="big">Welcome, sister. You're back in the driver's seat. 💛</div>
+    <div class="sm">There's no shame here — only clarity. Add what's coming in, what's going out, and let's see your honest picture together. Every number you enter saves automatically, so you can come back anytime.</div>
+  </div>
+
+  <!-- 1. Income -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Money Coming In</h2></div>
+    <p class="hint">Every dollar counts — wages, child support, benefits, assistance, side income. It's all legitimate. Add a line for each source.</p>
+    <div id="incomeList"></div>
+    <button class="add-btn" id="addIncome" type="button">＋ Add an income source</button>
+  </section>
+
+  <!-- 2. Expenses -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Money Going Out</h2></div>
+    <p class="hint">List what you spend each month. Start with the essentials — the rest can come later.</p>
+
+    <div class="group-label">Essentials</div>
+    <div id="essentialList"></div>
+    <button class="add-btn" id="addEssential" type="button">＋ Add an essential</button>
+
+    <div class="group-label">Other</div>
+    <div id="otherList"></div>
+    <button class="add-btn" id="addOther" type="button">＋ Add another expense</button>
+  </section>
+
+  <!-- 3. Summary -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Your Honest Picture</h2></div>
+    <p class="hint">This updates live as you type. No judgment — just truth you can work with.</p>
+    <div class="summary">
+      <div class="sum-row"><span class="lbl">Total coming in</span><span class="val" id="totalIncome">$0</span></div>
+      <div class="sum-row"><span class="lbl">Total going out</span><span class="val" id="totalExpense">$0</span></div>
+      <div class="sum-net">
+        <div class="nlabel" id="netLabel">Money left over</div>
+        <div class="nval" id="netValue">$0</div>
+      </div>
+    </div>
+    <div class="net-note" id="netNote"></div>
+  </section>
+
+  <!-- 4. Savings cushion -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Your Safety Cushion</h2></div>
+    <p class="hint">Even a tiny emergency fund changes everything. Start where you are — $25 is a beginning.</p>
+    <div class="twocol">
+      <div>
+        <label class="field-label" for="saveGoal">Cushion goal</label>
+        <input type="number" inputmode="decimal" id="saveGoal" placeholder="500" min="0" step="any">
+      </div>
+      <div>
+        <label class="field-label" for="saveNow">Saved so far</label>
+        <input type="number" inputmode="decimal" id="saveNow" placeholder="0" min="0" step="any">
+      </div>
+    </div>
+    <div class="bar-wrap">
+      <div class="bar-top"><span>Cushion progress</span><b id="savePct">0%</b></div>
+      <div class="bar"><div class="fill" id="saveFill"></div></div>
+      <div class="bar-msg" id="saveMsg">Every dollar you set aside is a wall against the next surprise.</div>
+    </div>
+  </section>
+
+  <!-- 5. Income goal -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>The Income You're Believing For</h2></div>
+    <p class="hint">Name the monthly income you're praying and working toward. Vision comes before increase.</p>
+    <label class="field-label" for="incomeGoal">Target monthly income</label>
+    <input type="number" inputmode="decimal" id="incomeGoal" placeholder="4000" min="0" step="any">
+    <div class="goal-result" id="goalResult"></div>
+  </section>
+
+  <!-- 6. Supports checklist -->
+  <section class="card">
+    <div class="step"><span class="num">6</span><h2>Supports Worth Exploring</h2></div>
+    <p class="hint">You may qualify for more than you think. Tick the ones to look into — asking for help is wisdom, not weakness.</p>
+    <div id="checkList"></div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_single_mom_financial";
+
+  var SYM = "$";
+
+  // ---- Default expense suggestions (essentials) ----
+  var ESSENTIAL_DEFAULTS = [
+    "Housing / rent","Food & groceries","Utilities","Transport","Childcare","Debt minimums"
+  ];
+
+  var SUPPORTS = [
+    ["Food assistance","Programs that help cover groceries and nutrition for you and your kids."],
+    ["Childcare help","Subsidies or vouchers that lower the cost of care while you work or study."],
+    ["Energy / utility assistance","Help with heating, cooling, or electric bills when money is tight."],
+    ["Tax credits","Credits for working parents that can mean a real refund at tax time."],
+    ["Housing support","Rental assistance or housing programs you may qualify for."],
+    ["Healthcare coverage","Low- or no-cost health coverage for you and your children."],
+    ["Education / training grants","Funding to build a skill or finish a credential."],
+    ["Local nonprofits & churches","Community help with food, bills, school supplies, and emergencies."]
+  ];
+
+  // ---- State ----
+  var data = load();
+
+  function freshState(){
+    return {
+      income: [],
+      essential: [],
+      other: [],
+      saveGoal: "",
+      saveNow: "",
+      incomeGoal: "",
+      checks: {},
+      seeded: false
+    };
+  }
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          var base = freshState();
+          for(var k in base){ if(!(k in o)) o[k] = base[k]; }
+          return o;
+        }
+      }
+    }catch(e){}
+    return freshState();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Seed gentle starter rows on very first run ----
+  if(!data.seeded){
+    data.income.push({ name:"", amt:"" });
+    ESSENTIAL_DEFAULTS.forEach(function(n){ data.essential.push({ name:n, amt:"" }); });
+    data.seeded = true;
+    save();
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  function num(v){
+    var n = parseFloat(String(v).replace(/[^0-9.\-]/g,""));
+    return isFinite(n) ? n : 0;
+  }
+  function money(n){
+    var neg = n < 0;
+    var a = Math.abs(n);
+    var s = a.toLocaleString(undefined,{ minimumFractionDigits:0, maximumFractionDigits:2 });
+    return (neg ? "-" : "") + SYM + s;
+  }
+  function sum(arr){
+    var t = 0;
+    arr.forEach(function(r){ t += num(r.amt); });
+    return t;
+  }
+
+  // ---- Render a line list (income / essential / other) ----
+  function renderLineList(containerId, arr, namePlaceholder){
+    var c = $(containerId);
+    c.innerHTML = "";
+    arr.forEach(function(row, idx){
+      var wrap = document.createElement("div");
+      wrap.className = "line-row";
+
+      var nameIn = document.createElement("input");
+      nameIn.type = "text";
+      nameIn.className = "name-in";
+      nameIn.placeholder = namePlaceholder;
+      nameIn.value = row.name || "";
+      nameIn.setAttribute("aria-label", namePlaceholder);
+      nameIn.addEventListener("input", function(){ row.name = nameIn.value; save(); });
+
+      var amtWrap = document.createElement("div");
+      amtWrap.className = "amt-wrap";
+      var symEl = document.createElement("span");
+      symEl.className = "sym"; symEl.textContent = SYM;
+      var amtIn = document.createElement("input");
+      amtIn.type = "number";
+      amtIn.inputMode = "decimal";
+      amtIn.min = "0"; amtIn.step = "any";
+      amtIn.className = "amt-in";
+      amtIn.placeholder = "0";
+      amtIn.value = row.amt || "";
+      amtIn.setAttribute("aria-label", "Monthly amount");
+      amtIn.addEventListener("input", function(){ row.amt = amtIn.value; save(); recalc(); });
+      amtWrap.appendChild(symEl);
+      amtWrap.appendChild(amtIn);
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "del-btn";
+      del.setAttribute("aria-label", "Remove this line");
+      del.textContent = "×";
+      del.addEventListener("click", function(){
+        arr.splice(idx, 1);
+        save();
+        renderLineList(containerId, arr, namePlaceholder);
+        recalc();
+      });
+
+      wrap.appendChild(nameIn);
+      wrap.appendChild(amtWrap);
+      wrap.appendChild(del);
+      c.appendChild(wrap);
+    });
+  }
+
+  function renderAll(){
+    renderLineList("incomeList", data.income, "Income source (e.g. wages, child support)");
+    renderLineList("essentialList", data.essential, "Essential (e.g. rent)");
+    renderLineList("otherList", data.other, "Expense");
+  }
+
+  // ---- Add buttons ----
+  $("addIncome").addEventListener("click", function(){
+    data.income.push({ name:"", amt:"" }); save();
+    renderLineList("incomeList", data.income, "Income source (e.g. wages, child support)");
+    focusLast("incomeList");
+  });
+  $("addEssential").addEventListener("click", function(){
+    data.essential.push({ name:"", amt:"" }); save();
+    renderLineList("essentialList", data.essential, "Essential (e.g. rent)");
+    focusLast("essentialList");
+  });
+  $("addOther").addEventListener("click", function(){
+    data.other.push({ name:"", amt:"" }); save();
+    renderLineList("otherList", data.other, "Expense");
+    focusLast("otherList");
+  });
+  function focusLast(id){
+    var rows = $(id).querySelectorAll(".line-row .name-in");
+    if(rows.length){ rows[rows.length-1].focus(); }
+  }
+
+  // ---- Summary ----
+  function recalc(){
+    var inc = sum(data.income);
+    var exp = sum(data.essential) + sum(data.other);
+    var net = inc - exp;
+
+    $("totalIncome").textContent = money(inc);
+    $("totalExpense").textContent = money(exp);
+
+    var netEl = $("netValue");
+    var labelEl = $("netLabel");
+    var noteEl = $("netNote");
+    netEl.classList.remove("short","surplus");
+
+    if(net >= 0){
+      labelEl.textContent = "Money left over";
+      netEl.textContent = money(net);
+      netEl.classList.add("surplus");
+      if(inc === 0 && exp === 0){
+        noteEl.innerHTML = "Add your income and expenses above and your picture will appear here. One number at a time, sister.";
+      }else if(net === 0){
+        noteEl.innerHTML = "You're balanced to the dollar. That's real discipline — now let's gently build a cushion in step 4.";
+      }else{
+        noteEl.innerHTML = "You have <b>" + money(net) + "</b> of breathing room. Even a little of this toward your cushion or income goal compounds. Well done.";
+      }
+    }else{
+      labelEl.textContent = "Shortfall to cover";
+      netEl.textContent = money(net);
+      netEl.classList.add("short");
+      noteEl.innerHTML = "You're short <b>" + money(Math.abs(net)) + "</b> right now — and that's information, not failure. A few gentle places to look: which expenses could ease this month, which supports in step 6 you might qualify for, and the income goal in step 5. You can carry this. 💛";
+    }
+
+    // Income goal gap
+    var goal = num(data.incomeGoal);
+    var gr = $("goalResult");
+    if(!data.incomeGoal && goal === 0){
+      gr.innerHTML = '<div class="gsub">Name a number above and we\'ll show the gap from where you are — then help you close it.</div>';
+    }else{
+      var gap = goal - inc;
+      if(gap <= 0){
+        gr.innerHTML = '<div class="gnum">You\'re already there. 🎉</div>'
+          + '<div class="gsub">Your current income meets or beats your goal. Time to set a bigger one — your ceiling just became a floor.</div>';
+      }else{
+        gr.innerHTML = '<div class="gnum">' + money(gap) + ' / month to go</div>'
+          + '<div class="gsub">That\'s the gap between today and your goal. It\'s reachable — explore the income & business tools in your library for ways to grow it, one step at a time.</div>';
+      }
+    }
+  }
+
+  // ---- Savings cushion ----
+  var saveGoalEl = $("saveGoal"), saveNowEl = $("saveNow"), incomeGoalEl = $("incomeGoal");
+  saveGoalEl.value = data.saveGoal || "";
+  saveNowEl.value = data.saveNow || "";
+  incomeGoalEl.value = data.incomeGoal || "";
+
+  function renderSavings(){
+    var goal = num(data.saveGoal);
+    var now = num(data.saveNow);
+    var pct = goal > 0 ? Math.min(100, (now / goal) * 100) : 0;
+    $("saveFill").style.width = pct + "%";
+    $("savePct").textContent = Math.round(pct) + "%";
+    var msg = $("saveMsg");
+    if(goal <= 0){
+      msg.textContent = "Set a small goal — even $100 is a real cushion when you're starting.";
+    }else if(now <= 0){
+      msg.textContent = "$0 today is still a starting line. The first $20 is the hardest and the most powerful.";
+    }else if(pct >= 100){
+      msg.textContent = "You did it — your cushion is fully funded. Look how far you've come. 💛";
+    }else if(pct >= 50){
+      msg.textContent = "Over halfway. You're building something steady. Keep going.";
+    }else{
+      msg.textContent = "You're on your way — " + money(Math.max(0, goal - now)) + " to reach your cushion.";
+    }
+  }
+
+  saveGoalEl.addEventListener("input", function(){ data.saveGoal = saveGoalEl.value; save(); renderSavings(); });
+  saveNowEl.addEventListener("input", function(){ data.saveNow = saveNowEl.value; save(); renderSavings(); });
+  incomeGoalEl.addEventListener("input", function(){ data.incomeGoal = incomeGoalEl.value; save(); recalc(); });
+
+  // ---- Checklist ----
+  function renderChecks(){
+    var c = $("checkList");
+    c.innerHTML = "";
+    SUPPORTS.forEach(function(s, i){
+      var id = "chk" + i;
+      var row = document.createElement("label");
+      row.className = "check-row" + (data.checks[i] ? " checked" : "");
+      row.setAttribute("for", id);
+
+      var box = document.createElement("input");
+      box.type = "checkbox";
+      box.id = id;
+      box.checked = !!data.checks[i];
+      box.addEventListener("change", function(){
+        data.checks[i] = box.checked;
+        row.classList.toggle("checked", box.checked);
+        save();
+      });
+
+      var text = document.createElement("span");
+      text.className = "ctext";
+      var t = document.createElement("span");
+      t.className = "ct-title"; t.textContent = s[0];
+      var sub = document.createElement("span");
+      sub.className = "ct-sub"; sub.textContent = s[1];
+      text.appendChild(t); text.appendChild(sub);
+
+      row.appendChild(box);
+      row.appendChild(text);
+      c.appendChild(row);
+    });
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your financial roadmap data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = freshState();
+      data.income.push({ name:"", amt:"" });
+      ESSENTIAL_DEFAULTS.forEach(function(n){ data.essential.push({ name:n, amt:"" }); });
+      data.seeded = true;
+      save();
+      saveGoalEl.value = ""; saveNowEl.value = ""; incomeGoalEl.value = "";
+      renderAll(); renderSavings(); renderChecks(); recalc();
+    }
+  });
+
+  // ---- Init ----
+  renderAll();
+  renderSavings();
+  renderChecks();
+  recalc();
+
+})();
+</script>
+</body>
+</html>

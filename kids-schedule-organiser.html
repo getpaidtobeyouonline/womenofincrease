@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kids Schedule Organiser · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:0 0 12px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], input[type="date"], input[type="time"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="date"], input[type="time"], select{ min-height:48px; }
+  textarea{ min-height:70px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  select{ -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236B655C' d='M6 8 0 0h12z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:36px;
+  }
+  .field-row{ display:flex; gap:10px; }
+  .field-row > div{ flex:1; }
+
+  /* ---------- Buttons ---------- */
+  .primary-btn{
+    width:100%; margin-top:8px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .primary-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .primary-btn:active{ transform:translateY(1px); }
+  .add-kid-btn{
+    min-height:48px; background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.18); border-radius:12px;
+    font-family:inherit; font-weight:600; font-size:15px; cursor:pointer;
+    padding:0 16px; transition:background .15s;
+  }
+  .add-kid-btn:hover{ background:#dbe7e0; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Kids row / badges ---------- */
+  .add-kid-row{ display:flex; gap:10px; align-items:center; }
+  .add-kid-row input{ flex:1; }
+  .kids-chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .kid-chip{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--cream); border:1px solid var(--line); border-radius:999px;
+    padding:6px 10px 6px 6px; font-size:14px; font-weight:600;
+  }
+  .badge{
+    flex:none; width:28px; height:28px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-weight:700; font-size:13px; font-family:'Hanken Grotesk';
+  }
+  .kid-chip .remove-kid{
+    background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:18px; line-height:1; padding:4px; min-width:28px; min-height:28px;
+    border-radius:50%;
+  }
+  .kid-chip .remove-kid:hover{ color:var(--ink); }
+
+  /* ---------- Filter ---------- */
+  .filters{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+  .filter-btn{
+    min-height:44px; background:var(--cream); border:1px solid var(--line);
+    color:var(--muted); border-radius:999px; padding:8px 14px;
+    font-family:inherit; font-weight:600; font-size:13.5px; cursor:pointer;
+    display:inline-flex; align-items:center; gap:7px;
+  }
+  .filter-btn.active{ background:var(--emerald); color:#FCF8EF; border-color:var(--emerald); }
+  .filter-btn .mini{ width:14px; height:14px; border-radius:50%; }
+
+  /* ---------- Upcoming count ---------- */
+  .upcoming-count{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-bottom:14px; color:var(--muted); font-size:14px;
+  }
+  .upcoming-count b{ color:var(--emerald); font-size:15px; }
+
+  /* ---------- Schedule items ---------- */
+  .day-group{ margin-bottom:18px; }
+  .day-group:last-child{ margin-bottom:0; }
+  .day-head{
+    display:flex; align-items:center; gap:8px; margin:0 0 8px;
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+  }
+  .day-head .today-tag{
+    font-family:'Hanken Grotesk'; font-weight:700; font-size:10.5px;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--ink);
+    background:var(--gold); border-radius:999px; padding:3px 9px;
+  }
+  .item{
+    display:flex; align-items:flex-start; gap:11px;
+    border:1px solid var(--line); border-radius:13px; padding:13px 14px;
+    margin-bottom:9px; background:#fff;
+  }
+  .item.today-item{ border-color:var(--gold-soft); box-shadow:0 0 0 2px rgba(200,160,74,.14); }
+  .item.is-done{ opacity:.58; }
+  .item.is-done .item-title{ text-decoration:line-through; }
+  .item-main{ flex:1; min-width:0; }
+  .item-title{
+    font-weight:700; font-size:15px; color:var(--ink);
+    display:flex; align-items:center; gap:7px; flex-wrap:wrap;
+  }
+  .type-tag{
+    font-weight:600; font-size:11px; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--emerald); background:var(--emerald-soft); border-radius:6px; padding:2px 7px;
+  }
+  .item-meta{ color:var(--muted); font-size:13px; margin-top:3px; }
+  .item-meta .kidname{ color:var(--ink); font-weight:600; }
+  .item-notes{ color:var(--muted); font-size:13px; margin-top:5px; font-style:italic; }
+  .item-actions{ flex:none; display:flex; flex-direction:column; gap:4px; }
+  .icon-btn{
+    background:none; border:1px solid var(--line); border-radius:9px;
+    width:40px; height:40px; min-width:40px; cursor:pointer; font-size:16px;
+    display:flex; align-items:center; justify-content:center; color:var(--muted);
+  }
+  .icon-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .icon-btn.done-on{ background:var(--emerald-soft); border-color:rgba(20,84,62,.25); color:var(--emerald); }
+
+  /* ---------- Empty states ---------- */
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+  .welcome{
+    text-align:center; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.15); border-radius:14px;
+    padding:22px 18px; color:var(--emerald);
+  }
+  .welcome .big{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin-bottom:6px; }
+  .welcome .sm{ font-size:14px; color:var(--muted); line-height:1.5; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Kids Schedule Organiser</h1>
+    <p class="subtitle">Every child, every activity — one calm view for the beautiful chaos.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- 1. Kids -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Children</h2></div>
+    <p class="hint">Add each child once. We'll give them a colour so you can spot their items at a glance.</p>
+    <form class="add-kid-row" id="kidForm">
+      <label class="field-label" for="kidName" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);margin:-1px;">Child's name</label>
+      <input type="text" id="kidName" placeholder="Add a child's name…" autocomplete="off" maxlength="30">
+      <button class="add-kid-btn" type="submit">Add</button>
+    </form>
+    <div class="kids-chips" id="kidsChips"></div>
+  </section>
+
+  <!-- 2. Add schedule item -->
+  <section class="card" id="addItemCard">
+    <div class="step"><span class="num">2</span><h2>Add to the Schedule</h2></div>
+    <p class="hint">Soccer, dentist, school play — pop it in and let it go from your mind to the plan.</p>
+
+    <form id="itemForm">
+      <label class="field-label" for="itemKid">Which child?</label>
+      <select id="itemKid"></select>
+
+      <label class="field-label" for="itemTitle">What is it?</label>
+      <input type="text" id="itemTitle" placeholder="e.g. Soccer practice, Dentist, School play" autocomplete="off" maxlength="60">
+
+      <div class="field-row">
+        <div>
+          <label class="field-label" for="itemType">Type</label>
+          <select id="itemType">
+            <option value="School">School</option>
+            <option value="Activity">Activity</option>
+            <option value="Appointment">Appointment</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label class="field-label" for="itemTime">Time <span class="opt">(optional)</span></label>
+          <input type="time" id="itemTime">
+        </div>
+      </div>
+
+      <label class="field-label" for="itemDate">Date</label>
+      <input type="date" id="itemDate">
+
+      <label class="field-label" for="itemLoc">Location / notes <span class="opt">(optional)</span></label>
+      <textarea id="itemLoc" placeholder="Field 3, bring shin pads, pick-up at 5…"></textarea>
+
+      <button class="primary-btn" type="submit">Add to schedule 🌿</button>
+    </form>
+  </section>
+
+  <!-- 3. Combined view -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Upcoming Together</h2></div>
+    <p class="hint">Everyone's plans in one place, sorted by day. You've got this, mama.</p>
+
+    <div class="upcoming-count" id="upcomingCount"></div>
+    <div class="filters" id="filters"></div>
+    <div id="scheduleView"></div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_kids_schedule";
+
+  // brand-tinted palette for child badges
+  var PALETTE = ["#14543E","#C8A04A","#1C6B50","#A6791F","#3E7A63","#9A6B2E","#0F3F2E","#B8893B"];
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && Array.isArray(o.kids) && Array.isArray(o.items)) return o;
+      }
+    }catch(e){}
+    return { kids:[], items:[], filter:"all" };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  }
+  function prettyDate(key){
+    if(!key) return "No date yet";
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+  }
+  function prettyTime(t){
+    if(!t) return "";
+    var p = t.split(":"); var h = parseInt(p[0],10); var m = p[1];
+    var ap = h >= 12 ? "PM":"AM"; var hr = h % 12; if(hr===0) hr = 12;
+    return hr + ":" + m + " " + ap;
+  }
+  var TODAY = todayKey();
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+
+  $("todayDate").textContent = prettyDate(TODAY);
+  $("itemDate").value = TODAY;
+
+  // ---- Kids ----
+  function kidById(id){
+    for(var i=0;i<data.kids.length;i++){ if(data.kids[i].id===id) return data.kids[i]; }
+    return null;
+  }
+  function initials(name){
+    var parts = name.trim().split(/\s+/);
+    var s = parts[0] ? parts[0][0] : "?";
+    return s.toUpperCase();
+  }
+
+  $("kidForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var name = $("kidName").value.trim();
+    if(!name) return;
+    var color = PALETTE[data.kids.length % PALETTE.length];
+    data.kids.push({ id:uid(), name:name, color:color });
+    $("kidName").value = "";
+    save();
+    renderKids(); renderKidSelect(); renderFilters(); renderSchedule();
+  });
+
+  function renderKids(){
+    var box = $("kidsChips");
+    box.innerHTML = "";
+    if(data.kids.length === 0){
+      var note = document.createElement("p");
+      note.className = "empty-note";
+      note.textContent = "No little ones added yet — start with the first name above. 💛";
+      box.appendChild(note);
+      return;
+    }
+    data.kids.forEach(function(k){
+      var chip = document.createElement("span");
+      chip.className = "kid-chip";
+
+      var b = document.createElement("span");
+      b.className = "badge"; b.style.background = k.color;
+      b.textContent = initials(k.name);
+
+      var nm = document.createElement("span");
+      nm.textContent = k.name;
+
+      var rm = document.createElement("button");
+      rm.className = "remove-kid"; rm.type = "button";
+      rm.setAttribute("aria-label","Remove "+k.name);
+      rm.textContent = "×";
+      rm.addEventListener("click", function(){
+        if(confirm("Remove "+k.name+" and all of their schedule items?")){
+          data.items = data.items.filter(function(it){ return it.kidId !== k.id; });
+          data.kids = data.kids.filter(function(x){ return x.id !== k.id; });
+          if(data.filter === k.id) data.filter = "all";
+          save();
+          renderKids(); renderKidSelect(); renderFilters(); renderSchedule();
+        }
+      });
+
+      chip.appendChild(b); chip.appendChild(nm); chip.appendChild(rm);
+      box.appendChild(chip);
+    });
+  }
+
+  function renderKidSelect(){
+    var sel = $("itemKid");
+    var prev = sel.value;
+    sel.innerHTML = "";
+    if(data.kids.length === 0){
+      var opt = document.createElement("option");
+      opt.value = ""; opt.textContent = "Add a child first…";
+      sel.appendChild(opt);
+      sel.disabled = true;
+      return;
+    }
+    sel.disabled = false;
+    data.kids.forEach(function(k){
+      var opt = document.createElement("option");
+      opt.value = k.id; opt.textContent = k.name;
+      sel.appendChild(opt);
+    });
+    if(prev && kidById(prev)) sel.value = prev;
+  }
+
+  // ---- Add item ----
+  $("itemForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    if(data.kids.length === 0){
+      alert("Add at least one child first, sister. 💛");
+      return;
+    }
+    var title = $("itemTitle").value.trim();
+    if(!title){ $("itemTitle").focus(); return; }
+    data.items.push({
+      id: uid(),
+      kidId: $("itemKid").value,
+      title: title,
+      type: $("itemType").value,
+      date: $("itemDate").value || "",
+      time: $("itemTime").value || "",
+      notes: $("itemLoc").value.trim(),
+      done: false
+    });
+    save();
+    // reset just the per-item fields, keep child + date for fast entry
+    $("itemTitle").value = "";
+    $("itemTime").value = "";
+    $("itemLoc").value = "";
+    renderSchedule();
+    $("itemTitle").focus();
+  });
+
+  // ---- Filters ----
+  function renderFilters(){
+    var box = $("filters");
+    box.innerHTML = "";
+    if(data.kids.length === 0) return;
+
+    var allBtn = document.createElement("button");
+    allBtn.className = "filter-btn" + (data.filter==="all" ? " active":"");
+    allBtn.type = "button";
+    allBtn.textContent = "Everyone";
+    allBtn.addEventListener("click", function(){ data.filter="all"; save(); renderFilters(); renderSchedule(); });
+    box.appendChild(allBtn);
+
+    data.kids.forEach(function(k){
+      var btn = document.createElement("button");
+      btn.className = "filter-btn" + (data.filter===k.id ? " active":"");
+      btn.type = "button";
+      var dot = document.createElement("span");
+      dot.className = "mini"; dot.style.background = k.color;
+      btn.appendChild(dot);
+      btn.appendChild(document.createTextNode(k.name));
+      btn.addEventListener("click", function(){ data.filter=k.id; save(); renderFilters(); renderSchedule(); });
+      box.appendChild(btn);
+    });
+  }
+
+  // ---- Schedule view ----
+  function visibleItems(){
+    return data.items.filter(function(it){
+      return data.filter==="all" || it.kidId===data.filter;
+    });
+  }
+
+  function sortItems(arr){
+    return arr.slice().sort(function(a,b){
+      // undated items sink to the bottom
+      var ad = a.date || "9999-99-99", bd = b.date || "9999-99-99";
+      if(ad !== bd) return ad < bd ? -1 : 1;
+      var at = a.time || "99:99", bt = b.time || "99:99";
+      if(at !== bt) return at < bt ? -1 : 1;
+      return (a.title||"").localeCompare(b.title||"");
+    });
+  }
+
+  function renderUpcomingCount(){
+    var box = $("upcomingCount");
+    box.innerHTML = "";
+    var items = visibleItems();
+    var upcoming = items.filter(function(it){
+      return !it.done && (!it.date || it.date >= TODAY);
+    }).length;
+    var todayN = items.filter(function(it){
+      return !it.done && it.date === TODAY;
+    }).length;
+    if(data.items.length === 0) return;
+    var b1 = document.createElement("b"); b1.textContent = upcoming;
+    box.appendChild(b1);
+    box.appendChild(document.createTextNode(" coming up"));
+    if(todayN > 0){
+      box.appendChild(document.createTextNode(" · "));
+      var b2 = document.createElement("b"); b2.textContent = todayN;
+      box.appendChild(b2);
+      box.appendChild(document.createTextNode(" today"));
+    }
+  }
+
+  function renderSchedule(){
+    renderUpcomingCount();
+    var view = $("scheduleView");
+    view.innerHTML = "";
+
+    // First-run / fully empty welcome
+    if(data.kids.length === 0 && data.items.length === 0){
+      var w = document.createElement("div");
+      w.className = "welcome";
+      w.innerHTML = '<div class="big">Welcome, mama. 💛</div>' +
+        '<div class="sm">Add your children above, then drop in their school runs, practices and appointments. ' +
+        'It\'ll all gather here in one calm, sorted view — so the week stops living in your head.</div>';
+      view.appendChild(w);
+      return;
+    }
+
+    var items = sortItems(visibleItems());
+    if(items.length === 0){
+      var p = document.createElement("p");
+      p.className = "empty-note";
+      p.textContent = data.items.length === 0
+        ? "Nothing scheduled yet — add the first thing above and watch it appear here."
+        : "Nothing here for this view. Try \"Everyone\" or add a new item. 💛";
+      view.appendChild(p);
+      return;
+    }
+
+    // group by date
+    var groups = [];
+    var map = {};
+    items.forEach(function(it){
+      var key = it.date || "__none__";
+      if(!map[key]){ map[key] = []; groups.push(key); }
+      map[key].push(it);
+    });
+
+    groups.forEach(function(key){
+      var g = document.createElement("div");
+      g.className = "day-group";
+
+      var head = document.createElement("div");
+      head.className = "day-head";
+      head.appendChild(document.createTextNode(key==="__none__" ? "No date yet" : prettyDate(key)));
+      if(key === TODAY){
+        var t = document.createElement("span");
+        t.className = "today-tag"; t.textContent = "Today";
+        head.appendChild(t);
+      }
+      g.appendChild(head);
+
+      map[key].forEach(function(it){
+        g.appendChild(buildItem(it, key===TODAY));
+      });
+      view.appendChild(g);
+    });
+  }
+
+  function buildItem(it, isToday){
+    var kid = kidById(it.kidId);
+    var row = document.createElement("div");
+    row.className = "item" + (it.done ? " is-done":"") + (isToday ? " today-item":"");
+
+    var badge = document.createElement("span");
+    badge.className = "badge";
+    badge.style.background = kid ? kid.color : "#999";
+    badge.textContent = kid ? initials(kid.name) : "?";
+    badge.setAttribute("title", kid ? kid.name : "");
+
+    var main = document.createElement("div");
+    main.className = "item-main";
+
+    var title = document.createElement("div");
+    title.className = "item-title";
+    title.appendChild(document.createTextNode(it.title));
+    var tag = document.createElement("span");
+    tag.className = "type-tag"; tag.textContent = it.type;
+    title.appendChild(tag);
+    main.appendChild(title);
+
+    var meta = document.createElement("div");
+    meta.className = "item-meta";
+    var kn = document.createElement("span");
+    kn.className = "kidname"; kn.textContent = kid ? kid.name : "—";
+    meta.appendChild(kn);
+    if(it.time){ meta.appendChild(document.createTextNode(" · " + prettyTime(it.time))); }
+    main.appendChild(meta);
+
+    if(it.notes){
+      var n = document.createElement("div");
+      n.className = "item-notes"; n.textContent = it.notes;
+      main.appendChild(n);
+    }
+
+    var actions = document.createElement("div");
+    actions.className = "item-actions";
+
+    var doneBtn = document.createElement("button");
+    doneBtn.className = "icon-btn" + (it.done ? " done-on":"");
+    doneBtn.type = "button";
+    doneBtn.textContent = it.done ? "✓" : "○";
+    doneBtn.setAttribute("aria-label", it.done ? "Mark not done" : "Mark done / attended");
+    doneBtn.setAttribute("title", it.done ? "Done" : "Mark done");
+    doneBtn.addEventListener("click", function(){
+      it.done = !it.done; save(); renderSchedule();
+    });
+
+    var delBtn = document.createElement("button");
+    delBtn.className = "icon-btn"; delBtn.type = "button";
+    delBtn.textContent = "🗑";
+    delBtn.setAttribute("aria-label", "Delete " + it.title);
+    delBtn.setAttribute("title", "Delete");
+    delBtn.addEventListener("click", function(){
+      if(confirm("Delete \"" + it.title + "\"?")){
+        data.items = data.items.filter(function(x){ return x.id !== it.id; });
+        save(); renderSchedule();
+      }
+    });
+
+    actions.appendChild(doneBtn);
+    actions.appendChild(delBtn);
+
+    row.appendChild(badge);
+    row.appendChild(main);
+    row.appendChild(actions);
+    return row;
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL children and schedule items? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { kids:[], items:[], filter:"all" };
+      $("itemTitle").value = ""; $("itemTime").value = ""; $("itemLoc").value = "";
+      $("itemDate").value = TODAY;
+      renderAll();
+    }
+  });
+
+  // ---- Initial render ----
+  function renderAll(){
+    renderKids(); renderKidSelect(); renderFilters(); renderSchedule();
+  }
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

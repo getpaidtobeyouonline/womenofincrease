@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raising Them While Building Me Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Truth banner ---------- */
+  .truth{
+    margin-top:18px;
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:20px 20px; position:relative; overflow:hidden;
+    text-align:left;
+  }
+  .truth::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-22px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .truth p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:0 0 14px; }
+
+  /* ---------- Welcome (first run) ---------- */
+  .welcome{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 18px; margin-top:16px; color:var(--emerald);
+  }
+  .welcome .big{ font-family:'Fraunces',serif; font-weight:600; font-size:19px; margin-bottom:6px; }
+  .welcome p{ font-size:14px; color:var(--ink); line-height:1.55; }
+  .welcome.hide{ display:none; }
+
+  /* ---------- Two tracks ---------- */
+  .tracks{ display:flex; flex-direction:column; gap:16px; }
+  .track{
+    border-radius:14px; padding:18px; border:1px solid var(--line);
+  }
+  .track.me{ background:#FFFBF2; border-color:var(--gold-soft); }
+  .track.them{ background:var(--emerald-soft); border-color:rgba(20,84,62,.18); }
+  .track-head{
+    display:flex; align-items:center; gap:9px; margin-bottom:4px;
+  }
+  .track-tag{
+    font-weight:700; letter-spacing:.14em; text-transform:uppercase; font-size:11px;
+    padding:4px 10px; border-radius:999px;
+  }
+  .track.me .track-tag{ background:var(--gold); color:var(--ink); }
+  .track.them .track-tag{ background:var(--emerald); color:#FCF8EF; }
+  .track h3{
+    font-family:'Fraunces',serif; font-weight:600; font-size:17px; color:var(--emerald);
+  }
+  .track .sub{ color:var(--muted); font-size:13px; margin:2px 0 12px; }
+
+  ul.list{ list-style:none; margin-bottom:10px; }
+  ul.list li{
+    display:flex; align-items:flex-start; gap:10px;
+    padding:9px 0; border-bottom:1px solid var(--line);
+  }
+  ul.list li:last-child{ border-bottom:none; }
+  .check{
+    flex:none; width:24px; height:24px; margin-top:1px; border-radius:7px;
+    border:1.5px solid var(--gold); background:#fff; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; color:transparent; transition:background .12s, color .12s;
+  }
+  .track.them .check{ border-color:var(--emerald); }
+  .check.on{ background:var(--gold); color:var(--ink); }
+  .track.them .check.on{ background:var(--emerald); color:#FCF8EF; }
+  .item-text{ flex:1; font-size:14.5px; line-height:1.4; word-break:break-word; padding-top:2px; }
+  .item-text.done{ text-decoration:line-through; color:var(--muted); }
+  .del{
+    flex:none; background:none; border:none; color:#C0B8A8; cursor:pointer;
+    font-size:18px; line-height:1; padding:4px 6px; min-width:34px; min-height:34px;
+  }
+  .del:hover{ color:var(--gold); }
+  .empty-line{ color:var(--muted); font-size:13.5px; font-style:italic; padding:6px 0 10px; }
+
+  .add-row{ display:flex; gap:8px; }
+  .add-row input{
+    flex:1; font-family:inherit; font-size:16px; color:var(--ink);
+    background:#fff; border:1px solid var(--line); border-radius:11px;
+    padding:11px 13px; min-height:46px;
+  }
+  .add-row input:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  .add-row input::placeholder{ color:#A7A095; }
+  .add-btn{
+    flex:none; min-width:48px; min-height:46px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:20px; cursor:pointer;
+    box-shadow:0 4px 12px rgba(200,160,74,.3);
+  }
+  .track.them .add-btn{ background:var(--emerald); color:#FCF8EF; box-shadow:0 4px 12px rgba(20,84,62,.25); }
+  .add-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Counters (pockets / connection) ---------- */
+  .counter-box{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    background:var(--cream); border:1px solid var(--line); border-radius:13px;
+    padding:14px 16px; margin-top:12px;
+  }
+  .counter-box .label{ font-size:14px; font-weight:600; color:var(--ink); }
+  .counter-box .label small{ display:block; font-weight:400; color:var(--muted); font-size:12.5px; margin-top:2px; }
+  .counter-controls{ display:flex; align-items:center; gap:10px; flex:none; }
+  .count-num{
+    font-family:'Fraunces',serif; font-weight:600; font-size:26px; color:var(--emerald);
+    min-width:34px; text-align:center;
+  }
+  .round-btn{
+    width:44px; height:44px; border-radius:50%; border:1px solid var(--line);
+    background:#fff; color:var(--emerald); font-size:22px; font-weight:700; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; line-height:1;
+  }
+  .round-btn:active{ transform:translateY(1px); }
+  .round-btn.plus{ background:var(--gold); color:var(--ink); border-color:var(--gold); box-shadow:0 4px 12px rgba(200,160,74,.3); }
+
+  .field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+
+  /* ---------- Reflection ---------- */
+  .reflect-q{ font-size:14.5px; color:var(--ink); margin-bottom:12px; }
+  .toggle-row{
+    display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap;
+  }
+  .toggle{
+    flex:1; min-width:140px; min-height:48px;
+    border:1px solid var(--line); background:var(--cream); color:var(--ink);
+    border-radius:12px; font-family:inherit; font-size:14px; font-weight:600;
+    cursor:pointer; padding:10px 12px; transition:border-color .12s, background .12s;
+  }
+  .toggle small{ display:block; font-weight:400; color:var(--muted); font-size:12px; margin-top:2px; }
+  .toggle.on{ border-color:var(--emerald); background:var(--emerald-soft); color:var(--emerald); }
+  textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; min-height:84px; line-height:1.5;
+  }
+  textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  textarea::placeholder{ color:#A7A095; }
+
+  .grace-note{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:16px; color:var(--emerald);
+  }
+  .grace-note.show{ display:block; animation:rise .4s ease; }
+  .grace-note .big{ font-family:'Fraunces',serif; font-weight:600; font-size:17px; margin-bottom:4px; }
+  .grace-note .sm{ font-size:13.5px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+
+  @media (min-width:440px){
+    .tracks{ flex-direction:row; }
+    .track{ flex:1; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Raising Them While Building Me</h1>
+    <p class="subtitle">Honor your dreams and your children — both, in the same season.</p>
+    <div class="truth">
+      <p>You are raising children who will watch their mother rise.</p>
+    </div>
+  </header>
+
+  <!-- First-run welcome -->
+  <section class="welcome" id="welcome">
+    <div class="big">Set down the guilt, sister. 💛</div>
+    <p>Your growth is not stolen from your children — it is part of what you give them.
+       You don't have to choose between being a present mother and a becoming woman.
+       Plan both here, side by side, and let them both be holy. Start with one thing on each side.</p>
+  </section>
+
+  <!-- 1. Two tracks -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Both, Honored</h2></div>
+    <p class="hint">Two lists, held together. Your becoming and their growing — neither one waits for the other.</p>
+
+    <div class="tracks">
+      <!-- BUILDING ME -->
+      <div class="track me">
+        <div class="track-head">
+          <span class="track-tag">Building Me</span>
+        </div>
+        <h3>My goals this season</h3>
+        <p class="sub">Dreams, growth steps, the woman you're becoming.</p>
+        <ul class="list" id="meList"></ul>
+        <p class="empty-line" id="meEmpty">Add one thing you're building in yourself.</p>
+        <form class="add-row" id="meForm">
+          <label for="meInput" class="sr-only" style="position:absolute;left:-9999px;">Add a Building Me goal</label>
+          <input type="text" id="meInput" placeholder="A goal for me…" autocomplete="off">
+          <button class="add-btn" type="submit" aria-label="Add my goal">+</button>
+        </form>
+      </div>
+
+      <!-- RAISING THEM -->
+      <div class="track them">
+        <div class="track-head">
+          <span class="track-tag">Raising Them</span>
+        </div>
+        <h3>Their needs this season</h3>
+        <p class="sub">What your children need from you right now.</p>
+        <ul class="list" id="themList"></ul>
+        <p class="empty-line" id="themEmpty">Add one thing your children need this season.</p>
+        <form class="add-row" id="themForm">
+          <label for="themInput" class="sr-only" style="position:absolute;left:-9999px;">Add a Raising Them priority</label>
+          <input type="text" id="themInput" placeholder="A need for them…" autocomplete="off">
+          <button class="add-btn" type="submit" aria-label="Add their priority">+</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Protected pockets -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Protected Pockets</h2></div>
+    <p class="hint">Small + consistent beats waiting for "more time." Claim little windows that are yours — and mark each one you use for you.</p>
+
+    <ul class="list" id="pocketList"></ul>
+    <p class="empty-line" id="pocketEmpty">Name a small window — early mornings, nap time, after bedtime, a Saturday hour.</p>
+    <form class="add-row" id="pocketForm">
+      <label for="pocketInput" style="position:absolute;left:-9999px;">Add a protected pocket</label>
+      <input type="text" id="pocketInput" placeholder="A pocket of time for me…" autocomplete="off">
+      <button class="add-btn" type="submit" aria-label="Add a protected pocket">+</button>
+    </form>
+
+    <div class="counter-box">
+      <div class="label">
+        Pockets claimed this week
+        <small>Every one counts. You showed up for you.</small>
+      </div>
+      <div class="counter-controls">
+        <button class="round-btn" id="pocketMinus" type="button" aria-label="Remove one claimed pocket">−</button>
+        <span class="count-num" id="pocketCount">0</span>
+        <button class="round-btn plus" id="pocketPlus" type="button" aria-label="Add one claimed pocket">+</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Connection time -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Connection Time</h2></div>
+    <p class="hint">Quality over quantity. Phone down, fully present. Mark each moment you truly showed up with them.</p>
+
+    <div class="counter-box">
+      <div class="label">
+        Connection moments this week
+        <small>Not perfect days — present minutes. They remember those.</small>
+      </div>
+      <div class="counter-controls">
+        <button class="round-btn" id="connMinus" type="button" aria-label="Remove one connection moment">−</button>
+        <span class="count-num" id="connCount">0</span>
+        <button class="round-btn plus" id="connPlus" type="button" aria-label="Add one connection moment">+</button>
+      </div>
+    </div>
+
+    <label class="field-label" for="connNote">A moment worth remembering <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <textarea id="connNote" placeholder="Pancakes and giggles. The bedtime question I actually answered. A walk with no phone…"></textarea>
+  </section>
+
+  <!-- 4. Weekly balance reflection -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Weekly Balance Check</h2></div>
+    <p class="hint">No scorekeeping, no guilt — balance is seasonal. Just a soft look at the week.</p>
+
+    <p class="reflect-q">This week, did both <b>ME</b> and <b>THEM</b> get honored?</p>
+    <div class="toggle-row">
+      <button class="toggle" id="meHonored" type="button" aria-pressed="false">
+        I built me 🌱<small>I took a step for my own growth</small>
+      </button>
+      <button class="toggle" id="themHonored" type="button" aria-pressed="false">
+        I raised them 🤍<small>I showed up present for them</small>
+      </button>
+    </div>
+
+    <label class="field-label" for="reflectNote">What did this season ask of you?</label>
+    <textarea id="reflectNote" placeholder="Some weeks lean more one way — that's allowed. What felt true this week?"></textarea>
+
+    <div class="grace-note" id="graceNote">
+      <div class="big" id="graceBig">Both honored. Beautiful. 💛</div>
+      <div class="sm" id="graceSm">You're showing them what a whole woman looks like.</div>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_raising_building";
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- State ----
+  function fresh(){
+    return {
+      me: [],            // {text, done}
+      them: [],          // {text, done}
+      pockets: [],       // {text}
+      pocketCount: 0,
+      connCount: 0,
+      connNote: "",
+      meHonored: false,
+      themHonored: false,
+      reflectNote: ""
+    };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          var f = fresh();
+          for(var k in f){ if(o[k] !== undefined) f[k] = o[k]; }
+          return f;
+        }
+      }
+    }catch(e){}
+    return fresh();
+  }
+  var data = load();
+
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Hide welcome once she has anything ----
+  function hasContent(){
+    return data.me.length || data.them.length || data.pockets.length ||
+           data.pocketCount || data.connCount || data.connNote ||
+           data.meHonored || data.themHonored || data.reflectNote;
+  }
+  function renderWelcome(){
+    $("welcome").classList.toggle("hide", !!hasContent());
+  }
+
+  // ---- Track lists (me / them) ----
+  function renderTrack(which){
+    var arr = data[which];
+    var listEl = $(which + "List");
+    var emptyEl = $(which + "Empty");
+    listEl.innerHTML = "";
+    emptyEl.style.display = arr.length ? "none" : "block";
+
+    arr.forEach(function(item, idx){
+      var li = document.createElement("li");
+
+      var box = document.createElement("button");
+      box.type = "button";
+      box.className = "check" + (item.done ? " on" : "");
+      box.textContent = item.done ? "✓" : "";
+      box.setAttribute("aria-label", (item.done ? "Mark not done: " : "Mark done: ") + item.text);
+      box.setAttribute("aria-pressed", item.done ? "true" : "false");
+      box.addEventListener("click", function(){
+        arr[idx].done = !arr[idx].done; save(); renderTrack(which);
+      });
+
+      var txt = document.createElement("span");
+      txt.className = "item-text" + (item.done ? " done" : "");
+      txt.textContent = item.text;
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "del";
+      del.innerHTML = "&times;";
+      del.setAttribute("aria-label", "Remove: " + item.text);
+      del.addEventListener("click", function(){
+        arr.splice(idx,1); save(); renderTrack(which); renderWelcome();
+      });
+
+      li.appendChild(box); li.appendChild(txt); li.appendChild(del);
+      listEl.appendChild(li);
+    });
+  }
+
+  function wireTrack(which){
+    $(which + "Form").addEventListener("submit", function(e){
+      e.preventDefault();
+      var input = $(which + "Input");
+      var v = input.value.trim();
+      if(!v) return;
+      data[which].push({ text:v, done:false });
+      input.value = "";
+      save(); renderTrack(which); renderWelcome();
+      input.focus();
+    });
+  }
+
+  // ---- Protected pockets list ----
+  function renderPockets(){
+    var listEl = $("pocketList");
+    var emptyEl = $("pocketEmpty");
+    listEl.innerHTML = "";
+    emptyEl.style.display = data.pockets.length ? "none" : "block";
+    data.pockets.forEach(function(item, idx){
+      var li = document.createElement("li");
+
+      var dot = document.createElement("span");
+      dot.className = "check on";
+      dot.style.cursor = "default";
+      dot.style.borderColor = "var(--gold)";
+      dot.style.background = "var(--gold)";
+      dot.style.color = "var(--ink)";
+      dot.textContent = "🕊";
+      dot.setAttribute("aria-hidden","true");
+      dot.style.fontSize = "12px";
+
+      var txt = document.createElement("span");
+      txt.className = "item-text";
+      txt.textContent = item.text;
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "del";
+      del.innerHTML = "&times;";
+      del.setAttribute("aria-label", "Remove pocket: " + item.text);
+      del.addEventListener("click", function(){
+        data.pockets.splice(idx,1); save(); renderPockets(); renderWelcome();
+      });
+
+      li.appendChild(dot); li.appendChild(txt); li.appendChild(del);
+      listEl.appendChild(li);
+    });
+  }
+  $("pocketForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var input = $("pocketInput");
+    var v = input.value.trim();
+    if(!v) return;
+    data.pockets.push({ text:v });
+    input.value = "";
+    save(); renderPockets(); renderWelcome();
+    input.focus();
+  });
+
+  // ---- Counters ----
+  function clampUp(n){ return n < 0 ? 0 : n; }
+  function renderCounters(){
+    $("pocketCount").textContent = data.pocketCount;
+    $("connCount").textContent = data.connCount;
+  }
+  $("pocketPlus").addEventListener("click", function(){ data.pocketCount = clampUp(data.pocketCount+1); save(); renderCounters(); renderWelcome(); });
+  $("pocketMinus").addEventListener("click", function(){ data.pocketCount = clampUp(data.pocketCount-1); save(); renderCounters(); });
+  $("connPlus").addEventListener("click", function(){ data.connCount = clampUp(data.connCount+1); save(); renderCounters(); renderWelcome(); });
+  $("connMinus").addEventListener("click", function(){ data.connCount = clampUp(data.connCount-1); save(); renderCounters(); });
+
+  // ---- Connection note ----
+  $("connNote").addEventListener("input", function(){ data.connNote = this.value; save(); renderWelcome(); });
+
+  // ---- Reflection toggles ----
+  function renderToggles(){
+    var m = $("meHonored"), t = $("themHonored");
+    m.classList.toggle("on", data.meHonored);
+    m.setAttribute("aria-pressed", data.meHonored ? "true":"false");
+    t.classList.toggle("on", data.themHonored);
+    t.setAttribute("aria-pressed", data.themHonored ? "true":"false");
+
+    var note = $("graceNote");
+    if(data.meHonored && data.themHonored){
+      $("graceBig").textContent = "Both honored. Beautiful. 💛";
+      $("graceSm").textContent = "You're showing them what a whole woman looks like.";
+      note.classList.add("show");
+    } else if(data.meHonored || data.themHonored){
+      $("graceBig").textContent = "This was a leaning season — and that's okay. 🌿";
+      $("graceSm").textContent = "Balance is seasonal, not daily. You honored what you could. No guilt here.";
+      note.classList.add("show");
+    } else {
+      note.classList.remove("show");
+    }
+  }
+  $("meHonored").addEventListener("click", function(){ data.meHonored = !data.meHonored; save(); renderToggles(); renderWelcome(); });
+  $("themHonored").addEventListener("click", function(){ data.themHonored = !data.themHonored; save(); renderToggles(); renderWelcome(); });
+  $("reflectNote").addEventListener("input", function(){ data.reflectNote = this.value; save(); renderWelcome(); });
+
+  // ---- Restore values ----
+  $("connNote").value = data.connNote || "";
+  $("reflectNote").value = data.reflectNote || "";
+
+  // ---- Initial render ----
+  wireTrack("me");
+  wireTrack("them");
+  renderTrack("me");
+  renderTrack("them");
+  renderPockets();
+  renderCounters();
+  renderToggles();
+  renderWelcome();
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Raising Them While Building Me data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = fresh();
+      $("connNote").value = "";
+      $("reflectNote").value = "";
+      renderTrack("me");
+      renderTrack("them");
+      renderPockets();
+      renderCounters();
+      renderToggles();
+      renderWelcome();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Single Mom Business Builder · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:16px; padding:22px 20px; margin-top:18px;
+    position:relative; overflow:hidden;
+  }
+  .welcome h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:21px;
+    margin-bottom:8px; color:#FCF8EF;
+  }
+  .welcome p{ font-size:14.5px; color:rgba(252,248,239,.9); }
+  .welcome .dismiss{
+    margin-top:14px; min-height:44px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:11px;
+    padding:11px 18px; font-family:inherit; font-weight:700; font-size:14.5px; cursor:pointer;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:8px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:0 0 12px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label:first-of-type{ margin-top:4px; }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:78px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  .optional{ color:var(--muted); font-weight:400; }
+
+  /* ---------- Flexibility filter (model chips) ---------- */
+  .models{ display:flex; flex-direction:column; gap:10px; margin-top:6px; }
+  .model{
+    display:flex; align-items:flex-start; gap:12px; cursor:pointer;
+    background:var(--cream); border:1px solid var(--line); border-radius:12px;
+    padding:13px 14px; min-height:44px; transition:border-color .15s, background .15s;
+  }
+  .model:hover{ border-color:var(--gold-soft); }
+  .model.sel{ border-color:var(--emerald); background:var(--emerald-soft); }
+  .model input{ position:absolute; opacity:0; width:1px; height:1px; }
+  .model .tick{
+    flex:none; width:22px; height:22px; border-radius:7px; margin-top:1px;
+    border:1.5px solid var(--line); background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--emerald); font-weight:700; font-size:14px;
+  }
+  .model.sel .tick{ background:var(--emerald); border-color:var(--emerald); color:#FCF8EF; }
+  .model .m-body strong{ display:block; font-size:14.5px; color:var(--ink); }
+  .model .m-body span{ display:block; font-size:12.5px; color:var(--muted); margin-top:2px; }
+  .model .flag{
+    font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--gold); margin-top:5px;
+  }
+  .model.caution .flag{ color:#A2602C; }
+
+  .note-soft{
+    margin-top:12px; font-size:13px; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.14);
+    border-radius:11px; padding:11px 13px;
+  }
+
+  /* ---------- First steps ---------- */
+  .add-row{ display:flex; gap:8px; margin-top:6px; }
+  .add-row input{ flex:1; }
+  .add-btn{
+    flex:none; min-height:48px; min-width:48px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:20px; cursor:pointer;
+    box-shadow:0 4px 12px rgba(200,160,74,.3);
+  }
+  .add-btn:active{ transform:translateY(1px); }
+
+  .progress-wrap{ margin:16px 0 6px; }
+  .progress-top{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-size:13px; color:var(--muted); margin-bottom:6px;
+  }
+  .progress-top b{ color:var(--emerald); font-size:14px; }
+  .bar{
+    height:10px; background:var(--emerald-soft); border-radius:999px; overflow:hidden;
+    border:1px solid rgba(20,84,62,.1);
+  }
+  .bar i{
+    display:block; height:100%; width:0%;
+    background:linear-gradient(90deg, var(--gold) 0%, var(--gold-soft) 100%);
+    border-radius:999px; transition:width .35s ease;
+  }
+
+  .steps-list{ list-style:none; margin-top:8px; }
+  .steps-list li{
+    display:flex; align-items:center; gap:11px;
+    padding:11px 2px; border-bottom:1px solid var(--line);
+  }
+  .steps-list li:last-child{ border-bottom:none; }
+  .steps-list .check{
+    flex:none; width:24px; height:24px; border-radius:7px; cursor:pointer;
+    border:1.5px solid var(--line); background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    color:#FCF8EF; font-weight:700; font-size:14px;
+  }
+  .steps-list li.done .check{ background:var(--emerald); border-color:var(--emerald); }
+  .steps-list .txt{ flex:1; font-size:14.5px; color:var(--ink); }
+  .steps-list li.done .txt{ color:var(--muted); text-decoration:line-through; }
+  .steps-list .del{
+    flex:none; background:none; border:none; color:var(--muted);
+    font-size:18px; cursor:pointer; min-width:36px; min-height:36px; line-height:1;
+  }
+  .steps-list .del:hover{ color:#A2602C; }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; margin-top:6px; }
+
+  /* ---------- Fit score ---------- */
+  .fit-row{ display:flex; align-items:flex-start; gap:11px; padding:9px 0; }
+  .fit-row .fcheck{
+    flex:none; width:24px; height:24px; border-radius:7px; cursor:pointer; margin-top:1px;
+    border:1.5px solid var(--line); background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    color:#FCF8EF; font-weight:700; font-size:14px;
+  }
+  .fit-row.on .fcheck{ background:var(--emerald); border-color:var(--emerald); }
+  .fit-row .ftxt{ font-size:14px; color:var(--ink); line-height:1.4; }
+  .fit-result{
+    margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .fit-result .big{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin-bottom:4px; }
+  .fit-result .sm{ font-size:14px; color:var(--muted); }
+
+  /* ---------- Blessing line ---------- */
+  .blessing-line{
+    margin-top:16px; text-align:center; font-family:'Fraunces',serif;
+    font-style:italic; font-size:16.5px; color:var(--emerald); line-height:1.45;
+    padding:0 6px;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Single Mom Business Builder</h1>
+    <p class="subtitle">Build an income around your real life — your time, your gifts, your kids.</p>
+  </header>
+
+  <!-- Welcome (first run) -->
+  <section class="welcome" id="welcome">
+    <h2>Welcome, mama. 💛</h2>
+    <p>You don't have to choose between your children and your dream. This planner helps you build a business <strong>around your life, not against it</strong> — starting small, fitting your real hours, and honoring the gifts already in you. Take it one section at a time.</p>
+    <button class="dismiss" id="welcomeDismiss" type="button">Let's begin</button>
+  </section>
+
+  <!-- 1. Business idea -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Business Idea</h2></div>
+    <p class="hint">Start from what's already in you — your skills, your story, the thing people ask you for.</p>
+    <label class="field-label" for="skills">What are you good at / known for? <span class="optional">(skills, experience, your story)</span></label>
+    <textarea id="skills" placeholder="e.g., I'm organized, I cook well on a budget, I've survived a lot and people come to me for advice…"></textarea>
+    <label class="field-label" for="idea">In one line: what will you offer, and who does it help?</label>
+    <textarea id="idea" placeholder="I help [who] do [what] so they can [result]…"></textarea>
+  </section>
+
+  <!-- 2. Real time + flexible income fit -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>The Time You Actually Have</h2></div>
+    <p class="hint">Be honest, not ambitious. We build around the hours that already exist.</p>
+    <label class="field-label" for="time">When can you realistically work? <span class="optional">(nap times, evenings, weekends…)</span></label>
+    <textarea id="time" placeholder="e.g., 1 hr during naptime, 45 min after bedtime, Saturday mornings…"></textarea>
+    <label class="field-label" for="hours">Roughly how many focused hours per week?</label>
+    <input type="text" id="hours" placeholder="e.g., 5–7 hours">
+  </section>
+
+  <!-- 3. Flexibility filter -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Choose a Model That Fits Motherhood</h2></div>
+    <p class="hint">Pick the way of working that bends around your kids. The first three let you earn without being on-call.</p>
+    <div class="models" id="models"></div>
+    <div class="note-soft" id="modelNote" style="display:none;"></div>
+  </section>
+
+  <!-- 4. Minimal startup needs -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>The Bare Minimum to Start</h2></div>
+    <p class="hint">You need less than you think. Separate what's truly required from what can wait.</p>
+    <label class="field-label" for="needNow">What do you truly need to start? <span class="optional">(keep it tiny)</span></label>
+    <textarea id="needNow" placeholder="e.g., a phone, a free Canva account, one product to sell…"></textarea>
+    <label class="field-label" for="needLater">Nice-to-have (later, once money comes in)</label>
+    <textarea id="needLater" placeholder="e.g., a logo, a website, ads, fancy tools…"></textarea>
+  </section>
+
+  <!-- 5. First customers -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>Your First Few Customers</h2></div>
+    <p class="hint">You don't need a crowd — you need the first 3 to 5 people who say yes.</p>
+    <label class="field-label" for="customers">Who could be your first customers, and where will you find them?</label>
+    <textarea id="customers" placeholder="e.g., moms in my church group, my Facebook friends, the school WhatsApp chat…"></textarea>
+  </section>
+
+  <!-- 6. Pricing + first income goal -->
+  <section class="card">
+    <div class="step"><span class="num">6</span><h2>Pricing &amp; First Income Goal</h2></div>
+    <p class="hint">Pick a number you can reach soon — proof beats perfection.</p>
+    <label class="field-label" for="price">What will you charge?</label>
+    <input type="text" id="price" placeholder="e.g., $25 per item / $80 per service">
+    <label class="field-label" for="goal">Your first income goal (and by when)</label>
+    <input type="text" id="goal" placeholder="e.g., my first $100 in 30 days">
+  </section>
+
+  <!-- First steps -->
+  <section class="card">
+    <div class="step"><span class="num">→</span><h2>First Steps: Idea to First Dollar</h2></div>
+    <p class="hint">Small, doable steps. Check them off as you go — momentum is everything.</p>
+    <form class="add-row" id="addForm">
+      <label for="newStep" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Add a step</label>
+      <input type="text" id="newStep" placeholder="Add a step…" autocomplete="off">
+      <button class="add-btn" type="submit" aria-label="Add step">+</button>
+    </form>
+
+    <div class="progress-wrap">
+      <div class="progress-top"><span>Your progress</span><span><b id="progPct">0%</b> · <span id="progCount">0 of 0</span></span></div>
+      <div class="bar"><i id="bar"></i></div>
+    </div>
+
+    <ul class="steps-list" id="stepsList"></ul>
+    <p class="empty-note" id="stepsEmpty">No steps yet. Add your first one above — or tap “Suggest starter steps.” 💛</p>
+    <div class="center" style="margin-top:10px;">
+      <button class="reset-btn" id="seedBtn" type="button" style="margin-bottom:0;">✨ Suggest starter steps</button>
+    </div>
+  </section>
+
+  <!-- Fit score -->
+  <section class="card">
+    <div class="step"><span class="num">♡</span><h2>Does This Respect Your Life?</h2></div>
+    <p class="hint">A gentle check-in, not a test. Tick what's true — there are no wrong answers.</p>
+    <div id="fitList"></div>
+    <div class="fit-result" id="fitResult">
+      <div class="big" id="fitBig">Reflect a moment 🌿</div>
+      <div class="sm" id="fitSm">Tick the lines above that feel true for your plan.</div>
+    </div>
+  </section>
+
+  <p class="blessing-line">
+    Your story has value, and so does your time. Start small — God grows what you faithfully begin.
+  </p>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_single_mom_business";
+
+  var MODELS = [
+    { id:"digital", name:"Digital products", desc:"Make once, sell again and again — printables, guides, templates, ebooks.", fit:true },
+    { id:"async", name:"Async services", desc:"Work on your schedule — writing, design, bookkeeping, social media you batch and deliver.", fit:true },
+    { id:"around-kids", name:"Things you do around the kids", desc:"Baking, crafts, candles, content you create in pockets of time.", fit:true },
+    { id:"reselling", name:"Reselling / flipping", desc:"Source and list when you have a free hour — flexible, low overhead.", fit:true },
+    { id:"live-service", name:"Live, on-demand service", desc:"Needs you available at set times (calls, in-person clients).", fit:false },
+    { id:"storefront", name:"Fixed-hours storefront", desc:"Requires being present on a set schedule most days.", fit:false }
+  ];
+
+  var FIT_QUESTIONS = [
+    "This works inside the hours I actually have.",
+    "I can start it with what I already own (or close to it).",
+    "It doesn't need me to be available on-demand all day.",
+    "It uses a gift or strength that's already in me.",
+    "I can earn my first dollar from it within a month or two.",
+    "On a hard parenting day, I could still pause it without losing everything."
+  ];
+
+  var SEED_STEPS = [
+    "Write my one-line offer (who + what + result)",
+    "Tell 3 people what I'm starting and ask what they think",
+    "Create my first product or service (keep it simple)",
+    "Set my price and write a short description",
+    "Make one post or message inviting people to buy",
+    "Get my first paying customer 🎉"
+  ];
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          o.fields = o.fields || {};
+          o.models = o.models || {};
+          o.steps = o.steps || [];
+          o.fit = o.fit || {};
+          if(typeof o.welcomed !== "boolean") o.welcomed = false;
+          return o;
+        }
+      }
+    }catch(e){}
+    return { fields:{}, models:{}, steps:[], fit:{}, welcomed:false };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Welcome ----
+  if(data.welcomed){ $("welcome").style.display = "none"; }
+  $("welcomeDismiss").addEventListener("click", function(){
+    data.welcomed = true; save();
+    $("welcome").style.display = "none";
+  });
+
+  // ---- Text fields: restore + auto-save ----
+  var FIELD_IDS = ["skills","idea","time","hours","needNow","needLater","customers","price","goal"];
+  FIELD_IDS.forEach(function(id){
+    var el = $(id);
+    el.value = data.fields[id] || "";
+    el.addEventListener("input", function(){
+      data.fields[id] = el.value;
+      save();
+    });
+  });
+
+  // ---- Flexibility filter (models) ----
+  var modelsWrap = $("models"), modelNote = $("modelNote");
+  function renderModels(){
+    modelsWrap.innerHTML = "";
+    MODELS.forEach(function(m){
+      var on = !!data.models[m.id];
+      var lbl = document.createElement("label");
+      lbl.className = "model" + (on ? " sel":"") + (m.fit ? "" : " caution");
+      var cb = document.createElement("input");
+      cb.type = "checkbox"; cb.checked = on;
+      cb.addEventListener("change", function(){
+        data.models[m.id] = cb.checked; save(); renderModels();
+      });
+      var tick = document.createElement("span");
+      tick.className = "tick"; tick.setAttribute("aria-hidden","true");
+      tick.textContent = on ? "✓" : "";
+      var body = document.createElement("span");
+      body.className = "m-body";
+      var strong = document.createElement("strong"); strong.textContent = m.name;
+      var span = document.createElement("span"); span.textContent = m.desc;
+      body.appendChild(strong); body.appendChild(span);
+      if(m.fit){
+        var f = document.createElement("span"); f.className="flag"; f.textContent="✓ Fits motherhood";
+        body.appendChild(f);
+      }else{
+        var f2 = document.createElement("span"); f2.className="flag"; f2.textContent="⚠ Needs you on-call";
+        body.appendChild(f2);
+      }
+      lbl.appendChild(cb); lbl.appendChild(tick); lbl.appendChild(body);
+      modelsWrap.appendChild(lbl);
+    });
+    // gentle steer
+    var pickedCaution = MODELS.some(function(m){ return !m.fit && data.models[m.id]; });
+    var pickedFlex = MODELS.some(function(m){ return m.fit && data.models[m.id]; });
+    if(pickedCaution && !pickedFlex){
+      modelNote.style.display = "block";
+      modelNote.textContent = "That can absolutely work — but it asks you to be available on demand. Could you start with a flexible model first, and add this later once you have support? No pressure, mama. 💛";
+    }else if(pickedFlex){
+      modelNote.style.display = "block";
+      modelNote.textContent = "Beautiful choice — that model bends around your kids instead of competing with them. 🌿";
+    }else{
+      modelNote.style.display = "none";
+    }
+  }
+  renderModels();
+
+  // ---- First steps ----
+  var stepsList = $("stepsList"), stepsEmpty = $("stepsEmpty");
+  function renderSteps(){
+    stepsList.innerHTML = "";
+    if(data.steps.length === 0){ stepsEmpty.style.display = "block"; }
+    else{ stepsEmpty.style.display = "none"; }
+    data.steps.forEach(function(s, idx){
+      var li = document.createElement("li");
+      if(s.done) li.className = "done";
+      var chk = document.createElement("button");
+      chk.type = "button"; chk.className = "check";
+      chk.setAttribute("aria-label", (s.done?"Mark not done: ":"Mark done: ") + s.text);
+      chk.setAttribute("aria-pressed", s.done ? "true" : "false");
+      chk.textContent = s.done ? "✓" : "";
+      chk.addEventListener("click", function(){
+        data.steps[idx].done = !data.steps[idx].done; save(); renderSteps();
+      });
+      var txt = document.createElement("span");
+      txt.className = "txt"; txt.textContent = s.text;
+      var del = document.createElement("button");
+      del.type = "button"; del.className = "del";
+      del.setAttribute("aria-label", "Delete step: " + s.text);
+      del.textContent = "×";
+      del.addEventListener("click", function(){
+        data.steps.splice(idx,1); save(); renderSteps();
+      });
+      li.appendChild(chk); li.appendChild(txt); li.appendChild(del);
+      stepsList.appendChild(li);
+    });
+    renderProgress();
+  }
+  function renderProgress(){
+    var total = data.steps.length;
+    var done = data.steps.filter(function(s){ return s.done; }).length;
+    var pct = total ? Math.round((done/total)*100) : 0;
+    $("bar").style.width = pct + "%";
+    $("progPct").textContent = pct + "%";
+    $("progCount").textContent = done + " of " + total;
+  }
+  $("addForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var inp = $("newStep");
+    var v = inp.value.trim();
+    if(!v) return;
+    data.steps.push({ text:v, done:false });
+    inp.value = "";
+    save(); renderSteps(); inp.focus();
+  });
+  $("seedBtn").addEventListener("click", function(){
+    SEED_STEPS.forEach(function(t){
+      var exists = data.steps.some(function(s){ return s.text === t; });
+      if(!exists) data.steps.push({ text:t, done:false });
+    });
+    save(); renderSteps();
+  });
+  renderSteps();
+
+  // ---- Fit score ----
+  var fitList = $("fitList");
+  function renderFit(){
+    fitList.innerHTML = "";
+    FIT_QUESTIONS.forEach(function(q, idx){
+      var on = !!data.fit[idx];
+      var row = document.createElement("div");
+      row.className = "fit-row" + (on ? " on":"");
+      var chk = document.createElement("button");
+      chk.type = "button"; chk.className = "fcheck";
+      chk.setAttribute("aria-label", q);
+      chk.setAttribute("aria-pressed", on ? "true" : "false");
+      chk.textContent = on ? "✓" : "";
+      chk.addEventListener("click", function(){
+        data.fit[idx] = !data.fit[idx]; save(); renderFit();
+      });
+      var t = document.createElement("span");
+      t.className = "ftxt"; t.textContent = q;
+      row.appendChild(chk); row.appendChild(t);
+      fitList.appendChild(row);
+    });
+    renderFitResult();
+  }
+  function renderFitResult(){
+    var count = 0;
+    for(var i=0;i<FIT_QUESTIONS.length;i++){ if(data.fit[i]) count++; }
+    var total = FIT_QUESTIONS.length;
+    var big = $("fitBig"), sm = $("fitSm");
+    if(count === 0){
+      big.textContent = "Reflect a moment 🌿";
+      sm.textContent = "Tick the lines above that feel true for your plan.";
+    }else if(count <= 2){
+      big.textContent = count + " of " + total + " — a tender start";
+      sm.textContent = "Some of this fits. Gently tweak the rest so the plan bends around your life, not against it.";
+    }else if(count <= 4){
+      big.textContent = count + " of " + total + " — you're shaping it well";
+      sm.textContent = "This is taking real, sustainable form. Smooth one or two more pieces and you're solid.";
+    }else{
+      big.textContent = count + " of " + total + " — this honors your life 💛";
+      sm.textContent = "Beautiful. This plan respects your time, your energy, and your babies. Begin with confidence, mama.";
+    }
+  }
+  renderFit();
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Business Builder data? This can't be undone, mama.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { fields:{}, models:{}, steps:[], fit:{}, welcomed:true };
+      FIELD_IDS.forEach(function(id){ $(id).value = ""; });
+      renderModels(); renderSteps(); renderFit();
+      $("welcome").style.display = "none";
+      save();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

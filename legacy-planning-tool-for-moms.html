@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legacy Planning Tool for Moms · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:16px; padding:24px 22px; margin-top:18px;
+    position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-22px; left:12px; font-size:96px; color:rgba(231,211,161,.22);
+  }
+  .welcome h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:21px;
+    margin-bottom:10px; position:relative; z-index:1;
+  }
+  .welcome p{
+    font-size:15px; line-height:1.55; position:relative; z-index:1;
+    color:#EDE6D6;
+  }
+  .welcome p + p{ margin-top:10px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:8px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:0 0 12px; }
+
+  .section-head{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:23px;
+    font-weight:600; margin:34px 0 2px; text-align:center; letter-spacing:-.3px;
+  }
+  .section-sub{ text-align:center; color:var(--muted); font-size:14px; margin-bottom:2px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], select{ min-height:48px; }
+  textarea{ min-height:96px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Buttons ---------- */
+  .btn-gold{
+    width:100%; margin-top:8px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .btn-gold:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .btn-gold:active{ transform:translateY(1px); }
+
+  .btn-emerald{
+    width:100%; margin-top:10px; min-height:48px;
+    background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.2); border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    transition:background .15s;
+  }
+  .btn-emerald:hover{ background:#dbe7e0; }
+
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+  .link-btn.danger{ color:var(--muted); }
+  .link-btn.danger:hover{ color:#9a3b3b; }
+
+  .saved-tag{
+    font-size:12px; color:var(--emerald); font-weight:600; opacity:0;
+    transition:opacity .3s; margin-left:auto;
+  }
+  .saved-tag.show{ opacity:1; }
+  .step-row{ display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .step-row .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step-row h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:19px;
+  }
+
+  /* ---------- Children chips ---------- */
+  .children-row{ display:flex; flex-wrap:wrap; gap:8px; margin:6px 0 2px; }
+  .chip{
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.15);
+    border-radius:999px; padding:7px 12px; font-size:13.5px; font-weight:600;
+  }
+  .chip button{
+    background:none; border:none; color:var(--emerald); cursor:pointer;
+    font-size:15px; line-height:1; padding:0 2px; opacity:.6;
+  }
+  .chip button:hover{ opacity:1; color:#9a3b3b; }
+  .add-child-row{ display:flex; gap:8px; margin-top:10px; }
+  .add-child-row input{ flex:1; }
+  .add-child-row button{
+    flex:none; width:48px; min-height:48px; background:var(--gold); color:var(--ink);
+    border:none; border-radius:11px; font-size:22px; font-weight:700; cursor:pointer;
+  }
+
+  /* ---------- Letters ---------- */
+  .letter{
+    background:var(--cream); border:1px solid var(--line); border-radius:14px;
+    padding:16px 16px 12px; margin-top:12px;
+  }
+  .letter-meta{
+    display:flex; align-items:baseline; justify-content:space-between; gap:8px;
+    margin-bottom:8px;
+  }
+  .letter-to{
+    font-family:'Fraunces',serif; color:var(--emerald); font-weight:600; font-size:16px;
+  }
+  .letter-date{ color:var(--muted); font-size:12.5px; font-weight:600; letter-spacing:.03em; }
+  .letter-body{ white-space:pre-wrap; font-size:15px; line-height:1.55; color:var(--ink); }
+  .letter-foot{ display:flex; justify-content:flex-end; margin-top:6px; }
+
+  /* ---------- Legacy in action ---------- */
+  .action-row{ display:flex; align-items:flex-start; gap:11px; padding:11px 2px; border-bottom:1px solid var(--line); }
+  .action-row:last-child{ border-bottom:none; }
+  .action-row input[type="checkbox"]{
+    flex:none; width:24px; height:24px; margin-top:1px; accent-color:var(--emerald); cursor:pointer;
+  }
+  .action-row .txt{ flex:1; font-size:15px; line-height:1.4; }
+  .action-row.done .txt{ color:var(--muted); text-decoration:line-through; }
+  .action-row .del{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:16px; padding:2px 4px; min-height:32px;
+  }
+  .action-row .del:hover{ color:#9a3b3b; }
+  .add-action-row{ display:flex; gap:8px; margin-top:12px; }
+  .add-action-row input{ flex:1; }
+  .add-action-row button{
+    flex:none; width:48px; min-height:48px; background:var(--gold); color:var(--ink);
+    border:none; border-radius:11px; font-size:22px; font-weight:700; cursor:pointer;
+  }
+  .progress-wrap{ margin-top:14px; }
+  .progress-bar{ height:10px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .progress-fill{ height:100%; background:var(--gold); width:0%; transition:width .3s ease; border-radius:999px; }
+  .progress-label{ text-align:center; margin-top:8px; color:var(--muted); font-size:13.5px; }
+  .progress-label b{ color:var(--emerald); }
+
+  /* ---------- Legacy statement ---------- */
+  .statement{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:16px; padding:24px 22px; margin-top:14px;
+  }
+  .statement .st-head{
+    font-family:'Fraunces',serif; font-size:13px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--gold-soft); margin-bottom:14px; text-align:center;
+  }
+  .statement .st-block{ margin-bottom:16px; }
+  .statement .st-block:last-child{ margin-bottom:0; }
+  .statement .st-label{
+    font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--gold-soft);
+    font-weight:700; margin-bottom:4px;
+  }
+  .statement .st-text{ font-family:'Fraunces',serif; font-style:italic; font-size:17px; line-height:1.5; color:#FCF8EF; }
+  .statement .st-empty{ color:rgba(252,248,239,.55); font-style:normal; font-family:'Hanken Grotesk'; font-size:14px; }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Legacy Planning for Moms</h1>
+    <p class="subtitle">Name the values, faith, and love you're building into your children.</p>
+  </header>
+
+  <!-- Welcome / first-run -->
+  <section class="welcome" id="welcome">
+    <h2>The legacy you're building, mama</h2>
+    <p>Long before there's anything to inherit, there is a way you love. A way you pray. The way you keep going on the hard days — that is the legacy your children will carry.</p>
+    <p>This space is for the things that truly last: your values, your faith, your stories, the example you set. Write a little, save it, and come back as often as you like. You are planting trees you may sit under for years — and they will too. 💛</p>
+  </section>
+
+  <!-- ===== LEGACY DIMENSIONS ===== -->
+  <h2 class="section-head">Your Legacy, In Six Parts</h2>
+  <p class="section-sub">Answer what speaks to you. There are no wrong words here.</p>
+
+  <section class="card">
+    <div class="step-row"><span class="num">1</span><h2>The values I'm passing on</h2><span class="saved-tag" data-tag="values">Saved ✓</span></div>
+    <p class="hint">What do you want to be true of your children's character — long after they leave your home?</p>
+    <textarea id="dim_values" placeholder="I want them to know honesty, kindness, hard work, that we keep our word…"></textarea>
+  </section>
+
+  <section class="card">
+    <div class="step-row"><span class="num">2</span><h2>The faith I'm leaving</h2><span class="saved-tag" data-tag="faith">Saved ✓</span></div>
+    <p class="hint">What do you hope your children carry of God, prayer, and trusting Him through it all?</p>
+    <textarea id="dim_faith" placeholder="That God is faithful. That they can always pray. The way we worship even when it's hard…"></textarea>
+  </section>
+
+  <section class="card">
+    <div class="step-row"><span class="num">3</span><h2>Lessons &amp; wisdom to carry</h2><span class="saved-tag" data-tag="lessons">Saved ✓</span></div>
+    <p class="hint">The hard-won truths you'd want whispered to them on a difficult day.</p>
+    <textarea id="dim_lessons" placeholder="You are stronger than you feel. Ask for help. Money doesn't measure your worth…"></textarea>
+  </section>
+
+  <section class="card">
+    <div class="step-row"><span class="num">4</span><h2>Memories &amp; traditions to create</h2><span class="saved-tag" data-tag="memories">Saved ✓</span></div>
+    <p class="hint">The rhythms and moments you want them to remember being held by.</p>
+    <textarea id="dim_memories" placeholder="Sunday breakfasts. Bedtime prayers. Our song in the car. The way we celebrate small wins…"></textarea>
+  </section>
+
+  <section class="card">
+    <div class="step-row"><span class="num">5</span><h2>The example I want to set</h2><span class="saved-tag" data-tag="example">Saved ✓</span></div>
+    <p class="hint">Who do you want them to remember you being?</p>
+    <textarea id="dim_example" placeholder="A woman of faith who didn't quit. Soft and strong. Someone who loved them out loud…"></textarea>
+  </section>
+
+  <section class="card">
+    <div class="step-row"><span class="num">6</span><h2>Words &amp; blessings for my children</h2><span class="saved-tag" data-tag="blessing">Saved ✓</span></div>
+    <p class="hint">A blessing over all of them — the truth you'd speak over their lives.</p>
+    <textarea id="dim_blessing" placeholder="May you always know you are loved, chosen, and never alone…"></textarea>
+  </section>
+
+  <!-- ===== CHILDREN ===== -->
+  <h2 class="section-head">My Children</h2>
+  <p class="section-sub">Add their names so you can write to each of them by name.</p>
+  <section class="card">
+    <div class="children-row" id="childrenRow"></div>
+    <p class="empty-note" id="childrenEmpty">No names added yet — this is optional. You can always write a general letter below. 💛</p>
+    <div class="add-child-row">
+      <label for="childName" style="position:absolute;left:-9999px;">Child's name</label>
+      <input type="text" id="childName" placeholder="Add a child's name…" maxlength="40">
+      <button id="addChild" type="button" aria-label="Add child">+</button>
+    </div>
+  </section>
+
+  <!-- ===== LETTERS ===== -->
+  <h2 class="section-head">Letters to My Children</h2>
+  <p class="section-sub">Write the words you want them to have. Keep adding over the years.</p>
+  <section class="card">
+    <label class="field-label" for="letterTo">This letter is for</label>
+    <select id="letterTo"></select>
+    <label class="field-label" for="letterText">Your letter or blessing</label>
+    <textarea id="letterText" placeholder="My darling, I want you to know…"></textarea>
+    <button class="btn-gold" id="saveLetter" type="button">Save this letter 💌</button>
+  </section>
+
+  <section class="card" id="lettersCard">
+    <div class="step-row"><h2 style="font-size:18px;">Your saved letters</h2></div>
+    <div id="lettersList"></div>
+    <p class="empty-note" id="lettersEmpty">No letters yet. The first one is always the hardest to start — write just a sentence. 💛</p>
+  </section>
+
+  <!-- ===== LEGACY IN ACTION ===== -->
+  <h2 class="section-head">Legacy in Action</h2>
+  <p class="section-sub">Small, doable things to start living this legacy now.</p>
+  <section class="card">
+    <div class="add-action-row">
+      <label for="actionInput" style="position:absolute;left:-9999px;">New legacy action</label>
+      <input type="text" id="actionInput" placeholder="Start a Sunday breakfast tradition…" maxlength="120">
+      <button id="addAction" type="button" aria-label="Add action">+</button>
+    </div>
+    <div id="actionsList"></div>
+    <p class="empty-note" id="actionsEmpty">Add one small thing you can do this week. Legacy is built in ordinary moments. 💛</p>
+    <div class="progress-wrap" id="progressWrap" style="display:none;">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label"><b id="actionDone">0</b> of <b id="actionTotal">0</b> being lived out — keep going, mama.</div>
+    </div>
+  </section>
+
+  <!-- ===== LEGACY STATEMENT ===== -->
+  <h2 class="section-head">My Legacy Statement</h2>
+  <p class="section-sub">Everything you've written, gathered into one place to return to.</p>
+  <button class="btn-emerald" id="buildStatement" type="button">Assemble my legacy statement ✨</button>
+  <div id="statementOut"></div>
+
+  <div class="center" style="margin-top:28px;">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_legacy_planning";
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---------- State ----------
+  function blank(){
+    return {
+      dims:{ values:"", faith:"", lessons:"", memories:"", example:"", blessing:"" },
+      children:[],      // [name]
+      letters:[],       // [{id,to,text,date}]
+      actions:[]        // [{id,text,done}]
+    };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.dims) return Object.assign(blank(), o); }
+    }catch(e){}
+    return blank();
+  }
+  var data = load();
+
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+  function todayPretty(){
+    return new Date().toLocaleDateString(undefined,{year:"numeric", month:"long", day:"numeric"});
+  }
+
+  // ---------- Welcome visibility ----------
+  function maybeHideWelcome(){
+    var hasAny =
+      Object.keys(data.dims).some(function(k){ return data.dims[k].trim(); }) ||
+      data.children.length || data.letters.length || data.actions.length;
+    $("welcome").style.display = hasAny ? "none" : "block";
+  }
+
+  // ---------- Dimensions ----------
+  var DIMS = ["values","faith","lessons","memories","example","blessing"];
+  function flashSaved(tag){
+    var el = document.querySelector('[data-tag="'+tag+'"]');
+    if(!el) return;
+    el.classList.add("show");
+    clearTimeout(el._t);
+    el._t = setTimeout(function(){ el.classList.remove("show"); }, 1100);
+  }
+  DIMS.forEach(function(key){
+    var el = $("dim_"+key);
+    el.value = data.dims[key] || "";
+    el.addEventListener("input", function(){
+      data.dims[key] = el.value;
+      save(); flashSaved(key); maybeHideWelcome();
+    });
+  });
+
+  // ---------- Children ----------
+  function renderChildren(){
+    var row = $("childrenRow");
+    row.innerHTML = "";
+    $("childrenEmpty").style.display = data.children.length ? "none" : "block";
+    data.children.forEach(function(name, idx){
+      var chip = document.createElement("span");
+      chip.className = "chip";
+      var t = document.createElement("span");
+      t.textContent = name;
+      var x = document.createElement("button");
+      x.type = "button";
+      x.setAttribute("aria-label","Remove "+name);
+      x.textContent = "×";
+      x.addEventListener("click", function(){
+        if(confirm("Remove "+name+" from your list? Saved letters to "+name+" will stay.")){
+          data.children.splice(idx,1);
+          save(); renderChildren(); renderLetterOptions(); maybeHideWelcome();
+        }
+      });
+      chip.appendChild(t); chip.appendChild(x);
+      row.appendChild(chip);
+    });
+  }
+  function addChild(){
+    var inp = $("childName");
+    var name = inp.value.trim();
+    if(!name) return;
+    if(data.children.indexOf(name) === -1){ data.children.push(name); }
+    inp.value = "";
+    save(); renderChildren(); renderLetterOptions(); maybeHideWelcome();
+    inp.focus();
+  }
+  $("addChild").addEventListener("click", addChild);
+  $("childName").addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); addChild(); } });
+
+  // ---------- Letter recipient options ----------
+  function renderLetterOptions(){
+    var sel = $("letterTo");
+    var prev = sel.value;
+    sel.innerHTML = "";
+    var optAll = document.createElement("option");
+    optAll.value = "All my children";
+    optAll.textContent = "All my children (general)";
+    sel.appendChild(optAll);
+    data.children.forEach(function(name){
+      var o = document.createElement("option");
+      o.value = name; o.textContent = name;
+      sel.appendChild(o);
+    });
+    if(prev){ sel.value = prev; }
+  }
+
+  // ---------- Letters ----------
+  function renderLetters(){
+    var list = $("lettersList");
+    list.innerHTML = "";
+    var letters = data.letters.slice().sort(function(a,b){ return b.id < a.id ? -1 : 1; });
+    $("lettersEmpty").style.display = letters.length ? "none" : "block";
+    letters.forEach(function(L){
+      var wrap = document.createElement("div");
+      wrap.className = "letter";
+
+      var meta = document.createElement("div");
+      meta.className = "letter-meta";
+      var to = document.createElement("span");
+      to.className = "letter-to";
+      to.textContent = "To " + L.to;
+      var dt = document.createElement("span");
+      dt.className = "letter-date";
+      dt.textContent = L.date;
+      meta.appendChild(to); meta.appendChild(dt);
+
+      var body = document.createElement("div");
+      body.className = "letter-body";
+      body.textContent = L.text;
+
+      var foot = document.createElement("div");
+      foot.className = "letter-foot";
+      var del = document.createElement("button");
+      del.className = "link-btn danger";
+      del.type = "button";
+      del.textContent = "🗑 Delete";
+      del.addEventListener("click", function(){
+        if(confirm("Delete this letter to "+L.to+"? This can't be undone.")){
+          data.letters = data.letters.filter(function(x){ return x.id !== L.id; });
+          save(); renderLetters(); maybeHideWelcome();
+        }
+      });
+      foot.appendChild(del);
+
+      wrap.appendChild(meta); wrap.appendChild(body); wrap.appendChild(foot);
+      list.appendChild(wrap);
+    });
+  }
+  $("saveLetter").addEventListener("click", function(){
+    var text = $("letterText").value.trim();
+    if(!text){ alert("Write a few words first, mama — even one sentence counts. 💛"); return; }
+    var to = $("letterTo").value || "All my children";
+    data.letters.push({ id: uid(), to: to, text: text, date: todayPretty() });
+    $("letterText").value = "";
+    save(); renderLetters(); maybeHideWelcome();
+  });
+
+  // ---------- Legacy in action ----------
+  function renderActions(){
+    var list = $("actionsList");
+    list.innerHTML = "";
+    $("actionsEmpty").style.display = data.actions.length ? "none" : "block";
+    data.actions.forEach(function(A){
+      var row = document.createElement("div");
+      row.className = "action-row" + (A.done ? " done" : "");
+
+      var cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = !!A.done;
+      cb.id = "act_" + A.id;
+      cb.addEventListener("change", function(){
+        A.done = cb.checked; save(); renderActions();
+      });
+
+      var lab = document.createElement("label");
+      lab.className = "txt";
+      lab.setAttribute("for", "act_" + A.id);
+      lab.textContent = A.text;
+
+      var del = document.createElement("button");
+      del.className = "del";
+      del.type = "button";
+      del.setAttribute("aria-label","Delete action");
+      del.textContent = "×";
+      del.addEventListener("click", function(){
+        data.actions = data.actions.filter(function(x){ return x.id !== A.id; });
+        save(); renderActions(); maybeHideWelcome();
+      });
+
+      row.appendChild(cb); row.appendChild(lab); row.appendChild(del);
+      list.appendChild(row);
+    });
+    // progress
+    var total = data.actions.length;
+    var done = data.actions.filter(function(a){ return a.done; }).length;
+    var wrap = $("progressWrap");
+    if(total){
+      wrap.style.display = "block";
+      $("actionTotal").textContent = total;
+      $("actionDone").textContent = done;
+      $("progressFill").style.width = Math.round((done/total)*100) + "%";
+    }else{
+      wrap.style.display = "none";
+    }
+  }
+  function addAction(){
+    var inp = $("actionInput");
+    var text = inp.value.trim();
+    if(!text) return;
+    data.actions.push({ id: uid(), text: text, done: false });
+    inp.value = "";
+    save(); renderActions(); maybeHideWelcome();
+    inp.focus();
+  }
+  $("addAction").addEventListener("click", addAction);
+  $("actionInput").addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); addAction(); } });
+
+  // ---------- Legacy statement ----------
+  var STATEMENT_PARTS = [
+    ["The values I'm passing on", "values"],
+    ["The faith I'm leaving", "faith"],
+    ["The wisdom I want them to carry", "lessons"],
+    ["The memories &amp; traditions I'm creating", "memories"],
+    ["The woman I want them to remember", "example"],
+    ["My blessing over them", "blessing"]
+  ];
+  function buildStatement(){
+    var out = $("statementOut");
+    var box = document.createElement("div");
+    box.className = "statement";
+
+    var head = document.createElement("div");
+    head.className = "st-head";
+    head.textContent = "My Legacy Statement";
+    box.appendChild(head);
+
+    var anyFilled = false;
+    STATEMENT_PARTS.forEach(function(p){
+      var val = (data.dims[p[1]] || "").trim();
+      var block = document.createElement("div");
+      block.className = "st-block";
+      var lab = document.createElement("div");
+      lab.className = "st-label";
+      lab.innerHTML = p[0];
+      var txt = document.createElement("div");
+      if(val){
+        txt.className = "st-text";
+        txt.textContent = val;
+        anyFilled = true;
+      }else{
+        txt.className = "st-text st-empty";
+        txt.textContent = "— not yet written —";
+      }
+      block.appendChild(lab); block.appendChild(txt);
+      box.appendChild(block);
+    });
+
+    if(data.children.length){
+      var block = document.createElement("div");
+      block.className = "st-block";
+      var lab = document.createElement("div");
+      lab.className = "st-label";
+      lab.textContent = "For my children";
+      var txt = document.createElement("div");
+      txt.className = "st-text";
+      txt.textContent = data.children.join(", ") + " — you are my legacy, and I love you more than words can hold.";
+      block.appendChild(lab); block.appendChild(txt);
+      box.appendChild(block);
+    }
+
+    out.innerHTML = "";
+    out.appendChild(box);
+    if(!anyFilled && !data.children.length){
+      var note = document.createElement("p");
+      note.className = "empty-note";
+      note.style.marginTop = "12px";
+      note.textContent = "Fill in a few sections above, then assemble again to see your statement take shape. 💛";
+      out.appendChild(note);
+    }
+    out.scrollIntoView({ behavior:"smooth", block:"nearest" });
+  }
+  $("buildStatement").addEventListener("click", buildStatement);
+
+  // ---------- Reset ----------
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your legacy planning — every reflection, letter, and action? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = blank();
+      DIMS.forEach(function(k){ $("dim_"+k).value = ""; });
+      $("letterText").value = ""; $("childName").value = ""; $("actionInput").value = "";
+      $("statementOut").innerHTML = "";
+      renderChildren(); renderLetterOptions(); renderLetters(); renderActions(); maybeHideWelcome();
+    }
+  });
+
+  // ---------- Initial render ----------
+  renderChildren();
+  renderLetterOptions();
+  renderLetters();
+  renderActions();
+  maybeHideWelcome();
+
+})();
+</script>
+</body>
+</html>

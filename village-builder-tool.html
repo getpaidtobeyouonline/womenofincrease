@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Village Builder Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Stats ---------- */
+  .stats{
+    display:flex; gap:10px; margin-top:18px;
+  }
+  .stat{
+    flex:1; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:12px; padding:12px 6px; text-align:center;
+  }
+  .stat b{
+    display:block; font-family:'Fraunces',serif; color:var(--emerald);
+    font-size:22px; line-height:1; font-weight:600;
+  }
+  .stat span{
+    display:block; margin-top:5px; color:var(--muted); font-size:11.5px;
+    letter-spacing:.03em; text-transform:uppercase; font-weight:600;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Permission note ---------- */
+  .permission{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .permission::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .permission p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .permission .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], select{ min-height:48px; }
+  textarea{ min-height:72px; line-height:1.5; }
+  select{ -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236B655C' stroke-width='2.5'><path d='M6 9l6 6 6-6'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:38px;
+  }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  .add-btn{
+    width:100%; margin-top:14px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .add-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .add-btn:active{ transform:translateY(1px); }
+
+  .secondary-btn{
+    width:100%; margin-top:10px; min-height:48px;
+    background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.2); border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    transition:background .15s;
+  }
+  .secondary-btn:hover{ background:#dbe7e1; }
+
+  /* ---------- Village list ---------- */
+  .person{
+    border:1px solid var(--line); border-radius:13px; padding:14px;
+    margin-top:12px; background:var(--cream);
+  }
+  .person-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+  .person-name{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:17px; font-weight:600;
+    line-height:1.2;
+  }
+  .tag{
+    display:inline-block; margin-top:6px;
+    background:var(--gold-soft); color:var(--emerald);
+    font-size:11.5px; font-weight:700; letter-spacing:.02em;
+    padding:4px 10px; border-radius:999px;
+  }
+  .person-note{ color:var(--ink); font-size:14px; margin-top:8px; }
+  .person-reach{ color:var(--muted); font-size:13px; margin-top:4px; }
+  .del-btn{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    min-width:44px; min-height:44px; font-size:18px; line-height:1; border-radius:10px;
+  }
+  .del-btn:hover{ color:#a23b32; background:rgba(162,59,50,.08); }
+
+  /* ---------- Gaps ---------- */
+  .gap-row{
+    display:flex; align-items:center; gap:10px; padding:11px 12px;
+    border:1px solid var(--line); border-radius:12px; margin-top:10px; background:var(--cream);
+  }
+  .gap-row .gap-icon{ flex:none; font-size:17px; }
+  .gap-row .gap-text{ flex:1; font-size:14px; }
+  .gap-row.covered{ background:var(--emerald-soft); border-color:rgba(20,84,62,.18); }
+  .gap-row.covered .gap-text{ color:var(--emerald); font-weight:600; }
+  .gap-status{ font-size:12px; font-weight:700; letter-spacing:.02em; }
+  .gap-status.thin{ color:#a23b32; }
+  .gap-status.ok{ color:var(--emerald); }
+
+  /* ---------- Reciprocity / give list ---------- */
+  .give-row{ display:flex; align-items:center; gap:10px; margin-top:10px; }
+  .give-row .dot{ flex:none; width:9px;height:9px;border-radius:50%;background:var(--gold); }
+  .give-row input{ flex:1; }
+  .give-item{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:10px 2px; border-bottom:1px solid var(--line); font-size:14px;
+  }
+  .give-item:last-child{ border-bottom:none; }
+  .give-item .gi-text{ color:var(--ink); }
+  .give-item .gi-text:before{ content:"♡ "; color:var(--gold); }
+
+  /* ---------- Leverage / match result ---------- */
+  .match-box{
+    display:none; margin-top:14px;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:16px; color:var(--emerald);
+  }
+  .match-box.show{ display:block; animation:rise .4s ease; }
+  .match-box .mb-title{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; margin-bottom:8px; }
+  .match-list{ list-style:none; }
+  .match-list li{
+    display:flex; align-items:center; gap:8px; padding:7px 0;
+    border-bottom:1px solid rgba(20,84,62,.12); font-size:14px;
+  }
+  .match-list li:last-child{ border-bottom:none; }
+  .match-list .ml-name{ font-weight:700; }
+  .match-list .ml-reach{ color:var(--muted); font-weight:400; }
+  .match-empty{ font-size:14px; }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; margin-top:10px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; margin-top:12px; color:var(--emerald);
+  }
+  .welcome .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:6px; }
+  .welcome .sm{ font-size:14px; color:var(--muted); line-height:1.5; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Village Builder</h1>
+    <p class="subtitle">Map the people and resources who help you carry the load — so you never have to do it all alone.</p>
+    <div class="stats">
+      <div class="stat"><b id="statSize">0</b><span>In your village</span></div>
+      <div class="stat"><b id="statTypes">0</b><span>Help covered</span></div>
+      <div class="stat"><b id="statGaps">0</b><span>Gaps to fill</span></div>
+    </div>
+  </header>
+
+  <!-- Permission -->
+  <section class="card">
+    <div class="permission">
+      <p>Needing a village isn't a flaw in your strength — it's the design. You were never meant to carry it all by yourself. Asking for help is wisdom, not weakness.</p>
+      <div class="ref">Permission, granted</div>
+    </div>
+  </section>
+
+  <!-- 1. Map my village -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Map My Village</h2></div>
+    <p class="hint">Add the real people and resources who can show up for you. Kept private, right here on your device.</p>
+
+    <label class="field-label" for="pName">Name</label>
+    <input type="text" id="pName" placeholder="e.g. Auntie Rose, Mrs. Daniels next door…">
+
+    <label class="field-label" for="pType">How they help</label>
+    <select id="pType">
+      <option value="Childcare/backup">Childcare / backup</option>
+      <option value="School/activity rides">School / activity rides</option>
+      <option value="Emergency contact">Emergency contact</option>
+      <option value="Errands/practical">Errands / practical</option>
+      <option value="Meals">Meals</option>
+      <option value="Trade/swap">Trade / swap</option>
+      <option value="Professional/paid help">Professional / paid help</option>
+      <option value="Encouragement">Encouragement</option>
+    </select>
+
+    <label class="field-label" for="pNote">What they can help with <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <textarea id="pNote" placeholder="e.g. Can take the kids on short notice; free most afternoons…"></textarea>
+
+    <label class="field-label" for="pReach">How to reach them <span style="color:var(--muted);font-weight:400;">(optional, stays private)</span></label>
+    <input type="text" id="pReach" placeholder="e.g. Text 555-0123, or just knock next door">
+
+    <button class="add-btn" id="addBtn" type="button">Add to my village +</button>
+  </section>
+
+  <!-- 2. Your village -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Your Village</h2></div>
+    <div id="welcome" class="welcome">
+      <div class="big">Welcome, sister. 💛</div>
+      <div class="sm">Every strong woman has people behind her. Start with one name above — the friend who'd answer at 2am, the neighbour with the spare key, the cousin who loves your kids. Little by little, you'll see your village take shape.</div>
+    </div>
+    <div id="villageList"></div>
+  </section>
+
+  <!-- 3. Identify gaps -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Identify the Gaps</h2></div>
+    <p class="hint">Honest check: where is your village thin right now? These are the connections worth growing — no shame, just clarity.</p>
+    <div id="gapList"></div>
+  </section>
+
+  <!-- 4. Cultivate / reciprocity -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Cultivate (Give Back)</h2></div>
+    <p class="hint">A village goes both ways. Log the ways you show up for others too — it keeps the well full and the asking easy.</p>
+    <div class="give-row">
+      <span class="dot"></span>
+      <input type="text" id="giveInput" placeholder="e.g. I watch Tasha's twins on Fridays…">
+    </div>
+    <button class="secondary-btn" id="addGiveBtn" type="button">Log a way I give back +</button>
+    <div id="giveList"></div>
+    <p class="empty-note" id="giveEmpty">Nothing logged yet — and that's okay. When you do help someone, jot it here. 💛</p>
+    <button class="secondary-btn" id="reachOutBtn" type="button" style="margin-top:14px;">↻ Pick someone to reach out to today</button>
+    <div class="match-box" id="reachBox">
+      <div class="mb-title">Strengthen this connection 💛</div>
+      <div class="match-empty" id="reachText"></div>
+    </div>
+  </section>
+
+  <!-- 5. Leverage -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>Leverage — Ask, Don't Struggle</h2></div>
+    <p class="hint">Tell me what you need help with, and I'll show you who in your village fits. Then actually reach out — that's the whole point.</p>
+
+    <label class="field-label" for="needType">I need help with…</label>
+    <select id="needType">
+      <option value="Childcare/backup">Childcare / backup</option>
+      <option value="School/activity rides">School / activity rides</option>
+      <option value="Emergency contact">An emergency / urgent backup</option>
+      <option value="Errands/practical">Errands / something practical</option>
+      <option value="Meals">A meal / food</option>
+      <option value="Trade/swap">A trade or swap</option>
+      <option value="Professional/paid help">Professional / paid help</option>
+      <option value="Encouragement">Encouragement</option>
+    </select>
+    <button class="secondary-btn" id="matchBtn" type="button">Who can help with this?</button>
+    <div class="match-box" id="matchBox">
+      <div class="mb-title" id="matchTitle">Here's who fits 💛</div>
+      <ul class="match-list" id="matchList"></ul>
+      <div class="match-empty" id="matchEmpty"></div>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_village_builder";
+
+  // ---- Help types + the gap prompts tied to each ----
+  var GAP_PROMPTS = [
+    { type:"Emergency contact",      icon:"🚨", q:"Who could I call in a real emergency?" },
+    { type:"School/activity rides",  icon:"🚗", q:"Who can do a school pickup if I'm stuck?" },
+    { type:"Childcare/backup",       icon:"🧸", q:"Who can watch the kids on short notice?" },
+    { type:"Errands/practical",      icon:"🛒", q:"Who can grab groceries or run an errand for me?" },
+    { type:"Meals",                  icon:"🍲", q:"Who would bring a meal on a hard week?" },
+    { type:"Professional/paid help", icon:"🧰", q:"Do I have paid help lined up for the big stuff?" },
+    { type:"Encouragement",          icon:"💬", q:"Who reminds me I'm doing a good job?" }
+  ];
+
+  var REACH_IDEAS = [
+    "Send a quick voice note just to say you're thinking of them.",
+    "Drop a thank-you text for the last time they showed up for you.",
+    "Invite them over for coffee — no agenda, just connection.",
+    "Offer to return a favour before you need one.",
+    "Check in: ask how THEY are doing, and really listen.",
+    "Share a small win with them — people love being trusted with your joy.",
+    "Plan a little something for the kids together this week."
+  ];
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.people) return normalize(o); }
+    }catch(e){}
+    return { people:[], gives:[] };
+  }
+  function normalize(o){
+    if(!Array.isArray(o.people)) o.people = [];
+    if(!Array.isArray(o.gives)) o.gives = [];
+    return o;
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var pName = $("pName"), pType = $("pType"), pNote = $("pNote"), pReach = $("pReach");
+  var villageList = $("villageList"), welcome = $("welcome");
+  var gapList = $("gapList");
+  var giveInput = $("giveInput"), giveList = $("giveList"), giveEmpty = $("giveEmpty");
+
+  // ---- Add a person ----
+  $("addBtn").addEventListener("click", function(){
+    var name = pName.value.trim();
+    if(!name){ pName.focus(); return; }
+    data.people.push({
+      id: uid(),
+      name: name,
+      type: pType.value,
+      note: pNote.value.trim(),
+      reach: pReach.value.trim()
+    });
+    save();
+    pName.value=""; pNote.value=""; pReach.value=""; pType.selectedIndex=0;
+    renderAll();
+    pName.focus();
+  });
+
+  // ---- Render village ----
+  function renderVillage(){
+    villageList.innerHTML = "";
+    if(data.people.length === 0){
+      welcome.style.display = "block";
+      return;
+    }
+    welcome.style.display = "none";
+    data.people.forEach(function(p){
+      var el = document.createElement("div");
+      el.className = "person";
+
+      var top = document.createElement("div");
+      top.className = "person-top";
+
+      var info = document.createElement("div");
+      var nm = document.createElement("div");
+      nm.className = "person-name";
+      nm.textContent = p.name;
+      info.appendChild(nm);
+      var tag = document.createElement("span");
+      tag.className = "tag";
+      tag.textContent = p.type;
+      info.appendChild(tag);
+
+      var del = document.createElement("button");
+      del.className = "del-btn";
+      del.type = "button";
+      del.setAttribute("aria-label", "Remove " + p.name + " from your village");
+      del.textContent = "✕";
+      del.addEventListener("click", function(){
+        if(confirm("Remove " + p.name + " from your village?")){
+          data.people = data.people.filter(function(x){ return x.id !== p.id; });
+          save(); renderAll();
+        }
+      });
+
+      top.appendChild(info);
+      top.appendChild(del);
+      el.appendChild(top);
+
+      if(p.note){
+        var nt = document.createElement("div");
+        nt.className = "person-note";
+        nt.textContent = p.note;
+        el.appendChild(nt);
+      }
+      if(p.reach){
+        var rc = document.createElement("div");
+        rc.className = "person-reach";
+        rc.textContent = "Reach: " + p.reach;
+        el.appendChild(rc);
+      }
+      villageList.appendChild(el);
+    });
+  }
+
+  // ---- Gaps ----
+  function coveredTypes(){
+    var set = {};
+    data.people.forEach(function(p){ set[p.type] = true; });
+    return set;
+  }
+  function renderGaps(){
+    gapList.innerHTML = "";
+    var covered = coveredTypes();
+    GAP_PROMPTS.forEach(function(g){
+      var isCovered = !!covered[g.type];
+      var row = document.createElement("div");
+      row.className = "gap-row" + (isCovered ? " covered" : "");
+
+      var icon = document.createElement("span");
+      icon.className = "gap-icon";
+      icon.textContent = g.icon;
+
+      var text = document.createElement("span");
+      text.className = "gap-text";
+      text.textContent = g.q;
+
+      var status = document.createElement("span");
+      status.className = "gap-status " + (isCovered ? "ok" : "thin");
+      status.textContent = isCovered ? "Covered ✓" : "Gap";
+
+      row.appendChild(icon);
+      row.appendChild(text);
+      row.appendChild(status);
+      gapList.appendChild(row);
+    });
+  }
+
+  // ---- Reciprocity / gives ----
+  $("addGiveBtn").addEventListener("click", function(){
+    var v = giveInput.value.trim();
+    if(!v){ giveInput.focus(); return; }
+    data.gives.push({ id: uid(), text: v });
+    save();
+    giveInput.value = "";
+    renderGives();
+    giveInput.focus();
+  });
+  giveInput.addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); $("addGiveBtn").click(); }
+  });
+
+  function renderGives(){
+    giveList.innerHTML = "";
+    if(data.gives.length === 0){ giveEmpty.style.display = "block"; return; }
+    giveEmpty.style.display = "none";
+    data.gives.forEach(function(g){
+      var row = document.createElement("div");
+      row.className = "give-item";
+      var t = document.createElement("span");
+      t.className = "gi-text";
+      t.textContent = g.text;
+      var del = document.createElement("button");
+      del.className = "del-btn";
+      del.type = "button";
+      del.setAttribute("aria-label", "Remove this entry");
+      del.textContent = "✕";
+      del.addEventListener("click", function(){
+        data.gives = data.gives.filter(function(x){ return x.id !== g.id; });
+        save(); renderGives();
+      });
+      row.appendChild(t);
+      row.appendChild(del);
+      giveList.appendChild(row);
+    });
+  }
+
+  // ---- Reach out suggestion ----
+  $("reachOutBtn").addEventListener("click", function(){
+    var box = $("reachBox"), txt = $("reachText");
+    var idea = REACH_IDEAS[Math.floor(Math.random()*REACH_IDEAS.length)];
+    if(data.people.length){
+      var p = data.people[Math.floor(Math.random()*data.people.length)];
+      txt.innerHTML = "";
+      var who = document.createElement("div");
+      who.style.fontWeight = "700";
+      who.style.marginBottom = "4px";
+      who.textContent = "Reach out to " + p.name + (p.reach ? " (" + p.reach + ")" : "");
+      var what = document.createElement("div");
+      what.textContent = idea;
+      txt.appendChild(who);
+      txt.appendChild(what);
+    }else{
+      txt.textContent = "Add a few people to your village first, then I'll suggest someone to lean toward. " + idea;
+    }
+    box.classList.add("show");
+  });
+
+  // ---- Leverage / match ----
+  $("matchBtn").addEventListener("click", function(){
+    var need = $("needType").value;
+    var box = $("matchBox"), list = $("matchList"), empty = $("matchEmpty"), title = $("matchTitle");
+    list.innerHTML = "";
+    empty.textContent = "";
+    var matches = data.people.filter(function(p){ return p.type === need; });
+    // Emergency contacts are also a fair fallback for many urgent needs
+    if(matches.length === 0 && need === "Emergency contact"){
+      matches = data.people.filter(function(p){ return p.type === "Childcare/backup" || p.type === "Errands/practical"; });
+    }
+    if(matches.length){
+      title.textContent = "Here's who fits 💛";
+      matches.forEach(function(p){
+        var li = document.createElement("li");
+        var nm = document.createElement("span");
+        nm.className = "ml-name";
+        nm.textContent = p.name;
+        li.appendChild(nm);
+        if(p.reach){
+          var rc = document.createElement("span");
+          rc.className = "ml-reach";
+          rc.textContent = "· " + p.reach;
+          li.appendChild(rc);
+        }
+        list.appendChild(li);
+      });
+      empty.textContent = "Now do the brave thing — reach out. They want to be your village.";
+    }else{
+      title.textContent = "This is a gap to grow 🌱";
+      empty.textContent = "No one in your village covers this yet — and that's good to know, not bad. Who could you invite into this role? Add them above, then come back.";
+    }
+    box.classList.add("show");
+  });
+
+  // ---- Stats ----
+  function renderStats(){
+    var covered = coveredTypes();
+    var coveredCount = Object.keys(covered).length;
+    $("statSize").textContent = data.people.length;
+    $("statTypes").textContent = coveredCount;
+    var gaps = 0;
+    GAP_PROMPTS.forEach(function(g){ if(!covered[g.type]) gaps++; });
+    $("statGaps").textContent = gaps;
+  }
+
+  // ---- Render everything ----
+  function renderAll(){
+    renderVillage();
+    renderGaps();
+    renderStats();
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Village Builder data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { people:[], gives:[] };
+      pName.value=""; pNote.value=""; pReach.value=""; pType.selectedIndex=0;
+      giveInput.value="";
+      $("matchBox").classList.remove("show");
+      $("reachBox").classList.remove("show");
+      renderAll();
+      renderGives();
+    }
+  });
+
+  // ---- First paint ----
+  renderAll();
+  renderGives();
+
+})();
+</script>
+</body>
+</html>

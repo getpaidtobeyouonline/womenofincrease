@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teaching Kids About Money Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome / empty ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .welcome p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .welcome .sm{
+    font-family:'Hanken Grotesk'; font-style:normal; font-size:14px;
+    margin-top:12px; color:#E7D3A1; position:relative; z-index:1; line-height:1.5;
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  select{ min-height:48px; -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236B655C' stroke-width='2.5'><path d='M6 9l6 6 6-6'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:40px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Child switcher ---------- */
+  .child-tabs{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:4px; }
+  .child-tab{
+    min-height:44px; padding:8px 14px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--line); background:var(--cream); color:var(--ink);
+    font-family:inherit; font-weight:600; font-size:14px;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .child-tab.active{
+    background:var(--emerald); color:#FCF8EF; border-color:var(--emerald);
+  }
+  .child-tab .ageband{ font-weight:500; font-size:12px; opacity:.85; }
+  .child-tab.add{ color:var(--emerald); border-style:dashed; border-color:var(--gold-soft); }
+
+  .child-meta{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:6px; }
+  .child-meta .who{ font-family:'Fraunces',serif; color:var(--emerald); font-size:20px; font-weight:600; }
+  .child-meta .who small{ font-family:'Hanken Grotesk'; font-style:normal; color:var(--muted); font-weight:500; font-size:13px; display:block; }
+
+  .band-pill{
+    display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:12.5px; letter-spacing:.02em;
+    padding:5px 12px; border-radius:999px;
+  }
+
+  /* ---------- Progress bar ---------- */
+  .progress-wrap{ margin-top:14px; }
+  .progress-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .progress-top .lbl{ font-size:13px; color:var(--muted); font-weight:600; }
+  .progress-top .pct{ font-family:'Fraunces',serif; color:var(--emerald); font-weight:600; font-size:15px; }
+  .bar{ height:10px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .bar > span{ display:block; height:100%; width:0%; background:var(--gold);
+    border-radius:999px; transition:width .35s ease; }
+
+  /* ---------- Activity list ---------- */
+  .cat-label{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:15px; font-weight:600;
+    margin:18px 0 8px; display:flex; align-items:center; gap:7px;
+  }
+  .cat-label:first-of-type{ margin-top:6px; }
+  .activity{
+    display:flex; align-items:flex-start; gap:12px; padding:12px 2px;
+    border-bottom:1px solid var(--line);
+  }
+  .activity:last-child{ border-bottom:none; }
+  .activity .check{
+    flex:none; width:26px; height:26px; margin-top:1px; border-radius:8px;
+    border:2px solid var(--gold-soft); background:#fff; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size:15px; color:#fff; transition:background .15s, border-color .15s;
+  }
+  .activity .check.on{ background:var(--emerald); border-color:var(--emerald); }
+  .activity .txt{ flex:1; font-size:14.5px; line-height:1.45; cursor:pointer; }
+  .activity.done .txt{ color:var(--muted); text-decoration:line-through; text-decoration-color:var(--gold-soft); }
+  .activity .del{
+    flex:none; background:none; border:none; color:#C8B9A0; cursor:pointer;
+    font-size:18px; line-height:1; padding:4px 6px; min-height:36px;
+  }
+  .activity .del:hover{ color:var(--gold); }
+  .tag{ font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--gold); margin-left:6px; }
+
+  /* ---------- Add activity ---------- */
+  .add-row{ display:flex; gap:8px; margin-top:14px; }
+  .add-row input{ flex:1; }
+  .add-row button{
+    flex:none; min-height:48px; padding:0 18px; border-radius:11px; border:none;
+    background:var(--gold); color:var(--ink); font-family:inherit; font-weight:700; font-size:15px;
+    cursor:pointer; box-shadow:0 4px 12px rgba(200,160,74,.3);
+  }
+  .add-row button:active{ transform:translateY(1px); }
+
+  /* ---------- Conversation starters ---------- */
+  .starter{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:12px; padding:14px 16px; margin-bottom:10px;
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:15.5px;
+    font-style:italic; line-height:1.45;
+  }
+  .starter:last-child{ margin-bottom:0; }
+
+  /* ---------- Values thread ---------- */
+  .values .verse{
+    font-family:'Fraunces',serif; font-style:italic; color:var(--emerald);
+    font-size:16px; line-height:1.45;
+  }
+  .values .ref{
+    margin-top:8px; font-weight:600; font-size:12px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .values .body{ margin-top:12px; font-size:14.5px; color:var(--ink); line-height:1.5; }
+
+  /* ---------- Buttons ---------- */
+  .ghost-btn{
+    width:100%; min-height:48px; margin-top:12px;
+    background:var(--cream); border:1px solid var(--line); color:var(--emerald);
+    border-radius:12px; font-family:inherit; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  .ghost-btn:hover{ border-color:var(--gold); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  .hidden{ display:none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Teaching Kids About Money</h1>
+    <p class="subtitle">Age-by-age activities and conversations to raise money-wise, generous kids.</p>
+  </header>
+
+  <!-- First-run welcome -->
+  <section class="card" id="welcomeCard">
+    <div class="welcome">
+      <p>You get to give your children something you may not have been handed yourself — a calm, confident relationship with money.</p>
+      <div class="sm">Add a child below and you'll get a ready-made set of age-appropriate lessons, activities, and gentle conversation starters. You're breaking old money patterns, one small habit at a time. 💛</div>
+    </div>
+  </section>
+
+  <!-- Children -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Children</h2></div>
+    <p class="hint">Add each child with their age band — their progress saves separately.</p>
+    <div class="child-tabs" id="childTabs"></div>
+
+    <div id="addChildForm" class="hidden">
+      <label class="field-label" for="childName">Child's name</label>
+      <input type="text" id="childName" placeholder="First name or nickname" maxlength="40">
+      <label class="field-label" for="childBand">Age band</label>
+      <select id="childBand">
+        <option value="3-5">3–5 years</option>
+        <option value="6-9">6–9 years</option>
+        <option value="10-12">10–12 years</option>
+        <option value="13-15">13–15 years</option>
+        <option value="16+">16+ years</option>
+      </select>
+      <button class="ghost-btn" id="saveChildBtn" type="button" style="background:var(--gold);color:var(--ink);border:none;font-weight:700;box-shadow:0 4px 12px rgba(200,160,74,.3);">Add this child</button>
+      <button class="ghost-btn" id="cancelChildBtn" type="button">Cancel</button>
+    </div>
+  </section>
+
+  <!-- Per-child content -->
+  <div id="childContent" class="hidden">
+
+    <!-- Progress + activities -->
+    <section class="card">
+      <div class="child-meta">
+        <div class="who" id="whoName">—
+          <small id="whoBand"></small>
+        </div>
+        <span class="band-pill" id="bandPill"></span>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-top">
+          <span class="lbl">Activities tried</span>
+          <span class="pct" id="progressPct">0%</span>
+        </div>
+        <div class="bar"><span id="progressBar"></span></div>
+      </div>
+
+      <div id="activityGroups"></div>
+
+      <div class="add-row">
+        <input type="text" id="newActivity" placeholder="Add your own activity…" maxlength="120">
+        <button id="addActivityBtn" type="button">Add</button>
+      </div>
+    </section>
+
+    <!-- Conversation starters -->
+    <section class="card">
+      <div class="step"><span class="num">2</span><h2>Conversation Starters</h2></div>
+      <p class="hint">Drop one of these in over dinner or in the car. No lecture needed.</p>
+      <div id="starters"></div>
+    </section>
+
+    <!-- Values thread -->
+    <section class="card values">
+      <div class="step"><span class="num">3</span><h2>The Heart Behind the Money</h2></div>
+      <p class="hint">Money is a tool; the heart is the treasure. Weave these in gently.</p>
+      <div class="verse" id="valuesVerse">—</div>
+      <div class="ref" id="valuesRef"></div>
+      <div class="body" id="valuesBody"></div>
+    </section>
+
+    <!-- Notes -->
+    <section class="card">
+      <div class="step"><span class="num">4</span><h2>How It Went</h2></div>
+      <p class="hint">Jot down what clicked, a question they asked, or a moment that surprised you.</p>
+      <label class="field-label" for="childNotes">Notes for <span id="notesName">this child</span></label>
+      <textarea id="childNotes" placeholder="Today she counted out her give-jar coins all on her own…"></textarea>
+    </section>
+
+    <div class="center">
+      <button class="reset-btn" id="removeChildBtn" type="button">Remove this child</button>
+    </div>
+  </div>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_teaching_kids_money";
+
+  // ---------- Curated content per age band ----------
+  // Each band: lesson activities grouped, conversation starters, a values thread.
+  var BANDS = {
+    "3-5": {
+      label:"3–5 years",
+      groups:[
+        { name:"Money basics", emoji:"🪙", items:[
+          "Sort real coins by colour and size together — name each one",
+          "Play 'needs vs wants' at the shop: point to food we need, then a treat we want",
+          "Use a clear jar so they can SEE savings grow coin by coin",
+          "Let them hand the cashier the money and take the change"
+        ]},
+        { name:"Saving & giving", emoji:"💛", items:[
+          "Set up three clear jars: Save, Spend, Give",
+          "Drop a coin in the Give jar for church or someone in need — say who it's for",
+          "Practise patience: 'We're saving for it' instead of buying right now"
+        ]}
+      ],
+      starters:[
+        "Can you find something in this room we NEED, and something we just WANT?",
+        "What would you like to save up for? Let's watch the jar fill.",
+        "Who could we bless with the coins in our Give jar?"
+      ],
+      values:{
+        verse:"Give, and it will be given to you. A good measure, pressed down… will be poured into your lap.",
+        ref:"Luke 6:38",
+        body:"At this age it's all caught, not taught. When they watch you give cheerfully and say thank-you for what you have, contentment and generosity become normal. Keep it playful — joy over jars."
+      }
+    },
+    "6-9": {
+      label:"6–9 years",
+      groups:[
+        { name:"Earning & counting", emoji:"🧮", items:[
+          "Pay a small amount for an 'above-and-beyond' chore (not basic helping)",
+          "Help them count and add up what's in each jar each week",
+          "Let them make one small purchase fully on their own at the till",
+          "Compare prices of two treats: which gives more for the money?"
+        ]},
+        { name:"Save · Spend · Give", emoji:"🫙", items:[
+          "Split any money they earn three ways: Save, Spend, Give",
+          "Introduce a short 'wait one sleep' rule before spending on a want",
+          "Pick a giving cause together and add to the Give jar each week"
+        ]}
+      ],
+      starters:[
+        "If you earned this, would you rather spend it now or save for the bigger thing?",
+        "How does it feel to buy something with money you worked for?",
+        "What's one way we could give to someone this week?"
+      ],
+      values:{
+        verse:"Whoever is faithful with very little is also faithful with much.",
+        ref:"Luke 16:10",
+        body:"Small amounts handled well now build the muscle for bigger choices later. Praise effort and honesty, not just the savings total. Let them feel the quiet pride of giving on purpose."
+      }
+    },
+    "10-12": {
+      label:"10–12 years",
+      groups:[
+        { name:"Earning & responsibility", emoji:"💪", items:[
+          "Set a small regular allowance tied to agreed responsibilities",
+          "Let them earn extra through a tiny job (pet care, car wash, baking to sell)",
+          "Have them save toward a specific goal and track it on paper or a note",
+          "Talk through one real family spending choice out loud (age-appropriate)"
+        ]},
+        { name:"Smart choices", emoji:"🧠", items:[
+          "Introduce a 24-hour (or one-week) waiting period before any bigger buy",
+          "Compare cost-per-use: a cheap toy that breaks vs one that lasts",
+          "Practise saving a set % first, before spending the rest",
+          "Open or visit a savings account / set up a savings goal together"
+        ]},
+        { name:"Generosity", emoji:"🤲", items:[
+          "Set a giving percentage they choose and stick to it",
+          "Sponsor or support a cause they personally care about"
+        ]}
+      ],
+      starters:[
+        "What's a goal you'd love to save up for? Let's make a plan.",
+        "Have you ever wanted something, waited, and then not wanted it anymore?",
+        "What would you do with £100 — and why?"
+      ],
+      values:{
+        verse:"Honour the Lord with your wealth, with the firstfruits of all your crops.",
+        ref:"Proverbs 3:9",
+        body:"Tweens can grasp 'give first, then save, then spend' as an order, not a leftover. Frame generosity as a privilege and contentment as freedom — they're watching how you talk about money under stress, too."
+      }
+    },
+    "13-15": {
+      label:"13–15 years",
+      groups:[
+        { name:"Budgeting", emoji:"📊", items:[
+          "Give them a fixed monthly allowance to manage themselves — no top-ups",
+          "Build a simple budget: give, save, spend categories with amounts",
+          "Let them feel a natural consequence of overspending (within reason)",
+          "Track spending for one month, then review it together without judgement"
+        ]},
+        { name:"Earning & banking", emoji:"🏦", items:[
+          "Encourage a first small job, tutoring, or selling a skill online",
+          "Open a youth bank account and learn to read a statement",
+          "Explain how a debit card pulls real money — it's not free money"
+        ]},
+        { name:"Wisdom & giving", emoji:"🌱", items:[
+          "Talk honestly about debt and why 'buy now, pay later' costs more",
+          "Set a personal giving habit they own and decide on",
+          "Introduce the idea of saving toward future goals (car, course, trip)"
+        ]}
+      ],
+      starters:[
+        "If your allowance is gone by week two, what would you change next month?",
+        "What's something you'd love to earn your own money for?",
+        "Why do you think some people who earn a lot still feel broke?"
+      ],
+      values:{
+        verse:"Keep your lives free from the love of money and be content with what you have.",
+        ref:"Hebrews 13:5",
+        body:"Teens face comparison and pressure online daily. Anchor them in contentment and purpose: money serves their values, not the other way round. Let them make small mistakes now where the stakes are low and the lessons are gold."
+      }
+    },
+    "16+": {
+      label:"16+ years",
+      groups:[
+        { name:"Real-world money", emoji:"🧾", items:[
+          "Build a full monthly budget including any income and obligations",
+          "Walk through a real bill or payslip together — taxes, deductions, the lot",
+          "Teach the difference between gross and net, and 'pay yourself first'",
+          "Set up automatic transfers to savings on payday"
+        ]},
+        { name:"Credit & debt", emoji:"⚠️", items:[
+          "Explain how credit, interest, and credit scores actually work",
+          "Show the true cost of minimum payments and high-interest debt",
+          "Discuss student loans / big purchases before they sign anything",
+          "Build a small emergency fund as their first savings goal"
+        ]},
+        { name:"Stewardship", emoji:"🌍", items:[
+          "Help them define money goals tied to their values and calling",
+          "Establish a consistent giving / tithing rhythm they choose",
+          "Introduce the basics of investing and compound growth over time"
+        ]}
+      ],
+      starters:[
+        "What kind of life do you want money to make possible for you?",
+        "If you started saving a little every month now, where could you be in five years?",
+        "How do you want generosity to be part of your adult life?"
+      ],
+      values:{
+        verse:"Each of you should give what you have decided in your heart to give… for God loves a cheerful giver.",
+        ref:"2 Corinthians 9:7",
+        body:"They're nearly launched. Your job now is coach, not controller. Talk openly about your own money wins and regrets — your honesty gives them permission to ask questions and to steward what they earn with peace and generosity."
+      }
+    }
+  };
+
+  // ---------- State ----------
+  // data = { children:[ {id, name, band, done:{}, custom:[{id,text}], doneCustom:{}, notes} ], activeId }
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.children) return o; }
+    }catch(e){}
+    return { children:[], activeId:null };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function uid(){ return "c"+Date.now()+Math.floor(Math.random()*1000); }
+
+  // ---------- Elements ----------
+  var $ = function(id){ return document.getElementById(id); };
+  var childTabs=$("childTabs"), addChildForm=$("addChildForm"),
+      childNameEl=$("childName"), childBandEl=$("childBand"),
+      welcomeCard=$("welcomeCard"), childContent=$("childContent"),
+      activityGroups=$("activityGroups"), startersEl=$("starters"),
+      childNotesEl=$("childNotes");
+
+  // ---------- Render children tabs ----------
+  function activeChild(){
+    return data.children.filter(function(c){ return c.id===data.activeId; })[0] || null;
+  }
+
+  function renderTabs(){
+    childTabs.innerHTML="";
+    data.children.forEach(function(c){
+      var b=document.createElement("button");
+      b.type="button";
+      b.className="child-tab"+(c.id===data.activeId?" active":"");
+      b.innerHTML='<span>'+escapeHtml(c.name)+'</span><span class="ageband">'+c.band+'</span>';
+      b.addEventListener("click", function(){ data.activeId=c.id; save(); renderAll(); });
+      childTabs.appendChild(b);
+    });
+    var add=document.createElement("button");
+    add.type="button"; add.className="child-tab add";
+    add.textContent="+ Add child";
+    add.addEventListener("click", function(){ openAddForm(); });
+    childTabs.appendChild(add);
+  }
+
+  function openAddForm(){
+    addChildForm.classList.remove("hidden");
+    childNameEl.value=""; childBandEl.value="3-5";
+    childNameEl.focus();
+  }
+  function closeAddForm(){ addChildForm.classList.add("hidden"); }
+
+  $("saveChildBtn").addEventListener("click", function(){
+    var name=childNameEl.value.trim();
+    if(!name){ childNameEl.focus(); return; }
+    var child={ id:uid(), name:name, band:childBandEl.value,
+      done:{}, custom:[], doneCustom:{}, notes:"" };
+    data.children.push(child);
+    data.activeId=child.id;
+    closeAddForm(); save(); renderAll();
+  });
+  $("cancelChildBtn").addEventListener("click", closeAddForm);
+
+  // ---------- Render active child ----------
+  function renderAll(){
+    renderTabs();
+    var c=activeChild();
+    if(!c){
+      welcomeCard.classList.remove("hidden");
+      childContent.classList.add("hidden");
+      return;
+    }
+    welcomeCard.classList.add("hidden");
+    childContent.classList.remove("hidden");
+
+    var band=BANDS[c.band];
+    $("whoName").firstChild.textContent=c.name+" ";
+    $("whoBand").textContent=band.label;
+    $("bandPill").textContent=band.label;
+    $("notesName").textContent=c.name;
+
+    renderActivities(c, band);
+    renderStarters(band);
+    renderValues(band);
+
+    childNotesEl.value=c.notes||"";
+  }
+
+  function renderActivities(c, band){
+    activityGroups.innerHTML="";
+    var total=0, doneCount=0;
+
+    band.groups.forEach(function(g, gi){
+      var lbl=document.createElement("div");
+      lbl.className="cat-label";
+      lbl.innerHTML='<span>'+g.emoji+'</span> '+escapeHtml(g.name);
+      activityGroups.appendChild(lbl);
+
+      g.items.forEach(function(text, ii){
+        var key=c.band+"|"+gi+"|"+ii;
+        total++;
+        var isDone=!!c.done[key];
+        if(isDone) doneCount++;
+        activityGroups.appendChild(buildActivityRow(text, isDone, false, function(){
+          if(c.done[key]) delete c.done[key]; else c.done[key]=true;
+          save(); renderAll();
+        }, null));
+      });
+    });
+
+    // custom (her own) activities
+    if(c.custom && c.custom.length){
+      var lbl2=document.createElement("div");
+      lbl2.className="cat-label";
+      lbl2.innerHTML='<span>✨</span> Your own activities';
+      activityGroups.appendChild(lbl2);
+      c.custom.forEach(function(item){
+        total++;
+        var isDone=!!c.doneCustom[item.id];
+        if(isDone) doneCount++;
+        activityGroups.appendChild(buildActivityRow(item.text, isDone, true, function(){
+          if(c.doneCustom[item.id]) delete c.doneCustom[item.id]; else c.doneCustom[item.id]=true;
+          save(); renderAll();
+        }, function(){
+          c.custom=c.custom.filter(function(x){ return x.id!==item.id; });
+          delete c.doneCustom[item.id];
+          save(); renderAll();
+        }));
+      });
+    }
+
+    var pct= total? Math.round(doneCount/total*100) : 0;
+    $("progressPct").textContent=pct+"%";
+    $("progressBar").style.width=pct+"%";
+  }
+
+  function buildActivityRow(text, isDone, isCustom, onToggle, onDelete){
+    var row=document.createElement("div");
+    row.className="activity"+(isDone?" done":"");
+    var chk=document.createElement("div");
+    chk.className="check"+(isDone?" on":"");
+    chk.setAttribute("role","checkbox");
+    chk.setAttribute("tabindex","0");
+    chk.setAttribute("aria-checked", isDone?"true":"false");
+    chk.innerHTML=isDone?"✓":"";
+    chk.addEventListener("click", onToggle);
+    chk.addEventListener("keydown", function(e){
+      if(e.key===" "||e.key==="Enter"){ e.preventDefault(); onToggle(); }
+    });
+    var txt=document.createElement("div");
+    txt.className="txt";
+    txt.innerHTML=escapeHtml(text)+(isCustom?'<span class="tag">yours</span>':"");
+    txt.addEventListener("click", onToggle);
+    row.appendChild(chk); row.appendChild(txt);
+    if(onDelete){
+      var del=document.createElement("button");
+      del.type="button"; del.className="del"; del.setAttribute("aria-label","Remove activity");
+      del.innerHTML="×";
+      del.addEventListener("click", function(e){ e.stopPropagation(); onDelete(); });
+      row.appendChild(del);
+    }
+    return row;
+  }
+
+  function renderStarters(band){
+    startersEl.innerHTML="";
+    band.starters.forEach(function(s){
+      var d=document.createElement("div");
+      d.className="starter";
+      d.textContent="“"+s+"”";
+      startersEl.appendChild(d);
+    });
+  }
+
+  function renderValues(band){
+    $("valuesVerse").textContent="“"+band.values.verse+"”";
+    $("valuesRef").textContent=band.values.ref;
+    $("valuesBody").textContent=band.values.body;
+  }
+
+  // ---------- Add custom activity ----------
+  $("addActivityBtn").addEventListener("click", addCustom);
+  $("newActivity").addEventListener("keydown", function(e){
+    if(e.key==="Enter"){ e.preventDefault(); addCustom(); }
+  });
+  function addCustom(){
+    var c=activeChild(); if(!c) return;
+    var txt=$("newActivity").value.trim();
+    if(!txt) return;
+    if(!c.custom) c.custom=[];
+    c.custom.push({ id:uid(), text:txt });
+    $("newActivity").value="";
+    save(); renderAll();
+  }
+
+  // ---------- Notes auto-save ----------
+  childNotesEl.addEventListener("input", function(){
+    var c=activeChild(); if(!c) return;
+    c.notes=childNotesEl.value; save();
+  });
+
+  // ---------- Remove child ----------
+  $("removeChildBtn").addEventListener("click", function(){
+    var c=activeChild(); if(!c) return;
+    if(confirm("Remove "+c.name+" and their progress? This can't be undone, sister.")){
+      data.children=data.children.filter(function(x){ return x.id!==c.id; });
+      data.activeId= data.children.length? data.children[0].id : null;
+      save(); renderAll();
+    }
+  });
+
+  // ---------- Reset / Clear ----------
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL children and progress? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data={ children:[], activeId:null };
+      closeAddForm();
+      renderAll();
+    }
+  });
+
+  // ---------- util ----------
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(ch){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];
+    });
+  }
+
+  // ---------- init ----------
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

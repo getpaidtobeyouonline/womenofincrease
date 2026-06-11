@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Co-Parenting Boundary Script Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .welcome p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .welcome .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label:first-of-type{ margin-top:0; }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], select{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  select{
+    -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2314543E' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:40px;
+  }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Tone toggle ---------- */
+  .tone-row{ display:flex; gap:10px; margin-top:6px; }
+  .tone-opt{
+    flex:1; min-height:48px; display:flex; align-items:center; justify-content:center;
+    text-align:center; border:1px solid var(--line); border-radius:11px;
+    background:var(--cream); color:var(--muted); font-weight:600; font-size:14px;
+    cursor:pointer; transition:all .15s; padding:8px;
+  }
+  .tone-opt.active{
+    background:var(--emerald-soft); border-color:var(--emerald);
+    color:var(--emerald);
+  }
+
+  /* ---------- Generate button ---------- */
+  .gen-btn{
+    width:100%; margin-top:16px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .gen-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .gen-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Results ---------- */
+  #results{ display:none; }
+  #results.show{ display:block; animation:rise .4s ease; }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  .variation-label{
+    font-family:'Hanken Grotesk'; font-weight:600; font-size:12px;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--gold);
+    margin:18px 0 8px;
+  }
+  .variation-label:first-child{ margin-top:0; }
+  .msg-box{
+    width:100%; font-family:inherit; font-size:15px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:14px; line-height:1.5; min-height:120px; resize:vertical;
+  }
+  .msg-box:focus{ outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,160,74,.18); }
+  .msg-actions{ display:flex; gap:10px; margin-top:8px; flex-wrap:wrap; }
+  .mini-btn{
+    min-height:44px; padding:10px 16px; border-radius:10px; cursor:pointer;
+    font-family:inherit; font-weight:600; font-size:13.5px;
+    display:inline-flex; align-items:center; gap:6px; transition:all .15s;
+  }
+  .mini-btn.primary{
+    background:var(--emerald); color:#FCF8EF; border:1px solid var(--emerald);
+  }
+  .mini-btn.primary:hover{ background:#0f3f2e; }
+  .mini-btn.ghost{
+    background:var(--cream); color:var(--emerald); border:1px solid var(--line);
+  }
+  .mini-btn.ghost:hover{ border-color:var(--gold); color:var(--ink); }
+  .copied-flash{ color:var(--emerald); font-weight:700; }
+
+  /* ---------- Coaching note ---------- */
+  .coach{
+    margin-top:16px; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.15); border-radius:14px; padding:16px 18px;
+  }
+  .coach .ct{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:16px; margin-bottom:6px;
+  }
+  .coach ul{ list-style:none; margin:0; }
+  .coach li{
+    position:relative; padding-left:20px; font-size:14px; color:var(--ink);
+    margin-bottom:6px; line-height:1.45;
+  }
+  .coach li::before{
+    content:"✓"; position:absolute; left:0; top:0; color:var(--gold); font-weight:700;
+  }
+  .coach .encourage{
+    margin-top:10px; font-style:italic; color:var(--emerald); font-size:14px;
+    font-family:'Fraunces',serif;
+  }
+
+  /* ---------- Library ---------- */
+  .lib-list{ list-style:none; }
+  .lib-item{
+    border:1px solid var(--line); border-radius:12px; padding:14px;
+    margin-bottom:10px; background:var(--cream);
+  }
+  .lib-item .li-top{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+    margin-bottom:6px;
+  }
+  .lib-item .li-type{
+    font-weight:700; font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--emerald); background:var(--emerald-soft); padding:4px 10px;
+    border-radius:999px; display:inline-block;
+  }
+  .lib-item .li-text{ font-size:14px; color:var(--ink); white-space:pre-wrap; line-height:1.45; }
+  .lib-item .li-actions{ display:flex; gap:8px; margin-top:10px; }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Co-Parenting Boundary Script Tool</h1>
+    <p class="subtitle">Calm, professional words for the messages that are hardest to write.</p>
+  </header>
+
+  <!-- Welcome / first run -->
+  <section class="card" id="welcomeCard">
+    <div class="welcome">
+      <p>You don't have to match their energy to be heard. Brief, kind, and firm protects your peace — and keeps the focus where it belongs: your child.</p>
+      <div class="ref">Grey-rock · BIFF · Child-centered</div>
+    </div>
+  </section>
+
+  <!-- 1. Build -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>What do you need to say?</h2></div>
+    <p class="hint">Pick the situation, share the details, and we'll shape the words.</p>
+
+    <label class="field-label" for="msgType">Message type</label>
+    <select id="msgType">
+      <option value="schedule">Schedule change</option>
+      <option value="pickup">Pickup / drop-off</option>
+      <option value="money">Money / expenses for the child</option>
+      <option value="decline">Declining to engage in conflict</option>
+      <option value="boundary">Setting a communication boundary</option>
+      <option value="info">Sharing child info / medical / school</option>
+      <option value="hostile">Responding to a hostile message</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label class="field-label" for="childName">Child's name <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <input type="text" id="childName" placeholder="e.g. Maya — keeps it warm and specific">
+
+    <label class="field-label" for="details">The specifics — what's happening &amp; what you need</label>
+    <textarea id="details" placeholder="e.g. I need to move Friday pickup to 6pm instead of 5pm because of a work shift."></textarea>
+
+    <label class="field-label" for="extra" id="extraLabel">Any dates, times, or details to include <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <input type="text" id="extra" placeholder="e.g. Friday 14th, 6pm at the school gate">
+
+    <label class="field-label">Tone</label>
+    <div class="tone-row" id="toneRow">
+      <div class="tone-opt active" data-tone="neutral" role="button" tabindex="0">Neutral</div>
+      <div class="tone-opt" data-tone="firm" role="button" tabindex="0">Firm-but-polite</div>
+    </div>
+
+    <button class="gen-btn" id="genBtn" type="button">Write my message ✍️</button>
+  </section>
+
+  <!-- 2. Results -->
+  <section class="card" id="results">
+    <div class="step"><span class="num">2</span><h2>Your message</h2></div>
+    <p class="hint">Edit anything below before you send. Two versions to choose from.</p>
+
+    <div class="variation-label">Version 1 · Brief</div>
+    <textarea class="msg-box" id="msg1"></textarea>
+    <div class="msg-actions">
+      <button class="mini-btn primary" type="button" data-copy="msg1">📋 Copy</button>
+      <button class="mini-btn ghost" type="button" data-save="msg1">＋ Save to library</button>
+    </div>
+
+    <div class="variation-label">Version 2 · A little fuller</div>
+    <textarea class="msg-box" id="msg2"></textarea>
+    <div class="msg-actions">
+      <button class="mini-btn primary" type="button" data-copy="msg2">📋 Copy</button>
+      <button class="mini-btn ghost" type="button" data-save="msg2">＋ Save to library</button>
+    </div>
+
+    <div class="coach">
+      <div class="ct">A gentle reminder 💛</div>
+      <ul>
+        <li>Keep it about the kids — logistics, not feelings or history.</li>
+        <li>Don't JADE: no Justify, Argue, Defend, or Explain. You don't owe a defense.</li>
+        <li>Document everything — keep messages in writing and dated.</li>
+        <li>One topic per message. Short is strong.</li>
+      </ul>
+      <div class="encourage" id="coachEncourage">You're not being cold — you're being clear. That's how you protect your peace and your child.</div>
+    </div>
+  </section>
+
+  <!-- Library -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Your saved messages</h2></div>
+    <p class="hint">Reuse your steady, go-to scripts whenever you need them.</p>
+    <ul class="lib-list" id="libList"></ul>
+    <p class="empty-note" id="libEmpty">Nothing saved yet. Generate a message above and tap “Save to library.” 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_coparenting_script";
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Elements ----
+  var msgTypeEl = $("msgType"), childNameEl = $("childName"),
+      detailsEl = $("details"), extraEl = $("extra"),
+      toneRow = $("toneRow"), genBtn = $("genBtn"),
+      results = $("results"), msg1El = $("msg1"), msg2El = $("msg2"),
+      coachEncourage = $("coachEncourage"),
+      libList = $("libList"), libEmpty = $("libEmpty");
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          o.form = o.form || {};
+          o.library = o.library || [];
+          o.results = o.results || null;
+          o.tone = o.tone || "neutral";
+          return o;
+        }
+      }
+    }catch(e){}
+    return { form:{}, library:[], results:null, tone:"neutral" };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Type labels ----
+  var TYPE_LABEL = {
+    schedule:"Schedule change", pickup:"Pickup / drop-off",
+    money:"Money / expenses", decline:"Declining conflict",
+    boundary:"Communication boundary", info:"Child info / medical / school",
+    hostile:"Responding to hostility", other:"Co-parenting"
+  };
+
+  // ---- Restore form ----
+  function restoreForm(){
+    var f = data.form;
+    if(f.msgType) msgTypeEl.value = f.msgType;
+    childNameEl.value = f.childName || "";
+    detailsEl.value = f.details || "";
+    extraEl.value = f.extra || "";
+    setTone(data.tone || "neutral", false);
+    if(data.results){
+      msg1El.value = data.results.v1 || "";
+      msg2El.value = data.results.v2 || "";
+      coachEncourage.textContent = data.results.encourage || coachEncourage.textContent;
+      results.classList.add("show");
+    }
+    renderLibrary();
+  }
+
+  // ---- Auto-save form on every change ----
+  function captureForm(){
+    data.form = {
+      msgType: msgTypeEl.value,
+      childName: childNameEl.value,
+      details: detailsEl.value,
+      extra: extraEl.value
+    };
+    save();
+  }
+  msgTypeEl.addEventListener("change", captureForm);
+  [childNameEl, detailsEl, extraEl].forEach(function(el){
+    el.addEventListener("input", captureForm);
+  });
+
+  // ---- Tone toggle ----
+  function setTone(tone, persist){
+    data.tone = tone;
+    var opts = toneRow.querySelectorAll(".tone-opt");
+    opts.forEach(function(o){
+      o.classList.toggle("active", o.getAttribute("data-tone") === tone);
+    });
+    if(persist){ save(); }
+  }
+  toneRow.querySelectorAll(".tone-opt").forEach(function(o){
+    o.addEventListener("click", function(){ setTone(o.getAttribute("data-tone"), true); });
+    o.addEventListener("keydown", function(e){
+      if(e.key === "Enter" || e.key === " "){ e.preventDefault(); setTone(o.getAttribute("data-tone"), true); }
+    });
+  });
+
+  // ---- Helpers ----
+  function cap(s){ s = (s||"").trim(); return s ? s.charAt(0).toUpperCase()+s.slice(1) : s; }
+  function clean(s){
+    s = (s||"").trim();
+    if(s && !/[.!?]$/.test(s)) s += ".";
+    return s;
+  }
+  function childRef(name){ return name ? name : "our child"; }
+  function childPossessive(name){ return name ? name + "'s" : "our child's"; }
+
+  // ---- Generator: produces two child-centered, BIFF-style variations ----
+  function generate(){
+    var type = msgTypeEl.value;
+    var firm = (data.tone === "firm");
+    var name = (childNameEl.value || "").trim();
+    var details = (detailsEl.value || "").trim();
+    var extra = (extraEl.value || "").trim();
+
+    var greet = "Hi,";
+    var sign = "Thanks,";
+    var c = childRef(name);
+    var cp = childPossessive(name);
+    var detSentence = details ? clean(cap(details)) : "";
+    var extraSentence = extra ? clean(cap(extra)) : "";
+
+    var v1, v2, encourage;
+    var closeNeutral = "Let me know if that works.";
+    var closeFirm = "Please confirm by reply.";
+    var close = firm ? closeFirm : closeNeutral;
+
+    switch(type){
+      case "schedule":
+        v1 = greet+" I'd like to adjust the schedule. " +
+             (detSentence || "I need to change the upcoming arrangement.") +
+             (extraSentence ? " " + extraSentence : "") + " " + close;
+        v2 = greet+" I'm writing about "+cp+" schedule. " +
+             (detSentence || "A change has come up on my side.") +
+             (extraSentence ? " The details: " + extraSentence : "") +
+             " I want to keep things steady for "+c+", so the earlier we lock this in, the better. " + close;
+        encourage = "Steady and early — that's how you keep "+c+"'s world calm.";
+        break;
+
+      case "pickup":
+        v1 = greet+" A quick note about pickup/drop-off. " +
+             (detSentence || "I'd like to confirm the handover.") +
+             (extraSentence ? " " + extraSentence : "") + " " + close;
+        v2 = greet+" I want to make "+cp+" handover smooth. " +
+             (detSentence || "Here's what I'm proposing.") +
+             (extraSentence ? " Time and place: " + extraSentence : "") +
+             " I'll be on time and ready. " + close;
+        encourage = "Clear logistics protect "+c+" from being caught in the middle.";
+        break;
+
+      case "money":
+        v1 = greet+" This is about an expense for "+c+". " +
+             (detSentence || "There's a cost I'd like to discuss.") +
+             (extraSentence ? " " + extraSentence : "") +
+             " I can share the receipt. " + close;
+        v2 = greet+" I'm writing regarding "+cp+" expenses. " +
+             (detSentence || "A cost has come up.") +
+             (extraSentence ? " Details: " + extraSentence : "") +
+             " Happy to provide documentation and keep a record so we're both clear. " + close;
+        encourage = "Keep money messages factual and receipted — it removes the friction.";
+        break;
+
+      case "decline":
+        v1 = greet+" I'm going to keep our messages focused on "+c+". " +
+             "I won't be discussing that further, but I'm always glad to talk about anything to do with "+c+".";
+        v2 = greet+" I understand we see this differently. " +
+             "To keep things calm for "+c+", I'll be stepping back from this conversation. " +
+             "If there's something practical regarding "+c+" I can help with, I'm here for that.";
+        encourage = "You can decline without defending. \"I won't be discussing that\" is a full sentence.";
+        break;
+
+      case "boundary":
+        v1 = greet+" Going forward, I'd like us to keep communication to messages about "+c+", " +
+             "and to one topic per message so nothing gets missed. " +
+             (detSentence ? detSentence + " " : "") +
+             "I'll respond to those within a day.";
+        v2 = greet+" To make co-parenting smoother, I'm setting a simple boundary: " +
+             "our communication will stay in writing and focused on "+c+". " +
+             (detSentence ? detSentence + " " : "") +
+             "I'll reply to child-related messages promptly, usually within 24 hours, and I appreciate the same. Thank you for working with me on this.";
+        encourage = "Boundaries aren't walls — they're the lanes that keep co-parenting on the road.";
+        break;
+
+      case "info":
+        v1 = greet+" Sharing an update about "+c+". " +
+             (detSentence || "Here's some information you'll want to have.") +
+             (extraSentence ? " " + extraSentence : "") +
+             " Let me know if you need anything else.";
+        v2 = greet+" Passing on some information about "+c+" so we're both in the loop. " +
+             (detSentence || "Here's the update.") +
+             (extraSentence ? " Details: " + extraSentence : "") +
+             " I'll keep you posted on anything new, and feel free to do the same. This keeps "+c+" well supported on both sides.";
+        encourage = "Sharing freely about "+c+" shows the record that you co-parent in good faith.";
+        break;
+
+      case "hostile":
+        // Grey-rock: do NOT engage the bait. Acknowledge briefly, refocus on logistics/child.
+        v1 = greet+" Thank you for the message. " +
+             "I'm only going to respond to the part about "+c+". " +
+             (detSentence ? detSentence + " " : "") +
+             "Let me know the practical details and I'll sort my side.";
+        v2 = greet+" I've read your message. " +
+             "I'm not going to get into the rest, but I do want to take care of what affects "+c+". " +
+             (detSentence ? detSentence + " " : "") +
+             (extraSentence ? extraSentence + " " : "") +
+             "Once I have the logistics, I'll confirm. Wishing you a good week.";
+        encourage = "Be a grey rock: no emotion to feed the conflict. Acknowledge, refocus on "+c+", disengage.";
+        break;
+
+      default: // other
+        v1 = greet+" " +
+             (detSentence || "I wanted to reach out about a co-parenting matter.") +
+             (extraSentence ? " " + extraSentence : "") + " " + close;
+        v2 = greet+" Reaching out about something to do with "+c+". " +
+             (detSentence || "Here's what's on my mind.") +
+             (extraSentence ? " Details: " + extraSentence : "") +
+             " I'd like to keep this simple and child-focused. " + close;
+        encourage = "Brief, informative, friendly, firm. You've got this.";
+    }
+
+    // Firm tone gets a slightly more directive sign-off line where appropriate.
+    if(firm && (type === "decline" || type === "boundary" || type === "hostile")){
+      v1 += "";
+    }
+
+    v1 += "\n\n" + sign;
+    v2 += "\n\n" + sign;
+
+    return { v1:v1, v2:v2, encourage:encourage };
+  }
+
+  genBtn.addEventListener("click", function(){
+    captureForm();
+    var out = generate();
+    msg1El.value = out.v1;
+    msg2El.value = out.v2;
+    coachEncourage.textContent = out.encourage;
+    data.results = out;
+    save();
+    results.classList.add("show");
+    results.scrollIntoView({ behavior:"smooth", block:"start" });
+  });
+
+  // ---- Editing results auto-saves ----
+  msg1El.addEventListener("input", function(){
+    if(!data.results) data.results = {};
+    data.results.v1 = msg1El.value; save();
+  });
+  msg2El.addEventListener("input", function(){
+    if(!data.results) data.results = {};
+    data.results.v2 = msg2El.value; save();
+  });
+
+  // ---- Copy with graceful fallback ----
+  function copyText(text, btn){
+    function flash(){
+      var orig = btn.innerHTML;
+      btn.innerHTML = "<span class='copied-flash'>✓ Copied!</span>";
+      setTimeout(function(){ btn.innerHTML = orig; }, 1400);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(flash, function(){ legacyCopy(text); flash(); });
+    }else{
+      legacyCopy(text); flash();
+    }
+  }
+  function legacyCopy(text){
+    try{
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.position="fixed"; ta.style.opacity="0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }catch(e){}
+  }
+
+  // ---- Save to library ----
+  function saveToLibrary(text){
+    var t = (text||"").trim();
+    if(!t) return;
+    data.library.unshift({
+      id: Date.now() + "_" + Math.random().toString(36).slice(2,7),
+      type: msgTypeEl.value,
+      typeLabel: TYPE_LABEL[msgTypeEl.value] || "Co-parenting",
+      text: t
+    });
+    save();
+    renderLibrary();
+  }
+
+  // ---- Result card buttons (copy + save) ----
+  document.querySelectorAll("[data-copy]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var el = $(b.getAttribute("data-copy"));
+      copyText(el.value, b);
+    });
+  });
+  document.querySelectorAll("[data-save]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var el = $(b.getAttribute("data-save"));
+      saveToLibrary(el.value);
+      var orig = b.innerHTML;
+      b.innerHTML = "<span class='copied-flash'>✓ Saved!</span>";
+      setTimeout(function(){ b.innerHTML = orig; }, 1400);
+    });
+  });
+
+  // ---- Render library ----
+  function renderLibrary(){
+    libList.innerHTML = "";
+    if(!data.library.length){ libEmpty.style.display="block"; return; }
+    libEmpty.style.display="none";
+    data.library.forEach(function(item){
+      var li = document.createElement("li");
+      li.className = "lib-item";
+
+      var top = document.createElement("div");
+      top.className = "li-top";
+      var tag = document.createElement("span");
+      tag.className = "li-type";
+      tag.textContent = item.typeLabel || "Co-parenting";
+      top.appendChild(tag);
+
+      var txt = document.createElement("div");
+      txt.className = "li-text";
+      txt.textContent = item.text;
+
+      var actions = document.createElement("div");
+      actions.className = "li-actions";
+
+      var copyBtn = document.createElement("button");
+      copyBtn.className = "mini-btn primary"; copyBtn.type = "button";
+      copyBtn.innerHTML = "📋 Copy";
+      copyBtn.addEventListener("click", function(){ copyText(item.text, copyBtn); });
+
+      var delBtn = document.createElement("button");
+      delBtn.className = "mini-btn ghost"; delBtn.type = "button";
+      delBtn.innerHTML = "🗑 Delete";
+      delBtn.addEventListener("click", function(){
+        if(confirm("Delete this saved message? This can't be undone.")){
+          data.library = data.library.filter(function(x){ return x.id !== item.id; });
+          save(); renderLibrary();
+        }
+      });
+
+      actions.appendChild(copyBtn);
+      actions.appendChild(delBtn);
+
+      li.appendChild(top);
+      li.appendChild(txt);
+      li.appendChild(actions);
+      libList.appendChild(li);
+    });
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Co-Parenting Boundary Script data — saved messages too? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { form:{}, library:[], results:null, tone:"neutral" };
+      msgTypeEl.value = "schedule";
+      childNameEl.value = ""; detailsEl.value = ""; extraEl.value = "";
+      msg1El.value = ""; msg2El.value = "";
+      results.classList.remove("show");
+      setTone("neutral", false);
+      renderLibrary();
+    }
+  });
+
+  // ---- Init ----
+  restoreForm();
+
+})();
+</script>
+</body>
+</html>

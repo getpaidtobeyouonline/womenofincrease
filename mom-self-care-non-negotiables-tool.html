@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mom Self-Care Non-Negotiables Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Truth panel ---------- */
+  .truth{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .truth::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .truth p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .truth .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+
+  /* ---------- Library chips ---------- */
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
+  .chip{
+    font-family:inherit; font-size:14px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:999px;
+    padding:9px 14px; min-height:44px; cursor:pointer; display:inline-flex; align-items:center; gap:7px;
+    transition:border-color .15s, background .15s, color .15s;
+  }
+  .chip:hover{ border-color:var(--gold); }
+  .chip[aria-pressed="true"]{
+    background:var(--emerald-soft); border-color:rgba(20,84,62,.3); color:var(--emerald); font-weight:600;
+  }
+  .chip .tick{ font-size:13px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:72px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  .add-row{ display:flex; gap:8px; margin-top:12px; }
+  .add-row input{ flex:1; }
+  .add-btn{
+    flex:none; min-height:48px; min-width:48px; padding:0 16px;
+    background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.2);
+    border-radius:11px; font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+  }
+  .add-btn:hover{ border-color:var(--gold); }
+
+  /* ---------- Non-negotiable items ---------- */
+  .nn-empty{ color:var(--muted); font-size:14px; font-style:italic; margin-top:4px; }
+  .nn-item{
+    border:1px solid var(--line); border-radius:13px; padding:14px; margin-top:12px; background:#fff;
+  }
+  .nn-head{ display:flex; align-items:flex-start; gap:10px; }
+  .nn-name{
+    flex:1; font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:17px; line-height:1.25;
+  }
+  .nn-remove{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:18px; min-height:44px; min-width:44px; border-radius:10px; line-height:1;
+  }
+  .nn-remove:hover{ color:var(--ink); }
+  .nn-plan{ margin-top:10px; }
+  .nn-plan label{ display:block; font-weight:600; font-size:12.5px; color:var(--muted); margin:8px 0 5px; }
+
+  /* ---------- Week grid ---------- */
+  .week-wrap{ overflow-x:auto; -webkit-overflow-scrolling:touch; margin-top:6px; padding-bottom:4px; }
+  table.grid{ border-collapse:separate; border-spacing:0; width:100%; min-width:340px; }
+  table.grid th, table.grid td{ padding:6px 4px; text-align:center; }
+  table.grid thead th{
+    font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);
+  }
+  table.grid th.rowname{
+    text-align:left; font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:14px; min-width:120px; white-space:normal;
+  }
+  table.grid td.today-col{ background:rgba(231,211,161,.18); border-radius:8px; }
+  table.grid thead th.today-col{ color:var(--gold); }
+  .toggle{
+    width:30px; height:30px; min-height:30px; border-radius:50%;
+    border:1.5px solid var(--line); background:var(--cream); cursor:pointer; padding:0;
+    display:inline-flex; align-items:center; justify-content:center; font-size:15px; color:transparent;
+    transition:background .12s, border-color .12s, color .12s;
+  }
+  .toggle:hover{ border-color:var(--gold); }
+  .toggle.on{ background:var(--emerald); border-color:var(--emerald); color:#FCF8EF; }
+  .grid-empty{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Progress ---------- */
+  .progress-wrap{ margin-top:6px; }
+  .bar{ height:12px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .bar span{ display:block; height:100%; width:0; background:var(--gold); border-radius:999px; transition:width .35s ease; }
+  .progress-line{ display:flex; align-items:center; justify-content:center; gap:8px; margin-top:12px; color:var(--muted); font-size:14px; text-align:center; }
+  .progress-line b{ color:var(--emerald); font-size:15px; }
+  .kind-note{
+    margin-top:14px; text-align:center; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.15); border-radius:14px; padding:16px;
+    color:var(--emerald); font-family:'Fraunces',serif; font-style:italic; font-size:16px; line-height:1.45;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Self-Care Non-Negotiables</h1>
+    <p class="subtitle">Name the few things that keep you well — and protect them like they matter. Because they do.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- Truth panel -->
+  <section class="card">
+    <div class="truth">
+      <p>Caring for yourself isn't taking <em>from</em> your children — it's giving <em>to</em> them. You show up softer, steadier, more present when your own cup isn't empty. You cannot pour from a cup you never let anyone fill.</p>
+      <div class="ref">You can't pour from empty</div>
+    </div>
+  </section>
+
+  <!-- 1. Identify -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Name Your Non-Negotiables</h2></div>
+    <p class="hint">Not the glamorous version — the real one. Tap the few small things that keep you well. Aim for 3–5 you'll actually protect.</p>
+    <div class="chips" id="chipLib"></div>
+    <div class="add-row">
+      <input type="text" id="customInput" placeholder="Add your own…" aria-label="Add your own non-negotiable">
+      <button class="add-btn" id="addBtn" type="button" aria-label="Add">Add</button>
+    </div>
+  </section>
+
+  <!-- 2. Protect -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Protect Each One</h2></div>
+    <p class="hint">A non-negotiable without a plan is just a wish. For each, name what could threaten it — and how you'll guard it.</p>
+    <div id="nnList"></div>
+    <p class="nn-empty" id="nnEmpty">Tap a non-negotiable above and it'll show up here to protect. 💛</p>
+  </section>
+
+  <!-- 3. Track -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>This Week's Check-In</h2></div>
+    <p class="hint">Tap a circle for each day you honored it. This isn't a scorecard — it's proof you're keeping promises to yourself.</p>
+    <div class="week-wrap">
+      <table class="grid" id="weekGrid" aria-label="Weekly non-negotiables tracker"></table>
+    </div>
+    <p class="grid-empty" id="gridEmpty">Add a non-negotiable to start tracking your week. 💛</p>
+
+    <div class="progress-wrap" id="progressWrap" style="display:none;">
+      <div class="bar"><span id="barFill"></span></div>
+      <div class="progress-line">
+        <span><b id="pctNum">0%</b> of your non-negotiables honored this week · <b id="honoredNum">0</b> kept moments</span>
+      </div>
+      <div class="kind-note" id="kindNote">Even one kept promise to yourself counts. Start where you are.</div>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_mom_self_care";
+
+  // ---- Library of realistic, mostly-unglamorous non-negotiables ----
+  var LIBRARY = [
+    "Enough sleep","Drink my water","A quiet moment alone","One boundary kept",
+    "Move my body","Time with God","Ask for help","A shower in peace",
+    "Eat a real meal","Step outside","Put my phone down","Say no without guilt",
+    "Call a friend","10 minutes of stillness","Go to bed on time","A deep breath before I react"
+  ];
+
+  // ---- Kind, encouraging messages by progress ----
+  var KIND = [
+    "Even one kept promise to yourself counts. Start where you are.",
+    "You're learning to take up space again. That's holy work.",
+    "Look at you, honoring yourself. Your kids are watching a woman who matters.",
+    "Steady and gentle — you're filling your own cup, sister. 💛"
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    return fmt(d);
+  }
+  function fmt(d){
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+  }
+  // Week = the 7 days ending today (today is last column)
+  function weekDays(){
+    var days = [];
+    var d = new Date();
+    for(var i=6;i>=0;i--){
+      var dd = new Date(d.getFullYear(), d.getMonth(), d.getDate()-i);
+      days.push(dd);
+    }
+    return days;
+  }
+  function shortDow(d){
+    return d.toLocaleDateString(undefined,{weekday:"short"}).slice(0,2);
+  }
+
+  // ---- State ----
+  // data.items: [{ id, name, threat, guard }]
+  // data.checks: { "<itemId>": { "<dateKey>": true } }
+  var data = load();
+  var TODAY = todayKey();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && o.items && o.checks){ return o; }
+      }
+    }catch(e){}
+    return { items:[], checks:{} };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function uid(){
+    return "n" + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  $("todayDate").textContent = prettyDate(TODAY);
+
+  function hasItemNamed(name){
+    name = name.trim().toLowerCase();
+    return data.items.some(function(it){ return it.name.trim().toLowerCase() === name; });
+  }
+  function findItemByName(name){
+    name = name.trim().toLowerCase();
+    return data.items.filter(function(it){ return it.name.trim().toLowerCase() === name; })[0];
+  }
+
+  function addItem(name){
+    name = (name||"").trim();
+    if(!name) return;
+    if(hasItemNamed(name)) return;
+    data.items.push({ id: uid(), name: name, threat:"", guard:"" });
+    save();
+    renderAll();
+  }
+  function removeItem(id){
+    data.items = data.items.filter(function(it){ return it.id !== id; });
+    delete data.checks[id];
+    save();
+    renderAll();
+  }
+
+  // ---- Library chips ----
+  function renderChips(){
+    var box = $("chipLib");
+    box.innerHTML = "";
+    LIBRARY.forEach(function(label){
+      var on = hasItemNamed(label);
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip";
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.innerHTML = (on ? '<span class="tick">✓</span>' : '<span class="tick">+</span>') +
+        '<span>'+escapeHtml(label)+'</span>';
+      b.addEventListener("click", function(){
+        if(hasItemNamed(label)){
+          var it = findItemByName(label);
+          if(it) removeItem(it.id);
+        }else{
+          addItem(label);
+        }
+      });
+      box.appendChild(b);
+    });
+  }
+
+  // ---- Protect list ----
+  function renderItems(){
+    var list = $("nnList");
+    var empty = $("nnEmpty");
+    list.innerHTML = "";
+    if(data.items.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+    data.items.forEach(function(it){
+      var wrap = document.createElement("div");
+      wrap.className = "nn-item";
+
+      var head = document.createElement("div");
+      head.className = "nn-head";
+      var nm = document.createElement("div");
+      nm.className = "nn-name";
+      nm.textContent = it.name;
+      var rm = document.createElement("button");
+      rm.type = "button";
+      rm.className = "nn-remove";
+      rm.setAttribute("aria-label","Remove "+it.name);
+      rm.textContent = "✕";
+      rm.addEventListener("click", function(){ removeItem(it.id); });
+      head.appendChild(nm); head.appendChild(rm);
+      wrap.appendChild(head);
+
+      var plan = document.createElement("div");
+      plan.className = "nn-plan";
+
+      plan.appendChild(makeLabel("What could threaten it?", "threat-"+it.id));
+      var t = document.createElement("textarea");
+      t.id = "threat-"+it.id;
+      t.placeholder = "Be honest — a busy night, guilt, everyone needing me at once…";
+      t.value = it.threat || "";
+      t.addEventListener("input", function(){ it.threat = t.value; save(); });
+      plan.appendChild(t);
+
+      plan.appendChild(makeLabel("How will you guard it?", "guard-"+it.id));
+      var g = document.createElement("textarea");
+      g.id = "guard-"+it.id;
+      g.placeholder = "Your plan to keep it — even small. \"Phone in another room by 9.\"";
+      g.value = it.guard || "";
+      g.addEventListener("input", function(){ it.guard = g.value; save(); });
+      plan.appendChild(g);
+
+      wrap.appendChild(plan);
+      list.appendChild(wrap);
+    });
+  }
+  function makeLabel(text, forId){
+    var l = document.createElement("label");
+    l.setAttribute("for", forId);
+    l.textContent = text;
+    return l;
+  }
+
+  // ---- Week grid ----
+  function isChecked(itemId, dateKey){
+    return !!(data.checks[itemId] && data.checks[itemId][dateKey]);
+  }
+  function toggleCheck(itemId, dateKey){
+    if(!data.checks[itemId]) data.checks[itemId] = {};
+    if(data.checks[itemId][dateKey]){ delete data.checks[itemId][dateKey]; }
+    else { data.checks[itemId][dateKey] = true; }
+    save();
+    renderGrid();
+    renderProgress();
+  }
+  function renderGrid(){
+    var table = $("weekGrid");
+    var empty = $("gridEmpty");
+    table.innerHTML = "";
+    if(data.items.length === 0){ empty.style.display="block"; table.style.display="none"; return; }
+    empty.style.display="none"; table.style.display="";
+
+    var days = weekDays();
+
+    // header
+    var thead = document.createElement("thead");
+    var hr = document.createElement("tr");
+    var corner = document.createElement("th");
+    corner.className = "rowname";
+    corner.textContent = "";
+    hr.appendChild(corner);
+    days.forEach(function(d){
+      var th = document.createElement("th");
+      if(fmt(d) === TODAY) th.className = "today-col";
+      th.innerHTML = escapeHtml(shortDow(d)) + "<br>" + d.getDate();
+      hr.appendChild(th);
+    });
+    thead.appendChild(hr);
+    table.appendChild(thead);
+
+    var tbody = document.createElement("tbody");
+    data.items.forEach(function(it){
+      var tr = document.createElement("tr");
+      var rn = document.createElement("th");
+      rn.className = "rowname";
+      rn.scope = "row";
+      rn.textContent = it.name;
+      tr.appendChild(rn);
+      days.forEach(function(d){
+        var key = fmt(d);
+        var td = document.createElement("td");
+        if(key === TODAY) td.className = "today-col";
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "toggle" + (isChecked(it.id, key) ? " on" : "");
+        btn.setAttribute("aria-pressed", isChecked(it.id, key) ? "true" : "false");
+        btn.setAttribute("aria-label", it.name + " on " + prettyDate(key));
+        btn.textContent = "✓";
+        btn.addEventListener("click", function(){ toggleCheck(it.id, key); });
+        td.appendChild(btn);
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+  }
+
+  // ---- Progress (kind) ----
+  function renderProgress(){
+    var wrap = $("progressWrap");
+    if(data.items.length === 0){ wrap.style.display="none"; return; }
+    wrap.style.display="block";
+
+    var days = weekDays();
+    var possible = data.items.length * days.length;
+    var honored = 0;
+    data.items.forEach(function(it){
+      days.forEach(function(d){
+        if(isChecked(it.id, fmt(d))) honored++;
+      });
+    });
+    var pct = possible ? Math.round((honored / possible) * 100) : 0;
+    $("barFill").style.width = pct + "%";
+    $("pctNum").textContent = pct + "%";
+    $("honoredNum").textContent = honored;
+
+    var idx = 0;
+    if(honored === 0) idx = 0;
+    else if(pct < 34) idx = 1;
+    else if(pct < 67) idx = 2;
+    else idx = 3;
+    $("kindNote").textContent = KIND[idx];
+  }
+
+  // ---- Util ----
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  // ---- Add custom ----
+  function commitCustom(){
+    var input = $("customInput");
+    addItem(input.value);
+    input.value = "";
+    input.focus();
+  }
+  $("addBtn").addEventListener("click", commitCustom);
+  $("customInput").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); commitCustom(); }
+  });
+
+  // ---- Render all ----
+  function renderAll(){
+    renderChips();
+    renderItems();
+    renderGrid();
+    renderProgress();
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your self-care non-negotiables and tracking? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { items:[], checks:{} };
+      $("customInput").value = "";
+      renderAll();
+    }
+  });
+
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

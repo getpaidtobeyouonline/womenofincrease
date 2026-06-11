@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Single Mom Daily Survival Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:8px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:0 0 14px; }
+
+  /* ---------- Anchor / encouragement ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:19px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .verse-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Mood check ---------- */
+  .mood-label{ display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:16px 0 8px; }
+  .mood-row{ display:flex; gap:8px; }
+  .mood-btn{
+    flex:1; min-height:48px; background:var(--cream); border:1px solid var(--line);
+    border-radius:12px; cursor:pointer; font-family:inherit; font-size:22px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+    transition:border-color .15s, background .15s, transform .08s;
+  }
+  .mood-btn .cap{ font-size:10.5px; font-weight:600; color:var(--muted); letter-spacing:.02em; }
+  .mood-btn:active{ transform:translateY(1px); }
+  .mood-btn.sel{
+    border-color:var(--gold); background:#FFFBF1; box-shadow:0 0 0 3px rgba(200,160,74,.16);
+  }
+  .mood-btn.sel .cap{ color:var(--emerald); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:6px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:96px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Checkable task rows ---------- */
+  .task{
+    display:flex; align-items:center; gap:11px; padding:9px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .task:last-child{ border-bottom:none; }
+  .check{
+    flex:none; width:26px; height:26px; border-radius:50%;
+    border:2px solid var(--gold-soft); background:#fff; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; color:#fff; transition:background .15s, border-color .15s;
+  }
+  .check.on{ background:var(--emerald); border-color:var(--emerald); }
+  .task input.task-text{
+    flex:1; min-height:44px; border:none; background:transparent; border-radius:0;
+    padding:6px 0; font-size:16px;
+  }
+  .task input.task-text:focus{ box-shadow:none; }
+  .task.done input.task-text{ color:var(--muted); text-decoration:line-through; }
+  .task .num-tag{
+    flex:none; width:24px; height:24px; border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald); font-weight:700; font-size:12px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .del-btn{
+    flex:none; background:none; border:none; color:#C0B8A8; cursor:pointer;
+    font-size:18px; min-width:44px; min-height:44px; line-height:1;
+  }
+  .del-btn:hover{ color:var(--gold); }
+  .add-btn{
+    margin-top:10px; min-height:44px; width:100%;
+    background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.15); border-radius:11px;
+    font-family:inherit; font-weight:600; font-size:14px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+  }
+  .add-btn:hover{ border-color:var(--emerald); }
+
+  /* ---------- The one-for-me row ---------- */
+  .me-row{ display:flex; align-items:center; gap:12px; }
+  .me-row input.task-text{
+    flex:1; min-height:48px; background:var(--cream); border:1px solid var(--line);
+    border-radius:11px; padding:13px 14px; font-size:16px;
+  }
+  .me-row.done input.task-text{ color:var(--muted); text-decoration:line-through; }
+
+  /* ---------- Complete button ---------- */
+  .complete-btn{
+    width:100%; margin-top:6px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+  .complete-btn.done{
+    background:var(--emerald-soft); color:var(--emerald); box-shadow:none;
+    border:1px solid rgba(20,84,62,.2);
+  }
+
+  .blessing{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .blessing.show{ display:block; animation:rise .4s ease; }
+  .blessing .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .blessing .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Streak ---------- */
+  .streak{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:18px; color:var(--muted); font-size:14px; text-align:center;
+  }
+  .streak b{ color:var(--emerald); font-size:15px; }
+  .flame{ font-size:16px; }
+
+  /* ---------- History ---------- */
+  .history-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 4px;
+  }
+  .history-list{ list-style:none; }
+  .history-list li{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:10px 2px; border-bottom:1px solid var(--line); font-size:14px;
+  }
+  .history-list li:last-child{ border-bottom:none; }
+  .history-list .h-date{ color:var(--ink); font-weight:600; }
+  .history-list .h-word{ color:var(--gold); font-family:'Fraunces',serif; font-style:italic; }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Single Mom Daily Survival Planner</h1>
+    <p class="subtitle">Built for real life. Less overwhelm, more grace — one day at a time.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- Morning anchor -->
+  <section class="card">
+    <div class="step"><span class="num">♡</span><h2>Your morning anchor</h2></div>
+    <p class="hint">Before the rush — one breath, one truth. You're not behind. You're carrying a lot, and you're doing it.</p>
+    <div class="verse">
+      <p id="verseText">—</p>
+      <div class="ref" id="verseRef"></div>
+    </div>
+    <div class="verse-actions">
+      <button class="link-btn" id="anotherVerse" type="button">↻ Another word for me</button>
+    </div>
+
+    <span class="mood-label">How am I doing today? (just a tap)</span>
+    <div class="mood-row" id="moodRow">
+      <button class="mood-btn" type="button" data-mood="0"><span>🌫️</span><span class="cap">Running on empty</span></button>
+      <button class="mood-btn" type="button" data-mood="1"><span>🌤️</span><span class="cap">Hanging in</span></button>
+      <button class="mood-btn" type="button" data-mood="2"><span>☀️</span><span class="cap">Pretty okay</span></button>
+      <button class="mood-btn" type="button" data-mood="3"><span>💛</span><span class="cap">Strong today</span></button>
+    </div>
+  </section>
+
+  <!-- 1. Today's 3 that matter most -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Today's 3 that matter most</h2></div>
+    <p class="hint">Not your whole list — just the 3 that would make today a win. If you only do these, it was enough.</p>
+    <div id="topThree"></div>
+  </section>
+
+  <!-- 2. Kids & household must-dos -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Kids &amp; household must-dos</h2></div>
+    <p class="hint">School, meals, pickups, appointments. Get it out of your head and onto the page.</p>
+    <div id="choreList"></div>
+    <button class="add-btn" id="addChore" type="button">＋ Add a must-do</button>
+  </section>
+
+  <!-- 3. One thing for ME -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>One thing for ME</h2></div>
+    <p class="hint">Non-negotiable. You pour out all day — this is the cup that's just yours. Even five minutes counts.</p>
+    <div class="me-row" id="meRow">
+      <span class="check" id="meCheck" role="checkbox" aria-checked="false" tabindex="0" aria-label="Mark my self-care done"></span>
+      <input type="text" class="task-text" id="meText" placeholder="A walk, a hot drink, a quiet shower, a chapter…" aria-label="One thing for me today">
+    </div>
+  </section>
+
+  <!-- 4. Brain dump -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Brain dump</h2></div>
+    <p class="hint">Everything swirling in your head — set it down here so you don't have to hold it all.</p>
+    <label class="field-label" for="brainDump" style="display:none;">Brain dump</label>
+    <textarea id="brainDump" placeholder="Worries, reminders, that thing you keep forgetting, a feeling… let it all out."></textarea>
+  </section>
+
+  <!-- End-of-day close -->
+  <section class="card">
+    <div class="step"><span class="num">✓</span><h2>Close out your day</h2></div>
+    <p class="hint">However today went, you showed up. That counts. Mark it when you're ready to rest.</p>
+    <button class="complete-btn" id="completeBtn" type="button">I survived today · I did my best 💛</button>
+    <div class="blessing" id="blessing">
+      <div class="big">You made it through. 💛</div>
+      <div class="sm">Whatever didn't get done can wait. Rest now, strong woman — you've earned it.</div>
+    </div>
+
+    <div class="streak">
+      <span class="flame">🔥</span>
+      <span><b id="streakCount">0</b>-day streak · <b id="totalCount">0</b> days you showed up</span>
+    </div>
+  </section>
+
+  <!-- History -->
+  <section class="card">
+    <div class="history-title">Your recent days</div>
+    <ul class="history-list" id="historyList"></ul>
+    <p class="empty-note" id="historyEmpty">Close out today and it'll appear here — proof of how strong you are. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_single_mom_survival";
+
+  // ---- Encouragement for tired moms (rotating, deterministic by date) ----
+  var VERSES = [
+    ["She is clothed with strength and dignity, and she laughs without fear of the future.", "Proverbs 31:25"],
+    ["He gives strength to the weary and increases the power of the weak.", "Isaiah 40:29"],
+    ["Cast all your anxiety on Him, because He cares for you.", "1 Peter 5:7"],
+    ["The Lord your God is with you, the Mighty Warrior who saves.", "Zephaniah 3:17"],
+    ["Those who hope in the Lord will renew their strength.", "Isaiah 40:31"],
+    ["God is within her, she will not fall; He will help her at break of day.", "Psalm 46:5"],
+    ["His mercies are new every morning; great is your faithfulness.", "Lamentations 3:23"],
+    ["Come to me, all you who are weary and burdened, and I will give you rest.", "Matthew 11:28"],
+    ["The joy of the Lord is your strength.", "Nehemiah 8:10"],
+    ["She watches over the affairs of her household and does not eat the bread of idleness.", "Proverbs 31:27"],
+    ["Do not be anxious about anything, but in every situation present your requests to God.", "Philippians 4:6"],
+    ["I can do all things through Christ who strengthens me.", "Philippians 4:13"],
+    ["Be still, and know that I am God.", "Psalm 46:10"],
+    ["The Lord will fight for you; you need only to be still.", "Exodus 14:14"],
+    ["Let us not become weary in doing good, for at the proper time we will reap a harvest.", "Galatians 6:9"],
+    ["You are a daughter of the King — strong, loved, and never carrying this alone.", "A Word for You"],
+    ["You don't have to be everything today. You just have to make it through, and you will.", "A Word for You"],
+    ["The grace that got you out of bed this morning is enough for the rest of today.", "A Word for You"],
+    ["A messy house and a fed, loved child is a day well done. Let perfect go.", "A Word for You"],
+    ["The same God who carried you this far will carry you the rest of the way.", "A Word for You"]
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    var diff = d - start;
+    return Math.floor(diff / 86400000);
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+  }
+
+  // ---- State ----
+  var data = load();
+  var TODAY = todayKey();
+  var entry = data.entries[TODAY] || newEntry();
+
+  function newEntry(){
+    return {
+      top:[ {t:"",done:false}, {t:"",done:false}, {t:"",done:false} ],
+      chores:[],
+      me:{t:"",done:false},
+      brain:"",
+      mood:null,
+      verse:null,
+      completed:false
+    };
+  }
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.entries) return o; }
+    }catch(e){}
+    return { entries:{} };
+  }
+  function save(){
+    data.entries[TODAY] = entry;
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Verse: deterministic daily default, user can cycle ----
+  if(entry.verse === null || entry.verse === undefined){
+    entry.verse = dayOfYear(new Date()) % VERSES.length;
+  }
+  function renderVerse(){
+    var v = VERSES[entry.verse];
+    $("verseText").textContent = v[0];
+    $("verseRef").textContent = v[1];
+  }
+  $("anotherVerse").addEventListener("click", function(){
+    entry.verse = (entry.verse + 1) % VERSES.length;
+    renderVerse(); save();
+  });
+
+  // ---- Mood ----
+  function renderMood(){
+    var btns = document.querySelectorAll("#moodRow .mood-btn");
+    btns.forEach(function(b){
+      var m = parseInt(b.getAttribute("data-mood"),10);
+      if(entry.mood === m){ b.classList.add("sel"); b.setAttribute("aria-pressed","true"); }
+      else{ b.classList.remove("sel"); b.setAttribute("aria-pressed","false"); }
+    });
+  }
+  document.querySelectorAll("#moodRow .mood-btn").forEach(function(b){
+    b.setAttribute("aria-pressed","false");
+    b.addEventListener("click", function(){
+      var m = parseInt(b.getAttribute("data-mood"),10);
+      entry.mood = (entry.mood === m) ? null : m;
+      renderMood(); save();
+    });
+  });
+
+  // ---- Top 3 (fixed three rows, checkable, editable) ----
+  function renderTop(){
+    var host = $("topThree");
+    host.innerHTML = "";
+    for(var i=0;i<3;i++){
+      (function(idx){
+        var item = entry.top[idx] || (entry.top[idx] = {t:"",done:false});
+        var row = document.createElement("div");
+        row.className = "task" + (item.done ? " done" : "");
+
+        var tag = document.createElement("span");
+        tag.className = "num-tag";
+        tag.textContent = idx+1;
+
+        var chk = document.createElement("span");
+        chk.className = "check" + (item.done ? " on" : "");
+        chk.setAttribute("role","checkbox");
+        chk.setAttribute("tabindex","0");
+        chk.setAttribute("aria-checked", item.done ? "true":"false");
+        chk.setAttribute("aria-label","Mark priority "+(idx+1)+" done");
+        chk.textContent = item.done ? "✓" : "";
+        function toggle(){
+          item.done = !item.done;
+          row.classList.toggle("done", item.done);
+          chk.classList.toggle("on", item.done);
+          chk.textContent = item.done ? "✓" : "";
+          chk.setAttribute("aria-checked", item.done ? "true":"false");
+          save();
+        }
+        chk.addEventListener("click", toggle);
+        chk.addEventListener("keydown", function(e){
+          if(e.key===" "||e.key==="Enter"){ e.preventDefault(); toggle(); }
+        });
+
+        var inp = document.createElement("input");
+        inp.type = "text";
+        inp.className = "task-text";
+        inp.value = item.t || "";
+        inp.placeholder = idx===0 ? "The one that matters most…" : "Another that matters…";
+        inp.setAttribute("aria-label","Priority "+(idx+1));
+        inp.addEventListener("input", function(){ item.t = inp.value; save(); });
+
+        row.appendChild(tag);
+        row.appendChild(chk);
+        row.appendChild(inp);
+        host.appendChild(row);
+      })(i);
+    }
+  }
+
+  // ---- Chores (addable list) ----
+  function renderChores(focusLast){
+    var host = $("choreList");
+    host.innerHTML = "";
+    entry.chores.forEach(function(item, idx){
+      var row = document.createElement("div");
+      row.className = "task" + (item.done ? " done" : "");
+
+      var chk = document.createElement("span");
+      chk.className = "check" + (item.done ? " on" : "");
+      chk.setAttribute("role","checkbox");
+      chk.setAttribute("tabindex","0");
+      chk.setAttribute("aria-checked", item.done ? "true":"false");
+      chk.setAttribute("aria-label","Mark must-do done");
+      chk.textContent = item.done ? "✓" : "";
+      function toggle(){
+        item.done = !item.done;
+        row.classList.toggle("done", item.done);
+        chk.classList.toggle("on", item.done);
+        chk.textContent = item.done ? "✓" : "";
+        chk.setAttribute("aria-checked", item.done ? "true":"false");
+        save();
+      }
+      chk.addEventListener("click", toggle);
+      chk.addEventListener("keydown", function(e){
+        if(e.key===" "||e.key==="Enter"){ e.preventDefault(); toggle(); }
+      });
+
+      var inp = document.createElement("input");
+      inp.type = "text";
+      inp.className = "task-text";
+      inp.value = item.t || "";
+      inp.placeholder = "School run, dinner, pickup, appointment…";
+      inp.setAttribute("aria-label","Must-do "+(idx+1));
+      inp.addEventListener("input", function(){ item.t = inp.value; save(); });
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "del-btn";
+      del.setAttribute("aria-label","Remove this must-do");
+      del.textContent = "×";
+      del.addEventListener("click", function(){
+        entry.chores.splice(idx,1); save(); renderChores();
+      });
+
+      row.appendChild(chk);
+      row.appendChild(inp);
+      row.appendChild(del);
+      host.appendChild(row);
+
+      if(focusLast && idx === entry.chores.length-1){ inp.focus(); }
+    });
+  }
+  $("addChore").addEventListener("click", function(){
+    entry.chores.push({t:"",done:false});
+    save();
+    renderChores(true);
+  });
+
+  // ---- One thing for ME ----
+  var meText = $("meText"), meCheck = $("meCheck"), meRow = $("meRow");
+  function renderMe(){
+    meText.value = entry.me.t || "";
+    meCheck.classList.toggle("on", entry.me.done);
+    meCheck.textContent = entry.me.done ? "✓" : "";
+    meCheck.setAttribute("aria-checked", entry.me.done ? "true":"false");
+    meRow.classList.toggle("done", entry.me.done);
+  }
+  function toggleMe(){
+    entry.me.done = !entry.me.done;
+    renderMe(); save();
+  }
+  meCheck.addEventListener("click", toggleMe);
+  meCheck.addEventListener("keydown", function(e){
+    if(e.key===" "||e.key==="Enter"){ e.preventDefault(); toggleMe(); }
+  });
+  meText.addEventListener("input", function(){ entry.me.t = meText.value; save(); });
+
+  // ---- Brain dump ----
+  var brainEl = $("brainDump");
+  brainEl.addEventListener("input", function(){ entry.brain = brainEl.value; save(); });
+
+  // ---- Complete / close out day ----
+  var completeBtn = $("completeBtn"), blessingEl = $("blessing");
+  function renderCompleted(){
+    if(entry.completed){
+      completeBtn.textContent = "Today is closed — well done ✓";
+      completeBtn.classList.add("done");
+    }else{
+      completeBtn.textContent = "I survived today · I did my best 💛";
+      completeBtn.classList.remove("done");
+    }
+    renderStreak();
+    renderHistory();
+  }
+  completeBtn.addEventListener("click", function(){
+    entry.completed = !entry.completed;
+    save();
+    blessingEl.classList.toggle("show", entry.completed);
+    renderCompleted();
+  });
+
+  // ---- Streak + totals (no guilt for misses) ----
+  function renderStreak(){
+    var keys = Object.keys(data.entries).filter(function(k){ return data.entries[k].completed; });
+    $("totalCount").textContent = keys.length;
+    var streak = 0;
+    var d = new Date();
+    while(true){
+      var m = String(d.getMonth()+1).padStart(2,"0");
+      var day = String(d.getDate()).padStart(2,"0");
+      var k = d.getFullYear()+"-"+m+"-"+day;
+      if(data.entries[k] && data.entries[k].completed){ streak++; d.setDate(d.getDate()-1); }
+      else break;
+    }
+    $("streakCount").textContent = streak;
+  }
+
+  // ---- History (last 7 closed days) ----
+  var MOOD_FACE = ["🌫️","🌤️","☀️","💛"];
+  function renderHistory(){
+    var list = $("historyList"), empty = $("historyEmpty");
+    var keys = Object.keys(data.entries)
+      .filter(function(k){ return data.entries[k].completed; })
+      .sort().reverse().slice(0,7);
+    list.innerHTML = "";
+    if(keys.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+    keys.forEach(function(k){
+      var e = data.entries[k];
+      var li = document.createElement("li");
+      var left = document.createElement("span");
+      left.className = "h-date";
+      left.textContent = prettyDate(k);
+      var right = document.createElement("span");
+      right.className = "h-word";
+      right.textContent = (e.mood !== null && e.mood !== undefined) ? (MOOD_FACE[e.mood] + " survived") : "survived ✓";
+      li.appendChild(left); li.appendChild(right);
+      list.appendChild(li);
+    });
+  }
+
+  // ---- Initial render ----
+  $("todayDate").textContent = prettyDate(TODAY);
+  renderVerse();
+  renderMood();
+  renderTop();
+  renderChores();
+  renderMe();
+  brainEl.value = entry.brain || "";
+  if(entry.completed){ blessingEl.classList.add("show"); }
+  renderCompleted();
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your survival planner data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { entries:{} };
+      entry = newEntry();
+      entry.verse = dayOfYear(new Date()) % VERSES.length;
+      blessingEl.classList.remove("show");
+      renderVerse(); renderMood(); renderTop(); renderChores(); renderMe();
+      brainEl.value = "";
+      renderCompleted();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>
