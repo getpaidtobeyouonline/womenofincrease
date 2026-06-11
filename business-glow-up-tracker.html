@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Glow Up Tracker · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Progress banner ---------- */
+  .banner{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:20px; position:relative; overflow:hidden;
+  }
+  .banner::before{
+    content:"\2728"; position:absolute; top:-6px; right:8px; font-size:54px; opacity:.18;
+  }
+  .banner .count{
+    font-family:'Fraunces',serif; font-weight:600; font-size:30px; line-height:1.1;
+  }
+  .banner .count span{ color:var(--gold-soft); }
+  .banner .sub{ font-size:14px; margin-top:4px; color:rgba(252,248,239,.85); position:relative; z-index:1; }
+  .progress-track{
+    margin-top:14px; height:10px; border-radius:999px;
+    background:rgba(255,255,255,.18); overflow:hidden; position:relative; z-index:1;
+  }
+  .progress-fill{
+    height:100%; border-radius:999px; background:var(--gold);
+    width:0%; transition:width .4s ease;
+  }
+  .next-up{
+    margin-top:14px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:12px; padding:13px 15px; color:var(--emerald); font-size:14px;
+  }
+  .next-up b{ font-family:'Fraunces',serif; }
+
+  /* ---------- Stats ---------- */
+  .stats{ display:flex; gap:10px; margin-top:14px; }
+  .stat{
+    flex:1; background:var(--cream); border:1px solid var(--line); border-radius:12px;
+    padding:12px 8px; text-align:center;
+  }
+  .stat .n{ font-family:'Fraunces',serif; color:var(--emerald); font-weight:600; font-size:22px; }
+  .stat .l{ color:var(--muted); font-size:11.5px; letter-spacing:.03em; margin-top:2px; }
+
+  /* ---------- Start date ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="date"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="date"]{ min-height:48px; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Milestone list ---------- */
+  .milestone{
+    display:flex; align-items:center; gap:12px; padding:13px 14px;
+    border:1px solid var(--line); border-radius:12px; margin-bottom:10px;
+    background:var(--cream); transition:background .2s, border-color .2s;
+  }
+  .milestone.done{
+    background:var(--emerald-soft); border-color:rgba(20,84,62,.22);
+  }
+  .check{
+    flex:none; width:30px; height:30px; border-radius:50%;
+    border:2px solid var(--gold-soft); background:#fff; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; font-size:15px;
+    color:transparent; transition:all .15s; padding:0;
+  }
+  .check:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(200,160,74,.3); }
+  .milestone.done .check{
+    background:var(--emerald); border-color:var(--emerald); color:#FCF8EF;
+  }
+  .m-body{ flex:1; min-width:0; }
+  .m-title{ font-weight:600; font-size:15px; color:var(--ink); }
+  .milestone.done .m-title{ color:var(--emerald); }
+  .m-meta{ font-size:12.5px; color:var(--muted); margin-top:2px; }
+  .milestone.done .m-meta{ color:var(--emerald); }
+  .x-btn{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:18px; line-height:1; width:34px; height:34px; border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .x-btn:hover{ color:#B23B3B; background:rgba(178,59,59,.08); }
+
+  /* ---------- Add row ---------- */
+  .add-row{ display:flex; gap:8px; margin-top:6px; }
+  .add-row input{ flex:1; }
+  .add-btn{
+    flex:none; min-width:52px; min-height:48px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:22px; cursor:pointer;
+    box-shadow:0 4px 12px rgba(200,160,74,.3); transition:transform .08s, box-shadow .15s;
+  }
+  .add-btn:hover{ box-shadow:0 6px 16px rgba(200,160,74,.4); }
+  .add-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Wins log ---------- */
+  .win{
+    display:flex; align-items:flex-start; gap:11px; padding:13px 2px;
+    border-bottom:1px solid var(--line);
+  }
+  .win:last-child{ border-bottom:none; }
+  .win .spark{ flex:none; font-size:17px; line-height:1.4; }
+  .win-body{ flex:1; min-width:0; }
+  .win-text{ font-size:14.5px; color:var(--ink); }
+  .win-date{ font-size:12px; color:var(--muted); margin-top:2px; }
+  .win-date .h-word{ color:var(--gold); font-family:'Fraunces',serif; font-style:italic; }
+
+  /* ---------- Celebration ---------- */
+  .blessing{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .blessing.show{ display:block; animation:rise .4s ease; }
+  .blessing .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .blessing .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  .section-note{ color:var(--muted); font-size:13px; font-style:italic; margin-top:12px; text-align:center; }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Business Glow Up Tracker</h1>
+    <p class="subtitle">Mark every milestone of your becoming — from first dream to first $1K month.</p>
+  </header>
+
+  <!-- Progress banner -->
+  <section class="card">
+    <div class="banner">
+      <div class="count"><span id="achievedCount">0</span> / <span id="totalCount">0</span> milestones</div>
+      <div class="sub" id="bannerSub">Your glow up starts now. 💛</div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <div class="next-up" id="nextUp">Up next: <b>name your business</b> ✨</div>
+
+    <div class="stats">
+      <div class="stat"><div class="n" id="statMilestones">0</div><div class="l">milestones hit</div></div>
+      <div class="stat"><div class="n" id="statDays">—</div><div class="l">days in business</div></div>
+      <div class="stat"><div class="n" id="statWins">0</div><div class="l">wins logged</div></div>
+    </div>
+
+    <label class="field-label" for="startDate">When did your journey begin? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <input type="date" id="startDate">
+  </section>
+
+  <!-- Milestone journey -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Milestone Journey</h2></div>
+    <p class="hint">Tap the circle each time you reach one. Every level you see here was once just a dream.</p>
+    <div id="milestoneList"></div>
+    <div class="blessing" id="blessing">
+      <div class="big" id="blessingBig">Look at you. 🎉</div>
+      <div class="sm" id="blessingSm">Another milestone, sister. Keep rising.</div>
+    </div>
+
+    <label class="field-label" for="newMilestone" style="margin-top:18px;">Add your own milestone</label>
+    <div class="add-row">
+      <input type="text" id="newMilestone" placeholder="e.g. First brand partnership" maxlength="80">
+      <button class="add-btn" id="addMilestoneBtn" type="button" aria-label="Add milestone">+</button>
+    </div>
+  </section>
+
+  <!-- Wins log -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Your Wins Log</h2></div>
+    <p class="hint">Big or small, log every win. This is your running celebration feed. 🎉</p>
+    <label class="field-label" for="newWin">What did you win today?</label>
+    <input type="text" id="newWin" placeholder="e.g. Closed a discovery call, got a kind DM…" maxlength="140">
+    <div class="add-row" style="margin-top:10px;">
+      <input type="date" id="winDate">
+      <button class="add-btn" id="addWinBtn" type="button" aria-label="Log win">+</button>
+    </div>
+
+    <div id="winsWrap" style="margin-top:16px;">
+      <div id="winsList"></div>
+      <p class="empty-note" id="winsEmpty">No wins logged yet — your first one is on its way. 💛</p>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_business_glow_up";
+
+  // ---- Default milestone journey ----
+  var DEFAULT_MILESTONES = [
+    "Named the business",
+    "First post / public launch",
+    "First email subscriber",
+    "First sale 🎉",
+    "First $100 earned",
+    "First repeat customer",
+    "First 10 customers / clients",
+    "First testimonial",
+    "First 100 followers",
+    "First $1K month",
+    "First $5K month"
+  ];
+
+  // ---- Celebration lines ----
+  var CHEERS = [
+    ["Look at you. 🎉", "Another milestone, sister. Keep rising."],
+    ["Yes! That's growth. ✨", "You're building something real. Don't you dare shrink it."],
+    ["Increase looks good on you. 💛", "This was a dream not long ago. Now it's done."],
+    ["She did the thing. 🎉", "Every level you reach makes the next one possible."],
+    ["Celebrate this one. 🌿", "You're proof that faithful steps add up."],
+    ["Big or small, it counts. 💫", "Heaven and your future self are cheering."]
+  ];
+
+  // ---- Date helpers ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function prettyDate(key){
+    if(!key) return "";
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{month:"short", day:"numeric", year:"numeric"});
+  }
+  function uid(){ return "m" + Date.now() + Math.floor(Math.random()*9999); }
+
+  // ---- State ----
+  function defaultMilestones(){
+    return DEFAULT_MILESTONES.map(function(t){
+      return { id: uid(), title: t, done:false, date:null, custom:false };
+    });
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && o.milestones){ return o; }
+      }
+    }catch(e){}
+    return { milestones: defaultMilestones(), wins: [], startDate: "" };
+  }
+  var data = load();
+
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Render milestones ----
+  function renderMilestones(){
+    var list = $("milestoneList");
+    list.innerHTML = "";
+    data.milestones.forEach(function(m){
+      var row = document.createElement("div");
+      row.className = "milestone" + (m.done ? " done" : "");
+
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "check";
+      btn.setAttribute("aria-pressed", m.done ? "true" : "false");
+      btn.setAttribute("aria-label", (m.done ? "Mark not achieved: " : "Mark achieved: ") + m.title);
+      btn.textContent = "✓";
+      btn.addEventListener("click", function(){ toggleMilestone(m.id); });
+
+      var body = document.createElement("div");
+      body.className = "m-body";
+      var t = document.createElement("div");
+      t.className = "m-title";
+      t.textContent = m.title;
+      var meta = document.createElement("div");
+      meta.className = "m-meta";
+      meta.textContent = m.done ? ("🎉 Achieved " + prettyDate(m.date)) : "Not yet — and that's okay.";
+      body.appendChild(t); body.appendChild(meta);
+
+      row.appendChild(btn); row.appendChild(body);
+
+      if(m.custom){
+        var x = document.createElement("button");
+        x.type = "button";
+        x.className = "x-btn";
+        x.setAttribute("aria-label", "Delete milestone: " + m.title);
+        x.textContent = "×";
+        x.addEventListener("click", function(){ deleteMilestone(m.id); });
+        row.appendChild(x);
+      }
+      list.appendChild(row);
+    });
+  }
+
+  function toggleMilestone(id){
+    var justAchieved = false;
+    data.milestones.forEach(function(m){
+      if(m.id === id){
+        m.done = !m.done;
+        m.date = m.done ? todayKey() : null;
+        justAchieved = m.done;
+      }
+    });
+    save();
+    renderMilestones();
+    renderProgress();
+    if(justAchieved){ celebrate(); }
+    else { $("blessing").classList.remove("show"); }
+  }
+
+  function deleteMilestone(id){
+    if(!confirm("Remove this milestone from your journey, sister?")) return;
+    data.milestones = data.milestones.filter(function(m){ return m.id !== id; });
+    save();
+    renderMilestones();
+    renderProgress();
+  }
+
+  function celebrate(){
+    var c = CHEERS[Math.floor(Math.random()*CHEERS.length)];
+    $("blessingBig").textContent = c[0];
+    $("blessingSm").textContent = c[1];
+    $("blessing").classList.add("show");
+  }
+
+  // ---- Progress + stats ----
+  function renderProgress(){
+    var total = data.milestones.length;
+    var done = data.milestones.filter(function(m){ return m.done; }).length;
+    $("achievedCount").textContent = done;
+    $("totalCount").textContent = total;
+    $("statMilestones").textContent = done;
+    var pct = total ? Math.round((done/total)*100) : 0;
+    $("progressFill").style.width = pct + "%";
+
+    if(total === 0){
+      $("bannerSub").textContent = "Add a milestone to begin your journey.";
+    } else if(done === 0){
+      $("bannerSub").textContent = "Your glow up starts now. 💛";
+    } else if(done === total){
+      $("bannerSub").textContent = "Every milestone, achieved. You are increase. 👑";
+    } else {
+      $("bannerSub").textContent = pct + "% of the way — keep rising, sister.";
+    }
+
+    // next milestone to aim for
+    var next = null;
+    for(var i=0;i<data.milestones.length;i++){
+      if(!data.milestones[i].done){ next = data.milestones[i]; break; }
+    }
+    if(next){
+      $("nextUp").innerHTML = "Up next: <b></b> ✨";
+      $("nextUp").querySelector("b").textContent = next.title;
+      $("nextUp").style.display = "block";
+    } else if(total > 0){
+      $("nextUp").innerHTML = "You've reached them all — time to dream up new ones. 🌿";
+      $("nextUp").style.display = "block";
+    } else {
+      $("nextUp").style.display = "none";
+    }
+
+    renderDays();
+  }
+
+  function renderDays(){
+    if(data.startDate){
+      var p = data.startDate.split("-");
+      var start = new Date(p[0], p[1]-1, p[2]);
+      var now = new Date();
+      var days = Math.floor((now - start) / 86400000);
+      if(days < 0) days = 0;
+      $("statDays").textContent = days;
+    } else {
+      $("statDays").textContent = "—";
+    }
+    $("statWins").textContent = data.wins.length;
+  }
+
+  // ---- Add custom milestone ----
+  function addMilestone(){
+    var input = $("newMilestone");
+    var v = input.value.trim();
+    if(!v) return;
+    data.milestones.push({ id: uid(), title: v, done:false, date:null, custom:true });
+    input.value = "";
+    save();
+    renderMilestones();
+    renderProgress();
+  }
+  $("addMilestoneBtn").addEventListener("click", addMilestone);
+  $("newMilestone").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); addMilestone(); }
+  });
+
+  // ---- Wins log ----
+  function renderWins(){
+    var list = $("winsList"), empty = $("winsEmpty");
+    list.innerHTML = "";
+    if(data.wins.length === 0){ empty.style.display = "block"; return; }
+    empty.style.display = "none";
+    // newest first
+    var sorted = data.wins.slice().sort(function(a,b){
+      return (b.date || "").localeCompare(a.date || "") || (b.id - a.id);
+    });
+    sorted.forEach(function(w){
+      var row = document.createElement("div");
+      row.className = "win";
+
+      var spark = document.createElement("span");
+      spark.className = "spark";
+      spark.textContent = "🎉";
+
+      var body = document.createElement("div");
+      body.className = "win-body";
+      var txt = document.createElement("div");
+      txt.className = "win-text";
+      txt.textContent = w.text;
+      var dt = document.createElement("div");
+      dt.className = "win-date";
+      dt.innerHTML = '<span class="h-word"></span>';
+      dt.querySelector(".h-word").textContent = prettyDate(w.date);
+      body.appendChild(txt); body.appendChild(dt);
+
+      var x = document.createElement("button");
+      x.type = "button";
+      x.className = "x-btn";
+      x.setAttribute("aria-label", "Delete win: " + w.text);
+      x.textContent = "×";
+      x.addEventListener("click", function(){ deleteWin(w.id); });
+
+      row.appendChild(spark); row.appendChild(body); row.appendChild(x);
+      list.appendChild(row);
+    });
+  }
+
+  function addWin(){
+    var input = $("newWin");
+    var v = input.value.trim();
+    if(!v) return;
+    var d = $("winDate").value || todayKey();
+    data.wins.push({ id: Date.now(), text: v, date: d });
+    input.value = "";
+    $("winDate").value = todayKey();
+    save();
+    renderWins();
+    renderDays();
+  }
+  $("addWinBtn").addEventListener("click", addWin);
+  $("newWin").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); addWin(); }
+  });
+
+  function deleteWin(id){
+    if(!confirm("Remove this win from your log, sister?")) return;
+    data.wins = data.wins.filter(function(w){ return w.id !== id; });
+    save();
+    renderWins();
+    renderDays();
+  }
+
+  // ---- Start date ----
+  $("startDate").addEventListener("change", function(){
+    data.startDate = this.value;
+    save();
+    renderDays();
+  });
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Business Glow Up data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { milestones: defaultMilestones(), wins: [], startDate: "" };
+      $("startDate").value = "";
+      $("winDate").value = todayKey();
+      $("newMilestone").value = "";
+      $("newWin").value = "";
+      $("blessing").classList.remove("show");
+      renderAll();
+    }
+  });
+
+  // ---- Init ----
+  function renderAll(){
+    renderMilestones();
+    renderProgress();
+    renderWins();
+    renderDays();
+  }
+  $("startDate").value = data.startDate || "";
+  $("winDate").value = todayKey();
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

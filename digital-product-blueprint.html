@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Product Blueprint · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Progress ---------- */
+  .progress-card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:18px 20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .progress-head{
+    display:flex; align-items:baseline; justify-content:space-between; margin-bottom:12px;
+  }
+  .progress-head .lbl{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+  }
+  .progress-head .count{ color:var(--muted); font-size:13.5px; font-weight:600; }
+  .bar{
+    height:10px; background:var(--emerald-soft); border-radius:999px; overflow:hidden;
+    border:1px solid rgba(20,84,62,.1);
+  }
+  .bar .fill{
+    height:100%; width:0%; background:var(--gold);
+    border-radius:999px; transition:width .35s ease;
+  }
+  .steps-mini{
+    display:flex; flex-wrap:wrap; gap:7px; margin-top:14px;
+  }
+  .pill{
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:11.5px; font-weight:600; color:var(--muted);
+    background:var(--cream); border:1px solid var(--line);
+    border-radius:999px; padding:5px 10px;
+  }
+  .pill.done{ color:var(--emerald); background:var(--emerald-soft); border-color:rgba(20,84,62,.18); }
+  .pill .tick{ font-size:11px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .step .chk{ margin-left:auto; font-size:18px; color:var(--gold); }
+  .step .chk.on{ color:var(--emerald); }
+  .hint{ color:var(--muted); font-size:13.5px; margin:4px 0 14px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  select{ min-height:48px; -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2314543E' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:40px;
+  }
+  textarea{ min-height:80px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Format chooser ---------- */
+  .fmt-grid{ display:grid; grid-template-columns:1fr; gap:9px; }
+  .fmt{
+    display:flex; align-items:flex-start; gap:11px; text-align:left;
+    background:var(--cream); border:1px solid var(--line); border-radius:12px;
+    padding:13px 14px; min-height:44px; cursor:pointer; width:100%;
+    font-family:inherit; color:var(--ink); transition:border-color .15s, background .15s;
+  }
+  .fmt:hover{ border-color:var(--gold-soft); }
+  .fmt.sel{ border-color:var(--gold); background:#FFFDF7; box-shadow:0 0 0 3px rgba(200,160,74,.14); }
+  .fmt .ic{ font-size:20px; line-height:1.2; flex:none; }
+  .fmt .body{ flex:1; }
+  .fmt .t{ font-weight:700; font-size:15px; color:var(--emerald); display:flex; align-items:center; gap:8px; }
+  .fmt.sel .t .badge{
+    font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink); background:var(--gold); border-radius:999px; padding:2px 8px;
+  }
+  .fmt .d{ font-size:13px; color:var(--muted); margin-top:2px; }
+  .fmt .pr{ font-size:12px; color:var(--gold); font-weight:600; margin-top:4px; }
+
+  /* ---------- Addable lists ---------- */
+  .row{ display:flex; align-items:center; gap:9px; margin-bottom:9px; }
+  .row .dot{ flex:none; width:9px;height:9px;border-radius:50%;background:var(--gold); }
+  .row input{ flex:1; }
+  .row .del{
+    flex:none; width:38px; height:38px; border:1px solid var(--line); background:#fff;
+    border-radius:9px; color:var(--muted); font-size:18px; cursor:pointer; line-height:1;
+  }
+  .row .del:hover{ border-color:var(--gold); color:var(--ink); }
+  .add-btn{
+    margin-top:4px; min-height:44px;
+    background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.18); border-radius:11px;
+    font-family:inherit; font-weight:600; font-size:14px; cursor:pointer;
+    padding:10px 16px; display:inline-flex; align-items:center; gap:7px;
+  }
+  .add-btn:hover{ border-color:var(--emerald); }
+
+  /* ---------- To-dos ---------- */
+  .todo{
+    display:flex; align-items:center; gap:11px; padding:11px 12px; margin-bottom:8px;
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+  }
+  .todo input[type="checkbox"]{
+    flex:none; width:22px; height:22px; accent-color:var(--emerald); cursor:pointer;
+  }
+  .todo .txt{ flex:1; font-size:14.5px; }
+  .todo.done .txt{ color:var(--muted); text-decoration:line-through; }
+  .todo .del{
+    flex:none; width:34px; height:34px; border:none; background:none;
+    color:var(--muted); font-size:18px; cursor:pointer;
+  }
+  .todo .del:hover{ color:var(--ink); }
+  .todo-add{ display:flex; gap:8px; margin-top:6px; }
+  .todo-add input{ flex:1; }
+  .todo-add button{
+    flex:none; min-width:48px; min-height:48px; border:none; border-radius:11px;
+    background:var(--gold); color:var(--ink); font-size:22px; font-weight:700; cursor:pointer;
+    box-shadow:0 4px 12px rgba(200,160,74,.3);
+  }
+  .todo-add button:active{ transform:translateY(1px); }
+
+  /* ---------- Launch plan steps ---------- */
+  .launch-step{ margin-bottom:14px; }
+  .launch-step .lt{
+    font-weight:700; font-size:14px; color:var(--emerald); display:flex; align-items:center; gap:8px; margin-bottom:5px;
+  }
+  .launch-step .ln{ font-size:13px; color:var(--muted); margin:0 0 6px 0; }
+
+  /* ---------- Price suggestion ---------- */
+  .suggest{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:12px; padding:13px 15px; margin-top:6px;
+    font-size:14px; color:var(--emerald);
+  }
+  .suggest b{ font-family:'Fraunces',serif; }
+  .price-wrap{ display:flex; align-items:center; gap:10px; }
+  .price-wrap .cur{ font-family:'Fraunces',serif; color:var(--emerald); font-size:22px; font-weight:600; }
+  .price-wrap input{ flex:1; font-family:'Fraunces',serif; font-size:20px; color:var(--emerald); font-weight:500; }
+
+  /* ---------- Summary ---------- */
+  .summary-card{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:16px; padding:22px 20px; margin-top:16px;
+  }
+  .summary-card h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:20px; color:#FCF8EF; margin-bottom:4px;
+  }
+  .summary-card .sub{ color:var(--gold-soft); font-size:13.5px; margin-bottom:14px; }
+  .summary-card textarea{
+    background:rgba(252,248,239,.96); color:var(--ink); border:none; min-height:150px;
+    font-size:15px; line-height:1.55;
+  }
+  .summary-card textarea:focus{ box-shadow:0 0 0 3px rgba(231,211,161,.4); }
+  .copy-btn{
+    width:100%; margin-top:12px; min-height:50px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    box-shadow:0 6px 16px rgba(200,160,74,.32); transition:transform .08s ease;
+  }
+  .copy-btn:active{ transform:translateY(1px); }
+  .copy-btn.copied{ background:var(--gold-soft); }
+  .regen{
+    background:none; border:none; color:var(--gold-soft); font-family:inherit;
+    font-weight:600; font-size:13px; cursor:pointer; padding:10px 6px 0;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .regen:hover{ color:#fff; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    display:none; margin-top:16px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:16px; padding:22px 18px; color:var(--emerald);
+  }
+  .welcome.show{ display:block; }
+  .welcome .big{ font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin-bottom:6px; }
+  .welcome .sm{ font-size:14px; color:var(--muted); line-height:1.5; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Digital Product Blueprint</h1>
+    <p class="subtitle">Map your first product — idea, format, price, platform, launch. Create once, sell many times.</p>
+  </header>
+
+  <!-- Welcome (first run) -->
+  <div class="welcome" id="welcome">
+    <div class="big">Welcome, sister. 💛</div>
+    <div class="sm">You don't need a big audience or a fancy setup to begin. Start with one small, specific idea — work down these six steps, and watch your first product take shape.</div>
+  </div>
+
+  <!-- Progress -->
+  <section class="progress-card">
+    <div class="progress-head">
+      <span class="lbl">Your blueprint</span>
+      <span class="count" id="progCount">0 of 6 done</span>
+    </div>
+    <div class="bar"><div class="fill" id="progFill"></div></div>
+    <div class="steps-mini" id="stepsMini"></div>
+  </section>
+
+  <!-- 1. IDEA -->
+  <section class="card" id="card-idea">
+    <div class="step"><span class="num">1</span><h2>The Idea</h2><span class="chk" id="chk-idea">○</span></div>
+    <p class="hint">Start small and specific. One clear problem, for one kind of person, beats "everything for everyone."</p>
+    <label class="field-label" for="problem">The ONE problem it solves</label>
+    <input type="text" id="problem" placeholder="e.g. Staying consistent with morning prayer">
+    <label class="field-label" for="who">Who it's for (be specific)</label>
+    <input type="text" id="who" placeholder="e.g. Busy moms craving a calmer start">
+    <label class="field-label" for="why">Why you're the one to make it <span class="opt">(optional)</span></label>
+    <textarea id="why" placeholder="What you've lived, learned, or healed that makes this real…"></textarea>
+  </section>
+
+  <!-- 2. FORMAT -->
+  <section class="card" id="card-format">
+    <div class="step"><span class="num">2</span><h2>The Format</h2><span class="chk" id="chk-format">○</span></div>
+    <p class="hint">Pick one beginner-friendly format. The simplest thing you can finish always beats the perfect thing you never ship.</p>
+    <div class="fmt-grid" id="fmtGrid"></div>
+  </section>
+
+  <!-- 3. OUTLINE -->
+  <section class="card" id="card-outline">
+    <div class="step"><span class="num">3</span><h2>The Outline</h2><span class="chk" id="chk-outline">○</span></div>
+    <p class="hint">List the key pieces inside your product — the pages, sections, or steps she'll actually get.</p>
+    <div id="outlineList"></div>
+    <button class="add-btn" id="addOutline" type="button">＋ Add a piece</button>
+  </section>
+
+  <!-- 4. PRICING -->
+  <section class="card" id="card-pricing">
+    <div class="step"><span class="num">4</span><h2>The Price</h2><span class="chk" id="chk-pricing">○</span></div>
+    <p class="hint">Price for the transformation, not the page count. Here's a gentle starter range for your format.</p>
+    <div class="suggest" id="priceSuggest">Pick a format above and we'll suggest a starting range.</div>
+    <label class="field-label" for="price">Your chosen price</label>
+    <div class="price-wrap">
+      <span class="cur">$</span>
+      <input type="text" id="price" inputmode="decimal" placeholder="27">
+    </div>
+  </section>
+
+  <!-- 5. PLATFORM -->
+  <section class="card" id="card-platform">
+    <div class="step"><span class="num">5</span><h2>The Platform</h2><span class="chk" id="chk-platform">○</span></div>
+    <p class="hint">Where will you host and sell it? Any of these will do — choose the one that feels least overwhelming.</p>
+    <label class="field-label" for="platform">Where you'll sell it</label>
+    <select id="platform">
+      <option value="">Choose a platform type…</option>
+      <option>Digital product marketplace</option>
+      <option>All-in-one creator / course platform</option>
+      <option>Your own simple website or landing page</option>
+      <option>Email list + checkout link</option>
+      <option>Social media shop / link-in-bio store</option>
+      <option>Community platform (sell to your members)</option>
+      <option>Not sure yet — I'll decide later</option>
+    </select>
+    <label class="field-label" for="platformNote">A note to yourself <span class="opt">(optional)</span></label>
+    <input type="text" id="platformNote" placeholder="e.g. Start free, upgrade once I make a few sales">
+  </section>
+
+  <!-- 6. LAUNCH -->
+  <section class="card" id="card-launch">
+    <div class="step"><span class="num">6</span><h2>The Launch</h2><span class="chk" id="chk-launch">○</span></div>
+    <p class="hint">A launch is just three honest moves: warm them up, make the offer, deliver with care.</p>
+
+    <div class="launch-step">
+      <div class="lt">🌱 Warm up</div>
+      <p class="ln">Share the journey before the offer — a tip, a story, a "coming soon."</p>
+      <textarea id="launchWarm" placeholder="How will you build a little anticipation?"></textarea>
+    </div>
+    <div class="launch-step">
+      <div class="lt">💛 Make the offer</div>
+      <p class="ln">Tell them plainly what it is, who it's for, and how to get it.</p>
+      <textarea id="launchOffer" placeholder="When and how will you open the doors?"></textarea>
+    </div>
+    <div class="launch-step">
+      <div class="lt">📦 Deliver</div>
+      <p class="ln">Make buying and receiving feel easy and cared for.</p>
+      <textarea id="launchDeliver" placeholder="How will they receive it? Any thank-you or follow-up?"></textarea>
+    </div>
+
+    <label class="field-label">Launch to-dos</label>
+    <div id="todoList"></div>
+    <div class="todo-add">
+      <input type="text" id="todoInput" placeholder="Add a task… e.g. Design the cover">
+      <button id="todoAdd" type="button" aria-label="Add task">＋</button>
+    </div>
+  </section>
+
+  <!-- Summary -->
+  <section class="summary-card">
+    <h2>Your product summary</h2>
+    <p class="sub">One paragraph, pulled from your blueprint. Edit it freely, then copy.</p>
+    <textarea id="summary" aria-label="Product summary"></textarea>
+    <button class="copy-btn" id="copyBtn" type="button">Copy my summary 📋</button>
+    <div class="center"><button class="regen" id="regenBtn" type="button">↻ Rebuild from my blueprint</button></div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_digital_product_blueprint";
+
+  // ---- Format library: icon, name, one-line note, starter price range ----
+  var FORMATS = [
+    ["template",  "📄", "Template",        "A fill-in-the-blank starting point she can reuse.",         "$9–$29"],
+    ["planner",   "🗓️", "Planner",          "Pages that help her plan a week, month, or goal.",         "$12–$39"],
+    ["printable", "🖨️", "Printable",        "A pretty page or two she prints and uses today.",          "$5–$19"],
+    ["checklist", "✅", "Checklist",        "A simple step-by-step she can tick off.",                  "$5–$15"],
+    ["guide",     "📖", "Guide / eBook",    "Your knowledge, organized into a readable guide.",         "$15–$49"],
+    ["course",    "🎓", "Mini-course",      "A short set of lessons that teach one outcome.",           "$29–$97"],
+    ["swipe",     "✍️", "Swipe file",       "Done-for-her words, captions, or scripts to copy.",        "$12–$39"],
+    ["toolkit",   "🧰", "Toolkit / bundle", "A few small pieces packaged into one helpful set.",        "$24–$67"]
+  ];
+  var FMT_MAP = {};
+  FORMATS.forEach(function(f){ FMT_MAP[f[0]] = f; });
+
+  // ---- State ----
+  var data = load();
+
+  function blank(){
+    return {
+      problem:"", who:"", why:"",
+      format:"",
+      outline:[""],
+      price:"", platform:"", platformNote:"",
+      launchWarm:"", launchOffer:"", launchDeliver:"",
+      todos:[],
+      summary:"", summaryEdited:false,
+      seen:false
+    };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && typeof o === "object"){ return Object.assign(blank(), o); } }
+    }catch(e){}
+    return blank();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Simple field wiring ----
+  function bind(id, key){
+    var el = $(id);
+    el.value = data[key] || "";
+    el.addEventListener("input", function(){
+      data[key] = el.value;
+      save(); refresh();
+    });
+  }
+  bind("problem","problem");
+  bind("who","who");
+  bind("why","why");
+  bind("price","price");
+  bind("platformNote","platformNote");
+  bind("launchWarm","launchWarm");
+  bind("launchOffer","launchOffer");
+  bind("launchDeliver","launchDeliver");
+
+  var platformEl = $("platform");
+  platformEl.value = data.platform || "";
+  platformEl.addEventListener("change", function(){
+    data.platform = platformEl.value; save(); refresh();
+  });
+
+  // ---- Format chooser ----
+  var fmtGrid = $("fmtGrid");
+  FORMATS.forEach(function(f){
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "fmt";
+    btn.setAttribute("data-fmt", f[0]);
+    btn.innerHTML =
+      '<span class="ic">'+f[1]+'</span>'+
+      '<span class="body">'+
+        '<span class="t">'+f[2]+' <span class="badge">Chosen</span></span>'+
+        '<span class="d">'+f[3]+'</span>'+
+        '<span class="pr">Starter range '+f[4]+'</span>'+
+      '</span>';
+    btn.addEventListener("click", function(){
+      data.format = (data.format === f[0]) ? "" : f[0];
+      save(); renderFormat(); renderPriceSuggest(); refresh();
+    });
+    fmtGrid.appendChild(btn);
+  });
+  function renderFormat(){
+    var nodes = fmtGrid.querySelectorAll(".fmt");
+    nodes.forEach(function(n){
+      n.classList.toggle("sel", n.getAttribute("data-fmt") === data.format);
+    });
+  }
+  function renderPriceSuggest(){
+    var box = $("priceSuggest");
+    if(data.format && FMT_MAP[data.format]){
+      var f = FMT_MAP[data.format];
+      box.innerHTML = "For a <b>"+f[2]+"</b>, a kind starting range is <b>"+f[4]+"</b>. Begin where it feels honest — you can always raise it as you grow.";
+    }else{
+      box.textContent = "Pick a format above and we'll suggest a starting range.";
+    }
+  }
+
+  // ---- Outline (addable list) ----
+  var outlineList = $("outlineList");
+  function renderOutline(){
+    outlineList.innerHTML = "";
+    if(!data.outline.length) data.outline = [""];
+    data.outline.forEach(function(val, i){
+      var row = document.createElement("div");
+      row.className = "row";
+      var dot = document.createElement("span"); dot.className = "dot";
+      var inp = document.createElement("input");
+      inp.type = "text"; inp.value = val || "";
+      inp.placeholder = "e.g. Weekly prayer pages";
+      inp.addEventListener("input", function(){ data.outline[i] = inp.value; save(); refresh(); });
+      var del = document.createElement("button");
+      del.type = "button"; del.className = "del"; del.innerHTML = "×";
+      del.setAttribute("aria-label","Remove piece");
+      del.addEventListener("click", function(){
+        data.outline.splice(i,1);
+        if(!data.outline.length) data.outline = [""];
+        save(); renderOutline(); refresh();
+      });
+      row.appendChild(dot); row.appendChild(inp); row.appendChild(del);
+      outlineList.appendChild(row);
+    });
+  }
+  $("addOutline").addEventListener("click", function(){
+    data.outline.push(""); save(); renderOutline();
+    var inputs = outlineList.querySelectorAll("input");
+    if(inputs.length) inputs[inputs.length-1].focus();
+  });
+
+  // ---- Launch to-dos ----
+  var todoList = $("todoList");
+  function renderTodos(){
+    todoList.innerHTML = "";
+    data.todos.forEach(function(t, i){
+      var item = document.createElement("div");
+      item.className = "todo" + (t.done ? " done" : "");
+      var cb = document.createElement("input");
+      cb.type = "checkbox"; cb.checked = !!t.done;
+      cb.setAttribute("aria-label", t.text);
+      cb.addEventListener("change", function(){ t.done = cb.checked; save(); renderTodos(); refresh(); });
+      var txt = document.createElement("span");
+      txt.className = "txt"; txt.textContent = t.text;
+      var del = document.createElement("button");
+      del.type = "button"; del.className = "del"; del.innerHTML = "×";
+      del.setAttribute("aria-label","Delete task");
+      del.addEventListener("click", function(){ data.todos.splice(i,1); save(); renderTodos(); refresh(); });
+      item.appendChild(cb); item.appendChild(txt); item.appendChild(del);
+      todoList.appendChild(item);
+    });
+  }
+  function addTodo(){
+    var inp = $("todoInput");
+    var v = inp.value.trim();
+    if(!v) return;
+    data.todos.push({ text:v, done:false });
+    inp.value = ""; save(); renderTodos(); refresh(); inp.focus();
+  }
+  $("todoAdd").addEventListener("click", addTodo);
+  $("todoInput").addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); addTodo(); } });
+
+  // ---- Section completion ----
+  function sectionsDone(){
+    return {
+      idea:    !!(data.problem.trim() && data.who.trim()),
+      format:  !!data.format,
+      outline: data.outline.some(function(x){ return x && x.trim(); }),
+      pricing: !!(data.price && String(data.price).trim()),
+      platform:!!data.platform,
+      launch:  !!(data.launchWarm.trim() || data.launchOffer.trim() || data.launchDeliver.trim() ||
+                  data.todos.length)
+    };
+  }
+  var STEP_LABELS = [
+    ["idea","Idea"], ["format","Format"], ["outline","Outline"],
+    ["pricing","Price"], ["platform","Platform"], ["launch","Launch"]
+  ];
+
+  function renderProgress(){
+    var done = sectionsDone();
+    var count = 0;
+    STEP_LABELS.forEach(function(s){ if(done[s[0]]) count++; });
+    var pct = Math.round((count/6)*100);
+    $("progFill").style.width = pct + "%";
+    $("progCount").textContent = count + " of 6 done";
+
+    var mini = $("stepsMini");
+    mini.innerHTML = "";
+    STEP_LABELS.forEach(function(s){
+      var d = done[s[0]];
+      var pill = document.createElement("span");
+      pill.className = "pill" + (d ? " done" : "");
+      pill.innerHTML = (d ? '<span class="tick">✓</span>' : '<span class="tick">○</span>') + s[1];
+      mini.appendChild(pill);
+    });
+
+    // per-card checks
+    STEP_LABELS.forEach(function(s){
+      var chk = $("chk-"+s[0]);
+      if(chk){
+        if(done[s[0]]){ chk.textContent = "✓"; chk.classList.add("on"); }
+        else{ chk.textContent = "○"; chk.classList.remove("on"); }
+      }
+    });
+  }
+
+  // ---- Summary builder ----
+  function buildSummary(){
+    var who = data.who.trim();
+    var problem = data.problem.trim();
+    var fmt = data.format ? FMT_MAP[data.format][2].toLowerCase() : "digital product";
+    var pieces = data.outline.filter(function(x){ return x && x.trim(); }).map(function(x){ return x.trim(); });
+    var price = String(data.price || "").trim();
+    var platform = data.platform && data.platform.indexOf("Not sure") === -1 ? data.platform.toLowerCase() : "";
+
+    var s = "";
+    if(problem){
+      s += "I'm creating a " + fmt + " that helps " + (who ? who.toLowerCase() : "the women I serve") +
+           " with " + problem.toLowerCase().replace(/\.$/,"") + ".";
+    }else{
+      s += "I'm creating a " + fmt + " for " + (who ? who.toLowerCase() : "the women I serve") + ".";
+    }
+    if(pieces.length){
+      s += " Inside, they'll get " + listJoin(pieces.slice(0,4)) + ".";
+    }
+    if(price){
+      s += " It's priced at $" + price.replace(/^\$/,"") + (platform ? ", sold through a " + platform : "") + ".";
+    }else if(platform){
+      s += " I'll sell it through a " + platform + ".";
+    }
+    s += " I'll warm my audience up, make a clear offer, and deliver it with care — then keep selling it again and again.";
+    return s;
+  }
+  function listJoin(arr){
+    if(arr.length === 1) return arr[0];
+    if(arr.length === 2) return arr[0] + " and " + arr[1];
+    return arr.slice(0,-1).join(", ") + ", and " + arr[arr.length-1];
+  }
+
+  var summaryEl = $("summary");
+  summaryEl.value = data.summary || "";
+  summaryEl.addEventListener("input", function(){
+    data.summary = summaryEl.value;
+    data.summaryEdited = true;
+    save();
+  });
+  function refreshSummary(){
+    // Only auto-fill when the user hasn't hand-edited it
+    if(!data.summaryEdited){
+      data.summary = buildSummary();
+      summaryEl.value = data.summary;
+      save();
+    }
+  }
+  $("regenBtn").addEventListener("click", function(){
+    data.summary = buildSummary();
+    data.summaryEdited = false;
+    summaryEl.value = data.summary;
+    save();
+  });
+
+  // ---- Copy ----
+  $("copyBtn").addEventListener("click", function(){
+    var btn = this;
+    var text = summaryEl.value;
+    function ok(){
+      btn.textContent = "Copied! 💛";
+      btn.classList.add("copied");
+      setTimeout(function(){ btn.textContent = "Copy my summary 📋"; btn.classList.remove("copied"); }, 1800);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(ok, fallback);
+    }else{ fallback(); }
+    function fallback(){
+      try{
+        summaryEl.focus(); summaryEl.select();
+        document.execCommand("copy");
+        summaryEl.setSelectionRange(0,0); summaryEl.blur();
+        ok();
+      }catch(e){
+        btn.textContent = "Select & copy manually";
+        setTimeout(function(){ btn.textContent = "Copy my summary 📋"; }, 1800);
+      }
+    }
+  });
+
+  // ---- First-run welcome ----
+  function renderWelcome(){
+    var hasAnything = data.seen || data.problem || data.who || data.format ||
+      data.outline.some(function(x){return x && x.trim();}) || data.price ||
+      data.platform || data.todos.length;
+    $("welcome").classList.toggle("show", !hasAnything);
+  }
+  function markSeen(){
+    if(!data.seen){ data.seen = true; save(); }
+  }
+
+  // ---- Master refresh ----
+  function refresh(){
+    renderProgress();
+    renderPriceSuggest();
+    refreshSummary();
+    renderWelcome();
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Digital Product Blueprint? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = blank();
+      // reset visible fields
+      ["problem","who","why","price","platformNote","launchWarm","launchOffer","launchDeliver","summary"].forEach(function(id){ $(id).value = ""; });
+      platformEl.value = "";
+      renderFormat(); renderOutline(); renderTodos(); refresh();
+    }
+  });
+
+  // ---- Init ----
+  markSeen();
+  renderFormat();
+  renderOutline();
+  renderTodos();
+  refresh();
+
+})();
+</script>
+</body>
+</html>

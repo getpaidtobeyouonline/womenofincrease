@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Women's Business Brand Builder · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .progress-pill{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:16px; padding:22px 20px; margin-top:16px;
+    position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.22);
+  }
+  .welcome h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:20px;
+    position:relative; z-index:1; margin-bottom:8px;
+  }
+  .welcome p{ font-size:14.5px; position:relative; z-index:1; color:#EAF1EC; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step .num.done{ background:var(--emerald); color:#FCF8EF; }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label:first-of-type{ margin-top:0; }
+  .optional{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Prompt chips ---------- */
+  .prompts{ margin:-4px 0 12px; padding:12px 14px; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.12); border-radius:12px; }
+  .prompts .lead{ font-size:12.5px; font-weight:600; color:var(--emerald);
+    text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px; }
+  .prompts ul{ list-style:none; }
+  .prompts li{ font-size:13.5px; color:var(--ink); padding:4px 0 4px 18px; position:relative; }
+  .prompts li::before{ content:"✦"; position:absolute; left:0; color:var(--gold); font-size:12px; }
+
+  /* ---------- Name option rows ---------- */
+  .name-row{ display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+  .name-row input{ flex:1; }
+  .fav-btn{
+    flex:none; width:44px; min-height:48px; border-radius:11px;
+    background:var(--cream); border:1px solid var(--line); cursor:pointer;
+    font-size:18px; line-height:1; color:#C9BFA8; transition:all .15s;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .fav-btn:hover{ border-color:var(--gold); }
+  .fav-btn.on{ background:var(--gold-soft); border-color:var(--gold); color:var(--gold); }
+  .del-btn{
+    flex:none; width:44px; min-height:48px; border-radius:11px;
+    background:none; border:1px solid var(--line); cursor:pointer;
+    font-size:16px; color:var(--muted); transition:all .15s;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .del-btn:hover{ border-color:#c97a6a; color:#c97a6a; }
+  .add-link{
+    background:none; border:1px dashed var(--line); color:var(--emerald);
+    font-family:inherit; font-weight:600; font-size:13.5px; cursor:pointer;
+    width:100%; min-height:44px; border-radius:11px; padding:10px;
+    transition:border-color .15s, color .15s;
+  }
+  .add-link:hover{ border-color:var(--gold); color:var(--gold); }
+
+  /* ---------- Tappable chips (voice) ---------- */
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
+  .chip{
+    background:var(--cream); border:1px solid var(--line); color:var(--ink);
+    font-family:inherit; font-size:14px; font-weight:500; cursor:pointer;
+    padding:9px 14px; min-height:44px; border-radius:999px; transition:all .15s;
+    display:inline-flex; align-items:center;
+  }
+  .chip:hover{ border-color:var(--gold); }
+  .chip.on{ background:var(--emerald); border-color:var(--emerald); color:#FCF8EF; }
+
+  /* ---------- Palette ---------- */
+  .palette-presets{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+  .preset{
+    display:flex; gap:0; border:2px solid transparent; border-radius:10px;
+    overflow:hidden; cursor:pointer; box-shadow:0 2px 6px rgba(28,27,26,.08);
+  }
+  .preset.on{ border-color:var(--gold); }
+  .preset span{ width:26px; height:34px; display:block; }
+  .swatch-row{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .swatch-row input[type="color"]{
+    -webkit-appearance:none; appearance:none; border:1px solid var(--line);
+    width:48px; height:48px; border-radius:11px; background:none; cursor:pointer; padding:0;
+  }
+  .swatch-row input[type="color"]::-webkit-color-swatch-wrapper{ padding:3px; }
+  .swatch-row input[type="color"]::-webkit-color-swatch{ border:none; border-radius:8px; }
+  .swatch-row input[type="text"]{ flex:1; text-transform:uppercase; }
+  .palette-preview{ display:flex; gap:8px; margin-top:6px; }
+  .palette-preview span{ flex:1; height:44px; border-radius:10px; border:1px solid rgba(0,0,0,.06); }
+
+  /* ---------- Generated options (tagline / pitch) ---------- */
+  .gen-btn{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.2);
+    color:var(--emerald); font-family:inherit; font-weight:700; font-size:14px;
+    cursor:pointer; width:100%; min-height:48px; border-radius:12px; margin-bottom:12px;
+    transition:background .15s;
+  }
+  .gen-btn:hover{ background:#dbe7e0; }
+  .gen-btn:disabled{ opacity:.55; cursor:default; }
+  .opt-row{ display:flex; align-items:flex-start; gap:8px; margin-bottom:10px; }
+  .opt-pick{
+    flex:1; text-align:left; background:var(--cream); border:1px solid var(--line);
+    border-radius:11px; padding:12px 14px; cursor:pointer; font-family:inherit;
+    font-size:15px; color:var(--ink); min-height:48px; transition:all .15s;
+    font-family:'Fraunces',serif; font-style:italic; line-height:1.4;
+  }
+  .opt-pick:hover{ border-color:var(--gold); }
+  .opt-pick.on{ background:var(--gold-soft); border-color:var(--gold); color:var(--emerald); }
+  .gen-empty{ color:var(--muted); font-size:13.5px; font-style:italic; margin-bottom:6px; }
+
+  /* ---------- Summary one-pager ---------- */
+  .summary{
+    background:#fff; border:1px solid var(--gold-soft); border-radius:16px;
+    padding:24px 22px; margin-top:16px; box-shadow:0 8px 24px rgba(200,160,74,.14);
+  }
+  .summary .s-name{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:26px; line-height:1.15; margin-bottom:4px;
+  }
+  .summary .s-tagline{
+    font-family:'Fraunces',serif; font-style:italic; color:var(--gold);
+    font-size:16px; margin-bottom:16px;
+  }
+  .summary .s-block{ margin-bottom:14px; }
+  .summary .s-label{
+    font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:4px;
+  }
+  .summary .s-text{ font-size:15px; color:var(--ink); line-height:1.5; }
+  .summary .s-voice{ display:flex; flex-wrap:wrap; gap:6px; }
+  .summary .s-voice span{
+    background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.12);
+    border-radius:999px; padding:4px 12px; font-size:13px; font-weight:600;
+  }
+  .summary .s-palette{ display:flex; gap:8px; }
+  .summary .s-palette span{ width:38px; height:38px; border-radius:9px; border:1px solid rgba(0,0,0,.08); }
+  .summary .s-divider{ height:1px; background:var(--line); margin:16px 0; }
+  .placeholder{ color:#A7A095; font-style:italic; }
+
+  .copy-btn{
+    width:100%; margin-top:8px; min-height:48px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:12px;
+    font-family:inherit; font-weight:700; font-size:15px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .copy-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .copy-btn:active{ transform:translateY(1px); }
+  .copy-btn.copied{ background:var(--emerald-soft); color:var(--emerald); box-shadow:none; border:1px solid rgba(20,84,62,.2); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Business Brand Builder</h1>
+    <p class="subtitle">Name it, shape its voice, and let your brand reflect who you're called to be.</p>
+    <div class="progress-pill" id="progressPill">0 of 6 sections complete</div>
+  </header>
+
+  <!-- Welcome (first run) -->
+  <section class="welcome" id="welcome">
+    <h2>Welcome, founder. 💛</h2>
+    <p>Your brand is already inside you — we're just giving it words, color, and shape. Move through one section at a time. Everything saves as you go, so you can build at your own pace. Let's begin.</p>
+  </section>
+
+  <!-- 1. Business Name -->
+  <section class="card">
+    <div class="step"><span class="num" id="num1">1</span><h2>Business Name</h2></div>
+    <p class="hint">Brainstorm freely — there are no wrong ideas here. Star the one your heart leans toward.</p>
+    <div class="prompts">
+      <div class="lead">A few ways in</div>
+      <ul>
+        <li>Use your own name + what you do ("Maya &amp; Co.", "Grace Wellness").</li>
+        <li>Name the feeling or outcome you give ("Rooted", "Rise &amp; Bloom").</li>
+        <li>Borrow from scripture, nature, or your heritage.</li>
+        <li>Say it out loud — does it feel like you?</li>
+      </ul>
+    </div>
+    <div id="nameList"></div>
+    <button class="add-link" id="addName" type="button">+ Add another name idea</button>
+  </section>
+
+  <!-- 2. What You Do + For Whom -->
+  <section class="card">
+    <div class="step"><span class="num" id="num2">2</span><h2>What You Do &amp; For Whom</h2></div>
+    <p class="hint">Get clear on the heart of your work — this fuels everything else.</p>
+    <label class="field-label" for="whatDo">What you do</label>
+    <textarea id="whatDo" placeholder="e.g., I create faith-based coaching programs that help women heal and grow…"></textarea>
+    <label class="field-label" for="forWhom">Who you serve</label>
+    <input type="text" id="forWhom" placeholder="e.g., busy Christian women in their 30s and 40s">
+    <label class="field-label" for="result">The result you help them reach <span class="optional">(optional)</span></label>
+    <input type="text" id="result" placeholder="e.g., feel confident, peaceful, and aligned">
+  </section>
+
+  <!-- 3. Brand Voice -->
+  <section class="card">
+    <div class="step"><span class="num" id="num3">3</span><h2>Brand Voice</h2></div>
+    <p class="hint">How should your brand feel when she shows up? Tap a few that fit — bold but soft.</p>
+    <div class="chips" id="voiceChips"></div>
+    <label class="field-label" for="voiceOwn">Add your own words <span class="optional">(comma-separated)</span></label>
+    <input type="text" id="voiceOwn" placeholder="e.g., nurturing, ambitious">
+  </section>
+
+  <!-- 4. Brand Colors -->
+  <section class="card">
+    <div class="step"><span class="num" id="num4">4</span><h2>Brand Colors</h2></div>
+    <p class="hint">Color carries feeling. Pick a starting palette, then make it yours.</p>
+    <div class="palette-presets" id="presets"></div>
+    <div id="swatchRows"></div>
+    <label class="field-label">Your palette, previewed</label>
+    <div class="palette-preview" id="palettePreview"></div>
+  </section>
+
+  <!-- 5. Tagline -->
+  <section class="card">
+    <div class="step"><span class="num" id="num5">5</span><h2>Tagline</h2></div>
+    <p class="hint">A short line that captures your essence. Generate a few, then star your favorite.</p>
+    <button class="gen-btn" id="genTagline" type="button">✨ Generate tagline ideas</button>
+    <p class="gen-empty" id="taglineEmpty">Fill in sections 2–3, then tap above for ideas built from your words.</p>
+    <div id="taglineOptions"></div>
+    <label class="field-label" for="taglineOwn">Or write your own</label>
+    <input type="text" id="taglineOwn" placeholder="Your tagline…">
+  </section>
+
+  <!-- 6. Elevator Pitch -->
+  <section class="card">
+    <div class="step"><span class="num" id="num6">6</span><h2>Elevator Pitch</h2></div>
+    <p class="hint">One or two sentences you can say with confidence. We'll draft it from your words — edit freely.</p>
+    <button class="gen-btn" id="genPitch" type="button">✨ Draft my pitch</button>
+    <label class="field-label" for="pitch">Your elevator pitch</label>
+    <textarea id="pitch" placeholder="I help [who] [result] through [how]…"></textarea>
+  </section>
+
+  <!-- Brand Summary one-pager -->
+  <section class="summary" id="summaryCard">
+    <div class="s-name" id="sName"><span class="placeholder">Your business name</span></div>
+    <div class="s-tagline" id="sTagline"></div>
+    <div class="s-divider"></div>
+
+    <div class="s-block">
+      <div class="s-label">What I do &amp; for whom</div>
+      <div class="s-text" id="sWhat"><span class="placeholder">Add this in section 2.</span></div>
+    </div>
+
+    <div class="s-block">
+      <div class="s-label">Brand voice</div>
+      <div class="s-voice" id="sVoice"><span class="placeholder" style="background:none;border:none;padding:0;">Pick a few in section 3.</span></div>
+    </div>
+
+    <div class="s-block">
+      <div class="s-label">Colors</div>
+      <div class="s-palette" id="sPalette"></div>
+    </div>
+
+    <div class="s-block">
+      <div class="s-label">Elevator pitch</div>
+      <div class="s-text" id="sPitch"><span class="placeholder">Draft this in section 6.</span></div>
+    </div>
+
+    <button class="copy-btn" id="copyBtn" type="button">Copy my brand one-pager</button>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_business_brand_builder";
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---------- Defaults ----------
+  var VOICE_WORDS = ["Warm","Bold","Elegant","Playful","Grounded","Luxurious","Faith-filled","Nurturing","Confident","Calm","Joyful","Empowering"];
+  var PRESETS = [
+    { id:"emerald", colors:["#14543E","#C8A04A","#FAF5EC"] },
+    { id:"blush",   colors:["#B97A86","#E8C9C1","#FBF3EF"] },
+    { id:"midnight",colors:["#1F2A44","#C8A04A","#F2EFE8"] },
+    { id:"sage",    colors:["#6E8B6A","#D8C9A3","#F4F1E6"] },
+    { id:"plum",    colors:["#5E3A66","#C8A04A","#F3EEF4"] },
+    { id:"terracotta",colors:["#B5613E","#E3B98C","#FBF1E7"] }
+  ];
+
+  function freshData(){
+    return {
+      names:[ {text:"", fav:false} ],
+      whatDo:"", forWhom:"", result:"",
+      voice:[], voiceOwn:"",
+      preset:"emerald", colors:["#14543E","#C8A04A","#FAF5EC"],
+      taglineOptions:[], taglinePick:-1, taglineOwn:"",
+      pitch:""
+    };
+  }
+
+  // ---------- State ----------
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          var d = freshData();
+          for(var k in d){ if(o[k] !== undefined) d[k] = o[k]; }
+          if(!d.names || !d.names.length) d.names = [{text:"",fav:false}];
+          return d;
+        }
+      }
+    }catch(e){}
+    return freshData();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+    renderSummary();
+    renderProgress();
+  }
+
+  // ---------- 1. Business Names ----------
+  var nameList = $("nameList");
+  function renderNames(){
+    nameList.innerHTML = "";
+    data.names.forEach(function(n, i){
+      var row = document.createElement("div");
+      row.className = "name-row";
+
+      var inp = document.createElement("input");
+      inp.type = "text";
+      inp.value = n.text;
+      inp.placeholder = "A name idea…";
+      inp.setAttribute("aria-label", "Business name idea " + (i+1));
+      inp.addEventListener("input", function(){ data.names[i].text = inp.value; save(); });
+
+      var fav = document.createElement("button");
+      fav.type = "button";
+      fav.className = "fav-btn" + (n.fav ? " on" : "");
+      fav.textContent = n.fav ? "★" : "☆";
+      fav.title = "Mark as favorite";
+      fav.setAttribute("aria-label", "Mark this name as favorite");
+      fav.addEventListener("click", function(){
+        var willOn = !data.names[i].fav;
+        data.names.forEach(function(x){ x.fav = false; });
+        data.names[i].fav = willOn;
+        renderNames(); save();
+      });
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "del-btn";
+      del.textContent = "✕";
+      del.title = "Remove";
+      del.setAttribute("aria-label", "Remove this name idea");
+      del.addEventListener("click", function(){
+        data.names.splice(i,1);
+        if(!data.names.length) data.names = [{text:"",fav:false}];
+        renderNames(); save();
+      });
+
+      row.appendChild(inp); row.appendChild(fav); row.appendChild(del);
+      nameList.appendChild(row);
+    });
+  }
+  $("addName").addEventListener("click", function(){
+    data.names.push({text:"", fav:false});
+    renderNames(); save();
+  });
+  function favoriteName(){
+    for(var i=0;i<data.names.length;i++){ if(data.names[i].fav && data.names[i].text.trim()) return data.names[i].text.trim(); }
+    for(var j=0;j<data.names.length;j++){ if(data.names[j].text.trim()) return data.names[j].text.trim(); }
+    return "";
+  }
+
+  // ---------- 2. What / Whom ----------
+  function wire(id, prop){
+    var el = $(id);
+    el.value = data[prop] || "";
+    el.addEventListener("input", function(){ data[prop] = el.value; save(); });
+  }
+  wire("whatDo","whatDo");
+  wire("forWhom","forWhom");
+  wire("result","result");
+
+  // ---------- 3. Voice ----------
+  var voiceChips = $("voiceChips");
+  function renderVoice(){
+    voiceChips.innerHTML = "";
+    VOICE_WORDS.forEach(function(w){
+      var on = data.voice.indexOf(w) !== -1;
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip" + (on ? " on" : "");
+      b.textContent = w;
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.addEventListener("click", function(){
+        var idx = data.voice.indexOf(w);
+        if(idx === -1) data.voice.push(w); else data.voice.splice(idx,1);
+        renderVoice(); save();
+      });
+      voiceChips.appendChild(b);
+    });
+  }
+  var voiceOwnEl = $("voiceOwn");
+  voiceOwnEl.value = data.voiceOwn || "";
+  voiceOwnEl.addEventListener("input", function(){ data.voiceOwn = voiceOwnEl.value; save(); });
+
+  function allVoiceWords(){
+    var list = data.voice.slice();
+    (data.voiceOwn || "").split(",").forEach(function(w){
+      w = w.trim(); if(w) list.push(w.charAt(0).toUpperCase() + w.slice(1));
+    });
+    return list;
+  }
+
+  // ---------- 4. Colors ----------
+  var presetsEl = $("presets");
+  function renderPresets(){
+    presetsEl.innerHTML = "";
+    PRESETS.forEach(function(p){
+      var on = data.preset === p.id;
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "preset" + (on ? " on" : "");
+      b.setAttribute("aria-label", "Use " + p.id + " palette");
+      b.style.minHeight = "44px";
+      p.colors.forEach(function(c){
+        var s = document.createElement("span"); s.style.background = c; b.appendChild(s);
+      });
+      b.addEventListener("click", function(){
+        data.preset = p.id;
+        data.colors = p.colors.slice();
+        renderPresets(); renderSwatchRows(); renderPalettePreview(); save();
+      });
+      presetsEl.appendChild(b);
+    });
+  }
+  var swatchRowsEl = $("swatchRows");
+  function renderSwatchRows(){
+    swatchRowsEl.innerHTML = "";
+    data.colors.forEach(function(c, i){
+      var row = document.createElement("div");
+      row.className = "swatch-row";
+
+      var color = document.createElement("input");
+      color.type = "color";
+      color.value = normalizeHex(c);
+      color.setAttribute("aria-label", "Color " + (i+1) + " picker");
+
+      var text = document.createElement("input");
+      text.type = "text";
+      text.value = c.toUpperCase();
+      text.setAttribute("aria-label", "Color " + (i+1) + " hex code");
+      text.maxLength = 7;
+
+      color.addEventListener("input", function(){
+        data.colors[i] = color.value.toUpperCase(); text.value = color.value.toUpperCase();
+        data.preset = "custom"; renderPresets(); renderPalettePreview(); save();
+      });
+      text.addEventListener("input", function(){
+        var v = text.value.trim();
+        data.colors[i] = v;
+        if(/^#?[0-9a-fA-F]{6}$/.test(v)){ color.value = normalizeHex(v); }
+        data.preset = "custom"; renderPresets(); renderPalettePreview(); save();
+      });
+
+      row.appendChild(color); row.appendChild(text);
+      swatchRowsEl.appendChild(row);
+    });
+  }
+  function normalizeHex(v){
+    v = (v||"").trim(); if(v.charAt(0) !== "#") v = "#" + v;
+    return /^#[0-9a-fA-F]{6}$/.test(v) ? v : "#CCCCCC";
+  }
+  var palettePreviewEl = $("palettePreview");
+  function renderPalettePreview(){
+    palettePreviewEl.innerHTML = "";
+    data.colors.forEach(function(c){
+      var s = document.createElement("span"); s.style.background = normalizeHex(c); palettePreviewEl.appendChild(s);
+    });
+  }
+
+  // ---------- 5. Tagline ----------
+  var taglineOptionsEl = $("taglineOptions");
+  var taglineOwnEl = $("taglineOwn");
+  taglineOwnEl.value = data.taglineOwn || "";
+  taglineOwnEl.addEventListener("input", function(){ data.taglineOwn = taglineOwnEl.value; save(); });
+
+  function clean(s){ return (s||"").trim().replace(/\s+/g," "); }
+  function lc(s){ s = clean(s); return s ? s.charAt(0).toLowerCase() + s.slice(1) : ""; }
+
+  function buildTaglines(){
+    var who = lc(data.forWhom);
+    var result = lc(data.result);
+    var what = lc(data.whatDo);
+    var v = allVoiceWords();
+    var v1 = v[0] ? v[0].toLowerCase() : "";
+    var v2 = v[1] ? v[1].toLowerCase() : "";
+    var out = [];
+
+    if(result) out.push("Helping you " + result + ".");
+    if(who && result) out.push("Where " + who + " " + result + ".");
+    if(v1 && result) out.push(cap(v1) + " support to help you " + result + ".");
+    if(v1 && v2) out.push(cap(v1) + ", " + v2 + ", and made for you.");
+    if(who) out.push("For " + who + " ready to rise.");
+    if(result) out.push("Your next level starts here — " + result + ".");
+    if(what) out.push("Faith-led work, made for real life.");
+    out.push("Heal. Grow. Elevate. Become.");
+    out.push("Bold but soft. Built for increase.");
+
+    // de-dup + cap to 5
+    var seen = {}; var res = [];
+    out.forEach(function(t){ t = clean(t); if(t && !seen[t]){ seen[t]=1; res.push(t); } });
+    return res.slice(0,5);
+  }
+  function cap(s){ s = clean(s); return s ? s.charAt(0).toUpperCase() + s.slice(1) : ""; }
+
+  function renderTaglineOptions(){
+    taglineOptionsEl.innerHTML = "";
+    var empty = $("taglineEmpty");
+    if(!data.taglineOptions || !data.taglineOptions.length){
+      empty.style.display = "block"; return;
+    }
+    empty.style.display = "none";
+    data.taglineOptions.forEach(function(t, i){
+      var row = document.createElement("div");
+      row.className = "opt-row";
+      var pick = document.createElement("button");
+      pick.type = "button";
+      pick.className = "opt-pick" + (data.taglinePick === i ? " on" : "");
+      pick.textContent = t;
+      pick.setAttribute("aria-pressed", data.taglinePick === i ? "true":"false");
+      pick.addEventListener("click", function(){
+        data.taglinePick = (data.taglinePick === i ? -1 : i);
+        renderTaglineOptions(); save();
+      });
+      row.appendChild(pick);
+      taglineOptionsEl.appendChild(row);
+    });
+  }
+  $("genTagline").addEventListener("click", function(){
+    data.taglineOptions = buildTaglines();
+    if(data.taglinePick >= data.taglineOptions.length) data.taglinePick = -1;
+    renderTaglineOptions(); save();
+  });
+  function chosenTagline(){
+    if(clean(data.taglineOwn)) return clean(data.taglineOwn);
+    if(data.taglinePick >= 0 && data.taglineOptions[data.taglinePick]) return data.taglineOptions[data.taglinePick];
+    return "";
+  }
+
+  // ---------- 6. Pitch ----------
+  var pitchEl = $("pitch");
+  pitchEl.value = data.pitch || "";
+  pitchEl.addEventListener("input", function(){ data.pitch = pitchEl.value; save(); });
+
+  $("genPitch").addEventListener("click", function(){
+    var who = lc(data.forWhom) || "the women I'm called to serve";
+    var result = lc(data.result);
+    var what = clean(data.whatDo);
+    var how = what ? lc(what) : "my work";
+    var pitch;
+    if(result){
+      pitch = "I help " + who + " " + result + " through " + how + ".";
+    } else {
+      pitch = "I help " + who + " through " + how + ".";
+    }
+    var name = favoriteName();
+    if(name) pitch = name + " — " + pitch.charAt(0).toLowerCase() + pitch.slice(1);
+    data.pitch = pitch;
+    pitchEl.value = pitch;
+    save();
+  });
+
+  // ---------- Summary ----------
+  function renderSummary(){
+    var name = favoriteName();
+    $("sName").innerHTML = name ? esc(name) : '<span class="placeholder">Your business name</span>';
+
+    var tag = chosenTagline();
+    $("sTagline").textContent = tag ? tag : "";
+    $("sTagline").style.display = tag ? "block" : "none";
+
+    var whatLine = buildWhatLine();
+    $("sWhat").innerHTML = whatLine ? esc(whatLine) : '<span class="placeholder">Add this in section 2.</span>';
+
+    var v = allVoiceWords();
+    var sVoice = $("sVoice");
+    if(v.length){
+      sVoice.innerHTML = "";
+      v.forEach(function(w){ var s = document.createElement("span"); s.textContent = w; sVoice.appendChild(s); });
+    } else {
+      sVoice.innerHTML = '<span class="placeholder" style="background:none;border:none;padding:0;">Pick a few in section 3.</span>';
+    }
+
+    var sPalette = $("sPalette");
+    sPalette.innerHTML = "";
+    data.colors.forEach(function(c){ var s = document.createElement("span"); s.style.background = normalizeHex(c); sPalette.appendChild(s); });
+
+    $("sPitch").innerHTML = clean(data.pitch) ? esc(clean(data.pitch)) : '<span class="placeholder">Draft this in section 6.</span>';
+  }
+  function buildWhatLine(){
+    var what = clean(data.whatDo), who = clean(data.forWhom);
+    if(what && who) return what + " — for " + who + ".";
+    if(what) return what;
+    if(who) return "For " + who + ".";
+    return "";
+  }
+  function esc(s){ var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+
+  // ---------- Progress ----------
+  function renderProgress(){
+    var done = 0;
+    if(favoriteName()) done++;                                   // 1
+    if(clean(data.whatDo) && clean(data.forWhom)) done++;        // 2
+    if(allVoiceWords().length) done++;                           // 3
+    if(data.colors && data.colors.length) done++;                // 4 (always has defaults — counts once palette touched)
+    if(chosenTagline()) done++;                                  // 5
+    if(clean(data.pitch)) done++;                                // 6
+    $("progressPill").textContent = done + " of 6 sections complete";
+    for(var i=1;i<=6;i++){ $("num"+i).classList.remove("done"); $("num"+i).textContent = i; }
+    if(favoriteName()){ markDone(1); }
+    if(clean(data.whatDo) && clean(data.forWhom)){ markDone(2); }
+    if(allVoiceWords().length){ markDone(3); }
+    if(data.preset && data.preset !== "emerald" || colorsTouched()){ markDone(4); }
+    if(chosenTagline()){ markDone(5); }
+    if(clean(data.pitch)){ markDone(6); }
+
+    // welcome hides once she's started
+    $("welcome").style.display = done > 0 ? "none" : "block";
+  }
+  function markDone(n){ var el = $("num"+n); el.classList.add("done"); el.textContent = "✓"; }
+  function colorsTouched(){
+    // default emerald palette
+    var def = ["#14543E","#C8A04A","#FAF5EC"];
+    return JSON.stringify((data.colors||[]).map(function(c){return (c||"").toUpperCase();})) !== JSON.stringify(def);
+  }
+
+  // ---------- Copy ----------
+  $("copyBtn").addEventListener("click", function(){
+    var text = buildCopyText();
+    var btn = $("copyBtn");
+    function ok(){
+      var orig = "Copy my brand one-pager";
+      btn.textContent = "Copied! 💛"; btn.classList.add("copied");
+      setTimeout(function(){ btn.textContent = orig; btn.classList.remove("copied"); }, 1800);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(ok, function(){ fallbackCopy(text, ok); });
+    } else {
+      fallbackCopy(text, ok);
+    }
+  });
+  function fallbackCopy(text, ok){
+    try{
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      document.execCommand("copy"); document.body.removeChild(ta); ok();
+    }catch(e){
+      alert("Copy didn't work on this device — you can select the one-pager text manually. 💛");
+    }
+  }
+  function buildCopyText(){
+    var L = [];
+    var name = favoriteName();
+    L.push("— MY BRAND ONE-PAGER —");
+    L.push("");
+    L.push("NAME: " + (name || "(not set yet)"));
+    var tag = chosenTagline(); if(tag) L.push("TAGLINE: " + tag);
+    L.push("");
+    var what = buildWhatLine(); if(what) L.push("WHAT I DO & FOR WHOM:\n" + what);
+    var v = allVoiceWords(); if(v.length){ L.push(""); L.push("BRAND VOICE: " + v.join(", ")); }
+    L.push("");
+    L.push("COLORS: " + data.colors.map(function(c){return c.toUpperCase();}).join("  "));
+    if(clean(data.pitch)){ L.push(""); L.push("ELEVATOR PITCH:\n" + clean(data.pitch)); }
+    L.push("");
+    L.push("Women of Increase · Heal. Grow. Elevate. Become.");
+    return L.join("\n");
+  }
+
+  // ---------- Reset ----------
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Brand Builder data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = freshData();
+      renderAll();
+    }
+  });
+
+  // ---------- Init ----------
+  function renderAll(){
+    renderNames();
+    $("whatDo").value = data.whatDo || "";
+    $("forWhom").value = data.forWhom || "";
+    $("result").value = data.result || "";
+    renderVoice();
+    $("voiceOwn").value = data.voiceOwn || "";
+    renderPresets(); renderSwatchRows(); renderPalettePreview();
+    renderTaglineOptions();
+    $("taglineOwn").value = data.taglineOwn || "";
+    $("pitch").value = data.pitch || "";
+    renderSummary();
+    renderProgress();
+  }
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

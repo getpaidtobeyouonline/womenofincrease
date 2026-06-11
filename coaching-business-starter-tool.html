@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coaching Business Starter Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:8px 0 14px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+    margin-top:16px;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .welcome h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:21px; line-height:1.25;
+    position:relative; z-index:1; margin-bottom:8px;
+  }
+  .welcome p{
+    font-size:14.5px; line-height:1.5; position:relative; z-index:1; color:#EDE6D5;
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], input[type="number"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="number"], select{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  select{ -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%236B655C' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
+
+  /* ---------- Generated statement ---------- */
+  .statement{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; margin-top:14px;
+  }
+  .statement .label{
+    font-size:11.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--emerald); margin-bottom:8px;
+  }
+  .statement p{
+    font-family:'Fraunces',serif; font-style:italic; font-size:18px; line-height:1.45;
+    color:var(--emerald); font-weight:500;
+  }
+  .statement p .blank{ color:#A7A095; font-style:normal; }
+  .row-actions{ display:flex; justify-content:flex-end; gap:4px; margin-top:8px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+  .copied-note{ color:var(--gold); font-size:13px; font-weight:600; display:none; align-self:center; margin-right:auto; padding-left:4px; }
+  .copied-note.show{ display:inline; }
+
+  /* ---------- Pricing ---------- */
+  .price-field{ position:relative; }
+  .price-field .currency{
+    position:absolute; left:14px; top:50%; transform:translateY(-50%);
+    color:var(--muted); font-size:16px; font-weight:600; pointer-events:none;
+  }
+  .price-field input{ padding-left:30px; font-family:'Fraunces',serif; font-size:20px; color:var(--emerald); font-weight:500; }
+  .tiers{ margin-top:8px; }
+  .tier-row{ display:flex; gap:8px; margin-bottom:10px; align-items:center; }
+  .tier-row .t-name{ flex:1.4; }
+  .tier-row .t-price{ flex:1; }
+  .tier-row .t-del{
+    flex:none; width:44px; height:44px; border:1px solid var(--line); background:var(--cream);
+    border-radius:10px; color:var(--muted); font-size:18px; cursor:pointer; line-height:1;
+  }
+  .tier-row .t-del:hover{ border-color:var(--gold); color:var(--ink); }
+  .add-btn{
+    width:100%; min-height:48px; margin-top:4px;
+    background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.2);
+    border-radius:11px; font-family:inherit; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  .add-btn:hover{ background:#dbe7e0; }
+
+  /* ---------- Checklist ---------- */
+  .check-item{
+    display:flex; align-items:flex-start; gap:11px; padding:11px 2px;
+    border-bottom:1px solid var(--line);
+  }
+  .check-item:last-child{ border-bottom:none; }
+  .check-item input[type="checkbox"]{
+    flex:none; width:22px; height:22px; margin-top:1px; accent-color:var(--emerald); cursor:pointer;
+  }
+  .check-item label{ flex:1; font-size:15px; cursor:pointer; }
+  .check-item.done label{ color:var(--muted); text-decoration:line-through; }
+  .check-item .c-del{
+    flex:none; background:none; border:none; color:#C9C0AE; font-size:18px; cursor:pointer;
+    min-width:32px; min-height:32px; line-height:1;
+  }
+  .check-item .c-del:hover{ color:var(--gold); }
+  .add-inline{ display:flex; gap:8px; margin-top:12px; }
+  .add-inline input{ flex:1; }
+  .add-inline button{
+    flex:none; min-height:48px; padding:0 18px; background:var(--gold); color:var(--ink);
+    border:none; border-radius:11px; font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+  }
+  .add-inline button:hover{ box-shadow:0 4px 12px rgba(200,160,74,.3); }
+
+  /* ---------- Prospect tracker ---------- */
+  .prospect{
+    display:flex; align-items:center; gap:8px; padding:11px 2px; border-bottom:1px solid var(--line);
+  }
+  .prospect:last-child{ border-bottom:none; }
+  .prospect .p-name{ flex:1; font-size:15px; font-weight:600; color:var(--ink); word-break:break-word; }
+  .prospect select{ flex:none; width:auto; min-height:40px; font-size:13.5px; padding:8px 30px 8px 12px;
+    font-weight:600; }
+  .prospect select.s-reach{ color:var(--muted); }
+  .prospect select.s-conv{ color:var(--gold); }
+  .prospect select.s-client{ color:var(--emerald); }
+  .prospect .p-del{
+    flex:none; background:none; border:none; color:#C9C0AE; font-size:18px; cursor:pointer;
+    min-width:32px; min-height:32px; line-height:1;
+  }
+  .prospect .p-del:hover{ color:var(--gold); }
+  .tracker-summary{
+    display:flex; gap:8px; justify-content:center; margin-top:14px; flex-wrap:wrap;
+  }
+  .pill{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12); color:var(--emerald);
+    font-weight:600; font-size:12.5px; padding:6px 12px; border-radius:999px;
+  }
+  .pill b{ font-size:14px; }
+
+  /* ---------- Confidence note ---------- */
+  .note{
+    margin-top:16px; background:var(--cream); border:1px dashed var(--gold-soft);
+    border-radius:14px; padding:18px 18px; text-align:center;
+  }
+  .note .heart{ font-size:22px; }
+  .note p{ font-size:14.5px; color:var(--ink); line-height:1.55; margin-top:6px; }
+  .note p b{ color:var(--emerald); font-family:'Fraunces',serif; font-weight:600; }
+
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; padding:8px 2px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Coaching Business Starter</h1>
+    <p class="subtitle">Your niche, your offer, your price, your first clients — one step at a time.</p>
+  </header>
+
+  <!-- Welcome / first-run -->
+  <section class="welcome" id="welcome">
+    <h2>You're already more ready than you think.</h2>
+    <p>You don't need a perfect plan or every answer. You just need to be a few steps ahead of the woman you're here to serve. Let's shape your coaching business together — gently, one card at a time. Everything you type saves automatically.</p>
+  </section>
+
+  <!-- 1. Niche -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Define Your Niche</h2></div>
+    <p class="hint">Get specific about who you serve and the transformation you guide them through. Clarity here makes everything after it easier.</p>
+
+    <label class="field-label" for="who">Who do you coach?</label>
+    <input type="text" id="who" placeholder="e.g. busy Christian mums, women starting over after 40…">
+
+    <label class="field-label" for="from">Where are they now? <span class="opt">(the &ldquo;from&rdquo;)</span></label>
+    <input type="text" id="from" placeholder="e.g. overwhelmed and stuck">
+
+    <label class="field-label" for="to">Where do you help them get to? <span class="opt">(the &ldquo;to&rdquo;)</span></label>
+    <input type="text" id="to" placeholder="e.g. confident and clear on their next step">
+
+    <div class="statement">
+      <div class="label">Your niche statement</div>
+      <p id="nicheOut"></p>
+      <div class="row-actions">
+        <span class="copied-note" id="nicheCopied">Copied ✓</span>
+        <button class="link-btn" id="editNiche" type="button">✎ Edit it</button>
+        <button class="link-btn" id="copyNiche" type="button">⧉ Copy</button>
+      </div>
+    </div>
+    <textarea id="nicheEdit" style="display:none;margin-top:10px;" placeholder="Write your niche statement in your own words…"></textarea>
+  </section>
+
+  <!-- 2. Offer -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Design Your Starter Offer</h2></div>
+    <p class="hint">Keep it simple. A clear first offer beats a clever one. You can grow it later.</p>
+
+    <label class="field-label" for="format">Coaching format</label>
+    <select id="format">
+      <option value="">Choose a format…</option>
+      <option value="1:1 coaching">1:1 coaching</option>
+      <option value="Group coaching">Group coaching</option>
+      <option value="Package of sessions">Package of sessions</option>
+      <option value="Single power session">Single power session</option>
+      <option value="Coaching + resources bundle">Coaching + resources bundle</option>
+    </select>
+
+    <label class="field-label" for="duration">Duration / structure</label>
+    <input type="text" id="duration" placeholder="e.g. 6 weekly 45-min sessions over 6 weeks">
+
+    <label class="field-label" for="included">What's included?</label>
+    <textarea id="included" placeholder="e.g. weekly calls, voice-note support between sessions, a workbook…"></textarea>
+
+    <label class="field-label" for="promise">The outcome / promise</label>
+    <textarea id="promise" placeholder="By the end, she will… (the result she walks away with)"></textarea>
+  </section>
+
+  <!-- 3. Pricing -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Set Your Price</h2></div>
+    <p class="hint">Your time, wisdom, and care have real worth. Pick a starting number that feels honest and a little brave — not the lowest you'd accept. You can raise it as you grow.</p>
+
+    <label class="field-label" for="price">Starting price for your offer</label>
+    <div class="price-field">
+      <span class="currency">$</span>
+      <input type="number" id="price" min="0" step="1" inputmode="numeric" placeholder="0">
+    </div>
+
+    <label class="field-label">Optional package tiers <span class="opt">(if you'd like a few options)</span></label>
+    <div class="tiers" id="tiers"></div>
+    <button class="add-btn" id="addTier" type="button">+ Add a tier</button>
+  </section>
+
+  <!-- 4. First Clients -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Get Your First Clients</h2></div>
+    <p class="hint">Your first 1&ndash;5 clients almost always come from people who already know and trust you. Check these off as you go — edit them or add your own.</p>
+
+    <div id="checklist"></div>
+    <div class="add-inline">
+      <input type="text" id="newAction" placeholder="Add your own action step…">
+      <button id="addAction" type="button">Add</button>
+    </div>
+  </section>
+
+  <!-- Prospect tracker -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>Prospect Tracker</h2></div>
+    <p class="hint">Jot down the warm contacts you'll reach out to and move them along as conversations grow. Watch your first clients take shape.</p>
+
+    <div id="prospects"></div>
+    <p class="empty-note" id="prospectsEmpty">No prospects yet. Add the first person who comes to mind. 💛</p>
+    <div class="add-inline">
+      <input type="text" id="newProspect" placeholder="Add a name…">
+      <button id="addProspect" type="button">Add</button>
+    </div>
+
+    <div class="tracker-summary" id="trackerSummary"></div>
+  </section>
+
+  <!-- Confidence note -->
+  <div class="note">
+    <div class="heart">💛</div>
+    <p>You don't need to know everything to begin. <b>Being a few steps ahead is enough.</b> The woman you're meant to help is waiting — and you are already enough to start.</p>
+  </div>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_coaching_starter";
+
+  var DEFAULT_ACTIONS = [
+    "List 10 warm contacts who might want this — or know someone who does",
+    "Reach out personally to 5 of them with a warm, no-pressure message",
+    "Offer a beta / founding-client rate to your first 1–3 clients",
+    "Ask happy contacts and past colleagues for referrals",
+    "Share your niche and what you offer on one platform this week",
+    "Post a short story or result that shows the transformation you create"
+  ];
+
+  var STATUSES = ["To reach out", "In conversation", "Client"];
+
+  // ---- State ----
+  function freshData(){
+    return {
+      who:"", from:"", to:"",
+      nicheCustom:null,            // null = use generated; string = user-edited
+      format:"", duration:"", included:"", promise:"",
+      price:"", tiers:[],
+      actions: DEFAULT_ACTIONS.map(function(t){ return { text:t, done:false }; }),
+      prospects:[],
+      seen:false
+    };
+  }
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          var d = freshData();
+          for(var k in o){ if(o.hasOwnProperty(k)) d[k] = o[k]; }
+          if(!Array.isArray(d.actions)) d.actions = freshData().actions;
+          if(!Array.isArray(d.tiers)) d.tiers = [];
+          if(!Array.isArray(d.prospects)) d.prospects = [];
+          return d;
+        }
+      }
+    }catch(e){}
+    return freshData();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Niche ----
+  var whoEl=$("who"), fromEl=$("from"), toEl=$("to");
+  var nicheOut=$("nicheOut"), nicheEdit=$("nicheEdit");
+
+  whoEl.value=data.who; fromEl.value=data.from; toEl.value=data.to;
+
+  function generatedNiche(){
+    var who = data.who.trim() || "women";
+    var from = data.from.trim();
+    var to = data.to.trim();
+    var s = "I help " + who + " ";
+    if(from && to){ s += "move from " + from + " to " + to + "."; }
+    else if(to){ s += to + "."; }
+    else if(from){ s += "move beyond " + from + "."; }
+    else { s += "make a real, lasting change."; }
+    return s;
+  }
+  function renderNiche(){
+    if(typeof data.nicheCustom === "string"){
+      nicheOut.textContent = data.nicheCustom;
+    } else {
+      nicheOut.textContent = generatedNiche();
+    }
+    // keep edit box in sync if visible
+    if(nicheEdit.style.display !== "none"){
+      nicheEdit.value = (typeof data.nicheCustom === "string") ? data.nicheCustom : generatedNiche();
+    }
+  }
+  function wire(el, fn){
+    el.addEventListener("input", function(){ fn(el.value); save(); });
+  }
+  wire(whoEl, function(v){ data.who=v; if(typeof data.nicheCustom!=="string") renderNiche(); });
+  wire(fromEl, function(v){ data.from=v; if(typeof data.nicheCustom!=="string") renderNiche(); });
+  wire(toEl, function(v){ data.to=v; if(typeof data.nicheCustom!=="string") renderNiche(); });
+
+  $("editNiche").addEventListener("click", function(){
+    if(nicheEdit.style.display === "none"){
+      nicheEdit.style.display = "block";
+      nicheEdit.value = (typeof data.nicheCustom === "string") ? data.nicheCustom : generatedNiche();
+      nicheEdit.focus();
+    } else {
+      nicheEdit.style.display = "none";
+    }
+  });
+  nicheEdit.addEventListener("input", function(){
+    var v = nicheEdit.value;
+    if(v.trim() === ""){ data.nicheCustom = null; }
+    else { data.nicheCustom = v; }
+    renderNiche(); save();
+  });
+  $("copyNiche").addEventListener("click", function(){
+    var text = nicheOut.textContent;
+    var note = $("nicheCopied");
+    function flash(){ note.classList.add("show"); setTimeout(function(){ note.classList.remove("show"); }, 1600); }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(flash, fallback);
+    } else { fallback(); }
+    function fallback(){
+      try{
+        var ta=document.createElement("textarea"); ta.value=text;
+        ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta);
+        ta.select(); document.execCommand("copy"); document.body.removeChild(ta); flash();
+      }catch(e){}
+    }
+  });
+
+  // ---- Offer ----
+  var formatEl=$("format"), durationEl=$("duration"), includedEl=$("included"), promiseEl=$("promise");
+  formatEl.value=data.format; durationEl.value=data.duration;
+  includedEl.value=data.included; promiseEl.value=data.promise;
+  formatEl.addEventListener("change", function(){ data.format=formatEl.value; save(); });
+  wire(durationEl, function(v){ data.duration=v; });
+  wire(includedEl, function(v){ data.included=v; });
+  wire(promiseEl, function(v){ data.promise=v; });
+
+  // ---- Pricing ----
+  var priceEl=$("price");
+  priceEl.value=data.price;
+  priceEl.addEventListener("input", function(){ data.price=priceEl.value; save(); });
+
+  var tiersEl=$("tiers");
+  function renderTiers(){
+    tiersEl.innerHTML="";
+    data.tiers.forEach(function(t, i){
+      var row=document.createElement("div"); row.className="tier-row";
+
+      var name=document.createElement("input");
+      name.type="text"; name.className="t-name"; name.placeholder="Tier name (e.g. VIP)";
+      name.value=t.name||"";
+      name.addEventListener("input", function(){ data.tiers[i].name=name.value; save(); });
+
+      var pf=document.createElement("div"); pf.className="t-price price-field";
+      var cur=document.createElement("span"); cur.className="currency"; cur.textContent="$";
+      var price=document.createElement("input");
+      price.type="number"; price.min="0"; price.step="1"; price.inputMode="numeric"; price.placeholder="0";
+      price.value=t.price||"";
+      price.addEventListener("input", function(){ data.tiers[i].price=price.value; save(); });
+      pf.appendChild(cur); pf.appendChild(price);
+
+      var del=document.createElement("button");
+      del.type="button"; del.className="t-del"; del.setAttribute("aria-label","Remove tier"); del.textContent="×";
+      del.addEventListener("click", function(){
+        data.tiers.splice(i,1); save(); renderTiers();
+      });
+
+      row.appendChild(name); row.appendChild(pf); row.appendChild(del);
+      tiersEl.appendChild(row);
+    });
+  }
+  $("addTier").addEventListener("click", function(){
+    data.tiers.push({ name:"", price:"" }); save(); renderTiers();
+  });
+
+  // ---- First Clients checklist ----
+  var checklistEl=$("checklist");
+  function renderChecklist(){
+    checklistEl.innerHTML="";
+    data.actions.forEach(function(a, i){
+      var item=document.createElement("div");
+      item.className="check-item"+(a.done?" done":"");
+
+      var cb=document.createElement("input");
+      cb.type="checkbox"; cb.checked=!!a.done;
+      cb.id="act"+i;
+      cb.addEventListener("change", function(){
+        data.actions[i].done=cb.checked; save(); renderChecklist();
+      });
+
+      var lab=document.createElement("label");
+      lab.setAttribute("for","act"+i);
+      lab.textContent=a.text;
+
+      var del=document.createElement("button");
+      del.type="button"; del.className="c-del"; del.setAttribute("aria-label","Remove step"); del.textContent="×";
+      del.addEventListener("click", function(){
+        data.actions.splice(i,1); save(); renderChecklist();
+      });
+
+      item.appendChild(cb); item.appendChild(lab); item.appendChild(del);
+      checklistEl.appendChild(item);
+    });
+  }
+  function addAction(){
+    var inp=$("newAction"); var v=inp.value.trim();
+    if(!v) return;
+    data.actions.push({ text:v, done:false }); inp.value=""; save(); renderChecklist();
+  }
+  $("addAction").addEventListener("click", addAction);
+  $("newAction").addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); addAction(); } });
+
+  // ---- Prospect tracker ----
+  var prospectsEl=$("prospects"), prospectsEmpty=$("prospectsEmpty");
+  function statusClass(s){
+    if(s==="In conversation") return "s-conv";
+    if(s==="Client") return "s-client";
+    return "s-reach";
+  }
+  function renderProspects(){
+    prospectsEl.innerHTML="";
+    if(data.prospects.length===0){ prospectsEmpty.style.display="block"; }
+    else { prospectsEmpty.style.display="none"; }
+
+    data.prospects.forEach(function(p, i){
+      var row=document.createElement("div"); row.className="prospect";
+
+      var name=document.createElement("span"); name.className="p-name"; name.textContent=p.name;
+
+      var sel=document.createElement("select");
+      sel.className=statusClass(p.status);
+      sel.setAttribute("aria-label","Status for "+p.name);
+      STATUSES.forEach(function(s){
+        var o=document.createElement("option"); o.value=s; o.textContent=s;
+        if(s===p.status) o.selected=true; sel.appendChild(o);
+      });
+      sel.addEventListener("change", function(){
+        data.prospects[i].status=sel.value; sel.className=statusClass(sel.value);
+        save(); renderSummary();
+      });
+
+      var del=document.createElement("button");
+      del.type="button"; del.className="p-del"; del.setAttribute("aria-label","Delete "+p.name); del.textContent="×";
+      del.addEventListener("click", function(){
+        if(confirm('Remove "'+p.name+'" from your prospect tracker?')){
+          data.prospects.splice(i,1); save(); renderProspects(); renderSummary();
+        }
+      });
+
+      row.appendChild(name); row.appendChild(sel); row.appendChild(del);
+      prospectsEl.appendChild(row);
+    });
+  }
+  function addProspect(){
+    var inp=$("newProspect"); var v=inp.value.trim();
+    if(!v) return;
+    data.prospects.push({ name:v, status:STATUSES[0] }); inp.value=""; save();
+    renderProspects(); renderSummary();
+  }
+  $("addProspect").addEventListener("click", addProspect);
+  $("newProspect").addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); addProspect(); } });
+
+  function renderSummary(){
+    var el=$("trackerSummary");
+    el.innerHTML="";
+    if(data.prospects.length===0) return;
+    var counts={};
+    STATUSES.forEach(function(s){ counts[s]=0; });
+    data.prospects.forEach(function(p){ if(counts[p.status]!==undefined) counts[p.status]++; });
+    STATUSES.forEach(function(s){
+      var pill=document.createElement("span"); pill.className="pill";
+      pill.innerHTML="<b>"+counts[s]+"</b> "+s;
+      el.appendChild(pill);
+    });
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Coaching Business Starter data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = freshData();
+      whoEl.value=""; fromEl.value=""; toEl.value=""; nicheEdit.value=""; nicheEdit.style.display="none";
+      formatEl.value=""; durationEl.value=""; includedEl.value=""; promiseEl.value="";
+      priceEl.value="";
+      renderAll(); save();
+    }
+  });
+
+  // ---- Initial render ----
+  function renderAll(){
+    renderNiche(); renderTiers(); renderChecklist(); renderProspects(); renderSummary();
+  }
+  renderAll();
+
+  // mark as seen (welcome stays — it's an encouraging intro, kept visible)
+  if(!data.seen){ data.seen=true; save(); }
+
+})();
+</script>
+</body>
+</html>

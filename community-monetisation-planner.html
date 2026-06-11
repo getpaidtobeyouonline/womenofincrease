@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community Monetisation Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome / encouragement ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+
+  /* ---------- Stream menu (checkboxes) ---------- */
+  .menu{ display:flex; flex-direction:column; gap:0; }
+  .menu-item{
+    display:flex; align-items:center; gap:12px;
+    padding:11px 4px; border-bottom:1px solid var(--line); min-height:48px; cursor:pointer;
+  }
+  .menu-item:last-of-type{ border-bottom:none; }
+  .menu-item input[type="checkbox"]{
+    flex:none; width:22px; height:22px; accent-color:var(--emerald); cursor:pointer;
+  }
+  .menu-item .mlabel{ font-size:15px; color:var(--ink); }
+  .menu-item .mlabel small{ display:block; color:var(--muted); font-size:12.5px; font-weight:400; }
+
+  .add-row{ display:flex; gap:8px; margin-top:14px; }
+  .add-row input{ flex:1; }
+  .add-btn{
+    flex:none; min-height:48px; padding:0 18px;
+    background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.18); border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:14px; cursor:pointer;
+  }
+  .add-btn:hover{ background:#dbe7e0; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="number"]{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; transition:border-color .15s, box-shadow .15s; min-height:48px;
+  }
+  input:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder{ color:#A7A095; }
+
+  /* ---------- Stream assumption cards ---------- */
+  .stream{
+    border:1px solid var(--line); border-radius:14px; padding:16px;
+    margin-top:14px; background:var(--cream);
+  }
+  .stream.focus{ border-color:var(--gold); box-shadow:0 0 0 2px rgba(200,160,74,.18); }
+  .stream-head{
+    display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+  }
+  .stream-name{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:17px;
+    flex:1;
+  }
+  .stream-del{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:18px; line-height:1; min-width:44px; min-height:44px;
+    display:flex; align-items:center; justify-content:center; border-radius:8px;
+  }
+  .stream-del:hover{ color:#a23b2e; background:rgba(162,59,46,.07); }
+  .stream-fields{ display:flex; gap:10px; margin-top:6px; }
+  .stream-fields .fld{ flex:1; }
+  .stream-fields .fld span{
+    display:block; font-size:12px; font-weight:600; color:var(--muted); margin-bottom:5px;
+  }
+  .input-money{ position:relative; }
+  .input-money .cur{
+    position:absolute; left:12px; top:50%; transform:translateY(-50%);
+    color:var(--muted); font-size:15px; pointer-events:none;
+  }
+  .input-money input{ padding-left:26px; }
+
+  .stream-result{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-top:12px; padding-top:12px; border-top:1px dashed var(--line);
+  }
+  .stream-result .lbl{ font-size:13px; color:var(--muted); }
+  .stream-result .amt{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:18px;
+  }
+  .focus-toggle{
+    margin-top:12px; display:inline-flex; align-items:center; gap:8px;
+    background:none; border:1px solid var(--line); border-radius:999px;
+    padding:8px 14px; min-height:44px; font-family:inherit; font-size:13px;
+    font-weight:600; color:var(--muted); cursor:pointer;
+  }
+  .focus-toggle.on{ border-color:var(--gold); color:var(--emerald); background:var(--emerald-soft); }
+  .focus-toggle .star{ font-size:15px; }
+
+  /* ---------- Totals ---------- */
+  .totals{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:16px; padding:22px 20px; margin-top:16px; text-align:center;
+  }
+  .totals .big{ font-family:'Fraunces',serif; font-weight:600; font-size:34px; line-height:1.1; }
+  .totals .big small{ font-size:16px; font-weight:500; color:var(--gold-soft); }
+  .totals .sub{ margin-top:8px; font-size:14px; color:var(--gold-soft); }
+  .totals .split{
+    display:flex; justify-content:center; gap:24px; margin-top:16px;
+    padding-top:16px; border-top:1px solid rgba(231,211,161,.22);
+  }
+  .totals .split div{ font-size:13px; color:rgba(252,248,239,.85); }
+  .totals .split b{ display:block; font-family:'Fraunces',serif; font-size:20px; color:#FCF8EF; margin-top:2px; }
+
+  /* ---------- Breakdown bars ---------- */
+  .bar-row{ margin-top:14px; }
+  .bar-top{ display:flex; justify-content:space-between; font-size:13.5px; margin-bottom:5px; }
+  .bar-top .bname{ color:var(--ink); font-weight:600; }
+  .bar-top .bamt{ color:var(--muted); }
+  .bar-track{ height:12px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .bar-fill{
+    height:100%; background:linear-gradient(90deg, var(--gold-soft), var(--gold));
+    border-radius:999px; transition:width .35s ease; min-width:3px;
+  }
+
+  /* ---------- Member math helper ---------- */
+  .mm-box{ background:var(--cream); border:1px solid var(--line); border-radius:14px; padding:16px; margin-top:14px; }
+  .mm-line{ font-size:15px; color:var(--ink); }
+  .mm-line b{ color:var(--emerald); font-family:'Fraunces',serif; font-weight:600; }
+  .mm-result{
+    margin-top:14px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:12px; padding:16px; text-align:center; color:var(--emerald);
+  }
+  .mm-result .num{ font-family:'Fraunces',serif; font-weight:600; font-size:28px; }
+  .mm-result .cap{ font-size:13.5px; color:var(--muted); margin-top:4px; }
+
+  /* ---------- Focus summary chips ---------- */
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+  .chip{
+    background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.15);
+    border-radius:999px; padding:7px 13px; font-size:13px; font-weight:600;
+  }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Community Monetisation Planner</h1>
+    <p class="subtitle">Map every way your community can earn — and price your transformation with confidence.</p>
+  </header>
+
+  <!-- Welcome / encouragement -->
+  <section class="card">
+    <div class="verse">
+      <p id="welcomeText">Your community is more than a place to gather — it's a place where lives change. Let's map how that calling can also become your provision.</p>
+      <div class="ref">Serve deeply · Price your transformation</div>
+    </div>
+  </section>
+
+  <!-- 1. Choose streams -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Choose Your Revenue Streams</h2></div>
+    <p class="hint">Tick the ways you'll invite people to invest. You don't need all of them — start with what feels true.</p>
+    <div class="menu" id="menu"></div>
+    <label class="field-label" for="customName">Add your own stream</label>
+    <div class="add-row">
+      <input type="text" id="customName" placeholder="e.g., Retreat ticket, Membership box…">
+      <button class="add-btn" id="addCustom" type="button">Add</button>
+    </div>
+  </section>
+
+  <!-- 2. Assumptions + per-stream math -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Your Numbers</h2></div>
+    <p class="hint">For each stream, enter a price and how many members or buyers you expect each month. We'll do the math live.</p>
+    <div id="streams"></div>
+    <p class="empty-note" id="streamsEmpty">Choose a stream above and it'll appear here, ready for your numbers. 💛</p>
+  </section>
+
+  <!-- 3. Totals + breakdown -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Your Projection</h2></div>
+    <p class="hint">This is what your community could generate — a starting picture you can refine as you grow.</p>
+    <div class="totals">
+      <div class="big"><span id="monthlyTotal">$0</span><small>/mo</small></div>
+      <div class="sub">projected monthly revenue</div>
+      <div class="split">
+        <div>Annual<b id="annualTotal">$0</b></div>
+        <div>Active streams<b id="streamCount">0</b></div>
+      </div>
+    </div>
+    <div id="breakdown" style="margin-top:18px;"></div>
+    <p class="empty-note" id="breakdownEmpty" style="margin-top:14px;">Add some numbers above to see where your income flows from. 💛</p>
+  </section>
+
+  <!-- 4. Member math helper -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Member Math</h2></div>
+    <p class="hint">Set an income goal and see exactly how many members you'd need at your membership price. Small, reachable numbers.</p>
+    <div class="mm-box">
+      <label class="field-label" for="mmPrice" style="margin-top:0;">Monthly membership price</label>
+      <div class="input-money">
+        <span class="cur">$</span>
+        <input type="number" id="mmPrice" inputmode="decimal" min="0" step="1" placeholder="29">
+      </div>
+      <label class="field-label" for="mmGoal">My monthly income goal</label>
+      <div class="input-money">
+        <span class="cur">$</span>
+        <input type="number" id="mmGoal" inputmode="decimal" min="0" step="1" placeholder="3000">
+      </div>
+    </div>
+    <div class="mm-result">
+      <div class="num" id="mmNeeded">—</div>
+      <div class="cap" id="mmCaption">Enter a price and a goal to see your number.</div>
+    </div>
+  </section>
+
+  <!-- 5. Focus / prioritise -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>Start Here First</h2></div>
+    <p class="hint">Don't do everything at once. Mark 1–2 streams as your focus (use the ⭐ on each stream above), and let the rest wait.</p>
+    <div class="chips" id="focusChips"></div>
+    <p class="empty-note" id="focusEmpty">No focus chosen yet — pick the one or two streams you'll build first. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_community_monetisation";
+
+  // ---- Default stream menu ----
+  var DEFAULTS = [
+    { id:"monthly",   name:"Monthly membership",        note:"Recurring monthly access", unit:"members" },
+    { id:"annual",    name:"Annual membership",         note:"Paid yearly (count monthly equivalent)", unit:"members", annual:true },
+    { id:"course",    name:"One-time courses",          note:"Self-paced programmes", unit:"buyers" },
+    { id:"premium",   name:"Premium tier",              note:"Higher-touch inner circle", unit:"members" },
+    { id:"coaching",  name:"1:1 / group coaching",      note:"Upsell to deeper support", unit:"clients" },
+    { id:"products",  name:"Digital products / templates", note:"Workbooks, planners, swipe files", unit:"buyers" },
+    { id:"affiliate", name:"Affiliate / MRR product sales", note:"Resell or recommend products", unit:"sales" },
+    { id:"sponsor",   name:"Sponsorships",              note:"Brands paying to reach your people", unit:"deals" },
+    { id:"events",    name:"Live events / workshops",   note:"Ticketed gatherings", unit:"tickets" },
+    { id:"dfy",       name:"Done-for-you services",     note:"You deliver the result", unit:"clients" }
+  ];
+
+  // ---- State ----
+  var data = load();
+
+  function freshData(){
+    return { streams:{}, custom:[], mmPrice:"", mmGoal:"" };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && o.streams){
+          o.custom = o.custom || [];
+          return o;
+        }
+      }
+    }catch(e){}
+    return freshData();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Helpers ----
+  function allDefs(){
+    return DEFAULTS.concat(data.custom);
+  }
+  function defById(id){
+    var all = allDefs();
+    for(var i=0;i<all.length;i++){ if(all[i].id===id) return all[i]; }
+    return null;
+  }
+  function num(v){
+    var n = parseFloat(v);
+    return (isNaN(n) || n<0) ? 0 : n;
+  }
+  function money(n){
+    n = Math.round(n);
+    return "$" + n.toLocaleString();
+  }
+  function streamMonthly(s){
+    return num(s.price) * num(s.qty);
+  }
+
+  // ---- Build the menu ----
+  function renderMenu(){
+    var menu = $("menu");
+    menu.innerHTML = "";
+    allDefs().forEach(function(d){
+      var on = !!data.streams[d.id];
+      var item = document.createElement("label");
+      item.className = "menu-item";
+      var cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = on;
+      cb.setAttribute("aria-label", d.name);
+      cb.addEventListener("change", function(){
+        if(cb.checked){
+          if(!data.streams[d.id]) data.streams[d.id] = { price:"", qty:"", focus:false };
+        }else{
+          delete data.streams[d.id];
+        }
+        save();
+        renderStreams(); renderTotals(); renderFocus();
+      });
+      var span = document.createElement("span");
+      span.className = "mlabel";
+      span.innerHTML = escapeHtml(d.name) + "<small>" + escapeHtml(d.note || "") + "</small>";
+      item.appendChild(cb);
+      item.appendChild(span);
+      menu.appendChild(item);
+    });
+  }
+
+  // ---- Build per-stream number cards ----
+  function renderStreams(){
+    var box = $("streams");
+    box.innerHTML = "";
+    var ids = Object.keys(data.streams);
+    $("streamsEmpty").style.display = ids.length ? "none" : "block";
+
+    allDefs().forEach(function(d){
+      if(!data.streams[d.id]) return;
+      var s = data.streams[d.id];
+
+      var card = document.createElement("div");
+      card.className = "stream" + (s.focus ? " focus" : "");
+
+      var head = document.createElement("div");
+      head.className = "stream-head";
+      var nm = document.createElement("div");
+      nm.className = "stream-name";
+      nm.textContent = d.name;
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "stream-del";
+      del.setAttribute("aria-label", "Remove " + d.name);
+      del.textContent = "✕";
+      del.addEventListener("click", function(){
+        if(confirm('Remove "' + d.name + '" from your plan?')){
+          delete data.streams[d.id];
+          save();
+          renderMenu(); renderStreams(); renderTotals(); renderFocus();
+        }
+      });
+      head.appendChild(nm); head.appendChild(del);
+      card.appendChild(head);
+
+      var fields = document.createElement("div");
+      fields.className = "stream-fields";
+
+      // Price
+      var f1 = document.createElement("div");
+      f1.className = "fld";
+      var lbl1 = document.createElement("span");
+      lbl1.textContent = d.annual ? "Price / year" : "Price";
+      var pid = "price_" + d.id;
+      lbl1.id = pid + "_lbl";
+      var money1 = document.createElement("div");
+      money1.className = "input-money";
+      money1.innerHTML = '<span class="cur">$</span>';
+      var pIn = document.createElement("input");
+      pIn.type = "number"; pIn.inputMode = "decimal"; pIn.min = "0"; pIn.step = "1";
+      pIn.id = pid; pIn.setAttribute("aria-labelledby", pid + "_lbl");
+      pIn.placeholder = d.annual ? "348" : "29";
+      pIn.value = s.price;
+      pIn.addEventListener("input", function(){
+        s.price = pIn.value; save(); renderResult(); renderTotals();
+      });
+      money1.appendChild(pIn);
+      f1.appendChild(lbl1); f1.appendChild(money1);
+
+      // Quantity
+      var f2 = document.createElement("div");
+      f2.className = "fld";
+      var lbl2 = document.createElement("span");
+      lbl2.textContent = (d.unit || "buyers");
+      lbl2.style.textTransform = "capitalize";
+      var qid = "qty_" + d.id;
+      lbl2.id = qid + "_lbl";
+      var qIn = document.createElement("input");
+      qIn.type = "number"; qIn.inputMode = "numeric"; qIn.min = "0"; qIn.step = "1";
+      qIn.id = qid; qIn.setAttribute("aria-labelledby", qid + "_lbl");
+      qIn.placeholder = "25";
+      qIn.value = s.qty;
+      qIn.addEventListener("input", function(){
+        s.qty = qIn.value; save(); renderResult(); renderTotals();
+      });
+      f2.appendChild(lbl2); f2.appendChild(qIn);
+
+      fields.appendChild(f1); fields.appendChild(f2);
+      card.appendChild(fields);
+
+      // Result line
+      var res = document.createElement("div");
+      res.className = "stream-result";
+      var rl = document.createElement("span");
+      rl.className = "lbl";
+      rl.textContent = "Monthly from this stream";
+      var ra = document.createElement("span");
+      ra.className = "amt";
+      ra.id = "res_" + d.id;
+      res.appendChild(rl); res.appendChild(ra);
+      card.appendChild(res);
+
+      // Focus toggle
+      var ft = document.createElement("button");
+      ft.type = "button";
+      ft.className = "focus-toggle" + (s.focus ? " on" : "");
+      ft.innerHTML = '<span class="star">' + (s.focus ? "⭐" : "☆") + '</span>' + (s.focus ? "Focus stream" : "Make this a focus");
+      ft.addEventListener("click", function(){
+        var focusCount = Object.keys(data.streams).filter(function(k){ return data.streams[k].focus; }).length;
+        if(!s.focus && focusCount >= 2){
+          alert("Keep it simple, sister — choose up to 2 focus streams to start. Unmark one first.");
+          return;
+        }
+        s.focus = !s.focus; save();
+        renderStreams(); renderFocus();
+      });
+      card.appendChild(ft);
+
+      box.appendChild(card);
+
+      // helper to repaint just this stream's amount
+      function renderResult(){
+        $("res_" + d.id).textContent = money(streamMonthly(s));
+      }
+      renderResult();
+    });
+  }
+
+  // ---- Totals + breakdown bars ----
+  function renderTotals(){
+    var ids = Object.keys(data.streams);
+    var total = 0;
+    var rows = [];
+    allDefs().forEach(function(d){
+      var s = data.streams[d.id];
+      if(!s) return;
+      var m = streamMonthly(s);
+      total += m;
+      if(m > 0) rows.push({ name:d.name, amt:m });
+    });
+
+    $("monthlyTotal").textContent = money(total);
+    $("annualTotal").textContent = money(total * 12);
+    $("streamCount").textContent = ids.length;
+
+    var bd = $("breakdown");
+    bd.innerHTML = "";
+    if(rows.length === 0){
+      $("breakdownEmpty").style.display = "block";
+      return;
+    }
+    $("breakdownEmpty").style.display = "none";
+    rows.sort(function(a,b){ return b.amt - a.amt; });
+    var max = rows[0].amt;
+    rows.forEach(function(r){
+      var pct = total > 0 ? Math.round((r.amt / total) * 100) : 0;
+      var width = max > 0 ? (r.amt / max) * 100 : 0;
+      var row = document.createElement("div");
+      row.className = "bar-row";
+      var top = document.createElement("div");
+      top.className = "bar-top";
+      top.innerHTML = '<span class="bname">' + escapeHtml(r.name) + '</span>' +
+                      '<span class="bamt">' + money(r.amt) + ' · ' + pct + '%</span>';
+      var track = document.createElement("div");
+      track.className = "bar-track";
+      var fill = document.createElement("div");
+      fill.className = "bar-fill";
+      fill.style.width = width + "%";
+      track.appendChild(fill);
+      row.appendChild(top); row.appendChild(track);
+      bd.appendChild(row);
+    });
+  }
+
+  // ---- Member math ----
+  function renderMemberMath(){
+    var price = num($("mmPrice").value);
+    var goal = num($("mmGoal").value);
+    var out = $("mmNeeded"), cap = $("mmCaption");
+    if(price <= 0 || goal <= 0){
+      out.textContent = "—";
+      cap.textContent = "Enter a price and a goal to see your number.";
+      return;
+    }
+    var needed = Math.ceil(goal / price);
+    out.textContent = needed.toLocaleString() + (needed === 1 ? " member" : " members");
+    cap.textContent = needed.toLocaleString() + " × " + money(price) + " = " + money(needed * price) + "/month. Reachable — one heart at a time.";
+  }
+
+  // ---- Focus chips ----
+  function renderFocus(){
+    var chips = $("focusChips");
+    chips.innerHTML = "";
+    var picked = [];
+    allDefs().forEach(function(d){
+      var s = data.streams[d.id];
+      if(s && s.focus) picked.push(d.name);
+    });
+    $("focusEmpty").style.display = picked.length ? "none" : "block";
+    picked.forEach(function(name){
+      var c = document.createElement("span");
+      c.className = "chip";
+      c.textContent = "⭐ " + name;
+      chips.appendChild(c);
+    });
+  }
+
+  // ---- Custom stream ----
+  $("addCustom").addEventListener("click", addCustom);
+  $("customName").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); addCustom(); }
+  });
+  function addCustom(){
+    var input = $("customName");
+    var name = input.value.trim();
+    if(!name) return;
+    var id = "custom_" + Date.now();
+    data.custom.push({ id:id, name:name, note:"Your custom stream", unit:"buyers" });
+    data.streams[id] = { price:"", qty:"", focus:false };
+    input.value = "";
+    save();
+    renderMenu(); renderStreams(); renderTotals(); renderFocus();
+  }
+
+  // ---- Member math wiring ----
+  $("mmPrice").value = data.mmPrice || "";
+  $("mmGoal").value = data.mmGoal || "";
+  $("mmPrice").addEventListener("input", function(){ data.mmPrice = $("mmPrice").value; save(); renderMemberMath(); });
+  $("mmGoal").addEventListener("input", function(){ data.mmGoal = $("mmGoal").value; save(); renderMemberMath(); });
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Community Monetisation Planner data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = freshData();
+      $("mmPrice").value = ""; $("mmGoal").value = "";
+      renderMenu(); renderStreams(); renderTotals(); renderMemberMath(); renderFocus();
+    }
+  });
+
+  function escapeHtml(str){
+    return String(str).replace(/[&<>"']/g, function(c){
+      return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c];
+    });
+  }
+
+  // ---- First paint ----
+  renderMenu();
+  renderStreams();
+  renderTotals();
+  renderMemberMath();
+  renderFocus();
+
+})();
+</script>
+</body>
+</html>

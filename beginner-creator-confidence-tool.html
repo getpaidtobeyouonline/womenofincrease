@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beginner Creator Confidence Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:0 0 14px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+    margin-bottom:2px;
+  }
+  .welcome p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .welcome .sm{
+    margin-top:10px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:500;
+    font-size:14px; color:var(--gold-soft);
+  }
+
+  /* ---------- Dare ---------- */
+  .dare{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:14px; padding:18px 18px;
+  }
+  .dare .tag{
+    font-weight:700; font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--gold);
+  }
+  .dare .text{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:20px; line-height:1.3; margin:8px 0 0;
+  }
+  .dare-actions{ display:flex; justify-content:space-between; align-items:center; margin-top:12px; gap:8px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+  .dare-done-btn{
+    background:var(--gold); color:var(--ink); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:14px; cursor:pointer;
+    min-height:44px; padding:10px 16px;
+    box-shadow:0 5px 14px rgba(200,160,74,.3);
+  }
+  .dare-done-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Ladder ---------- */
+  .rung{
+    display:flex; align-items:flex-start; gap:12px;
+    padding:12px 0; border-bottom:1px solid var(--line);
+  }
+  .rung:last-of-type{ border-bottom:none; }
+  .rung .check{
+    flex:none; width:30px; height:30px; margin-top:1px; border-radius:50%;
+    border:2px solid var(--gold-soft); background:#fff; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size:15px; color:transparent; transition:.15s;
+  }
+  .rung .check:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(200,160,74,.25); }
+  .rung.done .check{
+    background:var(--emerald); border-color:var(--emerald); color:#fff;
+  }
+  .rung .body{ flex:1; min-width:0; }
+  .rung .label{ font-weight:600; font-size:15px; color:var(--ink); }
+  .rung.done .label{ color:var(--muted); text-decoration:line-through; text-decoration-color:var(--gold-soft); }
+  .rung .meta{ font-size:12.5px; color:var(--emerald); font-weight:600; margin-top:2px; }
+  .rung .del{
+    flex:none; background:none; border:none; color:#C4BCAD; font-size:18px;
+    cursor:pointer; min-height:44px; min-width:36px; line-height:1;
+  }
+  .rung .del:hover{ color:var(--gold); }
+
+  .ladder-progress{
+    margin:4px 0 14px; height:9px; border-radius:999px; background:var(--emerald-soft);
+    overflow:hidden;
+  }
+  .ladder-progress > i{
+    display:block; height:100%; width:0%; border-radius:999px;
+    background:linear-gradient(90deg, var(--gold-soft), var(--gold)); transition:width .35s ease;
+  }
+  .ladder-count{ font-size:13.5px; color:var(--muted); margin-bottom:10px; }
+  .ladder-count b{ color:var(--emerald); }
+
+  .add-row{ display:flex; gap:8px; margin-top:14px; }
+  .add-row input{ flex:1; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:72px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  .add-btn{
+    flex:none; min-height:48px; padding:0 16px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    box-shadow:0 5px 14px rgba(200,160,74,.3);
+  }
+  .add-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Fear -> Truth ---------- */
+  .reframe-item{
+    border:1px solid var(--line); border-radius:13px; padding:14px; margin-bottom:12px;
+    background:var(--cream);
+  }
+  .reframe-item .fear{
+    font-family:'Fraunces',serif; font-style:italic; color:var(--ink);
+    font-size:16px; margin-bottom:8px;
+  }
+  .reframe-item .fear::before{ content:"“"; color:var(--gold); }
+  .reframe-item .fear::after{ content:"”"; color:var(--gold); }
+  .reframe-item .arrow{ color:var(--gold); font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; margin-bottom:8px; }
+  .truth-chips{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+  .chip{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15); color:var(--emerald);
+    border-radius:999px; padding:7px 12px; font-size:12.5px; font-weight:600; cursor:pointer;
+    min-height:36px;
+  }
+  .chip:hover{ border-color:var(--gold); }
+  .reframe-item textarea{ background:#fff; min-height:56px; }
+
+  /* ---------- Brave wins ---------- */
+  .wins-counter{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    text-align:center; margin-bottom:14px;
+  }
+  .wins-counter .big{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:38px; line-height:1;
+  }
+  .wins-counter .lbl{ font-size:13.5px; color:var(--muted); text-align:left; }
+  .win-input-row{ display:flex; gap:8px; }
+  .win-input-row input{ flex:1; }
+  .wins-list{ list-style:none; margin-top:14px; }
+  .wins-list li{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+    padding:11px 2px; border-bottom:1px solid var(--line); font-size:14.5px;
+  }
+  .wins-list li:last-child{ border-bottom:none; }
+  .wins-list .w-text{ color:var(--ink); }
+  .wins-list .w-date{ color:var(--muted); font-size:12px; font-weight:600; white-space:nowrap; }
+  .wins-list .w-del{
+    background:none; border:none; color:#C4BCAD; font-size:16px; cursor:pointer;
+    min-height:32px; min-width:30px; line-height:1; flex:none;
+  }
+  .wins-list .w-del:hover{ color:var(--gold); }
+
+  /* ---------- Climb message ---------- */
+  .climb{
+    margin-top:16px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:16px; color:var(--emerald);
+  }
+  .climb .big{ font-family:'Fraunces',serif; font-weight:600; font-size:17px; margin-bottom:3px; }
+  .climb .sm{ font-size:13.5px; color:var(--muted); }
+
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  .toast{
+    position:fixed; left:50%; bottom:20px; transform:translateX(-50%) translateY(20px);
+    background:var(--emerald); color:#FCF8EF; padding:12px 20px; border-radius:999px;
+    font-weight:600; font-size:14px; box-shadow:0 8px 24px rgba(20,84,62,.35);
+    opacity:0; pointer-events:none; transition:.3s; z-index:50; max-width:90vw; text-align:center;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Beginner Creator Confidence</h1>
+    <p class="subtitle">Build your creator courage one small, brave step at a time.</p>
+  </header>
+
+  <!-- Welcome (first run only) -->
+  <section class="card" id="welcomeCard" style="display:none;">
+    <div class="welcome">
+      <p>Feeling out of your depth? That's not a stop sign — it's proof you're growing.</p>
+      <div class="sm">Confidence isn't something you wait to feel. You build it by doing the next small brave thing. Start anywhere below. 💛</div>
+    </div>
+  </section>
+
+  <!-- 1. Tiny dare -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Today's Tiny Dare</h2></div>
+    <p class="hint">One small action to flex the muscle. Tiny is the point.</p>
+    <div class="dare">
+      <div class="tag">Your dare</div>
+      <p class="text" id="dareText">—</p>
+      <div class="dare-actions">
+        <button class="link-btn" id="anotherDare" type="button">↻ Give me another</button>
+        <button class="dare-done-btn" id="dareDoneBtn" type="button">I did it 🔥</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Confidence ladder -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Your Confidence Ladder</h2></div>
+    <p class="hint">Climb in order, or start where you are. Each rung is a small step out.</p>
+    <div class="ladder-progress"><i id="ladderBar"></i></div>
+    <p class="ladder-count"><b id="ladderDone">0</b> of <b id="ladderTotal">0</b> rungs climbed</p>
+    <div id="ladderList"></div>
+    <div class="add-row">
+      <input type="text" id="newRung" placeholder="Add your own rung…" maxlength="90" aria-label="Add your own ladder rung">
+      <button class="add-btn" id="addRungBtn" type="button">Add</button>
+    </div>
+    <div class="climb" id="climbMsg">
+      <div class="big" id="climbBig">Every rung counts.</div>
+      <div class="sm" id="climbSm">Pick one and check it off when it's done.</div>
+    </div>
+  </section>
+
+  <!-- 3. Fear -> Truth -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Fear → Truth</h2></div>
+    <p class="hint">Name the fear. Then answer it with a truth that's bigger.</p>
+    <div id="reframeList"></div>
+    <label class="field-label" for="newFear">Add a fear of your own</label>
+    <div class="add-row">
+      <input type="text" id="newFear" placeholder="e.g. “I’ll run out of things to say”" maxlength="90">
+      <button class="add-btn" id="addFearBtn" type="button">Add</button>
+    </div>
+  </section>
+
+  <!-- 4. Brave wins -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Brave Wins Log</h2></div>
+    <p class="hint">Every scary thing you do as a creator goes here. Celebrate it.</p>
+    <div class="wins-counter">
+      <span class="big" id="winsCount">0</span>
+      <span class="lbl">brave wins<br>and counting 🔥💛</span>
+    </div>
+    <label class="field-label" for="newWin">What brave thing did you do?</label>
+    <div class="win-input-row">
+      <input type="text" id="newWin" placeholder="e.g. Published my first post" maxlength="120">
+      <button class="add-btn" id="addWinBtn" type="button">Log it</button>
+    </div>
+    <ul class="wins-list" id="winsList"></ul>
+    <p class="empty-note" id="winsEmpty">No wins logged yet — your first one is the bravest. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_creator_confidence";
+
+  // ---- Built-in confidence ladder (escalating) ----
+  var DEFAULT_RUNGS = [
+    "Write a post — but don't publish it",
+    "Publish one text post",
+    "Reply or comment on someone else's content",
+    "Share something personal in a story",
+    "Show your face in a story (15 seconds)",
+    "Post a photo of yourself",
+    "Talk to camera for 15 seconds",
+    "Share an honest opinion you believe in",
+    "Make a small offer (something you do/sell)",
+    "Go live for the first time"
+  ];
+
+  // ---- Built-in fears + suggested truths ----
+  var DEFAULT_FEARS = [
+    { fear:"No one will care", truths:[
+      "I'm not making this for everyone — the right one person needs it.",
+      "Caring isn't the goal yet; showing up is.",
+      "Every creator I admire started with zero people watching."
+    ]},
+    { fear:"I'll cringe at myself", truths:[
+      "Cringe just means I grew — past me looks brave, not bad.",
+      "The discomfort is the muscle stretching, not a warning.",
+      "No one is watching me as closely as I'm watching myself."
+    ]},
+    { fear:"Who am I to do this?", truths:[
+      "I'm exactly far enough ahead to help the person behind me.",
+      "I don't need permission — I need one small step.",
+      "I was made to take up space, not shrink from it."
+    ]}
+  ];
+
+  // ---- Tiny dares (rotating) ----
+  var DARES = [
+    "Save one piece of content that made you feel something — notice why.",
+    "Write a single sentence about what you do. Just one.",
+    "Reply to one comment or DM with warmth today.",
+    "Take one photo you'd be willing to post. You don't have to post it.",
+    "Voice-note a 20-second idea to yourself like you're explaining it to a friend.",
+    "Comment something kind on a creator you admire.",
+    "Draft a caption for a post you haven't made yet.",
+    "Say one true opinion out loud, even just to yourself.",
+    "Record 10 seconds of you talking. Delete it after if you want.",
+    "Write down one thing you know that a beginner doesn't.",
+    "Share one small win in a story or post — no big production.",
+    "Outline a post in 3 bullet points. Done is the goal.",
+    "Look in the camera and smile for 5 seconds. Practice.",
+    "Tell one person what you're building.",
+    "Post one thing today without re-reading it 10 times."
+  ];
+
+  // ---- Climb messages by progress ----
+  var CLIMB = [
+    { big:"Every rung counts.", sm:"Pick one and check it off when it's done." },
+    { big:"You started. That's the hard part. 💛", sm:"Momentum is built, not found. Keep going." },
+    { big:"Look at you climbing.", sm:"You're braver than you were yesterday." },
+    { big:"You're finding your footing.", sm:"The fear gets quieter every step up." },
+    { big:"Halfway up the ladder. 🔥", sm:"You're becoming a creator in real time." },
+    { big:"This is who you're becoming.", sm:"Bold but soft — you're doing it your way." },
+    { big:"You've climbed so far.", sm:"Remember when posting felt impossible?" },
+    { big:"Almost at the top, sister.", sm:"The brave version of you is already here." },
+    { big:"You climbed the whole ladder. 🔥💛", sm:"Now build your own rungs — there's always a next level." }
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    var diff = d - start;
+    return Math.floor(diff / 86400000);
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{month:"short", day:"numeric"});
+  }
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+  // ---- State ----
+  function freshState(){
+    return {
+      rungs: DEFAULT_RUNGS.map(function(t){ return { id:uid(), text:t, done:false, date:null }; }),
+      fears: DEFAULT_FEARS.map(function(f){ return { id:uid(), fear:f.fear, truths:f.truths.slice(), answer:"" }; }),
+      wins: [],
+      dareIndex: dayOfYear(new Date()) % DARES.length,
+      seenWelcome: false
+    };
+  }
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && o.rungs && o.fears && o.wins){ return o; }
+      }
+    }catch(e){}
+    return freshState();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  function toast(msg){
+    var t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function(){ t.classList.remove("show"); }, 1900);
+  }
+
+  // ---- Welcome (first run) ----
+  function renderWelcome(){
+    var blank = data.wins.length === 0 &&
+      !data.rungs.some(function(r){ return r.done; }) &&
+      !data.fears.some(function(f){ return f.answer; });
+    $("welcomeCard").style.display = (blank && !data.seenWelcome) ? "block" : "none";
+  }
+
+  // ============ TINY DARE ============
+  function renderDare(){
+    $("dareText").textContent = DARES[data.dareIndex % DARES.length];
+  }
+  $("anotherDare").addEventListener("click", function(){
+    data.dareIndex = (data.dareIndex + 1) % DARES.length;
+    renderDare(); save();
+  });
+  $("dareDoneBtn").addEventListener("click", function(){
+    var txt = DARES[data.dareIndex % DARES.length];
+    addWin("Tiny dare: " + txt);
+    toast("Logged as a brave win 🔥");
+    data.dareIndex = (data.dareIndex + 1) % DARES.length;
+    renderDare(); save();
+  });
+
+  // ============ LADDER ============
+  function renderLadder(){
+    var list = $("ladderList");
+    list.innerHTML = "";
+    data.rungs.forEach(function(r){
+      var row = document.createElement("div");
+      row.className = "rung" + (r.done ? " done" : "");
+
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "check";
+      btn.setAttribute("aria-pressed", r.done ? "true" : "false");
+      btn.setAttribute("aria-label", (r.done ? "Mark not done: " : "Mark done: ") + r.text);
+      btn.textContent = "✓";
+      btn.addEventListener("click", function(){ toggleRung(r.id); });
+
+      var body = document.createElement("div");
+      body.className = "body";
+      var lbl = document.createElement("div");
+      lbl.className = "label";
+      lbl.textContent = r.text;
+      body.appendChild(lbl);
+      if(r.done && r.date){
+        var meta = document.createElement("div");
+        meta.className = "meta";
+        meta.textContent = "Climbed " + prettyDate(r.date) + " 🔥";
+        body.appendChild(meta);
+      }
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "del";
+      del.setAttribute("aria-label", "Remove rung: " + r.text);
+      del.textContent = "✕";
+      del.addEventListener("click", function(){ removeRung(r.id); });
+
+      row.appendChild(btn); row.appendChild(body); row.appendChild(del);
+      list.appendChild(row);
+    });
+
+    var total = data.rungs.length;
+    var done = data.rungs.filter(function(r){ return r.done; }).length;
+    $("ladderDone").textContent = done;
+    $("ladderTotal").textContent = total;
+    var pct = total ? Math.round((done/total)*100) : 0;
+    $("ladderBar").style.width = pct + "%";
+
+    // climb message keyed to progress
+    var idx;
+    if(total === 0){ idx = 0; }
+    else { idx = Math.round((done/total) * (CLIMB.length-1)); }
+    $("climbBig").textContent = CLIMB[idx].big;
+    $("climbSm").textContent = CLIMB[idx].sm;
+  }
+  function toggleRung(id){
+    data.rungs.forEach(function(r){
+      if(r.id === id){
+        r.done = !r.done;
+        r.date = r.done ? todayKey() : null;
+        if(r.done){ toast("Rung climbed 🔥 brave move"); }
+      }
+    });
+    save(); renderLadder(); renderWelcome();
+  }
+  function removeRung(id){
+    data.rungs = data.rungs.filter(function(r){ return r.id !== id; });
+    save(); renderLadder();
+  }
+  function addRung(){
+    var el = $("newRung");
+    var v = el.value.trim();
+    if(!v) return;
+    data.rungs.push({ id:uid(), text:v, done:false, date:null });
+    el.value = "";
+    save(); renderLadder();
+    toast("Rung added — your ladder, your way 💛");
+  }
+  $("addRungBtn").addEventListener("click", addRung);
+  $("newRung").addEventListener("keydown", function(e){ if(e.key === "Enter"){ addRung(); } });
+
+  // ============ FEAR -> TRUTH ============
+  function renderReframe(){
+    var list = $("reframeList");
+    list.innerHTML = "";
+    data.fears.forEach(function(f){
+      var item = document.createElement("div");
+      item.className = "reframe-item";
+
+      var fear = document.createElement("div");
+      fear.className = "fear";
+      fear.textContent = f.fear;
+      item.appendChild(fear);
+
+      var arrow = document.createElement("div");
+      arrow.className = "arrow";
+      arrow.textContent = "↓ the truth";
+      item.appendChild(arrow);
+
+      if(f.truths && f.truths.length){
+        var chips = document.createElement("div");
+        chips.className = "truth-chips";
+        f.truths.forEach(function(t){
+          var chip = document.createElement("button");
+          chip.type = "button";
+          chip.className = "chip";
+          chip.textContent = t;
+          chip.addEventListener("click", function(){
+            ta.value = t;
+            f.answer = t;
+            save();
+          });
+          chips.appendChild(chip);
+        });
+        item.appendChild(chips);
+      }
+
+      var ta = document.createElement("textarea");
+      ta.value = f.answer || "";
+      ta.placeholder = "Write your own truth, or tap one above…";
+      ta.setAttribute("aria-label", "Your truth for: " + f.fear);
+      ta.addEventListener("input", function(){ f.answer = ta.value; save(); });
+      item.appendChild(ta);
+
+      list.appendChild(item);
+    });
+  }
+  function addFear(){
+    var el = $("newFear");
+    var v = el.value.trim();
+    if(!v) return;
+    data.fears.push({ id:uid(), fear:v, truths:[], answer:"" });
+    el.value = "";
+    save(); renderReframe();
+    toast("Named it. Now you can answer it 💛");
+  }
+  $("addFearBtn").addEventListener("click", addFear);
+  $("newFear").addEventListener("keydown", function(e){ if(e.key === "Enter"){ addFear(); } });
+
+  // ============ BRAVE WINS ============
+  function addWin(text){
+    data.wins.unshift({ id:uid(), text:text, date:todayKey() });
+    save(); renderWins(); renderWelcome();
+  }
+  function renderWins(){
+    $("winsCount").textContent = data.wins.length;
+    var list = $("winsList"), empty = $("winsEmpty");
+    list.innerHTML = "";
+    if(data.wins.length === 0){ empty.style.display = "block"; return; }
+    empty.style.display = "none";
+    data.wins.forEach(function(w){
+      var li = document.createElement("li");
+
+      var left = document.createElement("span");
+      left.className = "w-text";
+      left.textContent = w.text;
+
+      var right = document.createElement("span");
+      right.className = "w-date";
+      right.textContent = prettyDate(w.date);
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "w-del";
+      del.setAttribute("aria-label", "Remove win: " + w.text);
+      del.textContent = "✕";
+      del.addEventListener("click", function(){
+        data.wins = data.wins.filter(function(x){ return x.id !== w.id; });
+        save(); renderWins();
+      });
+
+      li.appendChild(left); li.appendChild(right); li.appendChild(del);
+      list.appendChild(li);
+    });
+  }
+  function addWinFromInput(){
+    var el = $("newWin");
+    var v = el.value.trim();
+    if(!v) return;
+    addWin(v);
+    el.value = "";
+    toast("Brave win logged 🔥💛");
+  }
+  $("addWinBtn").addEventListener("click", addWinFromInput);
+  $("newWin").addEventListener("keydown", function(e){ if(e.key === "Enter"){ addWinFromInput(); } });
+
+  // ============ RESET ============
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Creator Confidence data — ladder, fears, and brave wins? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = freshState();
+      data.seenWelcome = false;
+      save();
+      $("newRung").value = ""; $("newFear").value = ""; $("newWin").value = "";
+      renderAll();
+    }
+  });
+
+  // ---- Mark welcome as seen once she's interacted (next load) ----
+  window.addEventListener("beforeunload", function(){
+    if($("welcomeCard").style.display === "block"){
+      var blank = data.wins.length === 0 &&
+        !data.rungs.some(function(r){ return r.done; }) &&
+        !data.fears.some(function(f){ return f.answer; });
+      if(!blank){ data.seenWelcome = true; save(); }
+    }
+  });
+
+  function renderAll(){
+    renderWelcome();
+    renderDare();
+    renderLadder();
+    renderReframe();
+    renderWins();
+  }
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

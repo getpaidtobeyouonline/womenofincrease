@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Media Content Batch Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label:first-of-type{ margin-top:0; }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], select{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  .pillar-row{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .pillar-row .dot{ flex:none; width:9px;height:9px;border-radius:50%;background:var(--gold); }
+  .pillar-row input{ flex:1; }
+  .pillar-row .rm{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:20px; line-height:1; min-width:44px; min-height:44px; border-radius:9px;
+  }
+  .pillar-row .rm:hover{ color:var(--gold); }
+
+  .add-link{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .add-link:hover{ color:var(--gold); }
+
+  .field-grid{ display:flex; gap:12px; }
+  .field-grid > div{ flex:1; }
+
+  /* ---------- Primary / gold buttons ---------- */
+  .btn-gold{
+    width:100%; margin-top:8px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .btn-gold:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .btn-gold:active{ transform:translateY(1px); }
+
+  /* ---------- Tabs ---------- */
+  .tabs{
+    display:flex; gap:6px; margin-top:16px; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.12); border-radius:13px; padding:5px;
+  }
+  .tab{
+    flex:1; min-height:44px; border:none; background:none; cursor:pointer;
+    font-family:inherit; font-weight:600; font-size:14px; color:var(--emerald);
+    border-radius:9px; transition:background .15s, color .15s;
+  }
+  .tab.active{ background:var(--emerald); color:#FCF8EF; }
+
+  /* ---------- Progress ---------- */
+  .progress-grid{ display:flex; gap:10px; }
+  .stat{
+    flex:1; text-align:center; background:var(--cream);
+    border:1px solid var(--line); border-radius:12px; padding:12px 6px;
+  }
+  .stat b{
+    display:block; font-family:'Fraunces',serif; color:var(--emerald);
+    font-size:24px; line-height:1;
+  }
+  .stat span{ font-size:11.5px; color:var(--muted); letter-spacing:.03em; text-transform:uppercase; font-weight:600; }
+  .bar{
+    height:9px; background:var(--emerald-soft); border-radius:999px;
+    margin-top:14px; overflow:hidden;
+  }
+  .bar > i{ display:block; height:100%; background:var(--gold); border-radius:999px; transition:width .35s ease; width:0%; }
+  .progress-note{ text-align:center; color:var(--muted); font-size:13px; margin-top:10px; }
+
+  .celebrate{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .celebrate.show{ display:block; animation:rise .4s ease; }
+  .celebrate .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .celebrate .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Filters ---------- */
+  .filters{ display:flex; gap:10px; margin-bottom:4px; }
+  .filters > div{ flex:1; }
+  .filters label{ display:block; font-size:11.5px; color:var(--muted); font-weight:600; margin-bottom:5px; letter-spacing:.03em; text-transform:uppercase; }
+  .filters select{ min-height:44px; font-size:14px; padding:10px 12px; }
+
+  /* ---------- Post cards ---------- */
+  .post{
+    background:#fff; border:1px solid var(--line); border-radius:14px;
+    padding:15px; margin-top:12px;
+  }
+  .post.s-posted{ border-color:rgba(20,84,62,.35); }
+  .post-head{ display:flex; align-items:center; gap:7px; flex-wrap:wrap; margin-bottom:10px; }
+  .tag{
+    font-size:11px; font-weight:700; letter-spacing:.04em;
+    padding:4px 9px; border-radius:999px; line-height:1;
+  }
+  .tag.when{ background:var(--emerald-soft); color:var(--emerald); }
+  .tag.pillar{ background:var(--gold-soft); color:var(--ink); }
+  .tag.type-Connection{ background:#EAE2F3; color:#5B3F8C; }
+  .tag.type-Value{ background:#E0EEE8; color:var(--emerald); }
+  .tag.type-Invitation{ background:#FBE7D6; color:#B5631F; }
+  .post-head .del{
+    margin-left:auto; background:none; border:none; color:var(--muted);
+    cursor:pointer; font-size:18px; min-width:40px; min-height:40px; border-radius:9px;
+  }
+  .post-head .del:hover{ color:#B5631F; }
+  .post textarea{ min-height:70px; margin-bottom:10px; }
+  .post-foot{ display:flex; gap:10px; align-items:center; }
+  .post-foot select{ min-height:44px; font-size:13.5px; padding:9px 11px; flex:1; }
+  .copy-btn{
+    flex:none; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    color:var(--emerald); font-family:inherit; font-weight:600; font-size:13px;
+    border-radius:10px; min-height:44px; padding:0 14px; cursor:pointer;
+  }
+  .copy-btn:hover{ background:var(--emerald); color:#FCF8EF; }
+  .copy-btn.copied{ background:var(--gold); color:var(--ink); border-color:var(--gold); }
+
+  /* status select coloring */
+  select.status{ font-weight:600; }
+  select.status.st-Idea{ color:var(--muted); }
+  select.status.st-Written{ color:#B5631F; }
+  select.status.st-Scheduled{ color:#5B3F8C; }
+  select.status.st-Posted{ color:var(--emerald); }
+
+  /* ---------- Board view ---------- */
+  .board-item{
+    display:flex; align-items:center; gap:10px;
+    padding:12px 2px; border-bottom:1px solid var(--line);
+  }
+  .board-item:last-child{ border-bottom:none; }
+  .board-item .sdot{ flex:none; width:11px; height:11px; border-radius:50%; }
+  .sdot.Idea{ background:#C7C0B4; }
+  .sdot.Written{ background:#E59B5A; }
+  .sdot.Scheduled{ background:#9B7BD0; }
+  .sdot.Posted{ background:var(--emerald); }
+  .board-item .b-main{ flex:1; min-width:0; }
+  .board-item .b-when{ font-size:11.5px; color:var(--muted); font-weight:600; }
+  .board-item .b-text{ font-size:14px; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .board-item .b-text.muted{ color:var(--muted); font-style:italic; }
+  .board-item .b-pillar{ flex:none; font-size:10.5px; font-weight:700; padding:3px 8px; border-radius:999px; background:var(--gold-soft); color:var(--ink); }
+
+  .legend{ display:flex; flex-wrap:wrap; gap:12px; margin-top:14px; padding-top:12px; border-top:1px solid var(--line); }
+  .legend span{ display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--muted); }
+  .legend i{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+
+  /* ---------- Tips ---------- */
+  .tips{ list-style:none; }
+  .tips li{ position:relative; padding:7px 0 7px 26px; font-size:14px; color:var(--ink); }
+  .tips li::before{ content:"✦"; position:absolute; left:4px; top:7px; color:var(--gold); }
+
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; text-align:center; padding:8px 0; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  .hidden{ display:none !important; }
+
+  .toast{
+    position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(20px);
+    background:var(--emerald); color:#FCF8EF; font-weight:600; font-size:14px;
+    padding:11px 20px; border-radius:999px; box-shadow:0 8px 22px rgba(20,84,62,.3);
+    opacity:0; pointer-events:none; transition:opacity .25s, transform .25s; z-index:50;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Content Batch Planner</h1>
+    <p class="subtitle">Plan a whole month of content in one focused sitting.</p>
+  </header>
+
+  <!-- ===== SETUP (first run) ===== -->
+  <section class="card" id="setupCard">
+    <div class="step"><span class="num">1</span><h2>Set up your batch</h2></div>
+    <p class="hint">Welcome to batching, sister. Tell the planner your themes and pace — it'll lay out a full month of post slots so all you do is fill in the ideas. Less scrambling, more flow.</p>
+
+    <label class="field-label">Your content pillars / themes</label>
+    <div id="pillarList"></div>
+    <button class="add-link" id="addPillar" type="button">＋ Add a pillar</button>
+
+    <div class="field-grid" style="margin-top:14px;">
+      <div>
+        <label class="field-label" for="perWeek">Posts per week</label>
+        <select id="perWeek">
+          <option value="3">3 a week</option>
+          <option value="4">4 a week</option>
+          <option value="5" selected>5 a week</option>
+          <option value="6">6 a week</option>
+          <option value="7">7 a week</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label" for="weeks">How many weeks</label>
+        <select id="weeks">
+          <option value="2">2 weeks</option>
+          <option value="3">3 weeks</option>
+          <option value="4" selected>4 weeks</option>
+        </select>
+      </div>
+    </div>
+
+    <label class="field-label" for="startDate">Start date <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <input type="text" id="startDate" placeholder="e.g. Mon 16 Jun — or leave blank for week labels">
+
+    <button class="btn-gold" id="generateBtn" type="button">Generate my month of slots ✨</button>
+  </section>
+
+  <!-- ===== MAIN (after setup) ===== -->
+  <div id="mainView" class="hidden">
+
+    <!-- Progress -->
+    <section class="card">
+      <div class="step"><span class="num">✓</span><h2>Your batch progress</h2></div>
+      <div class="progress-grid">
+        <div class="stat"><b id="cIdea">0</b><span>Idea</span></div>
+        <div class="stat"><b id="cWritten">0</b><span>Written</span></div>
+        <div class="stat"><b id="cScheduled">0</b><span>Scheduled</span></div>
+        <div class="stat"><b id="cPosted">0</b><span>Posted</span></div>
+      </div>
+      <div class="bar"><i id="barFill"></i></div>
+      <p class="progress-note" id="progressNote">Let's fill these in, one slot at a time.</p>
+      <div class="celebrate" id="celebrate">
+        <div class="big">Your batch is done! 🎉</div>
+        <div class="sm">A whole month, written and ready. That's a woman of increase at work. Go schedule with peace.</div>
+      </div>
+    </section>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" id="tabPlan" type="button">Plan</button>
+      <button class="tab" id="tabBoard" type="button">Month board</button>
+    </div>
+
+    <!-- PLAN view -->
+    <section id="planView">
+      <div class="card" style="margin-top:14px;">
+        <div class="filters">
+          <div>
+            <label for="fStatus">Filter by status</label>
+            <select id="fStatus">
+              <option value="">All statuses</option>
+              <option value="Idea">Idea</option>
+              <option value="Written">Written</option>
+              <option value="Scheduled">Scheduled</option>
+              <option value="Posted">Posted</option>
+            </select>
+          </div>
+          <div>
+            <label for="fPillar">Filter by pillar</label>
+            <select id="fPillar"><option value="">All pillars</option></select>
+          </div>
+        </div>
+      </div>
+
+      <div id="postList"></div>
+
+      <div class="card center" style="margin-top:14px;">
+        <button class="add-link" id="addPost" type="button">＋ Add another post slot</button>
+        <br>
+        <button class="copy-btn" id="copyAll" type="button" style="margin-top:6px;">Copy all captions</button>
+      </div>
+    </section>
+
+    <!-- BOARD view -->
+    <section id="boardView" class="hidden">
+      <div class="card" style="margin-top:14px;">
+        <div class="filters">
+          <div>
+            <label for="bStatus">Filter by status</label>
+            <select id="bStatus">
+              <option value="">All statuses</option>
+              <option value="Idea">Idea</option>
+              <option value="Written">Written</option>
+              <option value="Scheduled">Scheduled</option>
+              <option value="Posted">Posted</option>
+            </select>
+          </div>
+          <div>
+            <label for="bPillar">Filter by pillar</label>
+            <select id="bPillar"><option value="">All pillars</option></select>
+          </div>
+        </div>
+        <div id="boardList"></div>
+        <div class="legend">
+          <span><i style="background:#C7C0B4;"></i>Idea</span>
+          <span><i style="background:#E59B5A;"></i>Written</span>
+          <span><i style="background:#9B7BD0;"></i>Scheduled</span>
+          <span><i style="background:var(--emerald);"></i>Posted</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tips -->
+    <section class="card">
+      <div class="step"><span class="num">★</span><h2>Batching tips</h2></div>
+      <ul class="tips">
+        <li>Pass one: write every <b>hook</b> first — fast, no editing. Momentum is the goal.</li>
+        <li>Pass two: come back and flesh out the <b>captions</b> from each hook.</li>
+        <li>Pass three: pick a <b>format</b> and move each post to <b>Scheduled</b>.</li>
+        <li>Batch in a season of fullness, not fumes. Light a candle, put on worship, begin.</li>
+      </ul>
+    </section>
+
+    <div class="center">
+      <button class="reset-btn" id="resetBtn" type="button">Reset / Start a new month</button>
+    </div>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<div class="toast" id="toast">Copied! 💛</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_content_batch_planner";
+
+  var TYPES = ["Connection","Value","Invitation"];
+  var STATUSES = ["Idea","Written","Scheduled","Posted"];
+  var FORMATS = ["Reel","Carousel","Story","Post"];
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---------- State ----------
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.posts) return o; }
+    }catch(e){}
+    return null;
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  function uid(){ return "p" + Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+  // ---------- Setup UI ----------
+  var pillarListEl = $("pillarList");
+  var defaultPillars = ["Faith & encouragement","Behind the scenes","Tips & teaching","Offer / invitation"];
+
+  function renderPillarInputs(values){
+    pillarListEl.innerHTML = "";
+    values.forEach(function(v){ addPillarRow(v); });
+    if(values.length === 0){ addPillarRow(""); }
+  }
+  function addPillarRow(val){
+    var row = document.createElement("div");
+    row.className = "pillar-row";
+    var dot = document.createElement("span"); dot.className = "dot";
+    var inp = document.createElement("input"); inp.type="text"; inp.value = val || "";
+    inp.placeholder = "A theme you speak on…";
+    inp.setAttribute("aria-label","Content pillar");
+    var rm = document.createElement("button"); rm.type="button"; rm.className="rm"; rm.textContent="×";
+    rm.setAttribute("aria-label","Remove pillar");
+    rm.addEventListener("click", function(){
+      if(pillarListEl.children.length > 1){ row.remove(); }
+      else { inp.value=""; }
+    });
+    row.appendChild(dot); row.appendChild(inp); row.appendChild(rm);
+    pillarListEl.appendChild(row);
+  }
+  $("addPillar").addEventListener("click", function(){ addPillarRow(""); });
+
+  renderPillarInputs(defaultPillars);
+
+  // ---------- Generate batch ----------
+  $("generateBtn").addEventListener("click", function(){
+    var pillars = [];
+    pillarListEl.querySelectorAll("input").forEach(function(i){
+      var t = i.value.trim();
+      if(t) pillars.push(t);
+    });
+    if(pillars.length === 0){ pillars = ["My content"]; }
+
+    var perWeek = parseInt($("perWeek").value,10);
+    var weeks = parseInt($("weeks").value,10);
+    var startDate = $("startDate").value.trim();
+
+    var posts = [];
+    var total = perWeek * weeks;
+    for(var i=0;i<total;i++){
+      var week = Math.floor(i / perWeek) + 1;
+      var inWeek = (i % perWeek) + 1;
+      var when;
+      if(startDate){ when = (i===0 ? startDate : "Wk "+week+" · post "+inWeek); }
+      else { when = "Week "+week+" · post "+inWeek; }
+      posts.push({
+        id: uid(),
+        when: when,
+        pillar: pillars[i % pillars.length],
+        type: TYPES[i % TYPES.length],
+        idea: "",
+        format: "",
+        status: "Idea"
+      });
+    }
+
+    data = { pillars:pillars, perWeek:perWeek, weeks:weeks, startDate:startDate, posts:posts, tab:"plan" };
+    save();
+    showMain();
+  });
+
+  // ---------- Tabs ----------
+  function setTab(tab){
+    data.tab = tab; save();
+    var plan = (tab === "plan");
+    $("tabPlan").classList.toggle("active", plan);
+    $("tabBoard").classList.toggle("active", !plan);
+    $("planView").classList.toggle("hidden", !plan);
+    $("boardView").classList.toggle("hidden", plan);
+    if(!plan){ renderBoard(); }
+  }
+  $("tabPlan").addEventListener("click", function(){ setTab("plan"); });
+  $("tabBoard").addEventListener("click", function(){ setTab("board"); });
+
+  // ---------- Show / hide ----------
+  function showMain(){
+    $("setupCard").classList.add("hidden");
+    $("mainView").classList.remove("hidden");
+    buildPillarFilters();
+    setTab(data.tab || "plan");
+    renderPosts();
+    renderProgress();
+  }
+  function showSetup(){
+    $("mainView").classList.add("hidden");
+    $("setupCard").classList.remove("hidden");
+    renderPillarInputs(defaultPillars);
+    $("perWeek").value = "5"; $("weeks").value = "4"; $("startDate").value = "";
+  }
+
+  // ---------- Pillar filter options ----------
+  function buildPillarFilters(){
+    [ $("fPillar"), $("bPillar") ].forEach(function(sel){
+      var cur = sel.value;
+      sel.innerHTML = '<option value="">All pillars</option>';
+      (data.pillars || []).forEach(function(p){
+        var o = document.createElement("option"); o.value = p; o.textContent = p; sel.appendChild(o);
+      });
+      sel.value = cur;
+    });
+  }
+
+  // ---------- Render posts (PLAN) ----------
+  function renderPosts(){
+    var list = $("postList");
+    list.innerHTML = "";
+    var fs = $("fStatus").value, fp = $("fPillar").value;
+    var shown = 0;
+    data.posts.forEach(function(p){
+      if(fs && p.status !== fs) return;
+      if(fp && p.pillar !== fp) return;
+      shown++;
+      list.appendChild(buildPostCard(p));
+    });
+    if(shown === 0){
+      var note = document.createElement("p");
+      note.className = "empty-note card";
+      note.style.marginTop = "12px";
+      note.textContent = data.posts.length === 0
+        ? "No slots yet — add one below to begin."
+        : "No posts match this filter. Try clearing it.";
+      list.appendChild(note);
+    }
+  }
+
+  function buildPostCard(p){
+    var card = document.createElement("div");
+    card.className = "post s-" + p.status.toLowerCase();
+
+    var head = document.createElement("div");
+    head.className = "post-head";
+    var when = document.createElement("span"); when.className="tag when"; when.textContent = p.when;
+    var pill = document.createElement("span"); pill.className="tag pillar"; pill.textContent = p.pillar;
+    var type = document.createElement("span"); type.className="tag type-"+p.type; type.textContent = p.type;
+    var del = document.createElement("button"); del.type="button"; del.className="del"; del.textContent="🗑";
+    del.setAttribute("aria-label","Delete this post");
+    del.addEventListener("click", function(){
+      if(confirm("Delete this post slot? This can't be undone.")){
+        data.posts = data.posts.filter(function(x){ return x.id !== p.id; });
+        save(); renderPosts(); renderProgress();
+      }
+    });
+    head.appendChild(when); head.appendChild(pill); head.appendChild(type); head.appendChild(del);
+
+    var ta = document.createElement("textarea");
+    ta.value = p.idea || "";
+    ta.placeholder = "Hook or caption idea for this " + p.type.toLowerCase() + " post…";
+    ta.setAttribute("aria-label","Caption idea");
+    ta.addEventListener("input", function(){ p.idea = ta.value; save(); });
+
+    var foot = document.createElement("div");
+    foot.className = "post-foot";
+
+    var fmt = document.createElement("select");
+    fmt.setAttribute("aria-label","Format");
+    var fo = document.createElement("option"); fo.value=""; fo.textContent="Format…"; fmt.appendChild(fo);
+    FORMATS.forEach(function(f){
+      var o = document.createElement("option"); o.value=f; o.textContent=f;
+      if(p.format === f) o.selected = true; fmt.appendChild(o);
+    });
+    fmt.addEventListener("change", function(){ p.format = fmt.value; save(); });
+
+    var st = document.createElement("select");
+    st.className = "status st-" + p.status;
+    st.setAttribute("aria-label","Status");
+    STATUSES.forEach(function(s){
+      var o = document.createElement("option"); o.value=s; o.textContent=s;
+      if(p.status === s) o.selected = true; st.appendChild(o);
+    });
+    st.addEventListener("change", function(){
+      p.status = st.value; save();
+      card.className = "post s-" + p.status.toLowerCase();
+      st.className = "status st-" + p.status;
+      renderProgress();
+    });
+
+    var copy = document.createElement("button");
+    copy.type="button"; copy.className="copy-btn"; copy.textContent="Copy";
+    copy.addEventListener("click", function(){
+      var text = (p.idea || "").trim();
+      if(!text){ flashToast("Nothing to copy yet — write a caption first 💛"); return; }
+      copyText(text, function(){ markCopied(copy); });
+    });
+
+    foot.appendChild(fmt); foot.appendChild(st); foot.appendChild(copy);
+
+    card.appendChild(head); card.appendChild(ta); card.appendChild(foot);
+    return card;
+  }
+
+  // ---------- Render board ----------
+  function renderBoard(){
+    var list = $("boardList");
+    list.innerHTML = "";
+    var fs = $("bStatus").value, fp = $("bPillar").value;
+    var shown = 0;
+    data.posts.forEach(function(p){
+      if(fs && p.status !== fs) return;
+      if(fp && p.pillar !== fp) return;
+      shown++;
+      var row = document.createElement("div");
+      row.className = "board-item";
+      var dot = document.createElement("span"); dot.className = "sdot " + p.status;
+      dot.title = p.status;
+      var main = document.createElement("div"); main.className="b-main";
+      var w = document.createElement("div"); w.className="b-when"; w.textContent = p.when + " · " + p.type + (p.format ? " · " + p.format : "");
+      var t = document.createElement("div"); t.className="b-text";
+      if(p.idea && p.idea.trim()){ t.textContent = p.idea.trim(); }
+      else { t.textContent = "Empty slot — waiting for your idea"; t.classList.add("muted"); }
+      main.appendChild(w); main.appendChild(t);
+      var pl = document.createElement("span"); pl.className="b-pillar"; pl.textContent = p.pillar;
+      row.appendChild(dot); row.appendChild(main); row.appendChild(pl);
+      list.appendChild(row);
+    });
+    if(shown === 0){
+      var note = document.createElement("p");
+      note.className = "empty-note";
+      note.textContent = "Nothing to show for this filter yet.";
+      list.appendChild(note);
+    }
+  }
+
+  // ---------- Progress ----------
+  function renderProgress(){
+    var counts = { Idea:0, Written:0, Scheduled:0, Posted:0 };
+    data.posts.forEach(function(p){ if(counts[p.status]!==undefined) counts[p.status]++; });
+    $("cIdea").textContent = counts.Idea;
+    $("cWritten").textContent = counts.Written;
+    $("cScheduled").textContent = counts.Scheduled;
+    $("cPosted").textContent = counts.Posted;
+
+    var total = data.posts.length;
+    // "done" = written or further along
+    var done = counts.Written + counts.Scheduled + counts.Posted;
+    var pct = total ? Math.round((done/total)*100) : 0;
+    $("barFill").style.width = pct + "%";
+
+    var note = $("progressNote"), cel = $("celebrate");
+    if(total === 0){
+      note.textContent = "No slots yet — add one to begin.";
+      cel.classList.remove("show");
+    } else if(counts.Idea === total){
+      note.textContent = "Fresh month, blank slots. Write your first hook and feel it move. 🌿";
+      cel.classList.remove("show");
+    } else if(done === total){
+      note.textContent = pct + "% drafted — every slot has a caption.";
+      cel.classList.add("show");
+    } else {
+      note.textContent = done + " of " + total + " written (" + pct + "%). Keep going, sister — you're flowing.";
+      cel.classList.remove("show");
+    }
+  }
+
+  // ---------- Filters ----------
+  $("fStatus").addEventListener("change", renderPosts);
+  $("fPillar").addEventListener("change", renderPosts);
+  $("bStatus").addEventListener("change", renderBoard);
+  $("bPillar").addEventListener("change", renderBoard);
+
+  // ---------- Add post ----------
+  $("addPost").addEventListener("click", function(){
+    var n = data.posts.length;
+    var pillars = data.pillars && data.pillars.length ? data.pillars : ["My content"];
+    var week = Math.floor(n / (data.perWeek || pillars.length || 1)) + 1;
+    data.posts.push({
+      id: uid(),
+      when: data.startDate ? ("Wk "+week+" · extra") : ("Week "+week+" · extra"),
+      pillar: pillars[n % pillars.length],
+      type: TYPES[n % TYPES.length],
+      idea:"", format:"", status:"Idea"
+    });
+    save();
+    $("fStatus").value=""; $("fPillar").value="";
+    renderPosts(); renderProgress();
+  });
+
+  // ---------- Copy all ----------
+  $("copyAll").addEventListener("click", function(){
+    if(!data.posts.length){ flashToast("Nothing to copy yet 💛"); return; }
+    var lines = [];
+    data.posts.forEach(function(p, idx){
+      var idea = (p.idea||"").trim();
+      if(!idea) return;
+      lines.push("— " + p.when + " · " + p.pillar + " · " + p.type + (p.format?(" · "+p.format):"") + " ["+p.status+"]");
+      lines.push(idea);
+      lines.push("");
+    });
+    if(!lines.length){ flashToast("Write some captions first, then copy 💛"); return; }
+    var text = "MY CONTENT BATCH\n\n" + lines.join("\n").trim() + "\n";
+    copyText(text, function(){
+      var b = $("copyAll");
+      b.classList.add("copied"); b.textContent = "Copied all! ✓";
+      setTimeout(function(){ b.classList.remove("copied"); b.textContent="Copy all captions"; }, 1800);
+    });
+  });
+
+  // ---------- Clipboard helpers ----------
+  function copyText(text, onOk){
+    function fallback(){
+      try{
+        var ta = document.createElement("textarea");
+        ta.value = text; ta.style.position="fixed"; ta.style.left="-9999px";
+        document.body.appendChild(ta); ta.focus(); ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        if(onOk) onOk(); flashToast("Copied! 💛");
+      }catch(e){ flashToast("Couldn't copy — try selecting it manually."); }
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        if(onOk) onOk(); flashToast("Copied! 💛");
+      }, fallback);
+    } else { fallback(); }
+  }
+  function markCopied(btn){
+    btn.classList.add("copied"); var old = btn.textContent; btn.textContent="Copied! ✓";
+    setTimeout(function(){ btn.classList.remove("copied"); btn.textContent=old; }, 1600);
+  }
+  var toastTimer;
+  function flashToast(msg){
+    var t = $("toast"); t.textContent = msg; t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 1900);
+  }
+
+  // ---------- Reset ----------
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Start a fresh month? This clears all your current posts and pillars. This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = null;
+      showSetup();
+    }
+  });
+
+  // ---------- Boot ----------
+  if(data && data.posts){ showMain(); }
+  else { showSetup(); }
+
+})();
+</script>
+</body>
+</html>

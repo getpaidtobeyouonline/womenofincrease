@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Reinvention Business Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    display:none; margin-top:16px;
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:16px; padding:24px 20px;
+  }
+  .welcome.show{ display:block; }
+  .welcome h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:21px; margin-bottom:8px;
+    color:#FCF8EF;
+  }
+  .welcome p{ font-size:14.5px; color:rgba(252,248,239,.9); }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:6px 0 14px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:78px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- From / To pivot map ---------- */
+  .pivot{ display:flex; flex-direction:column; gap:0; }
+  .pivot-node{
+    border:1px solid var(--line); border-radius:13px; padding:14px; background:var(--cream);
+  }
+  .pivot-node .tag{
+    display:inline-block; font-weight:700; font-size:11px; letter-spacing:.14em;
+    text-transform:uppercase; padding:4px 10px; border-radius:999px; margin-bottom:8px;
+  }
+  .pivot-node.from .tag{ background:var(--gold-soft); color:#6e5418; }
+  .pivot-node.to .tag{ background:var(--emerald-soft); color:var(--emerald); }
+  .pivot-node textarea{ background:#fff; min-height:70px; }
+  .pivot-arrow{
+    text-align:center; color:var(--gold); font-size:22px; line-height:1; padding:8px 0;
+  }
+
+  /* ---------- Addable lists ---------- */
+  .add-row{ display:flex; gap:8px; margin-top:10px; }
+  .add-row input{ flex:1; }
+  .add-btn{
+    flex:none; min-width:48px; min-height:48px;
+    background:var(--emerald); color:#FCF8EF; border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:22px; line-height:1; cursor:pointer;
+    transition:transform .08s ease;
+  }
+  .add-btn:active{ transform:translateY(1px); }
+
+  .item-list{ list-style:none; margin-top:12px; }
+  .item-list li{
+    display:flex; align-items:flex-start; gap:10px;
+    padding:11px 12px; border:1px solid var(--line); border-radius:11px;
+    background:var(--cream); margin-bottom:8px;
+  }
+  .item-list li.checkable{ cursor:default; }
+  .item-list .item-check{
+    flex:none; width:24px; height:24px; margin-top:1px;
+    border:2px solid var(--gold); border-radius:7px; background:#fff;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    font-size:14px; color:#fff; transition:background .12s, border-color .12s;
+  }
+  .item-list li.checked .item-check{ background:var(--emerald); border-color:var(--emerald); }
+  .item-list li.checked .item-text{ text-decoration:line-through; color:var(--muted); }
+  .item-list .item-bullet{
+    flex:none; width:9px;height:9px;border-radius:50%;background:var(--gold);margin-top:7px;
+  }
+  .item-list .item-text{ flex:1; font-size:14.5px; word-break:break-word; }
+  .item-list .item-del{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:18px; line-height:1; padding:4px 6px; min-height:32px; border-radius:8px;
+  }
+  .item-list .item-del:hover{ color:#a23; }
+  .list-empty{ color:var(--muted); font-size:13.5px; font-style:italic; margin-top:10px; }
+
+  /* ---------- Timeline ---------- */
+  .phase{
+    border:1px solid var(--line); border-radius:13px; padding:14px; margin-top:14px;
+    background:var(--cream);
+  }
+  .phase-head{ display:flex; align-items:center; gap:10px; }
+  .phase-dot{
+    flex:none; width:12px;height:12px;border-radius:50%;
+    background:var(--gold); box-shadow:0 0 0 4px var(--gold-soft);
+  }
+  .phase-title{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:17px; flex:1;
+  }
+  .phase-dates{ display:flex; gap:8px; margin-top:12px; }
+  .phase-dates .df{ flex:1; }
+  .phase-dates label{
+    display:block; font-size:11.5px; font-weight:600; color:var(--muted);
+    text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px;
+  }
+  input[type="date"]{
+    width:100%; font-family:inherit; font-size:15px; color:var(--ink); min-height:46px;
+    background:#fff; border:1px solid var(--line); border-radius:10px; padding:10px 12px;
+  }
+  input[type="date"]:focus{ outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,160,74,.18); }
+  .phase-steps-label{ font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin:14px 0 0; }
+  .phase .item-list li{ background:#fff; }
+
+  /* ---------- Progress ---------- */
+  .progress-wrap{ margin-top:16px; }
+  .progress-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
+  .progress-top .lbl{ font-weight:600; font-size:14px; color:var(--emerald); }
+  .progress-top .pct{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; color:var(--gold); }
+  .progress-bar{ height:12px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .progress-fill{ height:100%; width:0%; background:linear-gradient(90deg, var(--gold-soft), var(--gold)); border-radius:999px; transition:width .35s ease; }
+  .progress-note{ margin-top:10px; font-size:13.5px; color:var(--muted); text-align:center; }
+
+  /* ---------- Bridge income ---------- */
+  .bridge{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:13px; padding:16px;
+  }
+  .bridge textarea{ background:#fff; }
+
+  /* ---------- Faith note ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+    margin-top:16px;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .verse .encourage{
+    margin-top:14px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:400;
+    font-size:14px; line-height:1.5; color:rgba(252,248,239,.92); position:relative; z-index:1;
+  }
+
+  /* ---------- Saved cue ---------- */
+  .saved-cue{
+    text-align:center; margin-top:18px; color:var(--muted); font-size:13px;
+    opacity:0; transition:opacity .3s ease;
+  }
+  .saved-cue.show{ opacity:1; }
+  .saved-cue b{ color:var(--emerald); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>The Reinvention Business Planner</h1>
+    <p class="subtitle">Map your pivot — the transition, the timeline, the launch.</p>
+  </header>
+
+  <!-- First-run welcome -->
+  <section class="welcome" id="welcome">
+    <h2>Welcome to your reinvention. 💛</h2>
+    <p>You're allowed to change. The version of you starting today isn't starting from zero — she's building on everything she already carries. Let's map where you're going, gently and on purpose. Nothing here is locked in. Save a thought, change it tomorrow. This is yours.</p>
+  </section>
+
+  <!-- 1. Pivot map -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Pivot Map</h2></div>
+    <p class="hint">Name where you are and where you're headed. Seeing both on one page makes the leap feel like a path.</p>
+    <div class="pivot">
+      <div class="pivot-node from">
+        <span class="tag">From</span>
+        <label class="field-label" for="fromText" style="margin-top:0;">Where your work is now — or what you're leaving</label>
+        <textarea id="fromText" placeholder="Right now, my business / work is…"></textarea>
+      </div>
+      <div class="pivot-arrow">↓</div>
+      <div class="pivot-node to">
+        <span class="tag">To</span>
+        <label class="field-label" for="toText" style="margin-top:0;">The new direction you're moving toward</label>
+        <textarea id="toText" placeholder="I'm reinventing toward…"></textarea>
+      </div>
+    </div>
+    <label class="field-label" for="whyText">Why now?</label>
+    <p class="hint" style="margin-top:0;">Your reason is your fuel for the hard days. Be honest with yourself here.</p>
+    <textarea id="whyText" placeholder="This season feels right because…"></textarea>
+  </section>
+
+  <!-- 2. What transfers -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>What Transfers</h2></div>
+    <p class="hint">You are not starting over. Name the skills, audience, lessons, and assets you're carrying forward — this pivot stands on what you've already built.</p>
+    <div class="add-row">
+      <input type="text" id="transferInput" placeholder="A skill, an audience, a lesson, an asset…" aria-label="Add something you're carrying forward">
+      <button class="add-btn" id="transferAdd" type="button" aria-label="Add to what transfers">+</button>
+    </div>
+    <ul class="item-list" id="transferList"></ul>
+    <p class="list-empty" id="transferEmpty">Add the first thing you're bringing with you. You've earned it. 💛</p>
+  </section>
+
+  <!-- 3. What changes -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>What Changes</h2></div>
+    <p class="hint">What's new, or needs building — a new offer, audience, skill, or brand. Tap each as you build it.</p>
+    <div class="add-row">
+      <input type="text" id="changeInput" placeholder="Something new to build…" aria-label="Add something that changes">
+      <button class="add-btn" id="changeAdd" type="button" aria-label="Add to what changes">+</button>
+    </div>
+    <ul class="item-list" id="changeList"></ul>
+    <p class="list-empty" id="changeEmpty">What does this new direction need that you don't have yet?</p>
+  </section>
+
+  <!-- 4. Transition timeline -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Transition Timeline</h2></div>
+    <p class="hint">A pivot is gradual, not a scary jump. Set rough dates for each phase, then check off the steps inside. You can move dates anytime.</p>
+    <div id="phaseContainer"></div>
+
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span class="lbl">Your transition progress</span>
+        <span class="pct" id="progressPct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <p class="progress-note" id="progressNote">Add steps to your phases and check them off as you go.</p>
+    </div>
+  </section>
+
+  <!-- 5. Bridge income -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>Bridge Income</h2></div>
+    <p class="hint">Reinvention is braver when you're not scared about money. Plan how you'll sustain yourself while the new thing grows — there's no shame in a bridge.</p>
+    <div class="bridge">
+      <label class="field-label" for="bridgeText" style="margin-top:0;">How I'll keep income steady during the transition</label>
+      <textarea id="bridgeText" placeholder="During the transition, I'll cover my needs by… (current clients, part-time work, savings runway, a kept offer…)"></textarea>
+    </div>
+  </section>
+
+  <!-- Faith / encouragement -->
+  <section>
+    <div class="verse">
+      <p>See, I am doing a new thing! Now it springs up; do you not perceive it? I am making a way in the wilderness and streams in the wasteland.</p>
+      <div class="ref">Isaiah 43:19</div>
+      <p class="encourage">There is a season for everything — including the brave decision to become someone new. The same God who carried you through the last chapter is already in this one, making a way. You're not behind. You're right on time.</p>
+    </div>
+  </section>
+
+  <div class="saved-cue" id="savedCue"><b>Saved.</b> Your plan is safe — refresh anytime.</div>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_reinvention_business";
+
+  // ---- Default state ----
+  function defaultData(){
+    return {
+      from:"", to:"", why:"", bridge:"",
+      transfers:[],   // [{text}]
+      changes:[],     // [{text, done}]
+      phases:[
+        { title:"Wind down the old", start:"", end:"", steps:[] },
+        { title:"Build the new",     start:"", end:"", steps:[] },
+        { title:"Soft launch",       start:"", end:"", steps:[] },
+        { title:"Full launch",       start:"", end:"", steps:[] }
+      ]
+    };
+  }
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          var d = defaultData();
+          // merge defensively
+          d.from = o.from || ""; d.to = o.to || ""; d.why = o.why || ""; d.bridge = o.bridge || "";
+          if(Array.isArray(o.transfers)) d.transfers = o.transfers.map(function(t){ return { text:String(t.text||"") }; });
+          if(Array.isArray(o.changes)) d.changes = o.changes.map(function(c){ return { text:String(c.text||""), done:!!c.done }; });
+          if(Array.isArray(o.phases) && o.phases.length){
+            d.phases = o.phases.map(function(p){
+              return {
+                title:String(p.title||""),
+                start:String(p.start||""),
+                end:String(p.end||""),
+                steps:Array.isArray(p.steps)? p.steps.map(function(s){ return { text:String(s.text||""), done:!!s.done }; }) : []
+              };
+            });
+          }
+          return { data:d, fresh:false };
+        }
+      }
+    }catch(e){}
+    return { data:defaultData(), fresh:true };
+  }
+
+  var loaded = load();
+  var data = loaded.data;
+
+  var savedCue = document.getElementById("savedCue"), savedTimer;
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+    if(savedCue){
+      savedCue.classList.add("show");
+      clearTimeout(savedTimer);
+      savedTimer = setTimeout(function(){ savedCue.classList.remove("show"); }, 1400);
+    }
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- First-run welcome ----
+  function isEmptyState(){
+    if(data.from || data.to || data.why || data.bridge) return false;
+    if(data.transfers.length || data.changes.length) return false;
+    for(var i=0;i<data.phases.length;i++){
+      var p = data.phases[i];
+      if(p.start || p.end || p.steps.length) return false;
+    }
+    return true;
+  }
+  function refreshWelcome(){
+    if(isEmptyState()) $("welcome").classList.add("show");
+    else $("welcome").classList.remove("show");
+  }
+
+  // ---- Simple saved text fields ----
+  function wireText(id, prop){
+    var el = $(id);
+    el.value = data[prop] || "";
+    el.addEventListener("input", function(){ data[prop] = el.value; save(); refreshWelcome(); });
+  }
+  wireText("fromText","from");
+  wireText("toText","to");
+  wireText("whyText","why");
+  wireText("bridgeText","bridge");
+
+  // ---- Generic addable list renderer ----
+  function renderList(arr, listEl, emptyEl, opts){
+    listEl.innerHTML = "";
+    if(arr.length === 0){ emptyEl.style.display = "block"; return; }
+    emptyEl.style.display = "none";
+    arr.forEach(function(item, idx){
+      var li = document.createElement("li");
+      if(opts.checkable){
+        li.className = "checkable" + (item.done ? " checked" : "");
+        var chk = document.createElement("button");
+        chk.type = "button";
+        chk.className = "item-check";
+        chk.setAttribute("aria-label", item.done ? "Mark not done" : "Mark done");
+        chk.setAttribute("aria-pressed", item.done ? "true" : "false");
+        chk.textContent = item.done ? "✓" : "";
+        chk.addEventListener("click", function(){
+          item.done = !item.done; save(); opts.afterChange();
+        });
+        li.appendChild(chk);
+      } else {
+        var bullet = document.createElement("span");
+        bullet.className = "item-bullet";
+        li.appendChild(bullet);
+      }
+      var txt = document.createElement("span");
+      txt.className = "item-text";
+      txt.textContent = item.text;
+      li.appendChild(txt);
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "item-del";
+      del.setAttribute("aria-label", "Remove");
+      del.innerHTML = "&times;";
+      del.addEventListener("click", function(){
+        arr.splice(idx, 1); save(); opts.afterChange();
+      });
+      li.appendChild(del);
+      listEl.appendChild(li);
+    });
+  }
+
+  function wireAdder(inputId, btnId, arr, onAdd){
+    var input = $(inputId), btn = $(btnId);
+    function add(){
+      var v = input.value.trim();
+      if(!v) return;
+      onAdd(v);
+      input.value = "";
+      save();
+      input.focus();
+    }
+    btn.addEventListener("click", add);
+    input.addEventListener("keydown", function(e){
+      if(e.key === "Enter"){ e.preventDefault(); add(); }
+    });
+  }
+
+  // ---- What transfers ----
+  var transferList = $("transferList"), transferEmpty = $("transferEmpty");
+  function renderTransfers(){
+    renderList(data.transfers, transferList, transferEmpty, {
+      checkable:false,
+      afterChange:function(){ renderTransfers(); refreshWelcome(); }
+    });
+  }
+  wireAdder("transferInput","transferAdd", data.transfers, function(v){
+    data.transfers.push({ text:v }); renderTransfers(); refreshWelcome();
+  });
+
+  // ---- What changes ----
+  var changeList = $("changeList"), changeEmpty = $("changeEmpty");
+  function renderChanges(){
+    renderList(data.changes, changeList, changeEmpty, {
+      checkable:true,
+      afterChange:function(){ renderChanges(); refreshWelcome(); }
+    });
+  }
+  wireAdder("changeInput","changeAdd", data.changes, function(v){
+    data.changes.push({ text:v, done:false }); renderChanges(); refreshWelcome();
+  });
+
+  // ---- Timeline phases ----
+  var phaseContainer = $("phaseContainer");
+  function renderPhases(){
+    phaseContainer.innerHTML = "";
+    data.phases.forEach(function(phase, pIdx){
+      var wrap = document.createElement("div");
+      wrap.className = "phase";
+
+      // head
+      var head = document.createElement("div");
+      head.className = "phase-head";
+      var dot = document.createElement("span"); dot.className = "phase-dot";
+      var title = document.createElement("span"); title.className = "phase-title"; title.textContent = phase.title;
+      head.appendChild(dot); head.appendChild(title);
+      wrap.appendChild(head);
+
+      // dates
+      var dates = document.createElement("div");
+      dates.className = "phase-dates";
+      ["start","end"].forEach(function(which){
+        var df = document.createElement("div"); df.className = "df";
+        var lab = document.createElement("label");
+        var did = "phase"+pIdx+"-"+which;
+        lab.setAttribute("for", did);
+        lab.textContent = which === "start" ? "Start" : "Target";
+        var inp = document.createElement("input");
+        inp.type = "date"; inp.id = did; inp.value = phase[which] || "";
+        inp.addEventListener("change", function(){ phase[which] = inp.value; save(); refreshWelcome(); });
+        df.appendChild(lab); df.appendChild(inp);
+        dates.appendChild(df);
+      });
+      wrap.appendChild(dates);
+
+      // steps label
+      var sl = document.createElement("p");
+      sl.className = "phase-steps-label";
+      sl.textContent = "Steps in this phase";
+      wrap.appendChild(sl);
+
+      // steps list
+      var ul = document.createElement("ul");
+      ul.className = "item-list";
+      var emptyP = document.createElement("p");
+      emptyP.className = "list-empty";
+      emptyP.textContent = "Break this phase into small, doable steps.";
+      // render steps
+      (function renderSteps(){
+        renderList(phase.steps, ul, emptyP, {
+          checkable:true,
+          afterChange:function(){ renderSteps(); renderProgress(); refreshWelcome(); }
+        });
+      })();
+      wrap.appendChild(ul);
+      wrap.appendChild(emptyP);
+
+      // add step row
+      var addRow = document.createElement("div");
+      addRow.className = "add-row";
+      var inp = document.createElement("input");
+      inp.type = "text"; inp.placeholder = "Add a step…";
+      inp.setAttribute("aria-label", "Add a step to " + phase.title);
+      var btn = document.createElement("button");
+      btn.type = "button"; btn.className = "add-btn"; btn.textContent = "+";
+      btn.setAttribute("aria-label", "Add step to " + phase.title);
+      function addStep(){
+        var v = inp.value.trim();
+        if(!v) return;
+        phase.steps.push({ text:v, done:false });
+        inp.value = "";
+        save();
+        renderList(phase.steps, ul, emptyP, {
+          checkable:true,
+          afterChange:function(){ renderPhases(); renderProgress(); refreshWelcome(); }
+        });
+        renderProgress(); refreshWelcome();
+        inp.focus();
+      }
+      btn.addEventListener("click", addStep);
+      inp.addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); addStep(); } });
+      addRow.appendChild(inp); addRow.appendChild(btn);
+      wrap.appendChild(addRow);
+
+      phaseContainer.appendChild(wrap);
+    });
+  }
+
+  // ---- Progress (across all phase steps) ----
+  function renderProgress(){
+    var total = 0, done = 0;
+    data.phases.forEach(function(p){
+      p.steps.forEach(function(s){ total++; if(s.done) done++; });
+    });
+    var pct = total === 0 ? 0 : Math.round((done/total)*100);
+    $("progressPct").textContent = pct + "%";
+    $("progressFill").style.width = pct + "%";
+    var note = $("progressNote");
+    if(total === 0){
+      note.textContent = "Add steps to your phases and check them off as you go.";
+    } else if(pct === 0){
+      note.textContent = done + " of " + total + " steps done — every reinvention starts with one.";
+    } else if(pct < 100){
+      note.textContent = done + " of " + total + " steps done — you're becoming her. Keep going. 💛";
+    } else {
+      note.textContent = "All " + total + " steps complete. Look how far you've come. 🌿";
+    }
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Reinvention Business Planner data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = defaultData();
+      $("fromText").value = ""; $("toText").value = ""; $("whyText").value = ""; $("bridgeText").value = "";
+      renderTransfers(); renderChanges(); renderPhases(); renderProgress(); refreshWelcome();
+    }
+  });
+
+  // ---- Initial render ----
+  renderTransfers();
+  renderChanges();
+  renderPhases();
+  renderProgress();
+  refreshWelcome();
+
+})();
+</script>
+</body>
+</html>

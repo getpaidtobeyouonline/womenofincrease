@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MRR Income Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Explainer ---------- */
+  .explainer{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .explainer::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .explainer h3{
+    font-family:'Fraunces',serif; font-weight:600; font-size:20px; margin-bottom:8px;
+    position:relative; z-index:1; color:#FCF8EF;
+  }
+  .explainer p{
+    font-size:14.5px; line-height:1.5; position:relative; z-index:1; color:#F2EAD8;
+  }
+  .explainer p + p{ margin-top:8px; }
+  .explainer b{ color:var(--gold-soft); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="number"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="number"]{ min-height:48px; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  .grid2{ display:flex; gap:10px; }
+  .grid2 > div{ flex:1; }
+  .with-prefix{ position:relative; }
+  .with-prefix .pre{
+    position:absolute; left:12px; top:50%; transform:translateY(-50%);
+    color:var(--muted); font-weight:600; font-size:15px; pointer-events:none;
+  }
+  .with-prefix input{ padding-left:26px; }
+
+  /* ---------- Add button ---------- */
+  .add-btn{
+    width:100%; margin-top:14px; min-height:50px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:15.5px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .add-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .add-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Product list ---------- */
+  .product{
+    border:1px solid var(--line); border-radius:13px; padding:14px;
+    margin-top:12px; background:var(--cream);
+  }
+  .product .p-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .product .p-name{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:17px;
+    line-height:1.2;
+  }
+  .product .del{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:13px; min-height:44px; min-width:44px; display:flex; align-items:center; justify-content:center;
+  }
+  .product .del:hover{ color:#b23b3b; }
+  .pstats{
+    display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;
+  }
+  .pstat{
+    background:#fff; border:1px solid var(--line); border-radius:9px;
+    padding:7px 11px; font-size:13px; color:var(--muted); flex:1; min-width:90px;
+  }
+  .pstat b{ display:block; color:var(--ink); font-size:16px; font-weight:700; margin-top:2px;
+    font-family:'Fraunces',serif; }
+  .pstat.profit b{ color:var(--emerald); }
+  .p-vol{ display:flex; align-items:center; gap:10px; margin-top:12px; }
+  .p-vol label{ font-size:13px; color:var(--ink); font-weight:600; flex:1; }
+  .p-vol input{ width:96px; min-height:44px; text-align:center; }
+  .breakeven-note{
+    margin-top:10px; font-size:12.5px; color:var(--muted); font-style:italic;
+  }
+  .breakeven-note b{ color:var(--emerald); font-style:normal; }
+
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; text-align:center; padding:6px 0; }
+
+  /* ---------- Welcome (first run) ---------- */
+  .welcome{
+    text-align:center; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:20px 16px; color:var(--emerald);
+  }
+  .welcome .big{ font-family:'Fraunces',serif; font-weight:600; font-size:19px; margin-bottom:6px; }
+  .welcome .sm{ font-size:14px; color:var(--muted); line-height:1.5; }
+
+  /* ---------- Projection totals ---------- */
+  .totals{
+    display:flex; gap:10px; flex-wrap:wrap;
+  }
+  .tcard{
+    flex:1; min-width:140px; background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:13px; padding:16px;
+  }
+  .tcard .lbl{ font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--gold-soft); font-weight:600; }
+  .tcard .val{ font-family:'Fraunces',serif; font-size:26px; font-weight:600; margin-top:4px; }
+  .tcard .sub{ font-size:12.5px; color:#D9CFB8; margin-top:2px; }
+  .tcard.light{
+    background:#fff; border:1px solid var(--line); color:var(--ink);
+  }
+  .tcard.light .lbl{ color:var(--muted); }
+  .tcard.light .val{ color:var(--emerald); }
+  .tcard.light .sub{ color:var(--muted); }
+
+  /* ---------- Bars ---------- */
+  .bars{ margin-top:18px; }
+  .bar-row{ margin-bottom:12px; }
+  .bar-top{ display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px; }
+  .bar-top .bn{ color:var(--ink); font-weight:600; }
+  .bar-top .bv{ color:var(--emerald); font-weight:700; }
+  .bar-track{ height:12px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .bar-fill{ height:100%; background:linear-gradient(90deg, var(--gold-soft), var(--gold)); border-radius:999px; transition:width .35s ease; }
+
+  /* ---------- Goal ---------- */
+  .goal-result{
+    margin-top:14px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:13px; padding:16px; color:var(--emerald);
+  }
+  .goal-result .line{ font-size:14.5px; line-height:1.55; }
+  .goal-result .line + .line{ margin-top:8px; }
+  .goal-result b{ font-family:'Fraunces',serif; font-size:18px; color:var(--emerald); }
+  .pill{ display:inline-block; background:#fff; border:1px solid rgba(20,84,62,.15);
+    border-radius:999px; padding:2px 10px; font-weight:700; color:var(--emerald); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>MRR Income Planner</h1>
+    <p class="subtitle">Buy once, sell many — keep your profit. Plan it here.</p>
+  </header>
+
+  <!-- Explainer -->
+  <section class="card">
+    <div class="explainer">
+      <h3>What is Master Resell Rights?</h3>
+      <p>When you buy a product with <b>Master Resell Rights (MRR)</b>, you pay once for the rights — then you're free to sell it as your own, again and again.</p>
+      <p>Every sale you make is <b>your</b> sale. You keep 100% of what comes in. No splitting, no asking permission. One purchase, then your own income stream.</p>
+      <p>This is exactly how your Women of Increase app bundles work, sister. Let's map the numbers and dream out loud. 💛</p>
+    </div>
+  </section>
+
+  <!-- 1. Add products -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your MRR Products</h2></div>
+    <p class="hint">Add each bundle or product you're reselling — what you paid for the rights, and your selling price.</p>
+
+    <label class="field-label" for="pName">Product / bundle name</label>
+    <input type="text" id="pName" placeholder="e.g. 100 Mini-App Bundle" maxlength="60">
+
+    <div class="grid2">
+      <div>
+        <label class="field-label" for="pCost">What you paid (rights)</label>
+        <div class="with-prefix"><span class="pre">$</span><input type="number" id="pCost" inputmode="decimal" min="0" step="0.01" placeholder="0"></div>
+      </div>
+      <div>
+        <label class="field-label" for="pPrice">Your selling price</label>
+        <div class="with-prefix"><span class="pre">$</span><input type="number" id="pPrice" inputmode="decimal" min="0" step="0.01" placeholder="0"></div>
+      </div>
+    </div>
+
+    <button class="add-btn" id="addBtn" type="button">+ Add this product</button>
+
+    <div id="productList"></div>
+    <p class="empty-note" id="productEmpty" style="display:none;">No products yet — add your first one above. ✨</p>
+  </section>
+
+  <!-- First-run welcome -->
+  <section class="card" id="welcomeCard" style="display:none;">
+    <div class="welcome">
+      <div class="big">Welcome, sister. 💛</div>
+      <div class="sm">This is your space to plan real income. Add a product you have the rights to resell, set how many sales you believe for each month, and watch your projection come alive. Buy once — sell many — keep your profit.</div>
+    </div>
+  </section>
+
+  <!-- 2. Fees & projection settings -->
+  <section class="card" id="settingsCard">
+    <div class="step"><span class="num">2</span><h2>Your Numbers</h2></div>
+    <p class="hint">Set expected sales for each product above. If your platform takes a cut per sale, enter it here.</p>
+
+    <label class="field-label" for="feePct">Platform / payment fee per sale (%)</label>
+    <div class="with-prefix" style="max-width:140px;">
+      <input type="number" id="feePct" inputmode="decimal" min="0" max="100" step="0.1" placeholder="0">
+      <span class="pre" style="left:auto; right:12px;">%</span>
+    </div>
+    <p class="hint" style="margin-top:8px;">Many platforms charge ~3–10%. Leave at 0 if you sell direct.</p>
+  </section>
+
+  <!-- 3. Projection -->
+  <section class="card" id="projCard">
+    <div class="step"><span class="num">3</span><h2>Your Projection</h2></div>
+    <p class="hint">Live numbers, based on everything above. Adjust price or volume and watch it move.</p>
+
+    <div class="totals">
+      <div class="tcard">
+        <div class="lbl">Monthly revenue</div>
+        <div class="val" id="mRev">$0</div>
+        <div class="sub" id="mUnits">0 sales / month</div>
+      </div>
+      <div class="tcard light">
+        <div class="lbl">Monthly profit</div>
+        <div class="val" id="mProfit">$0</div>
+        <div class="sub" id="mFee">after fees</div>
+      </div>
+    </div>
+    <div class="totals" style="margin-top:10px;">
+      <div class="tcard light">
+        <div class="lbl">Annual revenue</div>
+        <div class="val" id="yRev">$0</div>
+        <div class="sub">12 months</div>
+      </div>
+      <div class="tcard">
+        <div class="lbl">Annual profit</div>
+        <div class="val" id="yProfit">$0</div>
+        <div class="sub">your keep, sister</div>
+      </div>
+    </div>
+
+    <div class="bars" id="bars"></div>
+    <p class="empty-note" id="projEmpty">Add a product and set your monthly sales to see your projection. 🌱</p>
+  </section>
+
+  <!-- 4. Goal reverse-math -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Reach Your Goal</h2></div>
+    <p class="hint">Name an income goal, and I'll show you exactly how many sales it takes.</p>
+
+    <div class="grid2">
+      <div>
+        <label class="field-label" for="goalAmt">Income goal</label>
+        <div class="with-prefix"><span class="pre">$</span><input type="number" id="goalAmt" inputmode="decimal" min="0" step="1" placeholder="2000"></div>
+      </div>
+      <div>
+        <label class="field-label" for="goalPeriod">Per</label>
+        <select id="goalPeriod" style="width:100%; min-height:48px; font-family:inherit; font-size:16px; color:var(--ink); background:var(--cream); border:1px solid var(--line); border-radius:11px; padding:13px 14px;">
+          <option value="month">month</option>
+          <option value="year">year</option>
+        </select>
+      </div>
+    </div>
+
+    <label class="field-label" for="goalPrice">At which selling price?</label>
+    <div class="with-prefix"><span class="pre">$</span><input type="number" id="goalPrice" inputmode="decimal" min="0" step="0.01" placeholder="Pick a price"></div>
+    <p class="hint" style="margin-top:8px;">Tip: this auto-fills from your first product, but you can dream at any price.</p>
+
+    <div class="goal-result" id="goalResult" style="display:none;"></div>
+    <p class="empty-note" id="goalEmpty">Enter a goal and a price to see your path. 🎯</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_mrr_income";
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && Array.isArray(o.products)) return o;
+      }
+    }catch(e){}
+    return { products:[], feePct:0, goalAmt:"", goalPeriod:"month", goalPrice:"", goalTouched:false };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Currency helpers ----
+  function money(n){
+    if(!isFinite(n)) n = 0;
+    var neg = n < 0;
+    n = Math.abs(Math.round(n));
+    var s = n.toLocaleString(undefined);
+    return (neg?"-$":"$") + s;
+  }
+  function money2(n){
+    if(!isFinite(n)) n = 0;
+    return "$" + n.toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:2});
+  }
+  function num(v){ var n = parseFloat(v); return isFinite(n) ? n : 0; }
+
+  // ---- Add product ----
+  $("addBtn").addEventListener("click", function(){
+    var name = $("pName").value.trim();
+    var cost = num($("pCost").value);
+    var price = num($("pPrice").value);
+    if(!name){ $("pName").focus(); return; }
+    data.products.push({ id: Date.now()+"-"+Math.random().toString(36).slice(2,7), name:name, cost:cost, price:price, vol:0 });
+    $("pName").value=""; $("pCost").value=""; $("pPrice").value="";
+    if(!data.goalTouched && !data.goalPrice && price>0){ data.goalPrice = String(price); }
+    save();
+    renderAll();
+    $("pName").focus();
+  });
+
+  // ---- Render product list ----
+  function renderProducts(){
+    var list = $("productList");
+    var empty = $("productEmpty");
+    list.innerHTML = "";
+    if(data.products.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+
+    data.products.forEach(function(p){
+      var profit = p.price - p.cost;
+      var div = document.createElement("div");
+      div.className = "product";
+
+      var top = document.createElement("div");
+      top.className = "p-top";
+      var nm = document.createElement("div");
+      nm.className = "p-name";
+      nm.textContent = p.name;
+      var del = document.createElement("button");
+      del.className = "del";
+      del.type = "button";
+      del.setAttribute("aria-label","Delete "+p.name);
+      del.textContent = "✕ remove";
+      del.addEventListener("click", function(){
+        if(confirm('Remove "'+p.name+'" from your plan?')){
+          data.products = data.products.filter(function(x){ return x.id !== p.id; });
+          save(); renderAll();
+        }
+      });
+      top.appendChild(nm); top.appendChild(del);
+      div.appendChild(top);
+
+      var stats = document.createElement("div");
+      stats.className = "pstats";
+      stats.innerHTML =
+        '<div class="pstat">Rights cost<b>'+money2(p.cost)+'</b></div>'+
+        '<div class="pstat">Your price<b>'+money2(p.price)+'</b></div>'+
+        '<div class="pstat profit">Profit / sale<b>'+money2(profit)+'</b></div>';
+      div.appendChild(stats);
+
+      // break-even
+      var be = document.createElement("div");
+      be.className = "breakeven-note";
+      if(p.cost > 0 && p.price > 0){
+        var beSales = Math.ceil(p.cost / p.price);
+        be.innerHTML = 'Break-even: just <b>'+beSales+' sale'+(beSales===1?"":"s")+'</b> recoups what you paid for the rights.';
+      }else if(p.cost === 0 && p.price > 0){
+        be.innerHTML = 'Already paid for? <b>Every sale is pure profit.</b> 💛';
+      }else{
+        be.innerHTML = 'Add a price to see your break-even point.';
+      }
+      div.appendChild(be);
+
+      // volume
+      var vol = document.createElement("div");
+      vol.className = "p-vol";
+      var lab = document.createElement("label");
+      var volId = "vol-"+p.id;
+      lab.setAttribute("for", volId);
+      lab.textContent = "Expected sales / month";
+      var inp = document.createElement("input");
+      inp.type = "number"; inp.id = volId; inp.min = "0"; inp.step = "1";
+      inp.inputMode = "numeric";
+      inp.value = p.vol || "";
+      inp.placeholder = "0";
+      inp.addEventListener("input", function(){
+        p.vol = Math.max(0, Math.floor(num(inp.value)));
+        save(); renderProjection(); renderGoal();
+      });
+      vol.appendChild(lab); vol.appendChild(inp);
+      div.appendChild(vol);
+
+      list.appendChild(div);
+    });
+  }
+
+  // ---- Projection ----
+  function renderProjection(){
+    var fee = Math.min(100, Math.max(0, num($("feePct").value))) / 100;
+    var mRev = 0, mUnits = 0, mProfit = 0;
+    data.products.forEach(function(p){
+      var v = p.vol || 0;
+      var rev = p.price * v;
+      var costOfRights = 0; // rights are a one-time cost, not per-sale
+      var feeAmt = rev * fee;
+      var profit = (p.price - p.cost) * v - feeAmt;
+      mRev += rev;
+      mUnits += v;
+      mProfit += profit;
+    });
+
+    $("mRev").textContent = money(mRev);
+    $("mUnits").textContent = mUnits + " sale" + (mUnits===1?"":"s") + " / month";
+    $("mProfit").textContent = money(mProfit);
+    $("mFee").textContent = fee>0 ? ("after "+(fee*100).toFixed(fee*100%1?1:0)+"% fees") : "after fees";
+    $("yRev").textContent = money(mRev*12);
+    $("yProfit").textContent = money(mProfit*12);
+
+    // bars by revenue
+    var bars = $("bars");
+    var projEmpty = $("projEmpty");
+    var active = data.products.filter(function(p){ return (p.vol||0) > 0 && p.price > 0; });
+    bars.innerHTML = "";
+    if(active.length === 0){ projEmpty.style.display="block"; return; }
+    projEmpty.style.display="none";
+    var maxRev = 0;
+    active.forEach(function(p){ maxRev = Math.max(maxRev, p.price * p.vol); });
+    active.forEach(function(p){
+      var rev = p.price * p.vol;
+      var pct = maxRev>0 ? (rev/maxRev*100) : 0;
+      var row = document.createElement("div");
+      row.className = "bar-row";
+      row.innerHTML =
+        '<div class="bar-top"><span class="bn"></span><span class="bv">'+money(rev)+' / mo</span></div>'+
+        '<div class="bar-track"><div class="bar-fill" style="width:'+pct+'%;"></div></div>';
+      row.querySelector(".bn").textContent = p.name;
+      bars.appendChild(row);
+    });
+  }
+
+  // ---- Goal reverse-math ----
+  function renderGoal(){
+    var amt = num($("goalAmt").value);
+    var price = num($("goalPrice").value);
+    var period = $("goalPeriod").value;
+    var res = $("goalResult");
+    var empty = $("goalEmpty");
+
+    if(amt <= 0 || price <= 0){
+      res.style.display="none"; empty.style.display="block"; return;
+    }
+    empty.style.display="none"; res.style.display="block";
+
+    var fee = Math.min(100, Math.max(0, num($("feePct").value))) / 100;
+    var net = price * (1 - fee); // money kept per sale (before rights cost)
+    if(net <= 0){
+      res.innerHTML = '<div class="line">With a 100% fee there\'s nothing left per sale — adjust your fee or price, sister. 💛</div>';
+      return;
+    }
+
+    var salesNeeded = Math.ceil(amt / net);
+    var perMonth, perWeek, perDay, label;
+    if(period === "year"){
+      perMonth = Math.ceil(salesNeeded / 12);
+      perWeek = Math.ceil(salesNeeded / 52);
+      label = "this year";
+      res.innerHTML =
+        '<div class="line">To reach <span class="pill">'+money(amt)+' '+label+'</span> at '+money2(price)+' each, you need <b>'+salesNeeded.toLocaleString()+' sales</b>.</div>'+
+        '<div class="line">That\'s about <span class="pill">'+perMonth+' / month</span> or roughly <span class="pill">'+perWeek+' / week</span>. You\'ve got this. 💛</div>';
+    }else{
+      perWeek = Math.ceil(salesNeeded / 4.33);
+      perDay = Math.ceil(salesNeeded / 30);
+      label = "every month";
+      res.innerHTML =
+        '<div class="line">To reach <span class="pill">'+money(amt)+' '+label+'</span> at '+money2(price)+' each, you need <b>'+salesNeeded.toLocaleString()+' sales / month</b>.</div>'+
+        '<div class="line">That\'s about <span class="pill">'+perWeek+' / week</span> or <span class="pill">'+perDay+' / day</span>. Small steps, steady increase. 🌱</div>';
+    }
+  }
+
+  // ---- Wire global inputs ----
+  $("feePct").value = data.feePct || "";
+  $("goalAmt").value = data.goalAmt || "";
+  $("goalPeriod").value = data.goalPeriod || "month";
+  $("goalPrice").value = data.goalPrice || "";
+
+  $("feePct").addEventListener("input", function(){
+    data.feePct = $("feePct").value; save(); renderProjection(); renderGoal();
+  });
+  $("goalAmt").addEventListener("input", function(){
+    data.goalAmt = $("goalAmt").value; save(); renderGoal();
+  });
+  $("goalPeriod").addEventListener("change", function(){
+    data.goalPeriod = $("goalPeriod").value; save(); renderGoal();
+  });
+  $("goalPrice").addEventListener("input", function(){
+    data.goalPrice = $("goalPrice").value; data.goalTouched = true; save(); renderGoal();
+  });
+
+  // ---- Render orchestrator ----
+  function renderAll(){
+    var hasProducts = data.products.length > 0;
+    $("welcomeCard").style.display = hasProducts ? "none" : "block";
+    renderProducts();
+    renderProjection();
+    renderGoal();
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your MRR Income Planner data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { products:[], feePct:0, goalAmt:"", goalPeriod:"month", goalPrice:"", goalTouched:false };
+      $("pName").value=""; $("pCost").value=""; $("pPrice").value="";
+      $("feePct").value=""; $("goalAmt").value=""; $("goalPeriod").value="month"; $("goalPrice").value="";
+      renderAll();
+    }
+  });
+
+  renderAll();
+})();
+</script>
+</body>
+</html>

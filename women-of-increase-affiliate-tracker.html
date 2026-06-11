@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Affiliate Tracker · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label:first-of-type{ margin-top:0; }
+  .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], input[type="number"], input[type="date"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="number"], input[type="date"], select{ min-height:48px; }
+  textarea{ min-height:70px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  .row2{ display:flex; gap:10px; }
+  .row2 > div{ flex:1; }
+
+  /* ---------- Buttons ---------- */
+  .complete-btn{
+    width:100%; margin-top:16px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Totals ---------- */
+  .totals-grid{ display:flex; gap:10px; flex-wrap:wrap; }
+  .stat{
+    flex:1; min-width:140px; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.12); border-radius:14px; padding:14px 14px;
+  }
+  .stat .lbl{ font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--emerald); font-weight:600; }
+  .stat .val{ font-family:'Fraunces',serif; font-weight:600; font-size:24px; color:var(--emerald); margin-top:4px; }
+  .stat.gold{ background:linear-gradient(180deg,#FBF2DC 0%,#F6E8C8 100%); border-color:var(--gold-soft); }
+  .stat.gold .lbl, .stat.gold .val{ color:#8a6d22; }
+  .stat .sub{ font-size:12px; color:var(--muted); margin-top:2px; }
+
+  /* ---------- Goal ---------- */
+  .goal-row{ display:flex; align-items:center; gap:8px; }
+  .goal-row label.field-label{ margin:0; white-space:nowrap; }
+  .goal-row input{ max-width:160px; }
+  .progress-shell{
+    margin-top:14px; height:16px; background:var(--emerald-soft);
+    border-radius:999px; overflow:hidden; border:1px solid rgba(20,84,62,.12);
+  }
+  .progress-fill{
+    height:100%; width:0%; border-radius:999px;
+    background:linear-gradient(90deg,var(--gold) 0%,var(--gold-soft) 100%);
+    transition:width .4s ease;
+  }
+  .progress-meta{ display:flex; justify-content:space-between; margin-top:8px; font-size:13px; color:var(--muted); }
+  .progress-meta b{ color:var(--emerald); }
+  .celebrate{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:16px; color:var(--emerald); animation:rise .4s ease;
+  }
+  .celebrate.show{ display:block; }
+  .celebrate .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .celebrate .sm{ font-size:13.5px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Top performer ---------- */
+  .top-perf{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:18px 20px;
+  }
+  .top-perf .tag{ font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft); font-weight:600; }
+  .top-perf .nm{ font-family:'Fraunces',serif; font-weight:600; font-size:22px; margin:4px 0 2px; }
+  .top-perf .amt{ font-size:14px; color:var(--gold-soft); }
+  .top-perf .note{ font-size:13.5px; margin-top:10px; line-height:1.5; color:#EAE2D2; }
+
+  /* ---------- Breakdown bars ---------- */
+  .bar-item{ margin-bottom:14px; }
+  .bar-item:last-child{ margin-bottom:0; }
+  .bar-top{ display:flex; justify-content:space-between; font-size:13.5px; margin-bottom:6px; }
+  .bar-top .b-name{ font-weight:600; color:var(--ink); }
+  .bar-top .b-amt{ color:var(--emerald); font-weight:600; }
+  .bar-shell{ height:12px; background:var(--cream); border:1px solid var(--line); border-radius:999px; overflow:hidden; }
+  .bar-fill{ height:100%; border-radius:999px; background:linear-gradient(90deg,var(--emerald) 0%,#2a7d5f 100%); transition:width .4s ease; }
+
+  /* ---------- Lists ---------- */
+  .list{ list-style:none; }
+  .list li{
+    border:1px solid var(--line); border-radius:12px; padding:12px 14px;
+    margin-bottom:10px; background:var(--cream);
+  }
+  .list li:last-child{ margin-bottom:0; }
+  .li-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .li-name{ font-weight:600; color:var(--ink); font-size:15px; }
+  .li-meta{ font-size:13px; color:var(--muted); margin-top:2px; }
+  .li-link{ font-size:12.5px; color:var(--emerald); word-break:break-all; margin-top:4px; }
+  .badge{
+    font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+    padding:3px 9px; border-radius:999px; white-space:nowrap;
+  }
+  .badge.paid{ background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.2); }
+  .badge.pending{ background:#FBF2DC; color:#8a6d22; border:1px solid var(--gold-soft); }
+  .del-btn{
+    background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:13px; min-height:44px; min-width:44px; padding:0 4px;
+  }
+  .del-btn:hover{ color:#a3402f; }
+  .ref-amt{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:16px; }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; text-align:center; padding:8px 0; }
+
+  .welcome{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 18px; color:var(--emerald); margin-top:2px;
+  }
+  .welcome .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:6px; }
+  .welcome .sm{ font-size:13.5px; color:var(--muted); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  .section-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600; margin:6px 0 4px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Affiliate Tracker</h1>
+    <p class="subtitle">Track your partnerships, commissions, and referral income — all in one place.</p>
+  </header>
+
+  <!-- First-run welcome -->
+  <section class="card" id="welcomeCard" style="display:none;">
+    <div class="welcome">
+      <div class="big">Welcome, sister. 💛</div>
+      <div class="sm">Referral income is a beautiful stream — money that flows from recommending what you genuinely love. Add your first partnership below, log your referrals, and watch your increase grow. Everything stays private on your device.</div>
+    </div>
+  </section>
+
+  <!-- 1. Add Partnership -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Partnerships</h2></div>
+    <p class="hint">The programs and brands you promote. Add the commission so the tool can do the math for you.</p>
+
+    <label class="field-label" for="pName">Partnership / program name</label>
+    <input type="text" id="pName" placeholder="e.g. Grace Skincare, Course Affiliate…">
+
+    <div class="row2">
+      <div>
+        <label class="field-label" for="pType">Commission type</label>
+        <select id="pType">
+          <option value="percent">Percentage (%)</option>
+          <option value="flat">Flat amount</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label" for="pRate"><span id="rateLbl">Rate (%)</span></label>
+        <input type="number" id="pRate" inputmode="decimal" min="0" step="0.01" placeholder="20">
+      </div>
+    </div>
+
+    <label class="field-label" for="pLink">Your referral link / notes <span class="opt">(optional, kept private)</span></label>
+    <textarea id="pLink" placeholder="Paste your unique link or a note to remember…"></textarea>
+
+    <button class="complete-btn" id="addPartnerBtn" type="button">Add partnership 🌱</button>
+
+    <ul class="list" id="partnerList" style="margin-top:16px;"></ul>
+    <p class="empty-note" id="partnerEmpty">No partnerships yet — add the first brand you love above.</p>
+  </section>
+
+  <!-- 2. Log Referral -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Log a Referral or Sale</h2></div>
+    <p class="hint">Record each referral as it comes in. Enter a sale amount and we'll calculate your commission — or enter the commission directly.</p>
+
+    <label class="field-label" for="rPartner">Partnership</label>
+    <select id="rPartner"></select>
+
+    <div class="row2">
+      <div>
+        <label class="field-label" for="rDate">Date</label>
+        <input type="date" id="rDate">
+      </div>
+      <div>
+        <label class="field-label" for="rStatus">Status</label>
+        <select id="rStatus">
+          <option value="pending">Pending</option>
+          <option value="paid">Paid</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row2">
+      <div>
+        <label class="field-label" for="rSale">Sale amount <span class="opt">(optional)</span></label>
+        <input type="number" id="rSale" inputmode="decimal" min="0" step="0.01" placeholder="0.00">
+      </div>
+      <div>
+        <label class="field-label" for="rComm">Commission earned</label>
+        <input type="number" id="rComm" inputmode="decimal" min="0" step="0.01" placeholder="auto / enter">
+      </div>
+    </div>
+    <p class="hint" id="calcHint" style="margin-top:8px;">Tip: enter a sale amount and leave commission blank — we'll work it out from the partnership's rate.</p>
+
+    <button class="complete-btn" id="addRefBtn" type="button">Log referral 💫</button>
+
+    <ul class="list" id="refList" style="margin-top:16px;"></ul>
+    <p class="empty-note" id="refEmpty">No referrals logged yet. Every stream starts with one.</p>
+  </section>
+
+  <!-- 3. Totals -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Your Increase</h2></div>
+    <p class="hint">Live totals across everything you've logged.</p>
+    <div class="totals-grid">
+      <div class="stat gold">
+        <div class="lbl">Earned (Paid)</div>
+        <div class="val" id="tPaid">$0</div>
+      </div>
+      <div class="stat">
+        <div class="lbl">Pending</div>
+        <div class="val" id="tPending">$0</div>
+      </div>
+      <div class="stat">
+        <div class="lbl">Total Referral Income</div>
+        <div class="val" id="tTotal">$0</div>
+        <div class="sub" id="tCount">0 referrals</div>
+      </div>
+      <div class="stat">
+        <div class="lbl">This Month</div>
+        <div class="val" id="tMonth">$0</div>
+        <div class="sub" id="monthName">—</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Goal -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Monthly Income Goal</h2></div>
+    <p class="hint">Name a number to grow toward. Watch it fill as your referrals roll in this month.</p>
+    <div class="goal-row">
+      <label class="field-label" for="goalInput">My monthly goal:</label>
+      <input type="number" id="goalInput" inputmode="decimal" min="0" step="1" placeholder="500">
+    </div>
+    <div class="progress-shell"><div class="progress-fill" id="goalFill"></div></div>
+    <div class="progress-meta">
+      <span><b id="goalEarned">$0</b> this month</span>
+      <span id="goalPct">0%</span>
+    </div>
+    <div class="celebrate" id="celebrate">
+      <div class="big" id="celebrateBig">🎉 Milestone reached!</div>
+      <div class="sm" id="celebrateSm">Keep going, sister — your increase is real.</div>
+    </div>
+  </section>
+
+  <!-- 5. Top performer + breakdown -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>Top Performer</h2></div>
+    <p class="hint">The partnership carrying the most of your income right now.</p>
+    <div class="top-perf" id="topPerf" style="display:none;">
+      <div class="tag">⭐ Top earner</div>
+      <div class="nm" id="topName">—</div>
+      <div class="amt" id="topAmt">$0</div>
+      <div class="note">Referral income is a beautiful stream — only ever recommend what you genuinely love and use. Trust is the real asset here.</div>
+    </div>
+    <p class="empty-note" id="topEmpty">Log a few referrals and your top performer will shine here. ✨</p>
+
+    <div class="section-title" style="margin-top:18px;">Income by partnership</div>
+    <div id="breakdown"></div>
+    <p class="empty-note" id="breakdownEmpty">Your breakdown bars will appear once you log income.</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_affiliate_tracker";
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---------- State ----------
+  var data = load();
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && o.partners && o.refs) return o;
+      }
+    }catch(e){}
+    return { partners:[], refs:[], goal:0, celebratedTiers:[] };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+  // ---------- Helpers ----------
+  function money(n){
+    n = Number(n) || 0;
+    return "$" + n.toLocaleString(undefined,{ minimumFractionDigits: (n % 1 === 0 ? 0 : 2), maximumFractionDigits:2 });
+  }
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function prettyDate(key){
+    if(!key) return "";
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{ month:"short", day:"numeric", year:"numeric" });
+  }
+  function currentMonthPrefix(){
+    var d = new Date();
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+  }
+  function partnerById(id){
+    for(var i=0;i<data.partners.length;i++){ if(data.partners[i].id===id) return data.partners[i]; }
+    return null;
+  }
+  // commission for a ref: explicit commission wins; else compute from sale * rate
+  function refCommission(r){
+    if(r.commission !== "" && r.commission !== null && r.commission !== undefined && !isNaN(Number(r.commission)) && Number(r.commission) > 0){
+      return Number(r.commission);
+    }
+    var p = partnerById(r.partnerId);
+    if(p && r.sale){
+      var sale = Number(r.sale) || 0;
+      if(p.type === "percent"){ return sale * (Number(p.rate)||0) / 100; }
+      return Number(p.rate) || 0; // flat per referral
+    }
+    if(r.commission !== "" && !isNaN(Number(r.commission))) return Number(r.commission);
+    return 0;
+  }
+
+  // ---------- Elements ----------
+  var pName=$("pName"), pType=$("pType"), pRate=$("pRate"), pLink=$("pLink");
+  var rPartner=$("rPartner"), rDate=$("rDate"), rStatus=$("rStatus"), rSale=$("rSale"), rComm=$("rComm");
+
+  // default date today
+  rDate.value = todayKey();
+
+  // rate label toggles
+  pType.addEventListener("change", function(){
+    $("rateLbl").textContent = pType.value === "percent" ? "Rate (%)" : "Amount ($)";
+    pRate.placeholder = pType.value === "percent" ? "20" : "10";
+  });
+
+  // restore goal
+  $("goalInput").value = data.goal ? data.goal : "";
+  $("goalInput").addEventListener("input", function(){
+    data.goal = Number(this.value) || 0;
+    save(); renderGoal();
+  });
+
+  // ---------- Add partnership ----------
+  $("addPartnerBtn").addEventListener("click", function(){
+    var name = pName.value.trim();
+    if(!name){ pName.focus(); return; }
+    var rate = Number(pRate.value);
+    data.partners.push({
+      id: uid(),
+      name: name,
+      type: pType.value,
+      rate: isNaN(rate) ? 0 : rate,
+      link: pLink.value.trim()
+    });
+    pName.value=""; pRate.value=""; pLink.value="";
+    save(); renderAll();
+    pName.focus();
+  });
+
+  // ---------- Add referral ----------
+  $("addRefBtn").addEventListener("click", function(){
+    if(data.partners.length === 0){
+      alert("Add a partnership first, sister — then you can log referrals to it. 💛");
+      return;
+    }
+    var sale = rSale.value.trim();
+    var comm = rComm.value.trim();
+    if(sale === "" && comm === ""){
+      alert("Enter a sale amount or a commission so we can track it. 💫");
+      return;
+    }
+    data.refs.push({
+      id: uid(),
+      partnerId: rPartner.value,
+      date: rDate.value || todayKey(),
+      sale: sale === "" ? "" : Number(sale),
+      commission: comm === "" ? "" : Number(comm),
+      status: rStatus.value
+    });
+    rSale.value=""; rComm.value="";
+    rStatus.value="pending";
+    rDate.value = todayKey();
+    save(); renderAll();
+  });
+
+  // live calc hint as she types
+  function updateCalcHint(){
+    var p = partnerById(rPartner.value);
+    if(rComm.value.trim() !== ""){
+      $("calcHint").textContent = "Using your entered commission of " + money(rComm.value) + ".";
+      return;
+    }
+    if(p && rSale.value.trim() !== ""){
+      var preview = refCommission({ partnerId: rPartner.value, sale: Number(rSale.value), commission:"" });
+      $("calcHint").textContent = "Estimated commission: " + money(preview) + " (from " + p.name + ").";
+      return;
+    }
+    $("calcHint").textContent = "Tip: enter a sale amount and leave commission blank — we'll work it out from the partnership's rate.";
+  }
+  rSale.addEventListener("input", updateCalcHint);
+  rComm.addEventListener("input", updateCalcHint);
+  rPartner.addEventListener("change", updateCalcHint);
+
+  // ---------- Renderers ----------
+  function renderPartners(){
+    var list = $("partnerList"), empty = $("partnerEmpty");
+    list.innerHTML = "";
+    if(data.partners.length === 0){ empty.style.display="block"; }
+    else{ empty.style.display="none"; }
+    data.partners.forEach(function(p){
+      var li = document.createElement("li");
+      var top = document.createElement("div"); top.className="li-top";
+      var info = document.createElement("div");
+      var nm = document.createElement("div"); nm.className="li-name"; nm.textContent=p.name;
+      var meta = document.createElement("div"); meta.className="li-meta";
+      meta.textContent = p.type === "percent" ? (p.rate + "% commission") : (money(p.rate) + " per referral");
+      info.appendChild(nm); info.appendChild(meta);
+      if(p.link){
+        var lk = document.createElement("div"); lk.className="li-link"; lk.textContent = p.link;
+        info.appendChild(lk);
+      }
+      var del = document.createElement("button");
+      del.className="del-btn"; del.type="button"; del.textContent="✕";
+      del.setAttribute("aria-label","Delete "+p.name);
+      del.addEventListener("click", function(){
+        var hasRefs = data.refs.some(function(r){ return r.partnerId === p.id; });
+        var msg = hasRefs
+          ? "Delete \""+p.name+"\" and all its logged referrals? This can't be undone."
+          : "Delete \""+p.name+"\"?";
+        if(confirm(msg)){
+          data.partners = data.partners.filter(function(x){ return x.id !== p.id; });
+          data.refs = data.refs.filter(function(r){ return r.partnerId !== p.id; });
+          save(); renderAll();
+        }
+      });
+      top.appendChild(info); top.appendChild(del);
+      li.appendChild(top);
+      list.appendChild(li);
+    });
+  }
+
+  function renderPartnerSelect(){
+    var prev = rPartner.value;
+    rPartner.innerHTML = "";
+    if(data.partners.length === 0){
+      var opt = document.createElement("option");
+      opt.value=""; opt.textContent="— add a partnership first —"; opt.disabled=true; opt.selected=true;
+      rPartner.appendChild(opt);
+      return;
+    }
+    data.partners.forEach(function(p){
+      var opt = document.createElement("option");
+      opt.value = p.id;
+      opt.textContent = p.name + (p.type==="percent" ? " ("+p.rate+"%)" : " ("+money(p.rate)+")");
+      rPartner.appendChild(opt);
+    });
+    if(prev && partnerById(prev)){ rPartner.value = prev; }
+  }
+
+  function renderRefs(){
+    var list = $("refList"), empty = $("refEmpty");
+    list.innerHTML = "";
+    if(data.refs.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+    var sorted = data.refs.slice().sort(function(a,b){ return (b.date||"").localeCompare(a.date||""); });
+    sorted.forEach(function(r){
+      var p = partnerById(r.partnerId);
+      var comm = refCommission(r);
+      var li = document.createElement("li");
+      var top = document.createElement("div"); top.className="li-top";
+      var info = document.createElement("div");
+      var nm = document.createElement("div"); nm.className="li-name";
+      nm.textContent = p ? p.name : "Partnership";
+      var meta = document.createElement("div"); meta.className="li-meta";
+      var bits = [prettyDate(r.date)];
+      if(r.sale !== "" && r.sale != null){ bits.push("sale " + money(r.sale)); }
+      meta.textContent = bits.join(" · ");
+      info.appendChild(nm); info.appendChild(meta);
+
+      var right = document.createElement("div");
+      right.style.textAlign="right";
+      var amt = document.createElement("div"); amt.className="ref-amt"; amt.textContent = money(comm);
+      var badge = document.createElement("span");
+      badge.className = "badge " + (r.status === "paid" ? "paid" : "pending");
+      badge.textContent = r.status === "paid" ? "Paid" : "Pending";
+      badge.style.cursor="pointer";
+      badge.title="Tap to toggle Paid / Pending";
+      badge.addEventListener("click", function(){
+        r.status = r.status === "paid" ? "pending" : "paid";
+        save(); renderAll();
+      });
+      right.appendChild(amt);
+      right.appendChild(badge);
+
+      top.appendChild(info); top.appendChild(right);
+
+      var del = document.createElement("button");
+      del.className="del-btn"; del.type="button"; del.textContent="✕ remove";
+      del.style.marginTop="6px";
+      del.setAttribute("aria-label","Delete referral");
+      del.addEventListener("click", function(){
+        if(confirm("Delete this referral?")){
+          data.refs = data.refs.filter(function(x){ return x.id !== r.id; });
+          save(); renderAll();
+        }
+      });
+
+      li.appendChild(top);
+      li.appendChild(del);
+      list.appendChild(li);
+    });
+  }
+
+  function renderTotals(){
+    var paid=0, pending=0, total=0, monthTotal=0;
+    var mp = currentMonthPrefix();
+    data.refs.forEach(function(r){
+      var c = refCommission(r);
+      total += c;
+      if(r.status === "paid") paid += c; else pending += c;
+      if((r.date||"").indexOf(mp) === 0) monthTotal += c;
+    });
+    $("tPaid").textContent = money(paid);
+    $("tPending").textContent = money(pending);
+    $("tTotal").textContent = money(total);
+    $("tCount").textContent = data.refs.length + (data.refs.length===1 ? " referral" : " referrals");
+    $("tMonth").textContent = money(monthTotal);
+    $("monthName").textContent = new Date().toLocaleDateString(undefined,{ month:"long", year:"numeric" });
+    return { paid:paid, pending:pending, total:total, month:monthTotal };
+  }
+
+  function renderGoal(){
+    var mp = currentMonthPrefix();
+    var monthTotal = 0;
+    data.refs.forEach(function(r){
+      if((r.date||"").indexOf(mp) === 0) monthTotal += refCommission(r);
+    });
+    var goal = Number(data.goal) || 0;
+    var pct = goal > 0 ? (monthTotal / goal) * 100 : 0;
+    var shown = Math.min(pct, 100);
+    $("goalFill").style.width = shown + "%";
+    $("goalEarned").textContent = money(monthTotal);
+    $("goalPct").textContent = goal > 0 ? Math.round(pct) + "%" : "—";
+
+    // milestone celebration: 25/50/75/100
+    if(goal > 0){
+      var tiers = [25,50,75,100];
+      var hit = null;
+      tiers.forEach(function(t){
+        if(pct >= t && data.celebratedTiers.indexOf(t) === -1){ hit = t; }
+      });
+      if(hit !== null){
+        data.celebratedTiers.push(hit);
+        save();
+        var cel = $("celebrate");
+        if(hit === 100){
+          $("celebrateBig").textContent = "🎉 Goal reached — you did it!";
+          $("celebrateSm").textContent = "You hit your monthly goal of " + money(goal) + ". This is your increase, sister. Keep going.";
+        }else{
+          $("celebrateBig").textContent = "✨ " + hit + "% of the way there!";
+          $("celebrateSm").textContent = "You're at " + money(monthTotal) + " toward " + money(goal) + ". Beautiful momentum.";
+        }
+        cel.classList.add("show");
+      }
+    }
+    // reset celebrated tiers if she drops below them (e.g. new month / edits)
+    if(goal > 0){
+      data.celebratedTiers = data.celebratedTiers.filter(function(t){ return pct >= t; });
+    }
+  }
+
+  function renderTopAndBreakdown(){
+    // sum commission per partner
+    var sums = {};
+    data.partners.forEach(function(p){ sums[p.id] = 0; });
+    data.refs.forEach(function(r){
+      if(sums[r.partnerId] === undefined) sums[r.partnerId] = 0;
+      sums[r.partnerId] += refCommission(r);
+    });
+    var rows = data.partners.map(function(p){ return { name:p.name, amt: sums[p.id] || 0 }; })
+      .filter(function(x){ return x.amt > 0; })
+      .sort(function(a,b){ return b.amt - a.amt; });
+
+    var maxAmt = rows.length ? rows[0].amt : 0;
+
+    // top performer
+    var tp = $("topPerf"), te = $("topEmpty");
+    if(rows.length){
+      tp.style.display="block"; te.style.display="none";
+      $("topName").textContent = rows[0].name;
+      $("topAmt").textContent = money(rows[0].amt) + " earned so far";
+    }else{
+      tp.style.display="none"; te.style.display="block";
+    }
+
+    // breakdown bars
+    var bd = $("breakdown"), bde = $("breakdownEmpty");
+    bd.innerHTML = "";
+    if(rows.length === 0){ bde.style.display="block"; return; }
+    bde.style.display="none";
+    rows.forEach(function(row){
+      var item = document.createElement("div"); item.className="bar-item";
+      var t = document.createElement("div"); t.className="bar-top";
+      var nm = document.createElement("span"); nm.className="b-name"; nm.textContent=row.name;
+      var am = document.createElement("span"); am.className="b-amt"; am.textContent=money(row.amt);
+      t.appendChild(nm); t.appendChild(am);
+      var shell = document.createElement("div"); shell.className="bar-shell";
+      var fill = document.createElement("div"); fill.className="bar-fill";
+      fill.style.width = (maxAmt>0 ? (row.amt/maxAmt*100) : 0) + "%";
+      shell.appendChild(fill);
+      item.appendChild(t); item.appendChild(shell);
+      bd.appendChild(item);
+    });
+  }
+
+  function renderWelcome(){
+    $("welcomeCard").style.display = (data.partners.length === 0 && data.refs.length === 0) ? "block" : "none";
+  }
+
+  function renderAll(){
+    renderWelcome();
+    renderPartners();
+    renderPartnerSelect();
+    renderRefs();
+    renderTotals();
+    renderGoal();
+    renderTopAndBreakdown();
+    updateCalcHint();
+  }
+
+  // ---------- Reset ----------
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Affiliate Tracker data — partnerships, referrals, and goal? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { partners:[], refs:[], goal:0, celebratedTiers:[] };
+      $("goalInput").value="";
+      pName.value=""; pRate.value=""; pLink.value="";
+      rSale.value=""; rComm.value=""; rStatus.value="pending"; rDate.value=todayKey();
+      $("celebrate").classList.remove("show");
+      save(); renderAll();
+    }
+  });
+
+  // ---------- Init ----------
+  renderAll();
+})();
+</script>
+</body>
+</html>

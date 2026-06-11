@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Creator Starter Pack · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .welcome p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .welcome .sm{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:500;
+    font-size:13.5px; line-height:1.5; color:var(--gold-soft); position:relative; z-index:1;
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], select{ min-height:48px; }
+  textarea{ min-height:72px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  select{ -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236B655C' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:38px;
+  }
+
+  /* ---------- Platform picker ---------- */
+  .plat-grid{ display:grid; grid-template-columns:1fr; gap:10px; margin-bottom:6px; }
+  .plat{
+    display:flex; align-items:flex-start; gap:12px; width:100%; text-align:left;
+    background:var(--cream); border:1px solid var(--line); border-radius:12px;
+    padding:13px 14px; cursor:pointer; min-height:44px;
+    font-family:inherit; color:var(--ink); transition:border-color .15s, background .15s;
+  }
+  .plat:hover{ border-color:var(--gold-soft); }
+  .plat .emoji{ font-size:22px; flex:none; line-height:1.2; }
+  .plat .pt{ font-weight:700; font-size:15px; display:block; }
+  .plat .pp{ color:var(--muted); font-size:13px; display:block; margin-top:2px; }
+  .plat.primary{ border-color:var(--gold); background:#fff; box-shadow:0 0 0 3px rgba(200,160,74,.16); }
+  .plat.secondary{ border-color:var(--emerald); background:var(--emerald-soft); }
+  .plat .tag{
+    margin-left:auto; flex:none; font-size:10.5px; font-weight:700; letter-spacing:.08em;
+    text-transform:uppercase; padding:4px 8px; border-radius:999px; align-self:center;
+  }
+  .plat.primary .tag{ background:var(--gold); color:var(--ink); }
+  .plat.secondary .tag{ background:var(--emerald); color:#FCF8EF; }
+  .pick-note{ color:var(--muted); font-size:13px; margin-top:6px; }
+  .pick-note b{ color:var(--emerald); }
+
+  /* ---------- Pillars ---------- */
+  .pillar-row{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .pillar-row .dot{ flex:none; width:9px;height:9px;border-radius:50%;background:var(--gold); }
+  .pillar-row input{ flex:1; }
+  .pillar-row .rm{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:20px; line-height:1; width:44px; min-height:44px; border-radius:10px;
+  }
+  .pillar-row .rm:hover{ color:var(--emerald); }
+  .add-btn{
+    width:100%; margin-top:4px; min-height:46px;
+    background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.18);
+    border-radius:11px; font-family:inherit; font-weight:600; font-size:14px; cursor:pointer;
+  }
+  .add-btn:hover{ border-color:var(--emerald); }
+  .add-btn:disabled{ opacity:.45; cursor:not-allowed; }
+  .examples{ margin-top:12px; }
+  .examples .lbl{ font-size:12.5px; font-weight:600; color:var(--muted); margin-bottom:8px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:7px; }
+  .chip{
+    background:#fff; border:1px solid var(--line); border-radius:999px;
+    padding:7px 12px; font-size:13px; color:var(--ink); cursor:pointer;
+    font-family:inherit; min-height:36px;
+  }
+  .chip:hover{ border-color:var(--gold); color:var(--emerald); }
+
+  /* ---------- Buckets ---------- */
+  .bucket{ display:flex; gap:11px; padding:11px 0; border-bottom:1px solid var(--line); }
+  .bucket:last-child{ border-bottom:none; }
+  .bucket .bdot{
+    flex:none; width:30px;height:30px;border-radius:50%; display:flex;align-items:center;justify-content:center;
+    font-size:15px;
+  }
+  .bucket.connection .bdot{ background:var(--emerald-soft); }
+  .bucket.value .bdot{ background:var(--gold-soft); }
+  .bucket.invitation .bdot{ background:#F3E2C2; }
+  .bucket .bname{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:15.5px; }
+  .bucket .bdesc{ color:var(--muted); font-size:13.5px; margin-top:1px; }
+
+  /* ---------- Rhythm ---------- */
+  .rhythm-opts{ display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; }
+  .rhythm-opts .ro{
+    flex:1 1 auto; min-width:0; min-height:46px; text-align:center;
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    font-family:inherit; font-weight:600; font-size:14px; color:var(--ink); cursor:pointer;
+    padding:10px 8px;
+  }
+  .rhythm-opts .ro.on{ background:var(--gold); color:var(--ink); border-color:var(--gold); box-shadow:0 4px 12px rgba(200,160,74,.28); }
+
+  /* ---------- Progress ---------- */
+  .prog-wrap{ margin:2px 0 14px; }
+  .prog-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:7px; }
+  .prog-top .count{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:17px; }
+  .prog-top .count b{ font-size:22px; }
+  .prog-top .lab{ color:var(--muted); font-size:13px; }
+  .bar{ height:11px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .bar > span{ display:block; height:100%; width:0%;
+    background:linear-gradient(90deg, var(--gold-soft), var(--gold)); border-radius:999px;
+    transition:width .35s ease; }
+  .milestone{
+    display:none; margin-top:12px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:14px 16px; color:var(--emerald);
+  }
+  .milestone.show{ display:block; animation:rise .4s ease; }
+  .milestone .big{ font-family:'Fraunces',serif; font-weight:600; font-size:17px; margin-bottom:3px; }
+  .milestone .sm{ font-size:13.5px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Posts ---------- */
+  .post{
+    display:flex; gap:11px; align-items:flex-start;
+    border:1px solid var(--line); border-radius:13px; padding:12px 13px; margin-bottom:10px;
+    background:var(--cream);
+  }
+  .post.done{ background:var(--emerald-soft); border-color:rgba(20,84,62,.2); }
+  .post .check{
+    flex:none; width:26px;height:26px;border-radius:8px;border:2px solid var(--gold);
+    background:#fff; cursor:pointer; display:flex;align-items:center;justify-content:center;
+    margin-top:2px; padding:0; min-height:auto;
+  }
+  .post.done .check{ background:var(--emerald); border-color:var(--emerald); color:#FCF8EF; font-weight:700; }
+  .post .body{ flex:1; min-width:0; }
+  .post .meta{ display:flex; align-items:center; gap:7px; margin-bottom:5px; flex-wrap:wrap; }
+  .post .bk{
+    font-size:10px; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+    padding:3px 8px; border-radius:999px;
+  }
+  .bk.connection{ background:var(--emerald-soft); color:var(--emerald); }
+  .bk.value{ background:var(--gold-soft); color:#7a5e16; }
+  .bk.invitation{ background:#F3E2C2; color:#8a5a12; }
+  .post .pill-name{ font-size:11.5px; color:var(--muted); font-weight:600; }
+  .post .idea{
+    width:100%; font-family:inherit; font-size:14.5px; color:var(--ink); line-height:1.45;
+    background:transparent; border:none; resize:none; padding:0; min-height:auto; overflow:hidden;
+  }
+  .post.done .idea{ color:var(--muted); }
+  .post .idea:focus{ outline:none; }
+  .post .acts{ display:flex; gap:2px; margin-top:6px; }
+  .post .mini{
+    background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:12px; font-weight:600; font-family:inherit; padding:7px 8px; min-height:38px;
+    border-radius:8px;
+  }
+  .post .mini:hover{ color:var(--emerald); background:#fff; }
+  .post .mini.up:disabled, .post .mini.down:disabled{ opacity:.3; cursor:default; }
+
+  .gen-btn{
+    width:100%; margin-top:6px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .gen-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .gen-btn:active{ transform:translateY(1px); }
+  .gen-btn:disabled{ background:var(--emerald-soft); color:var(--muted); box-shadow:none; cursor:not-allowed; }
+
+  .row-btns{ display:flex; gap:9px; margin-top:6px; }
+  .ghost-btn{
+    flex:1; min-height:46px;
+    background:#fff; color:var(--emerald); border:1px solid var(--line);
+    border-radius:11px; font-family:inherit; font-weight:600; font-size:14px; cursor:pointer;
+  }
+  .ghost-btn:hover{ border-color:var(--gold); }
+
+  .need-note{ color:var(--muted); font-size:13.5px; font-style:italic; text-align:center; padding:6px 0; }
+
+  /* ---------- Toast ---------- */
+  .toast{
+    position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(20px);
+    background:var(--emerald); color:#FCF8EF; padding:11px 20px; border-radius:999px;
+    font-size:14px; font-weight:600; box-shadow:0 8px 24px rgba(20,84,62,.35);
+    opacity:0; pointer-events:none; transition:opacity .25s, transform .25s; z-index:50;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Content Creator Starter Pack</h1>
+    <p class="subtitle">Pick your platform, name your pillars, and walk out with your first 30 posts.</p>
+  </header>
+
+  <!-- Welcome / first-run -->
+  <section class="card" id="welcomeCard">
+    <div class="welcome">
+      <p>You don't have to be polished to begin — you just have to begin.</p>
+      <div class="sm">Show up helpfully. Show up consistently. The audience God has for you is looking for your exact voice. Let's build your starter pack, one warm step at a time.</div>
+    </div>
+  </section>
+
+  <!-- 1. Platform -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Choose Your Platform</h2></div>
+    <p class="hint">Pick ONE primary home for now. Master one room before you furnish the whole house. Tap a second if you have the capacity — but you truly don't need to.</p>
+    <div class="plat-grid" id="platGrid"></div>
+    <p class="pick-note" id="pickNote">Tap a platform to make it your <b>primary</b>. Tap again to set it as your <b>secondary</b>.</p>
+  </section>
+
+  <!-- 2. Pillars -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Define Your Content Pillars</h2></div>
+    <p class="hint">Your pillars are the 3–5 themes you'll come back to again and again — the heart of what you share. Name them in your own words.</p>
+    <div id="pillarList"></div>
+    <button class="add-btn" id="addPillar" type="button">+ Add a pillar</button>
+    <div class="examples">
+      <div class="lbl">Need a spark? Tap to add one:</div>
+      <div class="chips" id="pillarChips"></div>
+    </div>
+  </section>
+
+  <!-- 3. The 3 Buckets -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>The 3 Buckets</h2></div>
+    <p class="hint">Great content does more than inform — it moves people closer. Rotate through these three and your content converts, not just educates.</p>
+    <div class="bucket connection">
+      <div class="bdot">🤝</div>
+      <div>
+        <div class="bname">Connection</div>
+        <div class="bdesc">Your story, your why, the human behind the work. This builds trust.</div>
+      </div>
+    </div>
+    <div class="bucket value">
+      <div class="bdot">🎁</div>
+      <div>
+        <div class="bname">Value</div>
+        <div class="bdesc">Teach, tip, encourage, solve. Give freely — generosity grows audiences.</div>
+      </div>
+    </div>
+    <div class="bucket invitation">
+      <div class="bdot">📣</div>
+      <div>
+        <div class="bname">Invitation</div>
+        <div class="bdesc">Invite them to take a step — comment, follow, join, buy. Ask with confidence.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Rhythm -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Your Posting Rhythm</h2></div>
+    <p class="hint">Consistency over perfection. Choose a pace you can keep on a hard week, not just a good one.</p>
+    <div class="rhythm-opts" id="rhythmOpts"></div>
+    <p class="pick-note" id="rhythmNote" style="margin-top:10px;"></p>
+  </section>
+
+  <!-- 5. First 30 posts -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>Your First 30 Posts</h2></div>
+    <p class="hint">Built from <em>your</em> pillars, rotated through the 3 buckets. Edit any of them, add your own, nudge the order, and check each off as you publish.</p>
+
+    <div id="genArea">
+      <p class="need-note" id="needNote">Add at least one pillar above, then generate your 30 ideas.</p>
+      <button class="gen-btn" id="genBtn" type="button" disabled>Generate my 30 posts ✍️</button>
+    </div>
+
+    <div id="postsArea" style="display:none;">
+      <div class="prog-wrap">
+        <div class="prog-top">
+          <span class="count"><b id="doneCount">0</b><span id="ofTotal">/30</span> published</span>
+          <span class="lab" id="progLab">You're on your way 💛</span>
+        </div>
+        <div class="bar"><span id="progBar"></span></div>
+        <div class="milestone" id="milestone">
+          <div class="big" id="msBig"></div>
+          <div class="sm" id="msSm"></div>
+        </div>
+      </div>
+
+      <div id="postList"></div>
+
+      <div class="row-btns">
+        <button class="ghost-btn" id="addPost" type="button">+ Add my own</button>
+        <button class="ghost-btn" id="copyAll" type="button">Copy all 30</button>
+      </div>
+      <button class="add-btn" id="regenBtn" type="button" style="margin-top:9px;">↻ Re-generate from my pillars</button>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<div class="toast" id="toast">Copied! 💛</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_content_creator_starter";
+
+  // ---- Platform library ----
+  var PLATFORMS = [
+    ["instagram","📸","Instagram","Visual + caption storytelling. Great for building a warm, loyal community."],
+    ["tiktok","🎬","TikTok","Short video, fast reach. Beginner-friendly if you'll show up on camera."],
+    ["facebook","👥","Facebook","Groups + longer posts. Wonderful if your people are 30+ and love community."],
+    ["youtube","▶️","YouTube","Searchable, long-life videos. Slower to grow but builds deep trust."],
+    ["newsletter","✉️","Blog / Newsletter","You own the audience. No algorithm — just you, writing, in their inbox."]
+  ];
+
+  // ---- Pillar example chips ----
+  var PILLAR_EXAMPLES = [
+    "Faith & devotion","Behind the scenes","Tips & how-tos","My story / testimony",
+    "Motivation & mindset","Real-life lessons","Wins & gratitude","Community Q&A",
+    "Money & stewardship","Healthy living","Family & home","My offer / services"
+  ];
+
+  // ---- Posting rhythm options ----
+  var RHYTHMS = [
+    ["2x","2× a week","A gentle, fully sustainable start. Two faithful posts beat seven you dread."],
+    ["3x","3× a week","The sweet spot — steady momentum without burnout. A beautiful default."],
+    ["5x","5× a week","Faster growth if you have margin. Only choose this if it feels light, not heavy."],
+    ["daily","Daily","Bold. Keep posts short and from the heart so you can truly sustain it."]
+  ];
+
+  // ---- Buckets + per-pillar templates ----
+  var BUCKETS = [
+    ["connection","Connection"],
+    ["value","Value"],
+    ["invitation","Invitation"]
+  ];
+  var TEMPLATES = {
+    connection: [
+      "Share the moment you first felt called to “{p}.”",
+      "Tell a behind-the-scenes story about your “{p}” journey — the messy middle, not just the highlight.",
+      "Introduce yourself through the lens of “{p}”: who you are and why this matters to you.",
+      "Open up about a fear or doubt you've faced around “{p},” and what carried you through.",
+      "Show a real day-in-the-life snapshot connected to “{p}.”"
+    ],
+    value: [
+      "Teach one simple, actionable tip about “{p}” your people can use today.",
+      "Bust a common myth or mistake people make around “{p}.”",
+      "Share a quick 3-step framework for “{p.}”",
+      "Answer the #1 question you get asked about “{p}.”",
+      "Give a beginner's checklist or starting point for “{p}.”"
+    ],
+    invitation: [
+      "Invite your audience to comment with their biggest struggle around “{p}.”",
+      "Ask them to follow/subscribe for more on “{p}” — tell them what they'll get.",
+      "Invite them into your free space (group, newsletter, DMs) for support with “{p}.”",
+      "Gently introduce your offer that helps with “{p}” and invite the next step.",
+      "Ask a question about “{p}” and invite them to share their story below."
+    ]
+  };
+
+  // ---- State ----
+  var data = load();
+
+  function defaults(){
+    return {
+      primary:"", secondary:"",
+      pillars:["",""],
+      rhythm:"3x",
+      posts:[],            // {id, pillar, bucket, idea, done}
+      welcomeDismissed:false
+    };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && typeof o === "object"){
+        var d = defaults();
+        for(var k in d){ if(!(k in o)) o[k] = d[k]; }
+        return o;
+      }}
+    }catch(e){}
+    return defaults();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Toast ----
+  var toastT;
+  function toast(msg){
+    var t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toastT);
+    toastT = setTimeout(function(){ t.classList.remove("show"); }, 1600);
+  }
+  function copyText(text, msg){
+    msg = msg || "Copied! 💛";
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ toast(msg); }, function(){ fallbackCopy(text, msg); });
+    }else{ fallbackCopy(text, msg); }
+  }
+  function fallbackCopy(text, msg){
+    try{
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.style.position="fixed"; ta.style.opacity="0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      toast(msg);
+    }catch(e){ toast("Couldn't copy — long-press to select."); }
+  }
+
+  // ---- Welcome ----
+  function renderWelcome(){
+    var hasStarted = data.primary || data.pillars.some(function(p){ return p.trim(); }) || data.posts.length;
+    $("welcomeCard").style.display = hasStarted ? "none" : "block";
+  }
+
+  // ---- 1. Platforms ----
+  function renderPlatforms(){
+    var grid = $("platGrid");
+    grid.innerHTML = "";
+    PLATFORMS.forEach(function(pl){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "plat";
+      if(data.primary === pl[0]) b.className += " primary";
+      else if(data.secondary === pl[0]) b.className += " secondary";
+      var tag = "";
+      if(data.primary === pl[0]) tag = '<span class="tag">Primary</span>';
+      else if(data.secondary === pl[0]) tag = '<span class="tag">Secondary</span>';
+      b.innerHTML = '<span class="emoji">'+pl[1]+'</span>'+
+        '<span class="body"><span class="pt">'+pl[2]+'</span><span class="pp">'+pl[3]+'</span></span>'+tag;
+      b.addEventListener("click", function(){ cyclePlatform(pl[0]); });
+      grid.appendChild(b);
+    });
+    var note = $("pickNote");
+    if(data.primary){
+      var pName = label(data.primary);
+      note.innerHTML = "Your primary home is <b>"+pName+"</b>" +
+        (data.secondary ? ", with <b>"+label(data.secondary)+"</b> as a gentle second." : ". One faithful platform is plenty to start.");
+    }else{
+      note.innerHTML = "Tap a platform to make it your <b>primary</b>. Tap again to set it as your <b>secondary</b>.";
+    }
+  }
+  function label(id){
+    for(var i=0;i<PLATFORMS.length;i++){ if(PLATFORMS[i][0]===id) return PLATFORMS[i][2]; }
+    return id;
+  }
+  function cyclePlatform(id){
+    if(data.primary === id){
+      // primary -> secondary
+      data.primary = data.secondary || "";
+      data.secondary = id;
+      // avoid same on both
+      if(data.primary === data.secondary){ data.primary = ""; }
+    }else if(data.secondary === id){
+      // secondary -> off
+      data.secondary = "";
+    }else if(!data.primary){
+      data.primary = id;
+    }else if(!data.secondary){
+      data.secondary = id;
+    }else{
+      // both taken: replace primary
+      data.primary = id;
+      if(data.secondary === id) data.secondary = "";
+    }
+    save(); renderPlatforms(); renderWelcome();
+  }
+
+  // ---- 2. Pillars ----
+  function renderPillars(){
+    var list = $("pillarList");
+    list.innerHTML = "";
+    data.pillars.forEach(function(val, idx){
+      var row = document.createElement("div");
+      row.className = "pillar-row";
+      var dot = document.createElement("span"); dot.className = "dot";
+      var inp = document.createElement("input");
+      inp.type = "text"; inp.value = val;
+      inp.placeholder = "Pillar "+(idx+1)+" — e.g. " + PILLAR_EXAMPLES[idx % PILLAR_EXAMPLES.length];
+      inp.setAttribute("aria-label","Content pillar "+(idx+1));
+      inp.addEventListener("input", function(){ data.pillars[idx] = inp.value; save(); refreshGenState(); });
+      row.appendChild(dot); row.appendChild(inp);
+      if(data.pillars.length > 1){
+        var rm = document.createElement("button");
+        rm.type = "button"; rm.className = "rm"; rm.innerHTML = "×";
+        rm.setAttribute("aria-label","Remove pillar "+(idx+1));
+        rm.addEventListener("click", function(){
+          data.pillars.splice(idx,1); save(); renderPillars(); refreshGenState();
+        });
+        row.appendChild(rm);
+      }
+      list.appendChild(row);
+    });
+    $("addPillar").disabled = data.pillars.length >= 5;
+    $("addPillar").textContent = data.pillars.length >= 5 ? "Five pillars is a lovely full set ✓" : "+ Add a pillar";
+  }
+  $("addPillar").addEventListener("click", function(){
+    if(data.pillars.length >= 5) return;
+    data.pillars.push(""); save(); renderPillars(); refreshGenState();
+  });
+  function renderChips(){
+    var box = $("pillarChips");
+    box.innerHTML = "";
+    PILLAR_EXAMPLES.forEach(function(ex){
+      var c = document.createElement("button");
+      c.type = "button"; c.className = "chip"; c.textContent = ex;
+      c.addEventListener("click", function(){
+        // fill first empty pillar, else add new (up to 5)
+        var emptyIdx = data.pillars.findIndex(function(p){ return !p.trim(); });
+        if(emptyIdx >= 0){ data.pillars[emptyIdx] = ex; }
+        else if(data.pillars.length < 5){ data.pillars.push(ex); }
+        else { toast("You've got a full set of 5 💛"); return; }
+        save(); renderPillars(); refreshGenState();
+      });
+      box.appendChild(c);
+    });
+  }
+
+  // ---- 4. Rhythm ----
+  function renderRhythm(){
+    var box = $("rhythmOpts");
+    box.innerHTML = "";
+    RHYTHMS.forEach(function(r){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "ro" + (data.rhythm === r[0] ? " on" : "");
+      b.textContent = r[1];
+      b.addEventListener("click", function(){ data.rhythm = r[0]; save(); renderRhythm(); });
+      box.appendChild(b);
+    });
+    var note = $("rhythmNote");
+    var found = RHYTHMS.find(function(r){ return r[0] === data.rhythm; });
+    note.textContent = found ? found[2] : "";
+  }
+
+  // ---- Pillars that are actually named ----
+  function activePillars(){
+    return data.pillars.map(function(p){ return p.trim(); }).filter(function(p){ return p; });
+  }
+
+  // ---- Generate 30 posts ----
+  function generatePosts(){
+    var pillars = activePillars();
+    if(!pillars.length) return;
+    var posts = [];
+    var counters = { connection:0, value:0, invitation:0 };
+    var id = 1;
+    // Rotate buckets across pillars so each idea is tailored to HER pillars.
+    for(var i=0;i<30;i++){
+      var pillar = pillars[i % pillars.length];
+      var bucket = BUCKETS[i % BUCKETS.length][0];
+      var tpls = TEMPLATES[bucket];
+      var idea = tpls[counters[bucket] % tpls.length].replace(/\{p\.\}/g, pillar+".").replace(/\{p\}/g, pillar);
+      counters[bucket]++;
+      posts.push({ id:id++, pillar:pillar, bucket:bucket, idea:idea, done:false });
+    }
+    data.posts = posts;
+    save();
+    renderPosts();
+  }
+  $("genBtn").addEventListener("click", generatePosts);
+  $("regenBtn").addEventListener("click", function(){
+    var anyDone = data.posts.some(function(p){ return p.done; });
+    if(anyDone && !confirm("Re-generate fresh ideas from your pillars? Your published check-offs and any edits will be replaced.")) return;
+    generatePosts();
+    toast("Fresh ideas, ready ✍️");
+  });
+
+  function refreshGenState(){
+    var has = activePillars().length > 0;
+    $("genBtn").disabled = !has;
+    $("needNote").style.display = has ? "none" : "block";
+  }
+
+  function bucketLabel(b){
+    for(var i=0;i<BUCKETS.length;i++){ if(BUCKETS[i][0]===b) return BUCKETS[i][1]; }
+    return b;
+  }
+
+  // ---- Render posts ----
+  function autoGrow(ta){ ta.style.height="auto"; ta.style.height = ta.scrollHeight + "px"; }
+
+  function renderPosts(){
+    var has = data.posts.length > 0;
+    $("genArea").style.display = has ? "none" : "block";
+    $("postsArea").style.display = has ? "block" : "none";
+    if(!has){ refreshGenState(); return; }
+
+    var list = $("postList");
+    list.innerHTML = "";
+    data.posts.forEach(function(post, idx){
+      var el = document.createElement("div");
+      el.className = "post" + (post.done ? " done" : "");
+
+      var chk = document.createElement("button");
+      chk.type = "button"; chk.className = "check";
+      chk.setAttribute("aria-label", post.done ? "Mark post "+(idx+1)+" as not published" : "Mark post "+(idx+1)+" as published");
+      chk.setAttribute("aria-pressed", post.done ? "true" : "false");
+      chk.innerHTML = post.done ? "✓" : "";
+      chk.addEventListener("click", function(){
+        post.done = !post.done; save(); renderProgress();
+        el.classList.toggle("done", post.done);
+        chk.innerHTML = post.done ? "✓" : "";
+        chk.setAttribute("aria-pressed", post.done ? "true":"false");
+      });
+
+      var body = document.createElement("div"); body.className = "body";
+      var meta = document.createElement("div"); meta.className = "meta";
+      var bk = document.createElement("span"); bk.className = "bk "+post.bucket; bk.textContent = bucketLabel(post.bucket);
+      var pn = document.createElement("span"); pn.className = "pill-name"; pn.textContent = "· "+post.pillar;
+      meta.appendChild(bk); meta.appendChild(pn);
+
+      var ta = document.createElement("textarea");
+      ta.className = "idea"; ta.value = post.idea; ta.rows = 1;
+      ta.setAttribute("aria-label","Post idea "+(idx+1));
+      ta.addEventListener("input", function(){ post.idea = ta.value; autoGrow(ta); save(); });
+
+      var acts = document.createElement("div"); acts.className = "acts";
+      var up = document.createElement("button"); up.type="button"; up.className="mini up"; up.textContent="↑"; up.setAttribute("aria-label","Move up");
+      up.disabled = idx === 0;
+      up.addEventListener("click", function(){ move(idx, -1); });
+      var down = document.createElement("button"); down.type="button"; down.className="mini down"; down.textContent="↓"; down.setAttribute("aria-label","Move down");
+      down.disabled = idx === data.posts.length-1;
+      down.addEventListener("click", function(){ move(idx, 1); });
+      var cp = document.createElement("button"); cp.type="button"; cp.className="mini"; cp.textContent="Copy";
+      cp.addEventListener("click", function(){ copyText(post.idea); });
+      var del = document.createElement("button"); del.type="button"; del.className="mini"; del.textContent="Remove";
+      del.addEventListener("click", function(){
+        data.posts.splice(idx,1); save(); renderPosts();
+      });
+      acts.appendChild(up); acts.appendChild(down); acts.appendChild(cp); acts.appendChild(del);
+
+      body.appendChild(meta); body.appendChild(ta); body.appendChild(acts);
+      el.appendChild(chk); el.appendChild(body);
+      list.appendChild(el);
+      autoGrow(ta);
+    });
+    renderProgress();
+  }
+
+  function move(idx, dir){
+    var ni = idx + dir;
+    if(ni < 0 || ni >= data.posts.length) return;
+    var tmp = data.posts[idx]; data.posts[idx] = data.posts[ni]; data.posts[ni] = tmp;
+    save(); renderPosts();
+  }
+
+  $("addPost").addEventListener("click", function(){
+    var pillars = activePillars();
+    var p = pillars.length ? pillars[data.posts.length % pillars.length] : "My theme";
+    data.posts.push({ id:Date.now(), pillar:p, bucket:"value", idea:"", done:false });
+    save(); renderPosts();
+    // focus the new textarea
+    var areas = $("postList").querySelectorAll(".idea");
+    if(areas.length){ areas[areas.length-1].focus(); }
+  });
+
+  $("copyAll").addEventListener("click", function(){
+    if(!data.posts.length) return;
+    var lines = data.posts.map(function(p, i){
+      return (i+1)+". ["+bucketLabel(p.bucket)+" · "+p.pillar+"] "+p.idea;
+    });
+    var header = "MY FIRST 30 POSTS — Women of Increase\n";
+    if(data.primary){ header += "Primary platform: "+label(data.primary)+(data.secondary?" (+ "+label(data.secondary)+")":"")+"\n"; }
+    var found = RHYTHMS.find(function(r){ return r[0]===data.rhythm; });
+    if(found){ header += "Rhythm: "+found[1]+"\n"; }
+    copyText(header + "\n" + lines.join("\n"), "All posts copied! 💛");
+  });
+
+  // ---- Progress + milestones ----
+  var lastShownMs = -1;
+  function renderProgress(){
+    var total = data.posts.length;
+    var done = data.posts.filter(function(p){ return p.done; }).length;
+    $("doneCount").textContent = done;
+    $("ofTotal").textContent = "/"+total;
+    var pct = total ? Math.round((done/total)*100) : 0;
+    $("progBar").style.width = pct + "%";
+
+    var lab = $("progLab");
+    if(done === 0) lab.textContent = "Just show up 💛";
+    else if(done < total) lab.textContent = pct + "% published";
+    else lab.textContent = "Every single one — done! 🎉";
+
+    // Milestones
+    var ms = $("milestone");
+    var hit = -1;
+    if(total){
+      if(done === total) hit = total;
+      else if(done >= Math.ceil(total*0.75)) hit = 75;
+      else if(done >= Math.ceil(total/2)) hit = 50;
+      else if(done >= Math.max(1,Math.ceil(total*0.25))) hit = 25;
+      else if(done >= 1) hit = 1;
+    }
+    if(hit > 0 && hit !== lastShownMs){
+      var copy = milestoneCopy(hit, total);
+      $("msBig").textContent = copy[0];
+      $("msSm").textContent = copy[1];
+      ms.classList.add("show");
+      lastShownMs = hit;
+    }else if(hit <= 0){
+      ms.classList.remove("show");
+      lastShownMs = -1;
+    }else{
+      lastShownMs = hit; // keep current message without re-animating
+    }
+  }
+  function milestoneCopy(hit, total){
+    if(hit === total) return ["You published all "+total+"! 🎉", "You showed up — consistently, faithfully, beautifully. This is increase, sister."];
+    if(hit === 75) return ["Three-quarters there! 🌿", "Look at your faithfulness. The finish line is close — keep going."];
+    if(hit === 50) return ["Halfway! 💛", "Fifteen posts in. You're not 'trying' anymore — you're a creator."];
+    if(hit === 25) return ["A quarter done! ✨", "Momentum is building. Proud of you for showing up."];
+    return ["Your first post is live! 🥳", "The hardest one is behind you. Everything gets lighter from here."];
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Content Creator Starter Pack data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = defaults();
+      lastShownMs = -1;
+      renderAll();
+      toast("Cleared — a fresh start 💛");
+    }
+  });
+
+  // ---- Init ----
+  function renderAll(){
+    renderWelcome();
+    renderPlatforms();
+    renderPillars();
+    renderChips();
+    renderRhythm();
+    refreshGenState();
+    renderPosts();
+  }
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

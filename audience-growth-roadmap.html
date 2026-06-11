@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audience Growth Roadmap · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome / mindset banner ---------- */
+  .mindset{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .mindset::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .mindset p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .mindset .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="number"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="number"], select{ min-height:48px; }
+  textarea{ min-height:74px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  select{ -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path fill='%236B655C' d='M1 1l5 5 5-5'/></svg>");
+    background-repeat:no-repeat; background-position:right 16px center; padding-right:38px; }
+
+  /* ---------- Roadmap stages ---------- */
+  .stage{ border:1px solid var(--line); border-radius:13px; margin-top:12px; overflow:hidden; background:var(--cream); }
+  .stage-head{
+    display:flex; align-items:center; gap:10px; width:100%; text-align:left;
+    background:none; border:none; cursor:pointer; padding:14px; min-height:56px;
+    font-family:inherit;
+  }
+  .stage-head .dot{
+    flex:none; width:30px;height:30px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;
+  }
+  .stage-head.complete .dot{ background:var(--emerald); color:#FCF8EF; }
+  .stage-head .st-title{ flex:1; }
+  .stage-head .st-name{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:16px;
+  }
+  .stage-head .st-sub{ color:var(--muted); font-size:12.5px; }
+  .stage-head .chev{ color:var(--muted); font-size:14px; transition:transform .2s; }
+  .stage.open .chev{ transform:rotate(180deg); }
+  .stage-body{ display:none; padding:0 14px 14px; }
+  .stage.open .stage-body{ display:block; }
+
+  .action-row{
+    display:flex; align-items:flex-start; gap:10px; padding:9px 0; border-bottom:1px solid var(--line);
+  }
+  .action-row:last-of-type{ border-bottom:none; }
+  .action-row input[type="checkbox"]{
+    flex:none; width:22px; height:22px; margin-top:1px; accent-color:var(--emerald); cursor:pointer;
+  }
+  .action-row .txt{ flex:1; font-size:14.5px; cursor:pointer; }
+  .action-row.done .txt{ color:var(--muted); text-decoration:line-through; }
+  .action-row .del{
+    flex:none; background:none; border:none; color:var(--muted); font-size:18px; cursor:pointer;
+    min-width:44px; min-height:44px; line-height:1; margin:-11px -8px -11px 0;
+  }
+  .action-row .del:hover{ color:var(--gold); }
+  .add-action{ display:flex; gap:8px; margin-top:10px; }
+  .add-action input{ flex:1; min-height:44px; }
+  .add-btn{
+    flex:none; min-height:44px; min-width:48px; background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.18); border-radius:11px; font-family:inherit; font-weight:700;
+    font-size:20px; cursor:pointer; line-height:1;
+  }
+  .add-btn:hover{ background:var(--gold-soft); }
+
+  /* ---------- Content calendar ---------- */
+  .cadence-row{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .cadence-row .stepper{ display:flex; align-items:center; gap:6px; }
+  .stepper button{
+    width:44px;height:44px;border-radius:11px;border:1px solid var(--line);background:var(--cream);
+    color:var(--emerald); font-size:22px; font-weight:700; cursor:pointer; line-height:1;
+  }
+  .stepper button:hover{ border-color:var(--gold); }
+  .stepper .val{ font-family:'Fraunces',serif; font-size:24px; color:var(--emerald); min-width:34px; text-align:center; }
+  .cadence-row .lbl{ color:var(--muted); font-size:14px; }
+
+  .slot{
+    border:1px solid var(--line); border-radius:12px; padding:12px; margin-top:10px; background:var(--cream);
+  }
+  .slot-top{ display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .slot-top .day{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:15px; flex:1;
+  }
+  .slot-top input[type="checkbox"]{ width:22px;height:22px; accent-color:var(--emerald); cursor:pointer; }
+  .slot-top .donelbl{ font-size:12.5px; color:var(--muted); cursor:pointer; }
+  .slot.done{ background:var(--emerald-soft); }
+  .slot.done .day{ text-decoration:line-through; }
+  .slot-fields{ display:flex; gap:8px; }
+  .slot-fields input{ font-size:14.5px; min-height:44px; }
+  .slot-fields .pillar{ flex:1.3; }
+  .slot-fields .format{ flex:1; }
+
+  /* ---------- Growth tracker ---------- */
+  .log-row{ display:flex; gap:8px; align-items:flex-end; }
+  .log-row .fld{ flex:1; }
+  .log-row .fld label{ display:block; font-weight:600; font-size:12.5px; color:var(--ink); margin-bottom:5px; }
+  .log-btn{
+    flex:none; min-height:48px; padding:0 16px; background:var(--gold); color:var(--ink); border:none;
+    border-radius:11px; font-family:inherit; font-weight:700; font-size:14px; cursor:pointer;
+    box-shadow:0 4px 12px rgba(200,160,74,.3);
+  }
+  .log-btn:active{ transform:translateY(1px); }
+
+  .trend{ margin-top:14px; }
+  .trend-bar{ display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--line); font-size:14px; }
+  .trend-bar:last-child{ border-bottom:none; }
+  .trend-bar .t-date{ flex:none; width:70px; color:var(--muted); font-size:12.5px; }
+  .trend-bar .bar-wrap{ flex:1; height:14px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .trend-bar .bar{ height:100%; background:var(--gold); border-radius:999px; min-width:4px; }
+  .trend-bar .t-val{ flex:none; width:58px; text-align:right; font-weight:700; color:var(--emerald); }
+  .trend-bar .delta{ flex:none; width:46px; text-align:right; font-size:12px; color:var(--muted); }
+  .trend-bar .delta.up{ color:var(--emerald); }
+  .latest-note{
+    margin-top:14px; text-align:center; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.15); border-radius:14px; padding:14px 16px; color:var(--emerald);
+    font-size:14px;
+  }
+  .latest-note b{ font-family:'Fraunces',serif; }
+
+  /* ---------- Milestones ---------- */
+  .miles{ display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; }
+  .mile{
+    flex:1 1 calc(50% - 4px); border:1px solid var(--line); border-radius:12px; padding:12px;
+    background:var(--cream); text-align:center;
+  }
+  .mile.hit{ background:var(--emerald-soft); border-color:rgba(20,84,62,.25); }
+  .mile .m-num{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:20px; }
+  .mile .m-lbl{ font-size:12px; color:var(--muted); margin-top:2px; }
+  .mile.hit .m-lbl{ color:var(--emerald); font-weight:600; }
+  .mile .check{ font-size:15px; }
+
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Audience Growth Roadmap</h1>
+    <p class="subtitle">Grow from zero — your platform strategy and content plan, one faithful step at a time.</p>
+  </header>
+
+  <!-- Mindset / welcome -->
+  <section class="card">
+    <div class="mindset">
+      <p id="mindsetText">You don't need a big audience — you need the right one. A small, engaged circle who needs exactly what you carry will outgrow and outconvert a huge, distracted crowd every time. Start where you are. Plant faithfully.</p>
+      <div class="ref">Start from zero</div>
+    </div>
+  </section>
+
+  <!-- 1. Who & Where -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Who &amp; Where</h2></div>
+    <p class="hint">Get clear before you grow. Who are you serving, and where will you meet her?</p>
+    <label class="field-label" for="ideal">Who you're growing for — your ideal person</label>
+    <textarea id="ideal" placeholder="She's a… who's struggling with… and longing for…"></textarea>
+    <label class="field-label" for="platform">Your primary platform (home base)</label>
+    <select id="platform">
+      <option value="">Choose where you'll focus first…</option>
+      <option>Instagram</option>
+      <option>TikTok</option>
+      <option>YouTube</option>
+      <option>Facebook / Group</option>
+      <option>Pinterest</option>
+      <option>Email / Newsletter</option>
+      <option>Podcast</option>
+      <option>LinkedIn</option>
+      <option>Blog / Website</option>
+      <option>Threads / X</option>
+      <option>Other</option>
+    </select>
+    <label class="field-label" for="offer">What you offer — say it in one clear line</label>
+    <input type="text" id="offer" placeholder="I help ___ to ___ so they can ___">
+  </section>
+
+  <!-- 2. Growth Roadmap -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Your Growth Roadmap</h2></div>
+    <p class="hint">Five stages, in order. Check off each action as you live it — edit and add your own.</p>
+    <div id="stages"></div>
+  </section>
+
+  <!-- 3. Content Calendar -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>This Week's Content</h2></div>
+    <p class="hint">Light and repeatable beats perfect and exhausting. Set your cadence, plan your slots.</p>
+    <label class="field-label">How many posts this week?</label>
+    <div class="cadence-row">
+      <div class="stepper">
+        <button type="button" id="cadDown" aria-label="Fewer posts">−</button>
+        <span class="val" id="cadVal">3</span>
+        <button type="button" id="cadUp" aria-label="More posts">+</button>
+      </div>
+      <span class="lbl">posts this week — pick a number you can actually keep.</span>
+    </div>
+    <div id="slots"></div>
+  </section>
+
+  <!-- 4. Growth Tracker -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Growth Tracker</h2></div>
+    <p class="hint">Log your number now and then. Any growth counts — even one new person is one person who found you.</p>
+    <div class="log-row">
+      <div class="fld">
+        <label for="metric">Measuring</label>
+        <select id="metric">
+          <option>Followers</option>
+          <option>Subscribers</option>
+          <option>Email list</option>
+          <option>Engagement</option>
+          <option>Members</option>
+        </select>
+      </div>
+      <div class="fld">
+        <label for="metricVal">Today's number</label>
+        <input type="number" id="metricVal" min="0" inputmode="numeric" placeholder="e.g. 42">
+      </div>
+      <button class="log-btn" id="logBtn" type="button">Log</button>
+    </div>
+    <div class="latest-note" id="latestNote" style="display:none;"></div>
+    <div class="trend" id="trend"></div>
+    <p class="empty-note" id="trendEmpty">No numbers logged yet — log your first one above. Wherever you're starting, it's a real start. 💛</p>
+  </section>
+
+  <!-- 5. Milestones -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>Milestones to Celebrate</h2></div>
+    <p class="hint">Each one is proof you're building something real. We celebrate every single one.</p>
+    <div class="miles" id="miles"></div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_audience_growth";
+
+  // ---- Default roadmap ----
+  var DEFAULT_STAGES = [
+    { name:"Foundation", sub:"Make it clear who you help",
+      actions:[
+        {t:"Write a bio that says who you help and how",d:false},
+        {t:"Add a clear profile photo and handle",d:false},
+        {t:"Pin or feature what you offer up top",d:false},
+        {t:"Add one link/way to take the next step",d:false}
+      ]},
+    { name:"Show Up", sub:"Consistent, helpful content",
+      actions:[
+        {t:"Choose 2–3 content pillars (themes you own)",d:false},
+        {t:"Post helpful content on a cadence you can keep",d:false},
+        {t:"Share your story — people follow people",d:false},
+        {t:"Repurpose one idea into multiple posts",d:false}
+      ]},
+    { name:"Engage", sub:"Talk to people, find your people",
+      actions:[
+        {t:"Reply to every comment and DM warmly",d:false},
+        {t:"Comment on 5 accounts your person follows",d:false},
+        {t:"Ask a question and actually listen to answers",d:false},
+        {t:"Welcome new followers personally",d:false}
+      ]},
+    { name:"Get Found", sub:"Be discoverable",
+      actions:[
+        {t:"Use relevant hashtags / keywords / SEO",d:false},
+        {t:"Collaborate or go live with someone aligned",d:false},
+        {t:"Get featured, guest, or be a guest somewhere",d:false},
+        {t:"Make one shareable, save-worthy piece",d:false}
+      ]},
+    { name:"Convert", sub:"Lovingly make the offer",
+      actions:[
+        {t:"Invite people to your email list / community",d:false},
+        {t:"Talk about what you offer without shame",d:false},
+        {t:"Add clear calls to action",d:false},
+        {t:"Make a simple offer and follow up",d:false}
+      ]}
+  ];
+
+  var DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+
+  var MILESTONES = [
+    {n:10, l:"First 10"}, {n:50, l:"First 50"}, {n:100, l:"First 100"},
+    {n:250, l:"First 250"}, {n:500, l:"First 500"}, {n:1000, l:"First 1,000"}
+  ];
+
+  // ---- State ----
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o) return o; }
+    }catch(e){}
+    return null;
+  }
+  function freshData(){
+    return {
+      ideal:"", platform:"", offer:"",
+      stages: JSON.parse(JSON.stringify(DEFAULT_STAGES)),
+      cadence:3, slots:[], metric:"Followers", logs:[]
+    };
+  }
+  var data = load() || freshData();
+  // backfill any missing keys
+  var fd = freshData();
+  for(var k in fd){ if(!(k in data)) data[k] = fd[k]; }
+
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Who & Where ----
+  var idealEl=$("ideal"), platformEl=$("platform"), offerEl=$("offer");
+  idealEl.value = data.ideal || "";
+  platformEl.value = data.platform || "";
+  offerEl.value = data.offer || "";
+  idealEl.addEventListener("input", function(){ data.ideal=idealEl.value; save(); });
+  platformEl.addEventListener("change", function(){ data.platform=platformEl.value; save(); });
+  offerEl.addEventListener("input", function(){ data.offer=offerEl.value; save(); });
+
+  // ---- Roadmap stages ----
+  var stagesEl = $("stages");
+  function renderStages(){
+    stagesEl.innerHTML = "";
+    data.stages.forEach(function(stage, si){
+      var done = stage.actions.length>0 && stage.actions.every(function(a){return a.d;});
+      var doneCount = stage.actions.filter(function(a){return a.d;}).length;
+
+      var wrap = document.createElement("div");
+      wrap.className = "stage" + (stage.open ? " open":"");
+
+      var head = document.createElement("button");
+      head.type="button";
+      head.className = "stage-head" + (done?" complete":"");
+      head.innerHTML =
+        '<span class="dot">'+(done?"✓":(si+1))+'</span>'+
+        '<span class="st-title"><span class="st-name"></span>'+
+        '<span class="st-sub"></span></span>'+
+        '<span class="chev">▾</span>';
+      head.querySelector(".st-name").textContent = stage.name;
+      head.querySelector(".st-sub").textContent = stage.sub + " · " + doneCount + "/" + stage.actions.length + " done";
+      head.addEventListener("click", function(){
+        stage.open = !stage.open; save(); renderStages();
+      });
+      wrap.appendChild(head);
+
+      var body = document.createElement("div");
+      body.className="stage-body";
+      stage.actions.forEach(function(act, ai){
+        var row = document.createElement("div");
+        row.className = "action-row" + (act.d?" done":"");
+        var cbId = "act-"+si+"-"+ai;
+        var cb = document.createElement("input");
+        cb.type="checkbox"; cb.id=cbId; cb.checked=act.d;
+        cb.addEventListener("change", function(){ act.d=cb.checked; save(); renderStages(); });
+        var txt = document.createElement("label");
+        txt.className="txt"; txt.setAttribute("for",cbId); txt.textContent=act.t;
+        var del = document.createElement("button");
+        del.type="button"; del.className="del"; del.setAttribute("aria-label","Remove action"); del.textContent="×";
+        del.addEventListener("click", function(){ stage.actions.splice(ai,1); save(); renderStages(); });
+        row.appendChild(cb); row.appendChild(txt); row.appendChild(del);
+        body.appendChild(row);
+      });
+
+      var add = document.createElement("div");
+      add.className="add-action";
+      var inp = document.createElement("input");
+      inp.type="text"; inp.placeholder="Add your own action…";
+      inp.setAttribute("aria-label","New action for "+stage.name);
+      var addBtn = document.createElement("button");
+      addBtn.type="button"; addBtn.className="add-btn"; addBtn.setAttribute("aria-label","Add action"); addBtn.textContent="+";
+      function addAction(){
+        var v = inp.value.trim();
+        if(!v) return;
+        stage.actions.push({t:v,d:false}); inp.value=""; save(); renderStages();
+      }
+      addBtn.addEventListener("click", addAction);
+      inp.addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); addAction(); } });
+      add.appendChild(inp); add.appendChild(addBtn);
+      body.appendChild(add);
+
+      wrap.appendChild(body);
+      stagesEl.appendChild(wrap);
+    });
+  }
+  renderStages();
+
+  // ---- Content calendar ----
+  var cadValEl = $("cadVal"), slotsEl = $("slots");
+  function ensureSlots(){
+    var c = data.cadence;
+    while(data.slots.length < c){
+      data.slots.push({ day:DAYS[data.slots.length % 7], pillar:"", format:"", done:false });
+    }
+    if(data.slots.length > c){ data.slots = data.slots.slice(0, c); }
+  }
+  function renderCadence(){
+    cadValEl.textContent = data.cadence;
+    ensureSlots();
+    slotsEl.innerHTML = "";
+    data.slots.forEach(function(slot, i){
+      var box = document.createElement("div");
+      box.className = "slot" + (slot.done?" done":"");
+
+      var top = document.createElement("div");
+      top.className="slot-top";
+      var daySel = document.createElement("select");
+      daySel.className="day"; daySel.setAttribute("aria-label","Day for post "+(i+1));
+      daySel.style.flex="0 0 auto"; daySel.style.minHeight="44px"; daySel.style.fontSize="15px";
+      daySel.style.padding="6px 30px 6px 12px"; daySel.style.background="transparent"; daySel.style.border="none";
+      daySel.style.fontFamily="'Fraunces',serif"; daySel.style.color="var(--emerald)"; daySel.style.fontWeight="600";
+      DAYS.forEach(function(d){
+        var o=document.createElement("option"); o.textContent=d; if(d===slot.day) o.selected=true; daySel.appendChild(o);
+      });
+      daySel.addEventListener("change", function(){ slot.day=daySel.value; save(); });
+
+      var spacer = document.createElement("span"); spacer.style.flex="1";
+
+      var cbId="slot-done-"+i;
+      var cb=document.createElement("input"); cb.type="checkbox"; cb.id=cbId; cb.checked=slot.done;
+      cb.addEventListener("change", function(){ slot.done=cb.checked; save(); renderCadence(); });
+      var donelbl=document.createElement("label"); donelbl.className="donelbl"; donelbl.setAttribute("for",cbId);
+      donelbl.textContent="Posted";
+
+      top.appendChild(daySel); top.appendChild(spacer); top.appendChild(cb); top.appendChild(donelbl);
+
+      var fields=document.createElement("div"); fields.className="slot-fields";
+      var pillar=document.createElement("input"); pillar.type="text"; pillar.className="pillar";
+      pillar.placeholder="Topic / pillar"; pillar.value=slot.pillar||"";
+      pillar.setAttribute("aria-label","Topic for "+slot.day);
+      pillar.addEventListener("input", function(){ slot.pillar=pillar.value; save(); });
+      var format=document.createElement("input"); format.type="text"; format.className="format";
+      format.placeholder="Format"; format.value=slot.format||"";
+      format.setAttribute("aria-label","Format for "+slot.day);
+      format.addEventListener("input", function(){ slot.format=format.value; save(); });
+      fields.appendChild(pillar); fields.appendChild(format);
+
+      box.appendChild(top); box.appendChild(fields);
+      slotsEl.appendChild(box);
+    });
+  }
+  $("cadUp").addEventListener("click", function(){
+    if(data.cadence < 14){ data.cadence++; save(); renderCadence(); }
+  });
+  $("cadDown").addEventListener("click", function(){
+    if(data.cadence > 1){ data.cadence--; save(); renderCadence(); }
+  });
+  renderCadence();
+
+  // ---- Growth tracker ----
+  var metricEl=$("metric"), metricValEl=$("metricVal");
+  metricEl.value = data.metric || "Followers";
+  metricEl.addEventListener("change", function(){ data.metric=metricEl.value; save(); });
+
+  function todayKey(){
+    var d=new Date();
+    var m=String(d.getMonth()+1).padStart(2,"0");
+    var day=String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function prettyShort(key){
+    var p=key.split("-"); var d=new Date(p[0],p[1]-1,p[2]);
+    return d.toLocaleDateString(undefined,{month:"short", day:"numeric"});
+  }
+
+  $("logBtn").addEventListener("click", function(){
+    var v = parseInt(metricValEl.value, 10);
+    if(isNaN(v) || v < 0){ metricValEl.focus(); return; }
+    var tk = todayKey();
+    // replace same-day entry, else push
+    var existing = null;
+    for(var i=0;i<data.logs.length;i++){ if(data.logs[i].date===tk){ existing=data.logs[i]; break; } }
+    if(existing){ existing.v=v; existing.metric=data.metric; }
+    else{ data.logs.push({date:tk, v:v, metric:data.metric}); }
+    data.logs.sort(function(a,b){ return a.date<b.date?-1:1; });
+    metricValEl.value="";
+    save(); renderTrend(); renderMiles();
+  });
+
+  function renderTrend(){
+    var trend=$("trend"), empty=$("trendEmpty"), note=$("latestNote");
+    trend.innerHTML="";
+    if(data.logs.length===0){ empty.style.display="block"; note.style.display="none"; return; }
+    empty.style.display="none";
+
+    var shown = data.logs.slice(-8);
+    var max = Math.max.apply(null, shown.map(function(l){return l.v;}));
+    if(max<=0) max=1;
+
+    shown.forEach(function(log, idx){
+      var bar=document.createElement("div"); bar.className="trend-bar";
+      var dt=document.createElement("span"); dt.className="t-date"; dt.textContent=prettyShort(log.date);
+      var wrap=document.createElement("span"); wrap.className="bar-wrap";
+      var b=document.createElement("span"); b.className="bar"; b.style.width=Math.max(4,(log.v/max)*100)+"%";
+      wrap.appendChild(b);
+      var val=document.createElement("span"); val.className="t-val"; val.textContent=log.v.toLocaleString();
+      var delta=document.createElement("span"); delta.className="delta";
+      if(idx>0){
+        var diff=log.v - shown[idx-1].v;
+        if(diff>0){ delta.textContent="+"+diff; delta.classList.add("up"); }
+        else if(diff<0){ delta.textContent=String(diff); }
+        else{ delta.textContent="="; }
+      }
+      bar.appendChild(dt); bar.appendChild(wrap); bar.appendChild(val); bar.appendChild(delta);
+      trend.appendChild(bar);
+    });
+
+    // encouraging note on latest
+    var last=data.logs[data.logs.length-1];
+    note.style.display="block";
+    if(data.logs.length===1){
+      note.innerHTML="You're on the board — <b>"+last.v.toLocaleString()+" "+last.metric.toLowerCase()+"</b>. Every number from here is growth. 💛";
+    }else{
+      var prev=data.logs[data.logs.length-2];
+      var d=last.v-prev.v;
+      if(d>0){ note.innerHTML="Up <b>+"+d.toLocaleString()+"</b> since last time — celebrate it, sister. Keep showing up. 💛"; }
+      else if(d===0){ note.innerHTML="Steady at <b>"+last.v.toLocaleString()+"</b>. Plateaus aren't failure — they're the soil settling before the next bloom. 💛"; }
+      else{ note.innerHTML="A dip to <b>"+last.v.toLocaleString()+"</b>. Numbers wobble; your worth doesn't. The right people are still finding you. 💛"; }
+    }
+  }
+  renderTrend();
+
+  // ---- Milestones ----
+  function renderMiles(){
+    var milesEl=$("miles");
+    var best = data.logs.length ? Math.max.apply(null, data.logs.map(function(l){return l.v;})) : 0;
+    milesEl.innerHTML="";
+    MILESTONES.forEach(function(m){
+      var hit = best >= m.n;
+      var el=document.createElement("div"); el.className="mile"+(hit?" hit":"");
+      el.innerHTML='<div class="m-num">'+(hit?'<span class="check">🎉</span> ':'')+m.n.toLocaleString()+'</div>'+
+        '<div class="m-lbl"></div>';
+      el.querySelector(".m-lbl").textContent = hit ? (m.l+" — reached!") : m.l;
+      milesEl.appendChild(el);
+    });
+  }
+  renderMiles();
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Audience Growth Roadmap data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = freshData();
+      idealEl.value=""; platformEl.value=""; offerEl.value="";
+      metricEl.value="Followers"; metricValEl.value="";
+      renderStages(); renderCadence(); renderTrend(); renderMiles();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

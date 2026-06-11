@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vision to Launch Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome (first run) ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+    margin-bottom:2px;
+  }
+  .welcome h3{
+    font-family:'Fraunces',serif; font-weight:600; font-size:21px; line-height:1.25; margin-bottom:8px; color:#FCF8EF;
+  }
+  .welcome p{ font-size:14.5px; line-height:1.5; color:#EFE7D4; }
+  .welcome .accent{ color:var(--gold-soft); font-weight:600; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label:first-of-type{ margin-top:0; }
+  input[type="text"], input[type="date"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="date"]{ min-height:48px; }
+  textarea{ min-height:80px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  .two-col{ display:flex; gap:12px; }
+  .two-col > div{ flex:1; }
+
+  .offer-input{ font-family:'Fraunces',serif; font-size:18px; color:var(--emerald); font-weight:500; }
+
+  /* ---------- Countdown ---------- */
+  .countdown{
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:14px; padding:16px 18px; margin-top:16px; text-align:center;
+  }
+  .countdown .num{
+    font-family:'Fraunces',serif; font-weight:600; font-size:40px; line-height:1; color:var(--emerald);
+  }
+  .countdown .lbl{ font-size:13px; color:var(--muted); margin-top:3px; }
+  .countdown .divider{ width:1px; align-self:stretch; background:rgba(20,84,62,.16); }
+  .countdown.launched{ background:var(--gold-soft); border-color:rgba(200,160,74,.4); }
+  .countdown.launched .num{ color:var(--ink); }
+
+  /* ---------- Progress ---------- */
+  .progress-wrap{ margin-top:4px; }
+  .progress-top{
+    display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;
+  }
+  .progress-pct{ font-family:'Fraunces',serif; font-weight:600; font-size:26px; color:var(--emerald); }
+  .progress-phase{ font-size:13.5px; color:var(--muted); text-align:right; }
+  .progress-phase b{ color:var(--gold); font-weight:600; }
+  .bar{
+    height:12px; border-radius:999px; background:var(--emerald-soft);
+    overflow:hidden; border:1px solid rgba(20,84,62,.1);
+  }
+  .bar .fill{
+    height:100%; width:0%; border-radius:999px;
+    background:linear-gradient(90deg, var(--gold), var(--gold-soft));
+    transition:width .4s ease;
+  }
+  .progress-sub{ margin-top:8px; font-size:13px; color:var(--muted); }
+
+  .celebrate{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--gold-soft); border:1px solid rgba(200,160,74,.4);
+    border-radius:14px; padding:18px 16px; color:var(--ink);
+  }
+  .celebrate.show{ display:block; animation:rise .4s ease; }
+  .celebrate .big{ font-family:'Fraunces',serif; font-weight:600; font-size:19px; color:var(--emerald); margin-bottom:4px; }
+  .celebrate .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Week phases ---------- */
+  .week{ margin-top:16px; }
+  .week:first-child{ margin-top:0; }
+  .week-head{
+    display:flex; align-items:center; gap:10px; margin-bottom:4px;
+  }
+  .week-badge{
+    flex:none; padding:4px 10px; border-radius:999px; font-size:11px; font-weight:700;
+    letter-spacing:.1em; text-transform:uppercase;
+    background:var(--gold-soft); color:var(--emerald);
+  }
+  .week-badge.current{ background:var(--emerald); color:#FCF8EF; }
+  .week-badge.done{ background:var(--emerald-soft); color:var(--emerald); }
+  .week-title{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:18px;
+  }
+  .week-note{ color:var(--muted); font-size:13px; margin:0 0 12px 0; }
+
+  .task{
+    display:flex; align-items:flex-start; gap:11px; padding:9px 2px;
+    border-bottom:1px solid var(--line);
+  }
+  .task:last-of-type{ border-bottom:none; }
+  .task input[type="checkbox"]{
+    flex:none; width:22px; height:22px; margin-top:1px; accent-color:var(--emerald); cursor:pointer;
+  }
+  .task .tlabel{
+    flex:1; font-size:15px; color:var(--ink); cursor:pointer; line-height:1.4; padding:2px 0;
+    min-height:26px; display:flex; align-items:center;
+  }
+  .task.checked .tlabel{ color:var(--muted); text-decoration:line-through; }
+  .task .del{
+    flex:none; background:none; border:none; color:#C0B9AC; font-size:20px; line-height:1;
+    cursor:pointer; padding:4px 6px; min-width:34px; min-height:34px; border-radius:8px;
+  }
+  .task .del:hover{ color:var(--gold); }
+
+  .add-row{ display:flex; gap:8px; margin-top:10px; }
+  .add-row input{ flex:1; min-height:44px; font-size:15px; padding:10px 12px; }
+  .add-btn{
+    flex:none; min-height:44px; min-width:44px; padding:0 16px;
+    background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.18);
+    border-radius:11px; font-family:inherit; font-weight:600; font-size:14px; cursor:pointer;
+  }
+  .add-btn:hover{ background:var(--emerald); color:#FCF8EF; }
+
+  /* ---------- Encouragement ---------- */
+  .encourage{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:14px; padding:18px 18px;
+  }
+  .encourage p{ color:var(--emerald); font-size:15px; line-height:1.5; }
+  .encourage .lead{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500; font-size:18px; margin-bottom:8px;
+  }
+  .encourage .sm{ color:var(--muted); font-size:13.5px; margin-top:8px; font-style:normal; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Vision to Launch Planner</h1>
+    <p class="subtitle">From idea to live in 30 days — every step mapped, sister.</p>
+  </header>
+
+  <!-- Welcome (first run) -->
+  <section class="card" id="welcomeCard" style="display:none;">
+    <div class="welcome">
+      <h3>Your vision is allowed to be real.</h3>
+      <p>That thing on your heart? It's time. In the next <span class="accent">30 days</span> you'll name it, build the smallest version that can sell, warm up the people who need it, and <span class="accent">launch it</span> — clearly, more than once. Start by naming your offer below. Done beats perfect. Launched beats planned.</p>
+    </div>
+  </section>
+
+  <!-- 1. The Vision -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Name Your Vision</h2></div>
+    <p class="hint">Say it plainly. A named vision is already halfway to real.</p>
+    <label class="field-label" for="vision">What are you launching?</label>
+    <input type="text" class="offer-input" id="vision" placeholder="e.g. A 4-week prayer & planning circle for busy women">
+
+    <label class="field-label" for="launchDate">Your launch date</label>
+    <input type="date" id="launchDate">
+
+    <div class="countdown" id="countdown">
+      <div>
+        <div class="num" id="daysLeft">30</div>
+        <div class="lbl" id="daysLabel">days to launch</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. The Offer + Price -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Make It Real: Offer &amp; Price</h2></div>
+    <p class="hint">A vision with a price is a business. Write it down so there's something to launch.</p>
+    <label class="field-label" for="offer">The offer (what they get)</label>
+    <textarea id="offer" placeholder="In plain words — what you're giving, who it's for, the transformation it creates."></textarea>
+    <label class="field-label" for="price">The price</label>
+    <input type="text" id="price" placeholder="e.g. $97 · or 'pay-what-you-can from $27'">
+  </section>
+
+  <!-- 3. Progress -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Your Progress</h2></div>
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span class="progress-pct" id="progressPct">0%</span>
+        <span class="progress-phase" id="progressPhase">Start here: <b>Week 1 · Clarify</b></span>
+      </div>
+      <div class="bar"><div class="fill" id="progressFill"></div></div>
+      <div class="progress-sub" id="progressSub">0 of 0 steps done. Every checkbox is momentum.</div>
+    </div>
+    <div class="celebrate" id="celebrate">
+      <div class="big">You launched it. 🎉</div>
+      <div class="sm">You did the brave thing, sister. Now deliver with your whole heart — and watch what God does with obedience.</div>
+    </div>
+  </section>
+
+  <!-- 4. The 30-Day Plan -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Your 30-Day Launch Plan</h2></div>
+    <p class="hint">Four weeks, one phase at a time. Edit, add, and check things off — make it yours.</p>
+    <div id="weeks"></div>
+  </section>
+
+  <!-- 5. Encouragement -->
+  <section class="card">
+    <div class="encourage">
+      <p class="lead">You don't have to feel ready.</p>
+      <p>Readiness isn't a feeling you wait for — it's something that arrives <em>after</em> you begin. The most "ready" you'll ever feel is one launch from now. So move while it's still a little scary. That's where the increase lives.</p>
+      <p class="sm">Done beats perfect. Launched beats planned. 💛</p>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_vision_to_launch";
+
+  // ---- Default 4-week plan ----
+  var DEFAULT_WEEKS = [
+    {
+      title:"Clarify",
+      note:"Get crystal clear on the offer, who it's for, and the price.",
+      tasks:[
+        "Write the offer in one sentence",
+        "Name exactly who it's for",
+        "Decide the price (you can refine it later)",
+        "Name the transformation she walks away with"
+      ]
+    },
+    {
+      title:"Prepare the Minimum",
+      note:"Build the least you need to sell — not the most.",
+      tasks:[
+        "Outline what's actually included",
+        "Set up one simple place to buy (link, form, or DM)",
+        "Write a short, clear sales description",
+        "Decide how you'll deliver it"
+      ]
+    },
+    {
+      title:"Warm Up",
+      note:"Share the why and build anticipation before you sell.",
+      tasks:[
+        "Tell the story of why this matters to you",
+        "Post a 'something's coming' teaser",
+        "Invite people to watch for it / join a list",
+        "Share who it's for and the problem it solves"
+      ]
+    },
+    {
+      title:"Launch",
+      note:"Make the offer clearly — more than once — then deliver.",
+      tasks:[
+        "Make the offer plainly with the link",
+        "Make the offer again (most people miss it the first time)",
+        "Answer questions & invite a few people directly",
+        "Welcome your first yeses and begin delivering"
+      ]
+    }
+  ];
+
+  // ---- Helpers ----
+  function uid(){ return "t"+Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-3); }
+  function todayMidnight(){
+    var d = new Date(); d.setHours(0,0,0,0); return d;
+  }
+  function isoDate(d){
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function defaultLaunchDate(){
+    var d = todayMidnight(); d.setDate(d.getDate()+30); return isoDate(d);
+  }
+  function parseISO(s){
+    if(!s) return null;
+    var p = s.split("-");
+    if(p.length!==3) return null;
+    var d = new Date(Number(p[0]), Number(p[1])-1, Number(p[2]));
+    d.setHours(0,0,0,0);
+    return isNaN(d.getTime()) ? null : d;
+  }
+  function daysBetween(target){
+    if(!target) return null;
+    return Math.round((target - todayMidnight()) / 86400000);
+  }
+
+  // ---- State ----
+  function freshWeeks(){
+    return DEFAULT_WEEKS.map(function(w){
+      return {
+        title:w.title, note:w.note,
+        tasks:w.tasks.map(function(t){ return { id:uid(), text:t, done:false }; })
+      };
+    });
+  }
+  function freshState(){
+    return {
+      vision:"", launchDate:defaultLaunchDate(),
+      offer:"", price:"", weeks:freshWeeks(), touched:false
+    };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && o.weeks && o.weeks.length){
+          // backfill missing fields safely
+          if(!o.launchDate) o.launchDate = defaultLaunchDate();
+          return o;
+        }
+      }
+    }catch(e){}
+    return freshState();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  var state = load();
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var visionEl = $("vision"), launchDateEl = $("launchDate"),
+      offerEl = $("offer"), priceEl = $("price"),
+      weeksEl = $("weeks");
+
+  // ---- Restore basic fields ----
+  visionEl.value = state.vision || "";
+  launchDateEl.value = state.launchDate || defaultLaunchDate();
+  offerEl.value = state.offer || "";
+  priceEl.value = state.price || "";
+
+  // ---- Welcome state ----
+  function hasAnyProgress(){
+    if(state.vision || state.offer || state.price || state.touched) return true;
+    return state.weeks.some(function(w){ return w.tasks.some(function(t){ return t.done; }); });
+  }
+  function renderWelcome(){
+    $("welcomeCard").style.display = hasAnyProgress() ? "none" : "block";
+  }
+
+  // ---- Auto-save wiring for text fields ----
+  function wire(el, fn){
+    el.addEventListener("input", function(){ fn(el.value); state.touched = true; save(); renderWelcome(); });
+  }
+  wire(visionEl, function(v){ state.vision = v; });
+  wire(offerEl, function(v){ state.offer = v; });
+  wire(priceEl, function(v){ state.price = v; });
+  launchDateEl.addEventListener("change", function(){
+    state.launchDate = launchDateEl.value || defaultLaunchDate();
+    if(!launchDateEl.value){ launchDateEl.value = state.launchDate; }
+    state.touched = true; save(); renderCountdown();
+  });
+
+  // ---- Countdown ----
+  function renderCountdown(){
+    var box = $("countdown");
+    var target = parseISO(state.launchDate);
+    var d = daysBetween(target);
+    var allDone = totalDone() === totalTasks() && totalTasks() > 0;
+
+    if(d === null){
+      $("daysLeft").textContent = "—";
+      $("daysLabel").textContent = "set a launch date";
+      box.classList.remove("launched");
+      return;
+    }
+    if(allDone){
+      box.classList.add("launched");
+      $("daysLeft").textContent = "🎉";
+      $("daysLabel").textContent = "Launched — you did it!";
+      return;
+    }
+    box.classList.remove("launched");
+    if(d > 0){
+      $("daysLeft").textContent = d;
+      $("daysLabel").textContent = d === 1 ? "day to launch" : "days to launch";
+    } else if(d === 0){
+      $("daysLeft").textContent = "Today";
+      $("daysLabel").textContent = "is launch day — go, sister!";
+    } else {
+      box.classList.add("launched");
+      $("daysLeft").textContent = Math.abs(d);
+      $("daysLabel").textContent = Math.abs(d) === 1 ? "day past launch — finish strong" : "days past launch — finish strong";
+    }
+  }
+
+  // ---- Totals / progress ----
+  function totalTasks(){
+    return state.weeks.reduce(function(s,w){ return s + w.tasks.length; }, 0);
+  }
+  function totalDone(){
+    return state.weeks.reduce(function(s,w){
+      return s + w.tasks.filter(function(t){ return t.done; }).length;
+    }, 0);
+  }
+  function currentWeekIndex(){
+    // first week that isn't fully complete
+    for(var i=0;i<state.weeks.length;i++){
+      var w = state.weeks[i];
+      if(w.tasks.length === 0) continue;
+      var done = w.tasks.filter(function(t){ return t.done; }).length;
+      if(done < w.tasks.length) return i;
+    }
+    return state.weeks.length - 1; // all done
+  }
+
+  function renderProgress(){
+    var total = totalTasks(), done = totalDone();
+    var pct = total ? Math.round((done/total)*100) : 0;
+    $("progressPct").textContent = pct + "%";
+    $("progressFill").style.width = pct + "%";
+
+    if(total === 0){
+      $("progressSub").textContent = "Add a step to begin your plan.";
+    } else {
+      $("progressSub").textContent = done + " of " + total + " steps done. Every checkbox is momentum.";
+    }
+
+    var allDone = total > 0 && done === total;
+    if(allDone){
+      $("progressPhase").innerHTML = "Phase: <b>Launched 🎉</b>";
+      $("celebrate").classList.add("show");
+    } else {
+      var ci = currentWeekIndex();
+      $("progressPhase").innerHTML = "Now: <b>Week " + (ci+1) + " · " + state.weeks[ci].title + "</b>";
+      $("celebrate").classList.remove("show");
+    }
+  }
+
+  // ---- Render weeks ----
+  function renderWeeks(){
+    weeksEl.innerHTML = "";
+    var ci = currentWeekIndex();
+    var allDone = totalTasks() > 0 && totalDone() === totalTasks();
+
+    state.weeks.forEach(function(w, wi){
+      var wrap = document.createElement("div");
+      wrap.className = "week";
+
+      var head = document.createElement("div");
+      head.className = "week-head";
+
+      var badge = document.createElement("span");
+      badge.className = "week-badge";
+      var wDone = w.tasks.length>0 && w.tasks.every(function(t){ return t.done; });
+      if(wDone){ badge.classList.add("done"); }
+      else if(wi === ci && !allDone){ badge.classList.add("current"); }
+      badge.textContent = "Week " + (wi+1);
+
+      var title = document.createElement("span");
+      title.className = "week-title";
+      title.textContent = w.title;
+
+      head.appendChild(badge);
+      head.appendChild(title);
+      wrap.appendChild(head);
+
+      var note = document.createElement("p");
+      note.className = "week-note";
+      note.textContent = w.note || "";
+      wrap.appendChild(note);
+
+      w.tasks.forEach(function(t){
+        var row = document.createElement("div");
+        row.className = "task" + (t.done ? " checked" : "");
+
+        var cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.checked = !!t.done;
+        cb.id = "cb_" + t.id;
+        cb.addEventListener("change", function(){
+          t.done = cb.checked; state.touched = true; save();
+          renderProgress(); renderCountdown(); renderWeeks();
+        });
+
+        var lab = document.createElement("label");
+        lab.className = "tlabel";
+        lab.setAttribute("for", "cb_" + t.id);
+        lab.textContent = t.text;
+
+        var del = document.createElement("button");
+        del.type = "button";
+        del.className = "del";
+        del.setAttribute("aria-label", "Remove step");
+        del.textContent = "×";
+        del.addEventListener("click", function(){
+          w.tasks = w.tasks.filter(function(x){ return x.id !== t.id; });
+          state.touched = true; save();
+          renderProgress(); renderCountdown(); renderWeeks();
+        });
+
+        row.appendChild(cb);
+        row.appendChild(lab);
+        row.appendChild(del);
+        wrap.appendChild(row);
+      });
+
+      // add row
+      var addRow = document.createElement("div");
+      addRow.className = "add-row";
+      var inp = document.createElement("input");
+      inp.type = "text";
+      inp.placeholder = "Add a step for this week…";
+      inp.setAttribute("aria-label", "Add a step to Week " + (wi+1));
+      var addBtn = document.createElement("button");
+      addBtn.type = "button";
+      addBtn.className = "add-btn";
+      addBtn.textContent = "Add";
+      function doAdd(){
+        var v = inp.value.trim();
+        if(!v) return;
+        w.tasks.push({ id:uid(), text:v, done:false });
+        inp.value = "";
+        state.touched = true; save();
+        renderProgress(); renderCountdown(); renderWeeks();
+      }
+      addBtn.addEventListener("click", doAdd);
+      inp.addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); doAdd(); } });
+      addRow.appendChild(inp);
+      addRow.appendChild(addBtn);
+      wrap.appendChild(addRow);
+
+      weeksEl.appendChild(wrap);
+    });
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Vision to Launch plan? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      state = freshState();
+      visionEl.value = "";
+      launchDateEl.value = state.launchDate;
+      offerEl.value = "";
+      priceEl.value = "";
+      $("celebrate").classList.remove("show");
+      renderAll();
+    }
+  });
+
+  // ---- Initial render ----
+  function renderAll(){
+    renderWelcome();
+    renderCountdown();
+    renderProgress();
+    renderWeeks();
+  }
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

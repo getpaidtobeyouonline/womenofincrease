@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email List Growth Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Why email banner ---------- */
+  .why{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .why::before{
+    content:"\2709"; position:absolute; top:-10px; right:14px;
+    font-size:74px; color:rgba(231,211,161,.16);
+  }
+  .why .lead{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:19px; line-height:1.45; position:relative; z-index:1;
+  }
+  .why .sub{
+    margin-top:12px; font-size:14px; line-height:1.5; color:var(--gold-soft);
+    position:relative; z-index:1;
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  .optional{ color:var(--muted); font-weight:400; }
+  input[type="text"], input[type="number"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="number"], select{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  select{ -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236B655C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:40px;
+  }
+
+  /* ---------- Format picker ---------- */
+  .formats{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:4px; }
+  .fmt{
+    flex:none; min-height:44px; padding:10px 14px; border-radius:999px;
+    background:var(--cream); border:1px solid var(--line); color:var(--ink);
+    font-family:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
+    transition:all .12s ease;
+  }
+  .fmt:hover{ border-color:var(--gold); }
+  .fmt.active{ background:var(--emerald); color:#FCF8EF; border-color:var(--emerald); }
+
+  /* ---------- Headline preview ---------- */
+  .headline-box{
+    margin-top:14px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:13px; padding:16px;
+  }
+  .headline-box .lbl{
+    font-size:11.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--emerald); margin-bottom:8px;
+  }
+  .headline-box textarea{ background:#fff; min-height:64px; font-family:'Fraunces',serif; font-size:18px; color:var(--emerald); }
+  .head-actions{ display:flex; gap:8px; margin-top:10px; }
+  .link-btn{
+    background:none; border:1px solid var(--line); color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 14px; border-radius:10px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ border-color:var(--gold); color:var(--gold); }
+
+  /* ---------- Checklist ---------- */
+  .check-row{
+    display:flex; align-items:flex-start; gap:12px; padding:12px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .check-row:last-child{ border-bottom:none; }
+  .check-row input[type="checkbox"]{
+    flex:none; width:24px; height:24px; margin-top:1px; accent-color:var(--emerald); cursor:pointer;
+  }
+  .check-row label{ font-size:14.5px; cursor:pointer; line-height:1.4; }
+  .check-row label b{ color:var(--emerald); font-weight:600; }
+  .check-row label .desc{ display:block; color:var(--muted); font-size:13px; margin-top:2px; }
+  .check-row.done label b{ text-decoration:line-through; color:var(--muted); }
+
+  /* ---------- Nurture sequence ---------- */
+  .seq-row{ margin-bottom:12px; }
+  .seq-row .seq-head{
+    display:flex; align-items:center; gap:9px; margin-bottom:6px;
+  }
+  .seq-row .seq-num{
+    flex:none; width:24px;height:24px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:12px; display:flex;align-items:center;justify-content:center;
+  }
+  .seq-row .seq-title{ font-weight:600; font-size:14px; color:var(--ink); }
+  .seq-row .seq-title span{ color:var(--muted); font-weight:400; }
+
+  /* ---------- Growth tracker ---------- */
+  .add-row{ display:flex; gap:8px; align-items:flex-end; }
+  .add-row > div{ flex:1; }
+  .add-row .add-btn{
+    flex:none; min-height:48px; padding:0 18px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    box-shadow:0 4px 12px rgba(200,160,74,.3);
+  }
+  .add-row .add-btn:active{ transform:translateY(1px); }
+
+  .goal-wrap{ margin-top:16px; }
+  .goal-line{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:8px; }
+  .goal-line .now{ font-family:'Fraunces',serif; font-size:26px; font-weight:600; color:var(--emerald); }
+  .goal-line .of{ color:var(--muted); font-size:14px; }
+  .bar{
+    height:14px; background:var(--emerald-soft); border-radius:999px; overflow:hidden;
+    border:1px solid rgba(20,84,62,.12);
+  }
+  .bar .fill{
+    height:100%; width:0%; border-radius:999px;
+    background:linear-gradient(90deg, var(--gold) 0%, var(--gold-soft) 100%);
+    transition:width .4s ease;
+  }
+  .goal-pct{ text-align:right; color:var(--muted); font-size:12.5px; margin-top:6px; }
+  .goal-set{ display:flex; gap:8px; align-items:flex-end; margin-top:14px; }
+  .goal-set > div{ flex:1; }
+
+  .milestone{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:16px; color:var(--emerald);
+  }
+  .milestone.show{ display:block; animation:rise .4s ease; }
+  .milestone .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .milestone .sm{ font-size:13.5px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Trend / log ---------- */
+  .trend{ margin-top:18px; }
+  .trend-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 10px;
+  }
+  .spark{ display:flex; align-items:flex-end; gap:5px; height:70px; margin-bottom:14px; }
+  .spark .col{ flex:1; background:var(--emerald-soft); border-radius:5px 5px 0 0; min-height:4px;
+    border:1px solid rgba(20,84,62,.1); border-bottom:none; }
+  .spark .col.last{ background:var(--gold-soft); }
+  .log-list{ list-style:none; }
+  .log-list li{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:10px 2px; border-bottom:1px solid var(--line); font-size:14px;
+  }
+  .log-list li:last-child{ border-bottom:none; }
+  .log-list .l-date{ color:var(--muted); }
+  .log-list .l-count{ color:var(--emerald); font-weight:700; font-family:'Fraunces',serif; }
+  .log-list .l-up{ color:var(--gold); font-size:12.5px; font-weight:600; margin-left:8px; }
+  .del-x{
+    background:none; border:none; color:#C99; font-size:18px; cursor:pointer;
+    min-height:44px; min-width:34px; line-height:1;
+  }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  .toast{
+    position:fixed; left:50%; bottom:22px; transform:translateX(-50%) translateY(20px);
+    background:var(--emerald); color:#FCF8EF; padding:11px 20px; border-radius:999px;
+    font-size:13.5px; font-weight:600; opacity:0; pointer-events:none;
+    transition:opacity .2s, transform .2s; z-index:50; box-shadow:0 8px 20px rgba(20,84,62,.3);
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Email List Growth Tool</h1>
+    <p class="subtitle">Build an audience you truly own — one subscriber at a time.</p>
+  </header>
+
+  <!-- Why email -->
+  <section class="card">
+    <div class="why">
+      <p class="lead">Social platforms rent you a crowd. An email list is an audience you <em>own</em>.</p>
+      <p class="sub">No algorithm decides who sees your words. When you have a list, you can reach the women who said yes to you — directly, anytime. That's not vanity, that's stewardship. Let's build it from scratch, together.</p>
+    </div>
+  </section>
+
+  <!-- 1. Lead magnet -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Lead Magnet</h2></div>
+    <p class="hint">Give her one good reason to say yes. A small, specific win — something she can use today.</p>
+
+    <label class="field-label" for="lmTopic">What's it about? (your topic)</label>
+    <input type="text" id="lmTopic" placeholder="e.g. meal planning on a budget">
+
+    <label class="field-label" for="lmAudience">Who is it for? (your woman) <span class="optional">(optional)</span></label>
+    <input type="text" id="lmAudience" placeholder="e.g. busy working moms">
+
+    <label class="field-label">Pick a format</label>
+    <div class="formats" id="formats" role="group" aria-label="Lead magnet format">
+      <button type="button" class="fmt" data-fmt="Checklist">Checklist</button>
+      <button type="button" class="fmt" data-fmt="Guide">Guide</button>
+      <button type="button" class="fmt" data-fmt="Template">Template</button>
+      <button type="button" class="fmt" data-fmt="Mini-Challenge">Mini-Challenge</button>
+      <button type="button" class="fmt" data-fmt="Quiz">Quiz</button>
+      <button type="button" class="fmt" data-fmt="Resource">Resource List</button>
+    </div>
+
+    <label class="field-label" for="lmWin">The specific quick win it gives her</label>
+    <input type="text" id="lmWin" placeholder="e.g. a week of dinners planned in 20 minutes">
+
+    <div class="headline-box">
+      <div class="lbl">Your opt-in headline</div>
+      <textarea id="lmHeadline" placeholder="Fill the fields above and tap Generate — then make it yours."></textarea>
+      <div class="head-actions">
+        <button type="button" class="link-btn" id="genHeadline">✨ Generate</button>
+        <button type="button" class="link-btn" id="copyHeadline">⧉ Copy</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Where to promote -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Where to Promote It</h2></div>
+    <p class="hint">Your freebie can't grow your list if no one sees it. Adopt a few of these and check them off as you go.</p>
+    <div id="promoList"></div>
+  </section>
+
+  <!-- 3. Nurture basics -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Your Welcome Sequence</h2></div>
+    <p class="hint">When she joins, don't go silent. A few warm emails build trust before you ever ask for anything. Sketch yours.</p>
+    <div id="seqList"></div>
+  </section>
+
+  <!-- 4. Growth tracker -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Growth Tracker</h2></div>
+    <p class="hint">Log your subscriber count whenever you check it. Watch the line rise. (Enter your number manually — no integrations needed.)</p>
+
+    <div class="add-row">
+      <div>
+        <label class="field-label" for="subCount">Subscribers today</label>
+        <input type="number" id="subCount" inputmode="numeric" min="0" placeholder="0">
+      </div>
+      <button type="button" class="add-btn" id="logBtn">Log it</button>
+    </div>
+
+    <div class="goal-wrap">
+      <div class="goal-line">
+        <div><span class="now" id="goalNow">0</span> <span class="of">of <b id="goalTarget">100</b> goal</span></div>
+      </div>
+      <div class="bar"><div class="fill" id="goalFill"></div></div>
+      <div class="goal-pct" id="goalPct">0% there</div>
+
+      <div class="goal-set">
+        <div>
+          <label class="field-label" for="goalInput">Set your goal</label>
+          <input type="number" id="goalInput" inputmode="numeric" min="1" placeholder="100">
+        </div>
+        <button type="button" class="link-btn" id="saveGoal" style="min-height:48px;">Save goal</button>
+      </div>
+
+      <div class="milestone" id="milestone">
+        <div class="big" id="msBig">🎉 Look at you grow!</div>
+        <div class="sm" id="msSm">Every name on that list is a woman who said yes to you.</div>
+      </div>
+    </div>
+
+    <div class="trend">
+      <div class="trend-title">Your trend</div>
+      <div class="spark" id="spark" aria-hidden="true"></div>
+      <ul class="log-list" id="logList"></ul>
+      <p class="empty-note" id="logEmpty">Log your first count and your growth line begins here. 💛</p>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_email_list_growth";
+
+  // ---- Promo placements (default checklist) ----
+  var PROMOS = [
+    ["Link in bio", "Put your opt-in front and centre on every profile — Instagram, TikTok, your site."],
+    ["Calls-to-action in content", "End posts, reels and videos with a clear invite to grab the freebie."],
+    ["Freebie shoutouts", "Talk about the win it gives — not just \"join my list.\" Sell the result."],
+    ["Collaborations", "Be a guest, swap shoutouts, or co-host with women who serve a similar audience."],
+    ["Pinned post", "Pin your best opt-in post so new visitors see it first."],
+    ["Email signature", "Add a one-line invite (and link) to the bottom of your everyday emails."],
+    ["Stories & lives", "Share the freebie in stories with a swipe-up or link sticker, and mention it live."],
+    ["Lead magnet at the end of free content", "Blog post, podcast, or carousel — point them to the next step: your list."]
+  ];
+
+  // ---- Nurture sequence outline ----
+  var SEQ = [
+    ["Welcome + Deliver", "Say hi warmly, deliver the freebie, set the tone for what's coming."],
+    ["Your Story", "Share who you are and why you do this — let her feel the woman behind the list."],
+    ["Pure Value", "Teach one helpful thing with no ask. Build trust by giving first."],
+    ["Soft Offer", "Gently introduce how you can help further — an invitation, not a hard sell."]
+  ];
+
+  // ---- Headline templates ----
+  function makeHeadline(fmt, topic, win, aud){
+    fmt = fmt || "Free Guide";
+    topic = (topic||"").trim();
+    win = (win||"").trim();
+    aud = (aud||"").trim();
+    var T = topic || "this";
+    var W = win || ("get started with " + T);
+    var label = fmt;
+    var templates = [
+      "The Free " + label + " That Helps You " + cap(W),
+      "Want to " + cap(W) + "? Grab my free " + label.toLowerCase() + ".",
+      (aud ? "For " + aud + ": " : "") + "The " + label + " to " + cap(W),
+      "Free " + label + ": " + cap(W) + " — without the overwhelm"
+    ];
+    // pick deterministically-ish but allow regen variety
+    var idx = (makeHeadline._i = (makeHeadline._i||0) + 1) % templates.length;
+    return templates[idx];
+  }
+  function cap(s){ s=(s||"").trim(); return s ? s.charAt(0).toLowerCase()+s.slice(1) : s; }
+
+  // ---- Date helpers ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{month:"short", day:"numeric"});
+  }
+
+  // ---- State ----
+  function defaults(){
+    return {
+      lm:{ topic:"", audience:"", win:"", format:"", headline:"" },
+      promos:{},   // index -> true
+      seq:{},      // index -> text
+      goal:100,
+      logs:[],     // {date, count}
+      celebrated:[] // milestone thresholds already shown
+    };
+  }
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          var d = defaults();
+          o.lm = Object.assign(d.lm, o.lm||{});
+          o.promos = o.promos||{};
+          o.seq = o.seq||{};
+          o.goal = o.goal || 100;
+          o.logs = o.logs||[];
+          o.celebrated = o.celebrated||[];
+          return o;
+        }
+      }
+    }catch(e){}
+    return defaults();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Toast ----
+  var toastEl = $("toast"), toastT;
+  function toast(msg){
+    toastEl.textContent = msg; toastEl.classList.add("show");
+    clearTimeout(toastT); toastT = setTimeout(function(){ toastEl.classList.remove("show"); }, 1700);
+  }
+
+  // ========== 1. LEAD MAGNET ==========
+  var lmTopic=$("lmTopic"), lmAudience=$("lmAudience"), lmWin=$("lmWin"), lmHeadline=$("lmHeadline");
+  lmTopic.value = data.lm.topic;
+  lmAudience.value = data.lm.audience;
+  lmWin.value = data.lm.win;
+  lmHeadline.value = data.lm.headline;
+
+  function wire(el, fn){
+    el.addEventListener("input", function(){ fn(el.value); save(); });
+  }
+  wire(lmTopic, function(v){ data.lm.topic=v; });
+  wire(lmAudience, function(v){ data.lm.audience=v; });
+  wire(lmWin, function(v){ data.lm.win=v; });
+  wire(lmHeadline, function(v){ data.lm.headline=v; });
+
+  // format chips
+  var fmtBtns = Array.prototype.slice.call(document.querySelectorAll(".fmt"));
+  function renderFormat(){
+    fmtBtns.forEach(function(b){
+      b.classList.toggle("active", b.getAttribute("data-fmt") === data.lm.format);
+      b.setAttribute("aria-pressed", b.getAttribute("data-fmt") === data.lm.format ? "true":"false");
+    });
+  }
+  fmtBtns.forEach(function(b){
+    b.addEventListener("click", function(){
+      var f = b.getAttribute("data-fmt");
+      data.lm.format = (data.lm.format === f) ? "" : f;
+      renderFormat(); save();
+    });
+  });
+  renderFormat();
+
+  $("genHeadline").addEventListener("click", function(){
+    var h = makeHeadline(data.lm.format, data.lm.topic, data.lm.win, data.lm.audience);
+    data.lm.headline = h; lmHeadline.value = h; save();
+    toast("Headline drafted — make it yours 💛");
+  });
+  $("copyHeadline").addEventListener("click", function(){
+    var txt = lmHeadline.value.trim();
+    if(!txt){ toast("Nothing to copy yet"); return; }
+    var done = function(){ toast("Copied to clipboard ✓"); };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done, function(){ legacyCopy(txt); done(); });
+    } else { legacyCopy(txt); done(); }
+  });
+  function legacyCopy(txt){
+    lmHeadline.focus(); lmHeadline.select();
+    try{ document.execCommand("copy"); }catch(e){}
+  }
+
+  // ========== 2. PROMOS ==========
+  var promoWrap = $("promoList");
+  PROMOS.forEach(function(p, i){
+    var row = document.createElement("div");
+    row.className = "check-row";
+    var cb = document.createElement("input");
+    cb.type = "checkbox"; cb.id = "promo"+i;
+    cb.checked = !!data.promos[i];
+    var lab = document.createElement("label");
+    lab.setAttribute("for", "promo"+i);
+    lab.innerHTML = "<b>"+p[0]+"</b><span class='desc'>"+p[1]+"</span>";
+    function sync(){ row.classList.toggle("done", cb.checked); }
+    cb.addEventListener("change", function(){
+      data.promos[i] = cb.checked; sync(); save();
+    });
+    sync();
+    row.appendChild(cb); row.appendChild(lab);
+    promoWrap.appendChild(row);
+  });
+
+  // ========== 3. NURTURE SEQUENCE ==========
+  var seqWrap = $("seqList");
+  SEQ.forEach(function(s, i){
+    var row = document.createElement("div");
+    row.className = "seq-row";
+    var head = document.createElement("div");
+    head.className = "seq-head";
+    head.innerHTML = "<span class='seq-num'>"+(i+1)+"</span><span class='seq-title'>Email "+(i+1)+": "+s[0]+"</span>";
+    var ta = document.createElement("textarea");
+    ta.id = "seq"+i;
+    ta.placeholder = s[1];
+    ta.value = data.seq[i] || "";
+    ta.addEventListener("input", function(){ data.seq[i] = ta.value; save(); });
+    row.appendChild(head); row.appendChild(ta);
+    seqWrap.appendChild(row);
+  });
+
+  // ========== 4. GROWTH TRACKER ==========
+  var subCount=$("subCount"), goalInput=$("goalInput");
+  goalInput.value = data.goal;
+
+  function latestCount(){
+    return data.logs.length ? data.logs[data.logs.length-1].count : 0;
+  }
+
+  function renderGoal(){
+    var now = latestCount();
+    var target = data.goal || 100;
+    var pct = target>0 ? Math.min(100, Math.round((now/target)*100)) : 0;
+    $("goalNow").textContent = now;
+    $("goalTarget").textContent = target;
+    $("goalFill").style.width = pct + "%";
+    $("goalPct").textContent = pct>=100 ? "Goal reached! 🎉" : pct + "% there";
+  }
+
+  function checkMilestone(now){
+    var marks = [10, 25, 50, 100, 250, 500, 1000];
+    var hit = null;
+    marks.forEach(function(m){
+      if(now >= m && data.celebrated.indexOf(m) === -1){ hit = m; }
+    });
+    // also celebrate reaching the goal exactly
+    if(data.goal && now >= data.goal && data.celebrated.indexOf("goal:"+data.goal) === -1){
+      hit = data.goal; data.celebrated.push("goal:"+data.goal);
+    }
+    if(hit !== null){
+      if(data.celebrated.indexOf(hit) === -1) data.celebrated.push(hit);
+      var ms = $("milestone");
+      $("msBig").textContent = "🎉 " + hit + " subscribers!";
+      $("msSm").textContent = milestoneNote(hit);
+      ms.classList.add("show");
+      save();
+    }
+  }
+  function milestoneNote(n){
+    if(n>=1000) return "A thousand women who said yes to you. That's a movement, sister.";
+    if(n>=500) return "Five hundred strong. Keep showing up — they're listening.";
+    if(n>=250) return "Quarter of a thousand. Your voice is reaching further every week.";
+    if(n>=100) return "Your first hundred! The hardest stretch is behind you. 💛";
+    if(n>=50) return "Halfway to a hundred — momentum is on your side.";
+    if(n>=25) return "Twenty-five real humans chose your words. Beautiful.";
+    return "Your first ten. Every list starts here. Keep going.";
+  }
+
+  function renderSpark(){
+    var spark = $("spark");
+    spark.innerHTML = "";
+    var logs = data.logs.slice(-14);
+    if(logs.length === 0){ spark.style.display="none"; return; }
+    spark.style.display = "flex";
+    var max = Math.max.apply(null, logs.map(function(l){ return l.count; }));
+    if(max <= 0) max = 1;
+    logs.forEach(function(l, i){
+      var col = document.createElement("div");
+      col.className = "col" + (i===logs.length-1 ? " last":"");
+      var h = Math.max(4, Math.round((l.count/max)*66));
+      col.style.height = h + "px";
+      col.title = prettyDate(l.date) + ": " + l.count;
+      spark.appendChild(col);
+    });
+  }
+
+  function renderLog(){
+    var list = $("logList"), empty = $("logEmpty");
+    list.innerHTML = "";
+    if(data.logs.length === 0){ empty.style.display="block"; renderSpark(); return; }
+    empty.style.display="none";
+    var rev = data.logs.slice().reverse();
+    rev.forEach(function(l, ri){
+      var realIndex = data.logs.length - 1 - ri;
+      var prev = realIndex>0 ? data.logs[realIndex-1].count : null;
+      var li = document.createElement("li");
+      var left = document.createElement("span");
+      left.className = "l-date";
+      left.textContent = prettyDate(l.date);
+      var right = document.createElement("span");
+      var cnt = document.createElement("span");
+      cnt.className = "l-count"; cnt.textContent = l.count;
+      right.appendChild(cnt);
+      if(prev !== null && l.count - prev !== 0){
+        var diff = l.count - prev;
+        var up = document.createElement("span");
+        up.className = "l-up";
+        up.textContent = (diff>0?"+":"") + diff;
+        right.appendChild(up);
+      }
+      var del = document.createElement("button");
+      del.className = "del-x"; del.type="button"; del.setAttribute("aria-label","Delete entry");
+      del.textContent = "×";
+      del.addEventListener("click", function(){
+        data.logs.splice(realIndex,1); save();
+        renderLog(); renderSpark(); renderGoal();
+      });
+      var rowWrap = document.createElement("span");
+      rowWrap.style.display="flex"; rowWrap.style.alignItems="center"; rowWrap.style.gap="4px";
+      rowWrap.appendChild(right); rowWrap.appendChild(del);
+      li.appendChild(left); li.appendChild(rowWrap);
+      list.appendChild(li);
+    });
+    renderSpark();
+  }
+
+  $("logBtn").addEventListener("click", function(){
+    var raw = subCount.value.trim();
+    if(raw === ""){ toast("Enter a number first"); subCount.focus(); return; }
+    var n = Math.max(0, Math.floor(Number(raw)));
+    if(isNaN(n)){ toast("That's not a number"); return; }
+    var tk = todayKey();
+    // if last log is today, update it; else push new
+    if(data.logs.length && data.logs[data.logs.length-1].date === tk){
+      data.logs[data.logs.length-1].count = n;
+    } else {
+      data.logs.push({ date: tk, count: n });
+    }
+    save();
+    subCount.value = "";
+    renderLog(); renderGoal();
+    checkMilestone(n);
+    toast("Logged ✓");
+  });
+
+  $("saveGoal").addEventListener("click", function(){
+    var raw = goalInput.value.trim();
+    var n = Math.max(1, Math.floor(Number(raw)));
+    if(isNaN(n) || raw===""){ toast("Enter a goal number"); return; }
+    data.goal = n; save();
+    renderGoal();
+    toast("Goal set to " + n + " 💛");
+    checkMilestone(latestCount());
+  });
+
+  renderGoal();
+  renderLog();
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Email List Growth data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = defaults();
+      lmTopic.value=""; lmAudience.value=""; lmWin.value=""; lmHeadline.value="";
+      data.lm.format=""; renderFormat();
+      var boxes = document.querySelectorAll("#promoList input[type=checkbox]");
+      boxes.forEach(function(cb){ cb.checked=false; cb.parentNode.classList.remove("done"); });
+      SEQ.forEach(function(s,i){ var t=$("seq"+i); if(t) t.value=""; });
+      goalInput.value = data.goal;
+      subCount.value="";
+      $("milestone").classList.remove("show");
+      renderGoal(); renderLog();
+      toast("Fresh start. Go own that audience 💛");
+    }
+  });
+
+})();
+</script>
+</body>
+</html>
