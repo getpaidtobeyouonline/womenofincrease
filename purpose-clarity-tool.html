@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Purpose Clarity Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Progress ---------- */
+  .progress-wrap{
+    margin-top:18px; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.12); border-radius:14px; padding:14px 16px;
+  }
+  .progress-top{
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:9px;
+  }
+  .progress-top .label{
+    font-weight:600; font-size:13px; color:var(--emerald);
+    letter-spacing:.03em;
+  }
+  .progress-top .count{ font-size:13px; color:var(--muted); font-weight:600; }
+  .bar{
+    height:9px; background:#fff; border-radius:999px; overflow:hidden;
+    border:1px solid rgba(20,84,62,.12);
+  }
+  .bar .fill{
+    height:100%; width:0%; background:var(--gold);
+    border-radius:999px; transition:width .4s ease;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Prayer prompt ---------- */
+  .prayer{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:18px 18px 16px; position:relative; overflow:hidden;
+    margin-bottom:16px;
+  }
+  .prayer::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.22);
+  }
+  .prayer .tag{
+    display:block; font-weight:600; font-size:11px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--gold-soft); margin-bottom:7px;
+    position:relative; z-index:1;
+  }
+  .prayer p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:16.5px; line-height:1.45; position:relative; z-index:1;
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:80px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Addable gifts list ---------- */
+  .list-row{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .list-row .dot{
+    flex:none; width:9px;height:9px;border-radius:50%;background:var(--gold);
+  }
+  .list-row input{ flex:1; }
+  .list-row .remove{
+    flex:none; width:44px; height:44px; border:none; background:none;
+    color:var(--muted); font-size:20px; cursor:pointer; border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .list-row .remove:hover{ color:var(--gold); background:var(--cream); }
+  .add-btn{
+    display:inline-flex; align-items:center; gap:7px; min-height:44px;
+    background:none; border:1px dashed var(--gold-soft); color:var(--emerald);
+    border-radius:11px; padding:9px 16px; font-family:inherit; font-weight:600;
+    font-size:14px; cursor:pointer; margin-top:2px;
+  }
+  .add-btn:hover{ border-color:var(--gold); background:var(--emerald-soft); }
+
+  /* ---------- Purpose statement ---------- */
+  .statement-card{ border-color:var(--gold-soft); }
+  .statement-draft{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 18px; margin-bottom:14px;
+  }
+  .statement-draft .draft-label{
+    font-weight:600; font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--emerald); margin-bottom:8px;
+  }
+  .statement-draft p{
+    font-family:'Fraunces',serif; font-weight:500; font-style:italic;
+    color:var(--emerald); font-size:18px; line-height:1.5;
+  }
+  .statement-draft .draft-empty{
+    font-family:'Hanken Grotesk',sans-serif; font-style:normal; font-weight:400;
+    color:var(--muted); font-size:14.5px;
+  }
+  .statement-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+
+  .primary-btn{
+    flex:1; min-width:140px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:15.5px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .primary-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .primary-btn:active{ transform:translateY(1px); }
+  .ghost-btn{
+    flex:1; min-width:120px; min-height:52px;
+    background:#fff; color:var(--emerald); border:1px solid var(--line);
+    border-radius:13px; font-family:inherit; font-weight:700; font-size:15.5px;
+    cursor:pointer;
+  }
+  .ghost-btn:hover{ border-color:var(--gold); }
+
+  textarea#statementEdit{ min-height:110px; margin-top:4px; }
+
+  .toast{
+    display:none; margin-top:12px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:12px; padding:12px 14px; color:var(--emerald);
+    font-weight:600; font-size:14px;
+  }
+  .toast.show{ display:block; animation:rise .4s ease; }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Purpose Clarity Tool</h1>
+    <p class="subtitle">Uncover your calling, gifts, and purpose — one prayerful step at a time.</p>
+
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span class="label">Your clarity is unfolding</span>
+        <span class="count" id="progressCount">0 of 4</span>
+      </div>
+      <div class="bar"><div class="fill" id="progressFill"></div></div>
+    </div>
+  </header>
+
+  <!-- 1. Gifts & Strengths -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>My Gifts &amp; Strengths</h2></div>
+    <div class="prayer">
+      <span class="tag">Pause &amp; pray</span>
+      <p>Lord, You knit me together on purpose. Open my eyes to the gifts You placed in me before I knew to ask.</p>
+    </div>
+    <p class="hint">Notice what flows easily and lights you up. Add as many as come to mind.</p>
+
+    <label class="field-label">What comes easily to me</label>
+    <div id="giftsList"></div>
+    <button class="add-btn" id="addGift" type="button">＋ Add a gift or strength</button>
+
+    <label class="field-label" for="energizes">What energizes me <span class="opt">(I lose track of time doing this)</span></label>
+    <textarea id="energizes" placeholder="When I'm doing this, hours feel like minutes…"></textarea>
+
+    <label class="field-label" for="thankedFor">What people thank me for</label>
+    <textarea id="thankedFor" placeholder="People come to me for…"></textarea>
+
+    <label class="field-label" for="forFree">What I'd gladly do for free</label>
+    <textarea id="forFree" placeholder="Even with no pay, I'd happily…"></textarea>
+  </section>
+
+  <!-- 2. Story & Burdens -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>My Story &amp; Burdens</h2></div>
+    <div class="prayer">
+      <span class="tag">Pause &amp; pray</span>
+      <p>Father, You waste nothing. Show me how the things I've walked through can become a doorway of hope for someone else.</p>
+    </div>
+    <p class="hint">Your testimony and your tender places often point straight to your purpose.</p>
+
+    <label class="field-label" for="overcome">What I've overcome</label>
+    <textarea id="overcome" placeholder="A season, struggle, or story I came through…"></textarea>
+
+    <label class="field-label" for="drawnTo">Who I feel drawn to help</label>
+    <textarea id="drawnTo" placeholder="My heart leans toward… (e.g. young mothers, women rebuilding their faith, teen girls)"></textarea>
+
+    <label class="field-label" for="breaksHeart">What breaks my heart</label>
+    <textarea id="breaksHeart" placeholder="When I see this, I can't look away…"></textarea>
+
+    <label class="field-label" for="lightsUp">What lights me up</label>
+    <textarea id="lightsUp" placeholder="I come alive when…"></textarea>
+  </section>
+
+  <!-- 3. The Overlap -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>The Overlap</h2></div>
+    <div class="prayer">
+      <span class="tag">Pause &amp; pray</span>
+      <p>God, where my gifts meet the world's need — meet me there. Make the intersection clear, and give me courage to step into it.</p>
+    </div>
+    <p class="hint">Purpose often lives where what you carry meets what the world is aching for.</p>
+
+    <label class="field-label" for="need">A need in the world I notice</label>
+    <textarea id="need" placeholder="The world around me needs more…"></textarea>
+
+    <label class="field-label" for="overlap">Where my gifts meet that need</label>
+    <textarea id="overlap" placeholder="I could use my gifts to… for the people I'm drawn to…"></textarea>
+
+    <label class="field-label" for="contribution">The contribution only I can make</label>
+    <textarea id="contribution" placeholder="With my story and my gifts together, I can offer…"></textarea>
+  </section>
+
+  <!-- 4. Purpose Statement -->
+  <section class="card statement-card">
+    <div class="step"><span class="num">4</span><h2>My Purpose Statement</h2></div>
+    <div class="prayer">
+      <span class="tag">Pause &amp; pray</span>
+      <p>Lord, put words to what You've placed in me. Let this statement be a compass I can return to whenever I forget who I am.</p>
+    </div>
+    <p class="hint">This draft is built from your own words above. Generate it, then make it yours.</p>
+
+    <div class="statement-draft" id="draftBox">
+      <div class="draft-label">Your draft statement</div>
+      <p id="draftText" class="draft-empty">Fill in a few reflections above, then tap “Generate my statement” and watch your purpose take shape. 💛</p>
+    </div>
+
+    <div class="statement-actions">
+      <button class="primary-btn" id="generateBtn" type="button">Generate my statement ✨</button>
+      <button class="ghost-btn" id="copyBtn" type="button">Copy</button>
+    </div>
+
+    <label class="field-label" for="statementEdit">Make it yours <span class="opt">(edit freely — it auto-saves)</span></label>
+    <textarea id="statementEdit" placeholder="Your purpose statement will appear here to refine…"></textarea>
+
+    <div class="toast" id="toast">Saved &amp; copied. Carry it with you, sister. 💛</div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_purpose_clarity";
+
+  // ---- State ----
+  var data = load();
+
+  function blankData(){
+    return {
+      gifts:[""],            // addable list
+      energizes:"", thankedFor:"", forFree:"",
+      overcome:"", drawnTo:"", breaksHeart:"", lightsUp:"",
+      need:"", overlap:"", contribution:"",
+      statement:""
+    };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          var b = blankData();
+          for(var k in b){ if(o[k] !== undefined && o[k] !== null) b[k] = o[k]; }
+          if(!Array.isArray(b.gifts) || b.gifts.length === 0) b.gifts = [""];
+          return b;
+        }
+      }
+    }catch(e){}
+    return blankData();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var giftsListEl = $("giftsList");
+  var TEXT_FIELDS = ["energizes","thankedFor","forFree","overcome","drawnTo",
+    "breaksHeart","lightsUp","need","overlap","contribution"];
+  var els = {};
+  TEXT_FIELDS.forEach(function(id){ els[id] = $(id); });
+  var statementEl = $("statementEdit");
+
+  // ---- Render addable gifts list ----
+  function renderGifts(){
+    giftsListEl.innerHTML = "";
+    data.gifts.forEach(function(val, i){
+      var row = document.createElement("div");
+      row.className = "list-row";
+
+      var dot = document.createElement("span");
+      dot.className = "dot";
+
+      var input = document.createElement("input");
+      input.type = "text";
+      input.value = val || "";
+      input.placeholder = "Something that comes easily to me…";
+      input.setAttribute("aria-label", "Gift or strength " + (i+1));
+      input.addEventListener("input", function(){
+        data.gifts[i] = input.value; save(); updateProgress();
+      });
+
+      var rm = document.createElement("button");
+      rm.type = "button";
+      rm.className = "remove";
+      rm.textContent = "×";
+      rm.setAttribute("aria-label", "Remove this gift");
+      rm.addEventListener("click", function(){
+        data.gifts.splice(i,1);
+        if(data.gifts.length === 0) data.gifts = [""];
+        save(); renderGifts(); updateProgress();
+      });
+
+      row.appendChild(dot);
+      row.appendChild(input);
+      row.appendChild(rm);
+      giftsListEl.appendChild(row);
+    });
+  }
+  $("addGift").addEventListener("click", function(){
+    data.gifts.push("");
+    save(); renderGifts();
+    var inputs = giftsListEl.querySelectorAll("input");
+    if(inputs.length) inputs[inputs.length-1].focus();
+  });
+
+  // ---- Restore + wire text fields ----
+  TEXT_FIELDS.forEach(function(id){
+    els[id].value = data[id] || "";
+    els[id].addEventListener("input", function(){
+      data[id] = els[id].value; save(); updateProgress();
+    });
+  });
+  statementEl.value = data.statement || "";
+  statementEl.addEventListener("input", function(){
+    data.statement = statementEl.value; save();
+    if(data.statement.trim()){
+      $("draftText").textContent = data.statement;
+      $("draftText").classList.remove("draft-empty");
+    }
+    updateProgress();
+  });
+
+  // ---- Progress: 4 sections, each "filled" if any field has content ----
+  function hasAny(ids){
+    for(var i=0;i<ids.length;i++){ if((data[ids[i]]||"").trim()) return true; }
+    return false;
+  }
+  function giftsFilled(){
+    return data.gifts.some(function(g){ return (g||"").trim(); });
+  }
+  function updateProgress(){
+    var done = 0;
+    if(giftsFilled() || hasAny(["energizes","thankedFor","forFree"])) done++;
+    if(hasAny(["overcome","drawnTo","breaksHeart","lightsUp"])) done++;
+    if(hasAny(["need","overlap","contribution"])) done++;
+    if((data.statement||"").trim()) done++;
+    $("progressCount").textContent = done + " of 4";
+    $("progressFill").style.width = (done/4*100) + "%";
+  }
+
+  // ---- Build a readable statement from inputs ----
+  function cleanList(arr){
+    return arr.map(function(s){ return (s||"").trim(); }).filter(Boolean);
+  }
+  function lower(s){
+    s = (s||"").trim();
+    if(!s) return s;
+    return s.charAt(0).toLowerCase() + s.slice(1);
+  }
+  function joinNice(arr){
+    arr = cleanList(arr);
+    if(arr.length === 0) return "";
+    if(arr.length === 1) return arr[0];
+    if(arr.length === 2) return arr[0] + " and " + arr[1];
+    return arr.slice(0,-1).join(", ") + ", and " + arr[arr.length-1];
+  }
+
+  function buildStatement(){
+    // Gather raw gift sources
+    var giftWords = cleanList(data.gifts);
+    var energizes = (data.energizes||"").trim();
+    var forFree = (data.forFree||"").trim();
+    var thanked = (data.thankedFor||"").trim();
+
+    var serve = (data.drawnTo||"").trim();
+    var overcome = (data.overcome||"").trim();
+    var lightsUp = (data.lightsUp||"").trim();
+    var need = (data.need||"").trim();
+    var overlap = (data.overlap||"").trim();
+    var contribution = (data.contribution||"").trim();
+
+    var parts = [];
+
+    // Opening — gifts
+    var giftPhrase = "";
+    if(giftWords.length){
+      giftPhrase = joinNice(giftWords);
+    } else if(energizes){
+      giftPhrase = lower(energizes);
+    } else if(forFree){
+      giftPhrase = lower(forFree);
+    }
+
+    if(giftPhrase){
+      parts.push("I believe God has gifted me with " + giftPhrase + ".");
+    } else if(thanked){
+      parts.push("I believe God has gifted me in the ways people thank me for — " + lower(thanked) + ".");
+    }
+
+    // Who I'm called to serve
+    if(serve){
+      var serveSentence = "I feel called to serve " + lower(serve);
+      if(overcome){
+        serveSentence += ", especially because I've walked through " + lower(overcome) + " myself";
+      }
+      serveSentence += ".";
+      parts.push(serveSentence);
+    } else if(overcome){
+      parts.push("My own journey through " + lower(overcome) + " has shaped the kind of hope I'm meant to carry to others.");
+    }
+
+    // The overlap / contribution
+    if(contribution){
+      parts.push("My purpose is to offer " + lower(contribution) + ".");
+    } else if(overlap){
+      parts.push("My purpose is found where my gifts meet a real need: " + lower(overlap) + ".");
+    } else if(need){
+      parts.push("I see a world that needs more " + lower(need) + ", and I believe I'm meant to help meet that need.");
+    }
+
+    // Heart / lights up — closing warmth
+    if(lightsUp){
+      parts.push("I come most alive when " + lower(lightsUp) + " — and I trust that aliveness is a clue to my calling.");
+    }
+
+    if(parts.length === 0){
+      return "";
+    }
+
+    parts.push("With God's leading, I will use what He's placed in me to heal, grow, elevate, and become all I was made for.");
+    return parts.join(" ");
+  }
+
+  $("generateBtn").addEventListener("click", function(){
+    var draft = buildStatement();
+    if(!draft){
+      $("draftText").textContent = "Add a few reflections above first — your gifts, who you're drawn to help, or what breaks your heart — then I'll weave them into a starting statement for you. 💛";
+      $("draftText").classList.add("draft-empty");
+      return;
+    }
+    $("draftText").textContent = draft;
+    $("draftText").classList.remove("draft-empty");
+    // Seed the editable field if empty, so she can refine without losing her own edits
+    if(!statementEl.value.trim()){
+      statementEl.value = draft;
+      data.statement = draft;
+      save();
+      updateProgress();
+    }
+    statementEl.focus();
+  });
+
+  // ---- Copy ----
+  function showToast(msg){
+    var t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(function(){ t.classList.remove("show"); }, 2600);
+  }
+  $("copyBtn").addEventListener("click", function(){
+    var text = (statementEl.value.trim() || $("draftText").textContent || "").trim();
+    if(!text || $("draftText").classList.contains("draft-empty") && !statementEl.value.trim()){
+      showToast("Generate or write your statement first 💛");
+      return;
+    }
+    function fallback(){
+      try{
+        statementEl.focus(); statementEl.select();
+        document.execCommand("copy");
+        if(window.getSelection) window.getSelection().removeAllRanges();
+      }catch(e){}
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        showToast("Saved & copied. Carry it with you, sister. 💛");
+      }, function(){ fallback(); showToast("Copied. Carry it with you, sister. 💛"); });
+    } else {
+      fallback();
+      showToast("Copied. Carry it with you, sister. 💛");
+    }
+  });
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Purpose Clarity reflections? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = blankData();
+      TEXT_FIELDS.forEach(function(id){ els[id].value = ""; });
+      statementEl.value = "";
+      $("draftText").textContent = "Fill in a few reflections above, then tap “Generate my statement” and watch your purpose take shape. 💛";
+      $("draftText").classList.add("draft-empty");
+      renderGifts();
+      updateProgress();
+    }
+  });
+
+  // ---- Initial render ----
+  renderGifts();
+  if((data.statement||"").trim()){
+    $("draftText").textContent = data.statement;
+    $("draftText").classList.remove("draft-empty");
+  }
+  updateProgress();
+
+})();
+</script>
+</body>
+</html>

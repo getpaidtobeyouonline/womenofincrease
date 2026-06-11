@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healing Prayer Tracker · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Stats ---------- */
+  .stats{
+    display:flex; gap:12px; margin-top:18px;
+  }
+  .stat{
+    flex:1; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:14px; padding:14px 10px; text-align:center;
+  }
+  .stat .n{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:26px; line-height:1;
+  }
+  .stat .l{
+    color:var(--muted); font-size:12px; margin-top:6px; letter-spacing:.02em;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Care note ---------- */
+  .care{
+    margin-top:14px; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.15); border-radius:14px;
+    padding:14px 16px; color:var(--emerald); font-size:13.5px; line-height:1.5;
+  }
+  .care b{ font-weight:700; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], select{ min-height:48px; }
+  textarea{ min-height:78px; line-height:1.5; }
+  select{ appearance:none; -webkit-appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236B655C' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:40px;
+  }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Verse library chips ---------- */
+  .verse-lib-label{ color:var(--muted); font-size:12.5px; margin:14px 0 8px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    background:var(--cream); border:1px solid var(--line); border-radius:999px;
+    padding:9px 13px; min-height:40px; font-family:inherit; font-size:12.5px;
+    color:var(--emerald); font-weight:600; cursor:pointer; transition:.12s;
+  }
+  .chip:hover{ border-color:var(--gold); color:var(--ink); }
+  .chip.active{ background:var(--emerald-soft); border-color:var(--emerald); }
+
+  /* ---------- Primary button ---------- */
+  .complete-btn{
+    width:100%; margin-top:16px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Focus list ---------- */
+  .section-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:20px; font-weight:600;
+    margin:26px 0 2px;
+  }
+  .section-sub{ color:var(--muted); font-size:13.5px; margin-bottom:4px; }
+
+  .focus{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:18px; margin-top:14px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .focus.healed{ border-color:var(--gold); background:linear-gradient(180deg,#fff 0%, #FFFBF1 100%); }
+  .focus-top{ display:flex; align-items:flex-start; gap:10px; }
+  .focus-top .ttl{
+    flex:1; font-family:'Fraunces',serif; color:var(--emerald);
+    font-size:18px; font-weight:600; line-height:1.25;
+  }
+  .badge{
+    flex:none; font-size:11px; font-weight:700; letter-spacing:.04em;
+    text-transform:uppercase; padding:5px 10px; border-radius:999px;
+    background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.12);
+  }
+  .badge.t-Physical{ background:#E9F1EC; }
+  .badge.t-Emotional{ background:#F4ECE0; color:#8a6d28; border-color:rgba(200,160,74,.3); }
+  .badge.t-Spiritual{ background:#ECEAF6; color:#4a3f7a; border-color:rgba(74,63,122,.2); }
+  .badge.t-Relational{ background:#F6ECEE; color:#8a3a52; border-color:rgba(138,58,82,.2); }
+
+  .heal-banner{
+    margin-top:10px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:11px; padding:10px 12px; color:var(--emerald);
+    font-family:'Fraunces',serif; font-weight:600; font-size:14px; text-align:center;
+  }
+  .focus .note{ color:var(--ink); font-size:14px; margin-top:10px; }
+  .focus .scrip{
+    margin-top:12px; font-family:'Fraunces',serif; font-style:italic; color:var(--emerald);
+    font-size:14.5px; line-height:1.45;
+    border-left:3px solid var(--gold-soft); padding:2px 0 2px 12px;
+  }
+  .focus .scrip .r{ display:block; font-style:normal; font-family:'Hanken Grotesk'; font-size:11.5px;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-top:5px; }
+  .focus .decl{
+    margin-top:12px; background:var(--cream); border:1px dashed var(--gold-soft);
+    border-radius:11px; padding:11px 13px; font-size:14px; color:var(--ink);
+  }
+  .focus .decl span{ display:block; font-size:11px; font-weight:700; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:4px; }
+
+  /* feeling meter */
+  .meter{ margin-top:14px; }
+  .meter .ml{ font-size:12.5px; color:var(--muted); margin-bottom:8px; }
+  .dots{ display:flex; gap:8px; }
+  .dot-btn{
+    flex:1; min-height:44px; border-radius:10px; border:1px solid var(--line);
+    background:var(--cream); font-family:'Fraunces',serif; font-size:15px; color:var(--muted);
+    cursor:pointer; transition:.12s;
+  }
+  .dot-btn.on{ background:var(--gold); color:var(--ink); border-color:var(--gold); font-weight:600; }
+
+  /* progress notes */
+  .prog-title{ font-size:12.5px; color:var(--muted); margin:16px 0 8px; font-weight:600; }
+  .prog-list{ list-style:none; }
+  .prog-list li{
+    display:flex; gap:10px; padding:9px 0; border-bottom:1px solid var(--line); font-size:13.5px;
+  }
+  .prog-list li:last-child{ border-bottom:none; }
+  .prog-list .pd{ flex:none; color:var(--gold); font-weight:700; font-size:11.5px;
+    letter-spacing:.04em; padding-top:2px; min-width:58px; }
+  .prog-list .pt{ flex:1; color:var(--ink); }
+  .prog-empty{ color:var(--muted); font-size:13px; font-style:italic; }
+  .add-prog{ display:flex; gap:8px; margin-top:10px; }
+  .add-prog input{ flex:1; min-height:44px; font-size:15px; }
+  .add-prog button{
+    flex:none; min-height:44px; min-width:44px; padding:0 14px; border:none; border-radius:10px;
+    background:var(--emerald); color:#FCF8EF; font-family:inherit; font-weight:600; font-size:14px; cursor:pointer;
+  }
+
+  .focus-actions{ display:flex; gap:8px; margin-top:16px; flex-wrap:wrap; }
+  .fa-btn{
+    flex:1; min-height:44px; border-radius:10px; font-family:inherit; font-weight:600;
+    font-size:13.5px; cursor:pointer; padding:8px 10px; transition:.12s;
+  }
+  .fa-heal{ background:var(--gold); color:var(--ink); border:none; box-shadow:0 4px 12px rgba(200,160,74,.28); }
+  .fa-heal.on{ background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.2); box-shadow:none; }
+  .fa-del{ flex:none; background:none; border:1px solid var(--line); color:var(--muted); }
+  .fa-del:hover{ border-color:#c0392b; color:#c0392b; }
+
+  /* empty state */
+  .empty{
+    text-align:center; padding:30px 16px; color:var(--muted);
+  }
+  .empty .ico{ font-size:34px; margin-bottom:8px; }
+  .empty .big{ font-family:'Fraunces',serif; color:var(--emerald); font-size:18px; margin-bottom:6px; }
+  .empty .sm{ font-size:14px; line-height:1.5; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Healing Prayer Tracker</h1>
+    <p class="subtitle">Pray through it — body, heart, and spirit — and watch God move over time.</p>
+    <div class="stats">
+      <div class="stat"><div class="n" id="statActive">0</div><div class="l">Praying over</div></div>
+      <div class="stat"><div class="n" id="statHealed">0</div><div class="l">Testimonies 🙌</div></div>
+    </div>
+  </header>
+
+  <!-- New focus -->
+  <section class="card">
+    <div class="step"><span class="num">+</span><h2>Bring it to Him</h2></div>
+    <p class="hint">Name what you're seeking healing in. He is near to the brokenhearted.</p>
+
+    <label class="field-label" for="fTitle">What are you praying for healing in?</label>
+    <input type="text" id="fTitle" placeholder="e.g. My anxious heart, My mom's recovery…">
+
+    <label class="field-label" for="fType">Type of healing</label>
+    <select id="fType">
+      <option value="Physical">Physical</option>
+      <option value="Emotional">Emotional</option>
+      <option value="Spiritual">Spiritual</option>
+      <option value="Relational">Relational</option>
+    </select>
+
+    <label class="field-label" for="fNote">A note <span class="opt">(what's on your heart — optional)</span></label>
+    <textarea id="fNote" placeholder="Where you are right now, what you're carrying, what you're hoping for…"></textarea>
+
+    <div class="verse-lib-label">Tap a comfort verse to add it, or write your own below:</div>
+    <div class="chips" id="verseChips"></div>
+
+    <label class="field-label" for="fScrip">Healing scripture <span class="opt">(optional)</span></label>
+    <textarea id="fScrip" placeholder="A verse to stand on…"></textarea>
+
+    <label class="field-label" for="fDecl">Your declaration of healing &amp; faith</label>
+    <textarea id="fDecl" placeholder="e.g. By His stripes I am healed. I trust God with this, and I will not be moved."></textarea>
+
+    <button class="complete-btn" id="addBtn" type="button">Add this prayer focus 🤍</button>
+
+    <div class="care">
+      <b>A gentle word:</b> prayer and good care walk together. Leaning on a doctor, therapist, or counsellor isn't a lack of faith — it's wisdom, and it's welcome here. This tool is spiritual encouragement, not medical advice.
+    </div>
+  </section>
+
+  <!-- Focus list -->
+  <div class="section-title">Your prayers in motion</div>
+  <p class="section-sub">Come back, log the small signs, and let yourself see His faithfulness.</p>
+  <div id="focusList"></div>
+
+  <div class="empty" id="emptyState">
+    <div class="ico">🤍</div>
+    <div class="big">Nothing here yet — and that's okay.</div>
+    <div class="sm">Whatever you're carrying today, you don't have to carry it alone.<br>Name your first healing prayer above. He's already listening. 💛</div>
+  </div>
+
+  <div class="center" style="margin-top:24px;">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_healing_prayer";
+
+  // ---- A small library of comfort / healing verses ----
+  var VERSES = [
+    ["He heals the brokenhearted and binds up their wounds.", "Psalm 147:3"],
+    ["But he was pierced for our transgressions… and by his wounds we are healed.", "Isaiah 53:5"],
+    ["Heal me, Lord, and I will be healed; save me and I will be saved.", "Jeremiah 17:14"],
+    ["The Lord is close to the brokenhearted and saves those who are crushed in spirit.", "Psalm 34:18"],
+    ["Come to me, all you who are weary and burdened, and I will give you rest.", "Matthew 11:28"],
+    ["I will restore you to health and heal your wounds, declares the Lord.", "Jeremiah 30:17"],
+    ["He gives strength to the weary and increases the power of the weak.", "Isaiah 40:29"],
+    ["Cast all your anxiety on Him, because He cares for you.", "1 Peter 5:7"],
+    ["Weeping may stay for the night, but rejoicing comes in the morning.", "Psalm 30:5"],
+    ["The Lord will sustain them on their sickbed and restore them from their bed of illness.", "Psalm 41:3"],
+    ["My grace is sufficient for you, for my power is made perfect in weakness.", "2 Corinthians 12:9"],
+    ["He will wipe every tear from their eyes… the old order of things has passed away.", "Revelation 21:4"]
+  ];
+
+  // ---- Date helpers ----
+  function shortDate(){
+    var d = new Date();
+    return d.toLocaleDateString(undefined,{month:"short", day:"numeric"});
+  }
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && Array.isArray(o.focuses)) return o; }
+    }catch(e){}
+    return { focuses:[] };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Build verse chips ----
+  var chosenVerse = null;
+  var chipsEl = $("verseChips");
+  VERSES.forEach(function(v, i){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.textContent = v[1];
+    b.title = v[0];
+    b.addEventListener("click", function(){
+      var active = chosenVerse === i;
+      Array.prototype.forEach.call(chipsEl.children, function(c){ c.classList.remove("active"); });
+      if(active){
+        chosenVerse = null;
+        $("fScrip").value = "";
+      }else{
+        chosenVerse = i;
+        b.classList.add("active");
+        $("fScrip").value = "“" + v[0] + "” — " + v[1];
+      }
+    });
+    chipsEl.appendChild(b);
+  });
+  // if she edits the scripture box herself, drop chip selection
+  $("fScrip").addEventListener("input", function(){
+    chosenVerse = null;
+    Array.prototype.forEach.call(chipsEl.children, function(c){ c.classList.remove("active"); });
+  });
+
+  // ---- Add a focus ----
+  $("addBtn").addEventListener("click", function(){
+    var title = $("fTitle").value.trim();
+    if(!title){
+      $("fTitle").focus();
+      $("fTitle").style.borderColor = "#c0392b";
+      setTimeout(function(){ $("fTitle").style.borderColor = ""; }, 1200);
+      return;
+    }
+    data.focuses.unshift({
+      id: uid(),
+      title: title,
+      type: $("fType").value,
+      note: $("fNote").value.trim(),
+      scrip: $("fScrip").value.trim(),
+      decl: $("fDecl").value.trim(),
+      feeling: 0,
+      healed: false,
+      progress: []
+    });
+    save();
+    // clear form
+    $("fTitle").value=""; $("fNote").value=""; $("fScrip").value=""; $("fDecl").value="";
+    $("fType").value = "Physical";
+    chosenVerse = null;
+    Array.prototype.forEach.call(chipsEl.children, function(c){ c.classList.remove("active"); });
+    render();
+    $("fTitle").focus();
+  });
+
+  // ---- Render ----
+  var listEl = $("focusList");
+
+  function render(){
+    renderStats();
+    listEl.innerHTML = "";
+    if(data.focuses.length === 0){
+      $("emptyState").style.display = "block";
+      return;
+    }
+    $("emptyState").style.display = "none";
+    data.focuses.forEach(function(f){
+      listEl.appendChild(buildFocus(f));
+    });
+  }
+
+  function renderStats(){
+    var healed = data.focuses.filter(function(f){ return f.healed; }).length;
+    $("statActive").textContent = data.focuses.length - healed;
+    $("statHealed").textContent = healed;
+  }
+
+  function el(tag, cls, txt){
+    var e = document.createElement(tag);
+    if(cls) e.className = cls;
+    if(txt != null) e.textContent = txt;
+    return e;
+  }
+
+  function buildFocus(f){
+    var card = el("div", "focus" + (f.healed ? " healed" : ""));
+
+    var top = el("div", "focus-top");
+    top.appendChild(el("div", "ttl", f.title));
+    top.appendChild(el("span", "badge t-" + f.type, f.type));
+    card.appendChild(top);
+
+    if(f.healed){
+      card.appendChild(el("div", "heal-banner", "Healing received 🙌 Thank You, Lord."));
+    }
+
+    if(f.note) card.appendChild(el("div", "note", f.note));
+
+    if(f.scrip){
+      var s = el("div", "scrip");
+      s.appendChild(document.createTextNode(f.scrip));
+      card.appendChild(s);
+    }
+
+    if(f.decl){
+      var d = el("div", "decl");
+      d.appendChild(el("span", null, "My declaration"));
+      d.appendChild(document.createTextNode(f.decl));
+      card.appendChild(d);
+    }
+
+    // feeling meter
+    var meter = el("div", "meter");
+    meter.appendChild(el("div", "ml", "How I'm feeling / trusting today"));
+    var dots = el("div", "dots");
+    for(var i=1;i<=5;i++){
+      (function(val){
+        var b = el("button", "dot-btn" + (f.feeling >= val && f.feeling > 0 ? " on" : ""), String(val));
+        b.type = "button";
+        b.setAttribute("aria-label", "Set feeling to " + val + " of 5");
+        b.addEventListener("click", function(){
+          f.feeling = (f.feeling === val) ? 0 : val;
+          save(); render();
+        });
+        dots.appendChild(b);
+      })(i);
+    }
+    meter.appendChild(dots);
+    card.appendChild(meter);
+
+    // progress notes
+    card.appendChild(el("div", "prog-title", "Signs of healing · progress notes"));
+    if(f.progress.length === 0){
+      card.appendChild(el("div", "prog-empty", "No notes yet — even the smallest shift is worth recording. 🌱"));
+    }else{
+      var ul = el("ul", "prog-list");
+      f.progress.slice().reverse().forEach(function(p){
+        var li = el("li");
+        li.appendChild(el("span", "pd", p.date));
+        li.appendChild(el("span", "pt", p.text));
+        ul.appendChild(li);
+      });
+      card.appendChild(ul);
+    }
+
+    var addRow = el("div", "add-prog");
+    var inp = el("input");
+    inp.type = "text";
+    inp.placeholder = "A sign of healing, an answered prayer…";
+    inp.setAttribute("aria-label", "Add a progress note for " + f.title);
+    var addB = el("button", null, "Log");
+    addB.type = "button";
+    function addProg(){
+      var t = inp.value.trim();
+      if(!t) return;
+      f.progress.push({ date: shortDate(), text: t });
+      save(); render();
+    }
+    addB.addEventListener("click", addProg);
+    inp.addEventListener("keydown", function(e){ if(e.key === "Enter"){ addProg(); } });
+    addRow.appendChild(inp);
+    addRow.appendChild(addB);
+    card.appendChild(addRow);
+
+    // actions
+    var acts = el("div", "focus-actions");
+    var healBtn = el("button", "fa-btn fa-heal" + (f.healed ? " on" : ""),
+      f.healed ? "Healing received 🙌" : "Mark breakthrough 🙌");
+    healBtn.type = "button";
+    healBtn.addEventListener("click", function(){
+      f.healed = !f.healed;
+      save(); render();
+    });
+    var delBtn = el("button", "fa-btn fa-del", "Delete");
+    delBtn.type = "button";
+    delBtn.addEventListener("click", function(){
+      if(confirm("Remove “" + f.title + "” from your tracker? This can't be undone, sister.")){
+        data.focuses = data.focuses.filter(function(x){ return x.id !== f.id; });
+        save(); render();
+      }
+    });
+    acts.appendChild(healBtn);
+    acts.appendChild(delBtn);
+    card.appendChild(acts);
+
+    return card;
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your healing prayers and progress? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { focuses:[] };
+      render();
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

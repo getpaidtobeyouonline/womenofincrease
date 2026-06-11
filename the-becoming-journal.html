@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Becoming Journal · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Month selector ---------- */
+  .month-bar{
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    margin-top:18px;
+  }
+  .month-nav{
+    flex:none; width:44px; height:44px; border-radius:11px;
+    background:#fff; border:1px solid var(--line); color:var(--emerald);
+    font-size:20px; font-weight:600; cursor:pointer; font-family:inherit;
+    display:flex; align-items:center; justify-content:center;
+    transition:border-color .15s, color .15s;
+  }
+  .month-nav:hover{ border-color:var(--gold); color:var(--gold); }
+  .month-nav:disabled{ opacity:.35; cursor:not-allowed; }
+  .month-pill{
+    flex:1; text-align:center; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:999px; padding:10px 12px; min-height:44px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+  }
+  .month-pill .m-name{ font-family:'Fraunces',serif; font-weight:600; font-size:17px; line-height:1.1; }
+  .month-pill .m-tag{ font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-top:2px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:0 0 14px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:16px 0 6px;
+  }
+  label.field-label:first-of-type{ margin-top:6px; }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:78px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  .becoming-input{ text-align:center; font-family:'Fraunces',serif; font-size:20px; color:var(--emerald); font-weight:500; }
+
+  /* ---------- Ratings ---------- */
+  .rating-row{ margin:14px 0 4px; }
+  .rating-row .r-label{ font-weight:600; font-size:13.5px; color:var(--ink); margin-bottom:8px; display:block; }
+  .dots{ display:flex; gap:8px; }
+  .dot-btn{
+    flex:1; min-width:44px; min-height:44px; border-radius:11px;
+    border:1px solid var(--line); background:var(--cream); cursor:pointer;
+    font-family:'Fraunces',serif; font-weight:600; font-size:16px; color:var(--muted);
+    transition:all .12s ease;
+  }
+  .dot-btn:hover{ border-color:var(--gold-soft); }
+  .dot-btn.on{ background:var(--emerald); border-color:var(--emerald); color:#FCF8EF; box-shadow:0 4px 12px rgba(20,84,62,.22); }
+
+  /* ---------- Save note ---------- */
+  .saved-note{
+    display:flex; align-items:center; justify-content:center; gap:7px;
+    margin-top:16px; color:var(--muted); font-size:13px; font-style:italic;
+  }
+  .saved-note .leaf{ font-style:normal; }
+
+  /* ---------- Stat ---------- */
+  .stat{
+    text-align:center; background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; margin-top:16px;
+    position:relative; overflow:hidden;
+  }
+  .stat::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.22);
+  }
+  .stat .count{ font-family:'Fraunces',serif; font-weight:600; font-size:40px; line-height:1; }
+  .stat .count-lbl{ font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft); margin-top:6px; font-weight:600; }
+  .stat .encourage{ font-family:'Fraunces',serif; font-style:italic; font-size:16px; margin-top:14px; position:relative; z-index:1; line-height:1.45; }
+
+  /* ---------- Timeline ---------- */
+  .history-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:20px; font-weight:600;
+    margin-bottom:2px;
+  }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+  .snap{
+    border:1px solid var(--line); border-radius:13px; margin-top:12px; overflow:hidden;
+    background:var(--cream);
+  }
+  .snap-head{
+    width:100%; text-align:left; background:none; border:none; cursor:pointer;
+    font-family:inherit; padding:14px 16px; min-height:56px;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .snap-head .s-left{ display:flex; flex-direction:column; }
+  .snap-head .s-month{ font-family:'Fraunces',serif; font-weight:600; font-size:16px; color:var(--emerald); }
+  .snap-head .s-becoming{ font-size:13px; color:var(--gold); font-style:italic; margin-top:2px; }
+  .snap-head .s-right{ display:flex; align-items:center; gap:10px; flex:none; }
+  .snap-head .s-grow{
+    background:var(--gold-soft); color:var(--emerald); font-weight:700; font-size:12px;
+    border-radius:999px; padding:4px 10px; white-space:nowrap;
+  }
+  .snap-head .chev{ color:var(--muted); font-size:13px; transition:transform .2s; }
+  .snap.open .chev{ transform:rotate(180deg); }
+  .snap-body{ display:none; padding:0 16px 16px; }
+  .snap.open .snap-body{ display:block; animation:rise .3s ease; }
+  @keyframes rise{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+  .snap-field{ margin-top:12px; }
+  .snap-field .sf-q{ font-weight:600; font-size:12.5px; letter-spacing:.04em; color:var(--muted); text-transform:uppercase; }
+  .snap-field .sf-a{ font-size:15px; color:var(--ink); margin-top:3px; white-space:pre-wrap; }
+  .snap-ratings{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+  .snap-ratings .chip{
+    background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.12);
+    border-radius:999px; padding:5px 11px; font-size:12.5px; font-weight:600;
+  }
+  .snap-actions{ display:flex; gap:10px; margin-top:16px; }
+  .snap-actions button{
+    font-family:inherit; font-size:13px; font-weight:600; cursor:pointer;
+    border-radius:10px; min-height:44px; padding:10px 14px; flex:1;
+  }
+  .btn-edit{ background:var(--gold); color:var(--ink); border:none; box-shadow:0 4px 12px rgba(200,160,74,.28); }
+  .btn-del{ background:none; border:1px solid var(--line); color:var(--muted); }
+  .btn-del:hover{ border-color:#c0392b; color:#c0392b; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    text-align:center; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:22px 18px; color:var(--emerald); margin-top:12px;
+  }
+  .welcome .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:6px; }
+  .welcome .sm{ font-size:14px; color:var(--muted); line-height:1.55; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>The Becoming Journal</h1>
+    <p class="subtitle">A monthly snapshot of the woman you're becoming.</p>
+
+    <div class="month-bar">
+      <button class="month-nav" id="prevMonth" type="button" aria-label="Previous month">‹</button>
+      <div class="month-pill">
+        <span class="m-name" id="monthName">—</span>
+        <span class="m-tag" id="monthTag">This Month</span>
+      </div>
+      <button class="month-nav" id="nextMonth" type="button" aria-label="Next month">›</button>
+    </div>
+  </header>
+
+  <!-- Editor -->
+  <section class="card" id="editorCard">
+    <div class="step"><span class="num">✎</span><h2 id="editorTitle">This month's snapshot</h2></div>
+    <p class="hint" id="editorHint">Take a breath and be honest. There's no wrong answer — only your truth, right now.</p>
+
+    <label class="field-label" for="becoming">The woman I'm becoming is…</label>
+    <input type="text" class="becoming-input" id="becoming" placeholder="bolder, softer, more herself">
+
+    <label class="field-label" for="grown">How I've grown this month</label>
+    <textarea id="grown" placeholder="Name it, sister. Even the small shifts count."></textarea>
+
+    <label class="field-label" for="releasing">What I'm releasing</label>
+    <textarea id="releasing" placeholder="The weight you're choosing to set down…"></textarea>
+
+    <label class="field-label" for="stepping">What I'm stepping into</label>
+    <textarea id="stepping" placeholder="The space you're growing toward…"></textarea>
+
+    <label class="field-label" for="win">A win I'm celebrating</label>
+    <textarea id="win" placeholder="You're allowed to be proud of yourself."></textarea>
+
+    <div class="rating-row">
+      <span class="r-label">Where are you this month? (1–5)</span>
+    </div>
+    <div id="ratings"></div>
+
+    <div class="saved-note"><span class="leaf">🌿</span><span id="savedNote">Saved automatically as you write.</span></div>
+  </section>
+
+  <!-- Stat -->
+  <section class="stat">
+    <div class="count" id="monthsCount">0</div>
+    <div class="count-lbl" id="monthsLabel">months documented</div>
+    <p class="encourage" id="encourage">Every entry is a footprint of your growth. One day you'll look back and see just how far you've come.</p>
+  </section>
+
+  <!-- Timeline -->
+  <section class="card">
+    <div class="history-title">Your becoming, over time</div>
+    <p class="empty-note" id="historyEmpty">Your past snapshots will gather here, most recent first — so you can scroll back and witness your growth. 💛</p>
+    <div id="timeline"></div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_becoming_journal";
+
+  var RATINGS = [
+    { id:"faith",      label:"Faith" },
+    { id:"confidence", label:"Confidence" },
+    { id:"peace",      label:"Peace" }
+  ];
+
+  var MONTH_NAMES = ["January","February","March","April","May","June",
+                     "July","August","September","October","November","December"];
+
+  // ---- Month-key helpers (YYYY-MM, local) ----
+  function monthKeyFromDate(d){
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    return d.getFullYear()+"-"+m;
+  }
+  function thisMonthKey(){ return monthKeyFromDate(new Date()); }
+  function prettyMonth(key){
+    var p = key.split("-");
+    return MONTH_NAMES[parseInt(p[1],10)-1] + " " + p[0];
+  }
+  function shiftMonth(key, delta){
+    var p = key.split("-");
+    var d = new Date(parseInt(p[0],10), parseInt(p[1],10)-1+delta, 1);
+    return monthKeyFromDate(d);
+  }
+  function monthIndexValue(key){
+    var p = key.split("-");
+    return parseInt(p[0],10)*12 + (parseInt(p[1],10)-1);
+  }
+
+  // ---- Storage ----
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.entries) return o; }
+    }catch(e){}
+    return { entries:{} };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function blankEntry(){
+    return { becoming:"", grown:"", releasing:"", stepping:"", win:"", ratings:{} };
+  }
+  function isEmptyEntry(e){
+    if(!e) return true;
+    if(e.becoming || e.grown || e.releasing || e.stepping || e.win) return false;
+    for(var k in (e.ratings||{})){ if(e.ratings[k]) return false; }
+    return true;
+  }
+
+  // ---- State ----
+  var data = load();
+  var THIS = thisMonthKey();
+  var current = THIS;               // month currently being viewed/edited
+  var entry = getEntry(current);
+
+  function getEntry(key){
+    if(!data.entries[key]) data.entries[key] = blankEntry();
+    var e = data.entries[key];
+    if(!e.ratings) e.ratings = {};
+    return e;
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var fields = {
+    becoming:  $("becoming"),
+    grown:     $("grown"),
+    releasing: $("releasing"),
+    stepping:  $("stepping"),
+    win:       $("win")
+  };
+
+  // ---- Build rating controls ----
+  var ratingsWrap = $("ratings");
+  RATINGS.forEach(function(r){
+    var row = document.createElement("div");
+    row.className = "rating-row";
+    var lbl = document.createElement("span");
+    lbl.className = "r-label";
+    lbl.id = "rlbl-"+r.id;
+    lbl.textContent = r.label;
+    row.appendChild(lbl);
+    var dots = document.createElement("div");
+    dots.className = "dots";
+    dots.setAttribute("role","group");
+    dots.setAttribute("aria-labelledby","rlbl-"+r.id);
+    for(var n=1;n<=5;n++){
+      (function(n){
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "dot-btn";
+        b.textContent = n;
+        b.setAttribute("data-rid", r.id);
+        b.setAttribute("data-val", n);
+        b.setAttribute("aria-label", r.label+": "+n+" of 5");
+        b.addEventListener("click", function(){
+          var cur = entry.ratings[r.id];
+          entry.ratings[r.id] = (cur === n) ? 0 : n; // tap same to clear
+          save();
+          renderRatings();
+          renderStat();
+          renderTimeline();
+        });
+        dots.appendChild(b);
+      })(n);
+    }
+    row.appendChild(dots);
+    ratingsWrap.appendChild(row);
+  });
+
+  function renderRatings(){
+    var btns = ratingsWrap.querySelectorAll(".dot-btn");
+    btns.forEach(function(b){
+      var rid = b.getAttribute("data-rid");
+      var val = parseInt(b.getAttribute("data-val"),10);
+      if((entry.ratings[rid]||0) >= val) b.classList.add("on");
+      else b.classList.remove("on");
+    });
+  }
+
+  // ---- Render editor for current month ----
+  function renderEditor(){
+    var isThis = (current === THIS);
+    var isFuture = monthIndexValue(current) > monthIndexValue(THIS);
+
+    $("monthName").textContent = prettyMonth(current);
+    $("monthTag").textContent = isThis ? "This Month" : (isFuture ? "Upcoming" : "Looking Back");
+    $("editorTitle").textContent = isThis ? "This month's snapshot" : prettyMonth(current)+"'s snapshot";
+    $("editorHint").textContent = isThis
+      ? "Take a breath and be honest. There's no wrong answer — only your truth, right now."
+      : "You're revisiting a past month. Edit freely — your becoming is allowed to evolve.";
+
+    fields.becoming.value  = entry.becoming  || "";
+    fields.grown.value     = entry.grown     || "";
+    fields.releasing.value = entry.releasing || "";
+    fields.stepping.value  = entry.stepping  || "";
+    fields.win.value       = entry.win       || "";
+    renderRatings();
+
+    // disable forward nav past current month
+    $("nextMonth").disabled = isThis;
+  }
+
+  // ---- Auto-save wiring ----
+  function wire(el, key){
+    el.addEventListener("input", function(){
+      entry[key] = el.value;
+      save();
+      renderStat();
+      renderTimeline();
+    });
+  }
+  wire(fields.becoming,  "becoming");
+  wire(fields.grown,     "grown");
+  wire(fields.releasing, "releasing");
+  wire(fields.stepping,  "stepping");
+  wire(fields.win,       "win");
+
+  // ---- Month navigation ----
+  function goTo(key){
+    current = key;
+    entry = getEntry(current);
+    renderEditor();
+  }
+  $("prevMonth").addEventListener("click", function(){
+    goTo(shiftMonth(current, -1));
+  });
+  $("nextMonth").addEventListener("click", function(){
+    if(monthIndexValue(current) >= monthIndexValue(THIS)) return;
+    goTo(shiftMonth(current, +1));
+  });
+
+  // ---- Documented months (non-empty), most recent first ----
+  function documentedKeys(){
+    return Object.keys(data.entries)
+      .filter(function(k){ return !isEmptyEntry(data.entries[k]); })
+      .sort()
+      .reverse();
+  }
+  function avgGrowth(e){
+    var sum=0, n=0;
+    RATINGS.forEach(function(r){
+      var v = e.ratings && e.ratings[r.id];
+      if(v){ sum+=v; n++; }
+    });
+    return n ? (sum/n) : null;
+  }
+
+  // ---- Stat ----
+  function renderStat(){
+    var keys = documentedKeys();
+    var c = keys.length;
+    $("monthsCount").textContent = c;
+    $("monthsLabel").textContent = c === 1 ? "month documented" : "months documented";
+    var enc;
+    if(c === 0){
+      enc = "Your first snapshot is the start of the story. Begin above — she's worth documenting.";
+    } else if(c === 1){
+      enc = "One month down. Keep going — the woman you're becoming reveals herself over time.";
+    } else if(c < 4){
+      enc = "Look at you, showing up for yourself. Scroll back below and notice how you've shifted.";
+    } else {
+      enc = "Months of evidence that you're growing. When the road feels long, read back and see how far you've come.";
+    }
+    $("encourage").textContent = enc;
+  }
+
+  // ---- Timeline ----
+  function renderTimeline(){
+    var wrap = $("timeline");
+    var empty = $("historyEmpty");
+    var keys = documentedKeys();
+    wrap.innerHTML = "";
+
+    if(keys.length === 0){
+      empty.style.display = "block";
+      // first-run warm welcome
+      var w = document.createElement("div");
+      w.className = "welcome";
+      w.innerHTML = '<div class="big">Welcome, sister. 💛</div>'+
+        '<div class="sm">This is where you document your becoming — one honest month at a time. '+
+        'Fill in this month above, and watch your story gather here. You are already on your way.</div>';
+      wrap.appendChild(w);
+      return;
+    }
+    empty.style.display = "none";
+
+    keys.forEach(function(k){
+      var e = data.entries[k];
+      var snap = document.createElement("div");
+      snap.className = "snap";
+
+      // header
+      var head = document.createElement("button");
+      head.type = "button";
+      head.className = "snap-head";
+      head.setAttribute("aria-expanded","false");
+
+      var left = document.createElement("span");
+      left.className = "s-left";
+      var mEl = document.createElement("span");
+      mEl.className = "s-month";
+      mEl.textContent = prettyMonth(k) + (k === THIS ? " · now" : "");
+      left.appendChild(mEl);
+      if(e.becoming){
+        var bEl = document.createElement("span");
+        bEl.className = "s-becoming";
+        bEl.textContent = "becoming " + e.becoming;
+        left.appendChild(bEl);
+      }
+
+      var right = document.createElement("span");
+      right.className = "s-right";
+      var g = avgGrowth(e);
+      if(g !== null){
+        var grow = document.createElement("span");
+        grow.className = "s-grow";
+        grow.textContent = "↑ " + (Math.round(g*10)/10);
+        right.appendChild(grow);
+      }
+      var chev = document.createElement("span");
+      chev.className = "chev";
+      chev.textContent = "▾";
+      right.appendChild(chev);
+
+      head.appendChild(left);
+      head.appendChild(right);
+
+      // body
+      var body = document.createElement("div");
+      body.className = "snap-body";
+      addField(body, "The woman I'm becoming", e.becoming);
+      addField(body, "How I've grown", e.grown);
+      addField(body, "What I'm releasing", e.releasing);
+      addField(body, "What I'm stepping into", e.stepping);
+      addField(body, "A win I'm celebrating", e.win);
+
+      var chips = document.createElement("div");
+      chips.className = "snap-ratings";
+      var anyRating = false;
+      RATINGS.forEach(function(r){
+        var v = e.ratings && e.ratings[r.id];
+        if(v){
+          anyRating = true;
+          var chip = document.createElement("span");
+          chip.className = "chip";
+          chip.textContent = r.label + " " + v + "/5";
+          chips.appendChild(chip);
+        }
+      });
+      if(anyRating) body.appendChild(chips);
+
+      var actions = document.createElement("div");
+      actions.className = "snap-actions";
+      var edit = document.createElement("button");
+      edit.className = "btn-edit";
+      edit.textContent = "Open & edit";
+      edit.addEventListener("click", function(ev){
+        ev.stopPropagation();
+        goTo(k);
+        document.getElementById("editorCard").scrollIntoView({behavior:"smooth", block:"start"});
+      });
+      var del = document.createElement("button");
+      del.className = "btn-del";
+      del.textContent = "Delete";
+      del.addEventListener("click", function(ev){
+        ev.stopPropagation();
+        if(confirm("Delete your "+prettyMonth(k)+" snapshot? This can't be undone, sister.")){
+          delete data.entries[k];
+          save();
+          if(current === k){ entry = getEntry(current); renderEditor(); }
+          renderStat();
+          renderTimeline();
+        }
+      });
+      actions.appendChild(edit);
+      actions.appendChild(del);
+      body.appendChild(actions);
+
+      head.addEventListener("click", function(){
+        var open = snap.classList.toggle("open");
+        head.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+
+      snap.appendChild(head);
+      snap.appendChild(body);
+      wrap.appendChild(snap);
+    });
+  }
+
+  function addField(parent, q, a){
+    if(!a) return;
+    var f = document.createElement("div");
+    f.className = "snap-field";
+    var qe = document.createElement("div");
+    qe.className = "sf-q";
+    qe.textContent = q;
+    var ae = document.createElement("div");
+    ae.className = "sf-a";
+    ae.textContent = a;
+    f.appendChild(qe); f.appendChild(ae);
+    parent.appendChild(f);
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Becoming Journal entries? Every month will be erased. This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { entries:{} };
+      current = THIS;
+      entry = getEntry(current);
+      renderEditor();
+      renderStat();
+      renderTimeline();
+    }
+  });
+
+  // ---- Initial render ----
+  renderEditor();
+  renderStat();
+  renderTimeline();
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fear vs Faith Identifier · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:72px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  .add-btn{
+    width:100%; margin-top:16px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .add-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .add-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Summary ---------- */
+  .summary{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:20px; text-align:center;
+  }
+  .summary .line{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.4;
+  }
+  .summary .counts{
+    display:flex; justify-content:center; gap:14px; margin-top:14px;
+  }
+  .summary .pill{
+    flex:1; max-width:150px; border-radius:12px; padding:12px 8px;
+    background:rgba(252,248,239,.08); border:1px solid rgba(231,211,161,.25);
+  }
+  .summary .pill b{
+    display:block; font-family:'Fraunces',serif; font-size:26px; line-height:1; margin-bottom:4px;
+  }
+  .summary .pill.faith b{ color:var(--gold-soft); }
+  .summary .pill .lbl{ font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:rgba(252,248,239,.75); }
+
+  /* ---------- Entry cards ---------- */
+  .entries{ margin-top:4px; }
+  .entry{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:18px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .entry-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+  .entry-head h3{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:20px; line-height:1.18; word-break:break-word;
+  }
+  .del-btn{
+    flex:none; min-width:44px; min-height:44px; margin:-8px -8px 0 0;
+    background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:18px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+  }
+  .del-btn:hover{ color:var(--ink); background:var(--cream); }
+
+  .voice{ border-radius:12px; padding:13px 14px; margin-top:12px; }
+  .voice .tag{
+    font-weight:700; font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    display:flex; align-items:center; gap:6px; margin-bottom:5px;
+  }
+  .voice p{ font-size:15px; line-height:1.5; word-break:break-word; }
+  .voice.fear{ background:#F4F1EA; border:1px solid var(--line); }
+  .voice.fear .tag{ color:var(--muted); }
+  .voice.fear p{ color:var(--muted); }
+  .voice.faith{ background:var(--emerald-soft); border:1px solid rgba(20,84,62,.16); }
+  .voice.faith .tag{ color:var(--emerald); }
+  .voice.faith p{ color:var(--emerald); font-weight:600; }
+
+  .action{
+    margin-top:13px; border-radius:12px; padding:13px 14px;
+    background:var(--gold-soft); border:1px solid rgba(200,160,74,.35);
+    display:flex; align-items:flex-start; gap:11px;
+  }
+  .action input[type="checkbox"]{
+    flex:none; width:22px; height:22px; margin-top:1px; accent-color:var(--emerald); cursor:pointer;
+  }
+  .action .a-body{ flex:1; }
+  .action .a-tag{
+    font-weight:700; font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--emerald); margin-bottom:4px;
+  }
+  .action .a-text{ font-size:15px; line-height:1.45; color:var(--ink); word-break:break-word; }
+  .action.done .a-text{ text-decoration:line-through; color:var(--muted); }
+  .action label{ cursor:pointer; display:block; }
+
+  /* ---------- Leading toggle ---------- */
+  .lead-row{
+    display:flex; gap:8px; margin-top:13px;
+  }
+  .lead-row .seg-label{
+    font-size:12px; color:var(--muted); align-self:center; margin-right:2px; flex:none;
+  }
+  .seg{ display:flex; flex:1; border:1px solid var(--line); border-radius:11px; overflow:hidden; }
+  .seg button{
+    flex:1; min-height:44px; background:#fff; border:none; cursor:pointer;
+    font-family:inherit; font-size:13px; font-weight:600; color:var(--muted);
+    transition:background .15s, color .15s;
+  }
+  .seg button + button{ border-left:1px solid var(--line); }
+  .seg button.sel-fear{ background:#F0EDE6; color:var(--ink); }
+  .seg button.sel-faith{ background:var(--emerald); color:#FCF8EF; }
+
+  /* ---------- Empty state ---------- */
+  .empty{
+    text-align:center; padding:30px 16px; color:var(--muted);
+  }
+  .empty .em{ font-family:'Fraunces',serif; color:var(--emerald); font-size:19px; margin-bottom:8px; }
+  .empty p{ font-size:14.5px; line-height:1.5; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Fear vs Faith Identifier</h1>
+    <p class="subtitle">Name what fear is whispering — then answer it with faith and one brave step.</p>
+  </header>
+
+  <!-- Add a new area -->
+  <section class="card">
+    <div class="step"><span class="num">+</span><h2>Bring an area to the light</h2></div>
+    <p class="hint">A decision, a relationship, your finances, a dream — whatever fear is loudest about today.</p>
+
+    <label class="field-label" for="areaInput">The area or situation</label>
+    <input type="text" id="areaInput" placeholder="e.g. My finances, this big decision, a dream…" maxlength="80">
+
+    <label class="field-label" for="fearInput">What is fear saying here?</label>
+    <textarea id="fearInput" placeholder="Let it speak — it loses power once it's named."></textarea>
+
+    <label class="field-label" for="faithInput">What is faith saying here?</label>
+    <textarea id="faithInput" placeholder="The truth, the promise, the bolder word over you."></textarea>
+
+    <label class="field-label" for="actionInput">One small faith-driven step you'll take</label>
+    <input type="text" id="actionInput" placeholder="e.g. Send the email, make the call, pray over it…" maxlength="120">
+
+    <button class="add-btn" id="addBtn" type="button">Add this area 🌿</button>
+  </section>
+
+  <!-- Summary -->
+  <section class="card" id="summaryCard" style="display:none;">
+    <div class="summary">
+      <div class="line" id="summaryLine">—</div>
+      <div class="counts">
+        <div class="pill faith"><b id="faithCount">0</b><span class="lbl">Faith leading</span></div>
+        <div class="pill"><b id="fearCount">0</b><span class="lbl">Fear leading</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Entries -->
+  <div class="entries" id="entries"></div>
+
+  <!-- Empty state -->
+  <section class="card empty" id="emptyState">
+    <div class="em">Nothing here yet — and that's okay. 💛</div>
+    <p>Fear almost always shows up right before something brave. Name one area above, hand it the truth, and take one small step. You don't have to feel fearless to move in faith.</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_fear_vs_faith";
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && Array.isArray(o.entries)) return o; }
+    }catch(e){}
+    return { entries:[] };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+  var areaInput = $("areaInput"), fearInput = $("fearInput"),
+      faithInput = $("faithInput"), actionInput = $("actionInput");
+  var entriesEl = $("entries"), emptyState = $("emptyState");
+  var summaryCard = $("summaryCard");
+
+  function uid(){
+    return "e" + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+  }
+  function esc(s){
+    var d = document.createElement("div");
+    d.textContent = s == null ? "" : String(s);
+    return d.innerHTML;
+  }
+
+  // ---- Add an entry ----
+  $("addBtn").addEventListener("click", function(){
+    var area = areaInput.value.trim();
+    var fear = fearInput.value.trim();
+    var faith = faithInput.value.trim();
+    var action = actionInput.value.trim();
+
+    if(!area){
+      alert("Give this area a name first, sister — even just a word.");
+      areaInput.focus();
+      return;
+    }
+
+    data.entries.unshift({
+      id: uid(),
+      area: area,
+      fear: fear,
+      faith: faith,
+      action: action,
+      done: false,
+      leading: "" // "", "fear", or "faith"
+    });
+    save();
+
+    areaInput.value = ""; fearInput.value = "";
+    faithInput.value = ""; actionInput.value = "";
+    render();
+    areaInput.focus();
+  });
+
+  // ---- Summary ----
+  function renderSummary(){
+    var faithN = 0, fearN = 0;
+    data.entries.forEach(function(e){
+      if(e.leading === "faith") faithN++;
+      else if(e.leading === "fear") fearN++;
+    });
+    $("faithCount").textContent = faithN;
+    $("fearCount").textContent = fearN;
+
+    var line;
+    if(faithN === 0 && fearN === 0){
+      line = "Tag each area below as you go — let's watch faith take the lead.";
+    }else if(fearN === 0){
+      line = "Faith is leading everywhere you've named. Keep walking, sister. 💛";
+    }else if(faithN >= fearN){
+      line = "Faith is gaining ground in you — that's real momentum. One step at a time.";
+    }else{
+      line = "Fear is loud in a few places, and that's okay. You're naming it — that's where courage begins.";
+    }
+    $("summaryLine").textContent = line;
+
+    summaryCard.style.display = data.entries.length ? "block" : "none";
+  }
+
+  // ---- Render all ----
+  function render(){
+    entriesEl.innerHTML = "";
+
+    if(data.entries.length === 0){
+      emptyState.style.display = "block";
+      renderSummary();
+      return;
+    }
+    emptyState.style.display = "none";
+
+    data.entries.forEach(function(e){
+      var card = document.createElement("div");
+      card.className = "entry";
+
+      var fearBlock = e.fear
+        ? '<div class="voice fear"><div class="tag">🗯️ Fear is saying</div><p>'+esc(e.fear)+'</p></div>'
+        : '<div class="voice fear"><div class="tag">🗯️ Fear is saying</div><p style="font-style:italic;">You didn\'t give fear the mic here — beautiful.</p></div>';
+
+      var faithBlock = e.faith
+        ? '<div class="voice faith"><div class="tag">✨ Faith is saying</div><p>'+esc(e.faith)+'</p></div>'
+        : '<div class="voice faith"><div class="tag">✨ Faith is saying</div><p style="font-style:italic;font-weight:500;">What truth or promise answers the fear above?</p></div>';
+
+      var actionBlock = e.action
+        ? '<div class="action'+(e.done?' done':'')+'">'
+            + '<input type="checkbox" id="chk-'+e.id+'" '+(e.done?'checked':'')+'>'
+            + '<div class="a-body"><div class="a-tag">My faith step</div>'
+            + '<label for="chk-'+e.id+'" class="a-text">'+esc(e.action)+'</label></div>'
+          + '</div>'
+        : '<div class="action"><div class="a-body"><div class="a-tag">My faith step</div>'
+            + '<div class="a-text" style="color:var(--muted);font-style:italic;">No step yet — what\'s one small move you can make?</div></div></div>';
+
+      card.innerHTML =
+        '<div class="entry-head">'
+          + '<h3>'+esc(e.area)+'</h3>'
+          + '<button class="del-btn" type="button" data-del="'+e.id+'" aria-label="Delete this area">✕</button>'
+        + '</div>'
+        + fearBlock
+        + faithBlock
+        + actionBlock
+        + '<div class="lead-row">'
+          + '<span class="seg-label">Right now:</span>'
+          + '<div class="seg">'
+            + '<button type="button" data-lead="fear" data-id="'+e.id+'" class="'+(e.leading==="fear"?"sel-fear":"")+'">From fear</button>'
+            + '<button type="button" data-lead="faith" data-id="'+e.id+'" class="'+(e.leading==="faith"?"sel-faith":"")+'">From faith</button>'
+          + '</div>'
+        + '</div>';
+
+      entriesEl.appendChild(card);
+    });
+
+    // wire checkboxes
+    data.entries.forEach(function(e){
+      var chk = $("chk-"+e.id);
+      if(chk){
+        chk.addEventListener("change", function(){
+          e.done = chk.checked;
+          save();
+          render();
+        });
+      }
+    });
+
+    renderSummary();
+  }
+
+  // ---- Delegated clicks (delete + leading toggle) ----
+  entriesEl.addEventListener("click", function(ev){
+    var t = ev.target;
+
+    var delId = t.getAttribute && t.getAttribute("data-del");
+    if(delId){
+      var e = findEntry(delId);
+      var label = e && e.area ? '"'+e.area+'"' : "this area";
+      if(confirm("Remove "+label+"? This can't be undone, sister.")){
+        data.entries = data.entries.filter(function(x){ return x.id !== delId; });
+        save();
+        render();
+      }
+      return;
+    }
+
+    var lead = t.getAttribute && t.getAttribute("data-lead");
+    if(lead){
+      var id = t.getAttribute("data-id");
+      var en = findEntry(id);
+      if(en){
+        en.leading = (en.leading === lead) ? "" : lead; // tap again to clear
+        save();
+        render();
+      }
+    }
+  });
+
+  function findEntry(id){
+    for(var i=0;i<data.entries.length;i++){
+      if(data.entries[i].id === id) return data.entries[i];
+    }
+    return null;
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Fear vs Faith areas? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { entries:[] };
+      areaInput.value=""; fearInput.value=""; faithInput.value=""; actionInput.value="";
+      render();
+    }
+  });
+
+  // ---- Init ----
+  render();
+
+})();
+</script>
+</body>
+</html>

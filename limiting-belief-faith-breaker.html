@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Limiting Belief Faith Breaker · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .freedom{
+    margin-top:14px; display:inline-flex; align-items:center; gap:7px; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.02em;
+    padding:6px 14px; border-radius:999px;
+  }
+  .freedom b{ font-family:'Fraunces',serif; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label:first-of-type{ margin-top:0; }
+  .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:78px; line-height:1.5; }
+  select{ min-height:48px; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2314543E' stroke-width='2.5'><path d='M6 9l6 6 6-6'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:40px;
+  }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Verse picker ---------- */
+  .verse-pick-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .verse-pick-row select{ flex:1; min-width:120px; }
+  .verse-preview{
+    margin-top:12px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:12px; padding:14px 16px; display:none;
+  }
+  .verse-preview.show{ display:block; }
+  .verse-preview p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:16px; line-height:1.45; color:var(--emerald);
+  }
+  .verse-preview .ref{
+    margin-top:8px; font-weight:600; font-size:11.5px; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--gold);
+  }
+
+  /* ---------- Break button ---------- */
+  .break-btn{
+    width:100%; margin-top:18px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .break-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .break-btn:active{ transform:translateY(1px); }
+  .break-btn:disabled{ opacity:.5; cursor:not-allowed; box-shadow:none; }
+
+  /* ---------- Breakthrough card (live preview) ---------- */
+  .bt-card{
+    border-radius:16px; overflow:hidden; border:1px solid var(--line);
+    margin-top:6px; display:none;
+  }
+  .bt-card.show{ display:block; }
+  .bt-old{
+    background:#F4EEE2; padding:16px 18px; border-bottom:1px dashed var(--line);
+  }
+  .bt-label{
+    font-weight:700; font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .bt-old .bt-label{ color:var(--muted); }
+  .bt-old .bt-text{
+    color:var(--muted); font-size:16px; text-decoration:line-through;
+    text-decoration-color:rgba(200,160,74,.7); text-decoration-thickness:2px;
+  }
+  .bt-old .bt-source{ color:var(--muted); font-size:12.5px; margin-top:6px; font-style:italic; }
+  .bt-new{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; padding:18px 18px 20px;
+  }
+  .bt-new .bt-label{ color:var(--gold-soft); }
+  .bt-new .bt-text{
+    font-family:'Fraunces',serif; font-weight:600; font-size:19px; line-height:1.32;
+  }
+  .bt-verse{
+    margin-top:14px; padding-top:14px; border-top:1px solid rgba(231,211,161,.25);
+  }
+  .bt-verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:15.5px; line-height:1.42;
+  }
+  .bt-verse .ref{
+    margin-top:8px; font-weight:600; font-size:11px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--gold-soft);
+  }
+
+  /* ---------- Celebration ---------- */
+  .celebrate{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .celebrate.show{ display:block; animation:rise .4s ease; }
+  .celebrate .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .celebrate .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Broken list ---------- */
+  .list-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:18px; font-weight:600;
+    margin-bottom:4px;
+  }
+  .list-sub{ color:var(--muted); font-size:13.5px; margin-bottom:14px; }
+  .broken-item{
+    border:1px solid var(--line); border-radius:14px; overflow:hidden; margin-top:12px;
+  }
+  .broken-item .bi-head{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+    padding:14px 16px 4px;
+  }
+  .broken-item .bi-old{
+    color:var(--muted); font-size:14px; text-decoration:line-through;
+    text-decoration-color:rgba(200,160,74,.7); flex:1;
+  }
+  .del-btn{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:13px; min-width:44px; min-height:44px; display:flex; align-items:center;
+    justify-content:center; border-radius:8px; margin:-8px -6px 0 0;
+  }
+  .del-btn:hover{ color:#9c3a2e; background:rgba(156,58,46,.06); }
+  .broken-item .bi-new{
+    padding:0 16px 6px;
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:16px; line-height:1.3;
+  }
+  .broken-item .bi-verse{
+    margin:0 16px 14px; padding:10px 12px; background:var(--emerald-soft);
+    border-radius:10px; font-size:13px; color:var(--emerald);
+  }
+  .broken-item .bi-verse i{ font-family:'Fraunces',serif; }
+  .broken-item .bi-verse .ref{
+    display:block; margin-top:5px; font-style:normal; font-weight:600; font-size:10.5px;
+    letter-spacing:.13em; text-transform:uppercase; color:var(--gold);
+  }
+  .broken-item .bi-date{
+    padding:0 16px 12px; color:var(--muted); font-size:11.5px;
+  }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; text-align:center; padding:8px 4px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Limiting Belief Faith Breaker</h1>
+    <p class="subtitle">Name the lie. Answer it with truth. Break the chain.</p>
+    <div class="freedom">⛓️‍💥 <span><b id="freedomCount">0</b> chains broken · freedom won</span></div>
+  </header>
+
+  <!-- 1. The limiting belief -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>The belief to break</h2></div>
+    <p class="hint">Say it plainly — the thought that's been quietly running the show.</p>
+    <label class="field-label" for="belief">What's the limiting belief?</label>
+    <input type="text" id="belief" placeholder='"I&apos;m not…", "I always…", "I&apos;ll never…"'>
+  </section>
+
+  <!-- 2. Where did it come from -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Whose voice is this?</h2></div>
+    <p class="hint">Naming where it came from loosens its grip. This isn't yours to carry.</p>
+    <label class="field-label" for="source">Where did it come from? <span class="opt">(optional)</span></label>
+    <input type="text" id="source" placeholder="A parent, a season of hurt, an old failure…">
+  </section>
+
+  <!-- 3. The reframe -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>The truth that argues back</h2></div>
+    <p class="hint">What does faith say instead? Write the truer, kinder, bolder thing.</p>
+    <label class="field-label" for="reframe">The faith reframe</label>
+    <textarea id="reframe" placeholder="The truth is… I am chosen, capable, and held."></textarea>
+  </section>
+
+  <!-- 4. Counter-scripture -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Counter-scripture</h2></div>
+    <p class="hint">Anchor the truth in a promise. Pick one, or write your own.</p>
+    <div class="verse-pick-row">
+      <select id="themeSelect" aria-label="Verse theme">
+        <option value="">Choose a theme…</option>
+      </select>
+      <select id="verseSelect" aria-label="Choose a verse" disabled>
+        <option value="">Choose a verse…</option>
+      </select>
+    </div>
+    <div class="verse-preview" id="versePreview">
+      <p id="versePreviewText">—</p>
+      <div class="ref" id="versePreviewRef"></div>
+    </div>
+    <label class="field-label" for="ownVerse">…or write your own verse / truth <span class="opt">(optional)</span></label>
+    <input type="text" id="ownVerse" placeholder="Type a verse or your own words of truth">
+  </section>
+
+  <!-- Breakthrough preview + action -->
+  <section class="card">
+    <div class="step"><span class="num">✦</span><h2>Your Breakthrough Card</h2></div>
+    <p class="hint">Watch the old story get crossed out — and the new one rise.</p>
+
+    <div class="bt-card" id="btCard">
+      <div class="bt-old">
+        <div class="bt-label">The old belief</div>
+        <div class="bt-text" id="btOldText"></div>
+        <div class="bt-source" id="btSource"></div>
+      </div>
+      <div class="bt-new">
+        <div class="bt-label">The truth that breaks it</div>
+        <div class="bt-text" id="btNewText"></div>
+        <div class="bt-verse" id="btVerseWrap" style="display:none;">
+          <p id="btVerseText"></p>
+          <div class="ref" id="btVerseRef"></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="break-btn" id="breakBtn" type="button" disabled>Break this belief 🔨</button>
+
+    <div class="celebrate" id="celebrate">
+      <div class="big" id="celebrateBig">Chain broken. 🕊️</div>
+      <div class="sm">That lie doesn't get to define you anymore, sister.</div>
+    </div>
+  </section>
+
+  <!-- Beliefs you've broken -->
+  <section class="card">
+    <div class="list-title">Beliefs you've broken</div>
+    <div class="list-sub">Every one of these is a place you renewed your mind.</div>
+    <div id="brokenList"></div>
+    <p class="empty-note" id="brokenEmpty">No chains broken yet — and that's okay. The mind is renewed one truth at a time. Name your first belief above, and let's break it together. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_limiting_belief_breaker";
+
+  // ---- Truth verse library, grouped by theme ----
+  var THEMES = [
+    ["Worth", [
+      ["I praise you, for I am fearfully and wonderfully made.", "Psalm 139:14"],
+      ["You are precious and honored in my sight, and I love you.", "Isaiah 43:4"],
+      ["See what great love the Father has lavished on us, that we should be called children of God.", "1 John 3:1"]
+    ]],
+    ["Fear", [
+      ["For God has not given us a spirit of fear, but of power, love, and a sound mind.", "2 Timothy 1:7"],
+      ["When I am afraid, I put my trust in you.", "Psalm 56:3"],
+      ["Do not fear, for I am with you; do not be dismayed, for I am your God.", "Isaiah 41:10"]
+    ]],
+    ["Provision", [
+      ["And my God will meet all your needs according to the riches of his glory.", "Philippians 4:19"],
+      ["Seek first his kingdom and his righteousness, and all these things will be given to you.", "Matthew 6:33"],
+      ["The Lord is my shepherd; I lack nothing.", "Psalm 23:1"]
+    ]],
+    ["Ability", [
+      ["I can do all things through Christ who strengthens me.", "Philippians 4:13"],
+      ["His grace is sufficient for you, for his power is made perfect in weakness.", "2 Corinthians 12:9"],
+      ["For we are God's handiwork, created in Christ Jesus to do good works.", "Ephesians 2:10"]
+    ]],
+    ["Future", [
+      ["For I know the plans I have for you — plans to prosper you and not to harm you.", "Jeremiah 29:11"],
+      ["She is clothed with strength and dignity, and she laughs without fear of the future.", "Proverbs 31:25"],
+      ["Being confident of this, that he who began a good work in you will carry it on to completion.", "Philippians 1:6"]
+    ]],
+    ["Identity", [
+      ["You did not choose me, but I chose you and appointed you to bear fruit.", "John 15:16"],
+      ["Therefore, if anyone is in Christ, the new creation has come: the old has gone, the new is here!", "2 Corinthians 5:17"],
+      ["You are a daughter of the King — chosen, loved, and never alone.", "A Word for You"]
+    ]]
+  ];
+
+  // ---- Celebration lines ----
+  var CHEERS = [
+    "Chain broken. 🕊️",
+    "That lie just lost its power. ✨",
+    "You answered fear with truth. 💛",
+    "One more place set free. 🔓",
+    "The old story is crossed out. 🙌",
+    "Renewed, one truth at a time. 🌿"
+  ];
+
+  // ---- Date helpers ----
+  function nowStamp(){
+    var d = new Date();
+    return d.toLocaleDateString(undefined,{month:"long", day:"numeric", year:"numeric"});
+  }
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && Array.isArray(o.broken) && o.draft){ return o; }
+      }
+    }catch(e){}
+    return { draft:{ belief:"", source:"", reframe:"", theme:"", verseIdx:"", ownVerse:"" }, broken:[] };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var beliefEl = $("belief"), sourceEl = $("source"), reframeEl = $("reframe");
+  var themeSel = $("themeSelect"), verseSel = $("verseSelect"), ownVerseEl = $("ownVerse");
+  var previewEl = $("versePreview"), previewText = $("versePreviewText"), previewRef = $("versePreviewRef");
+  var btCard = $("btCard");
+  var breakBtn = $("breakBtn"), celebrateEl = $("celebrate"), celebrateBig = $("celebrateBig");
+
+  // ---- Populate theme select ----
+  THEMES.forEach(function(t, i){
+    var o = document.createElement("option");
+    o.value = String(i); o.textContent = t[0];
+    themeSel.appendChild(o);
+  });
+
+  function populateVerses(themeIdx, keepIdx){
+    verseSel.innerHTML = "";
+    var def = document.createElement("option");
+    def.value = ""; def.textContent = "Choose a verse…";
+    verseSel.appendChild(def);
+    if(themeIdx === "" || themeIdx === null || themeIdx === undefined){
+      verseSel.disabled = true; return;
+    }
+    verseSel.disabled = false;
+    var verses = THEMES[+themeIdx][1];
+    verses.forEach(function(v, i){
+      var o = document.createElement("option");
+      o.value = String(i);
+      var ref = v[1];
+      o.textContent = ref;
+      verseSel.appendChild(o);
+    });
+    if(keepIdx !== "" && keepIdx !== null && keepIdx !== undefined && verses[+keepIdx]){
+      verseSel.value = String(keepIdx);
+    }
+  }
+
+  // ---- Resolve the chosen verse (library pick OR own) ----
+  function chosenVerse(){
+    if(data.draft.ownVerse && data.draft.ownVerse.trim()){
+      return [data.draft.ownVerse.trim(), "Your truth"];
+    }
+    if(data.draft.theme !== "" && data.draft.verseIdx !== ""){
+      var verses = THEMES[+data.draft.theme] && THEMES[+data.draft.theme][1];
+      if(verses && verses[+data.draft.verseIdx]){ return verses[+data.draft.verseIdx]; }
+    }
+    return null;
+  }
+
+  function renderPreview(){
+    // Show library preview only when a library verse is selected and no own-text override
+    if(data.draft.ownVerse && data.draft.ownVerse.trim()){
+      previewEl.classList.remove("show");
+      return;
+    }
+    if(data.draft.theme !== "" && data.draft.verseIdx !== ""){
+      var verses = THEMES[+data.draft.theme] && THEMES[+data.draft.theme][1];
+      var v = verses && verses[+data.draft.verseIdx];
+      if(v){
+        previewText.textContent = "“" + v[0] + "”";
+        previewRef.textContent = v[1];
+        previewEl.classList.add("show");
+        return;
+      }
+    }
+    previewEl.classList.remove("show");
+  }
+
+  // ---- Live Breakthrough Card ----
+  function renderCard(){
+    var d = data.draft;
+    var hasBelief = d.belief && d.belief.trim();
+    var hasNew = (d.reframe && d.reframe.trim()) || chosenVerse();
+    if(!hasBelief || !hasNew){
+      btCard.classList.remove("show");
+      breakBtn.disabled = true;
+      return;
+    }
+    btCard.classList.add("show");
+    breakBtn.disabled = false;
+
+    $("btOldText").textContent = "“" + d.belief.trim() + "”";
+    var src = $("btSource");
+    if(d.source && d.source.trim()){
+      src.textContent = "— this came from " + d.source.trim() + ". It doesn't get to stay.";
+      src.style.display = "block";
+    }else{
+      src.style.display = "none";
+    }
+
+    // New truth text: prefer the reframe, else build from verse
+    var newText = (d.reframe && d.reframe.trim())
+      ? d.reframe.trim()
+      : "This is who I truly am.";
+    $("btNewText").textContent = newText;
+
+    var v = chosenVerse();
+    var vw = $("btVerseWrap");
+    if(v){
+      $("btVerseText").textContent = "“" + v[0] + "”";
+      $("btVerseRef").textContent = v[1];
+      vw.style.display = "block";
+    }else{
+      vw.style.display = "none";
+    }
+  }
+
+  // ---- Restore draft ----
+  beliefEl.value = data.draft.belief || "";
+  sourceEl.value = data.draft.source || "";
+  reframeEl.value = data.draft.reframe || "";
+  ownVerseEl.value = data.draft.ownVerse || "";
+  themeSel.value = data.draft.theme !== "" ? String(data.draft.theme) : "";
+  populateVerses(data.draft.theme, data.draft.verseIdx);
+  renderPreview();
+  renderCard();
+  renderList();
+
+  // ---- Wire inputs (auto-save every change) ----
+  beliefEl.addEventListener("input", function(){ data.draft.belief = beliefEl.value; save(); renderCard(); });
+  sourceEl.addEventListener("input", function(){ data.draft.source = sourceEl.value; save(); renderCard(); });
+  reframeEl.addEventListener("input", function(){ data.draft.reframe = reframeEl.value; save(); renderCard(); });
+  ownVerseEl.addEventListener("input", function(){ data.draft.ownVerse = ownVerseEl.value; save(); renderPreview(); renderCard(); });
+
+  themeSel.addEventListener("change", function(){
+    data.draft.theme = themeSel.value;
+    data.draft.verseIdx = "";
+    populateVerses(themeSel.value, "");
+    save(); renderPreview(); renderCard();
+  });
+  verseSel.addEventListener("change", function(){
+    data.draft.verseIdx = verseSel.value;
+    save(); renderPreview(); renderCard();
+  });
+
+  // ---- Break this belief ----
+  breakBtn.addEventListener("click", function(){
+    var d = data.draft;
+    if(!(d.belief && d.belief.trim())) return;
+    if(!((d.reframe && d.reframe.trim()) || chosenVerse())) return;
+
+    var v = chosenVerse();
+    data.broken.unshift({
+      belief: d.belief.trim(),
+      source: (d.source||"").trim(),
+      reframe: (d.reframe||"").trim(),
+      verse: v ? v[0] : "",
+      verseRef: v ? v[1] : "",
+      date: nowStamp()
+    });
+
+    // reset the draft for the next belief
+    data.draft = { belief:"", source:"", reframe:"", theme:"", verseIdx:"", ownVerse:"" };
+    save();
+
+    // clear inputs
+    beliefEl.value = ""; sourceEl.value = ""; reframeEl.value = ""; ownVerseEl.value = "";
+    themeSel.value = ""; populateVerses("", "");
+    renderPreview(); renderCard(); renderList();
+
+    // celebrate
+    celebrateBig.textContent = CHEERS[Math.floor(Math.random()*CHEERS.length)];
+    celebrateEl.classList.remove("show");
+    void celebrateEl.offsetWidth; // restart animation
+    celebrateEl.classList.add("show");
+    setTimeout(function(){ celebrateEl.classList.remove("show"); }, 4200);
+  });
+
+  // ---- Render broken list + counter ----
+  function renderList(){
+    $("freedomCount").textContent = data.broken.length;
+    var list = $("brokenList"), empty = $("brokenEmpty");
+    list.innerHTML = "";
+    if(data.broken.length === 0){ empty.style.display = "block"; return; }
+    empty.style.display = "none";
+
+    data.broken.forEach(function(b, idx){
+      var item = document.createElement("div");
+      item.className = "broken-item";
+
+      var head = document.createElement("div");
+      head.className = "bi-head";
+      var old = document.createElement("div");
+      old.className = "bi-old";
+      old.textContent = "“" + b.belief + "”";
+      var del = document.createElement("button");
+      del.className = "del-btn";
+      del.type = "button";
+      del.setAttribute("aria-label", "Delete this entry");
+      del.textContent = "✕";
+      del.addEventListener("click", function(){
+        if(confirm("Remove this broken belief from your list, sister?")){
+          data.broken.splice(idx, 1);
+          save(); renderList();
+        }
+      });
+      head.appendChild(old); head.appendChild(del);
+      item.appendChild(head);
+
+      var newText = b.reframe ? b.reframe : "This is who I truly am.";
+      var nw = document.createElement("div");
+      nw.className = "bi-new";
+      nw.textContent = newText;
+      item.appendChild(nw);
+
+      if(b.verse){
+        var vw = document.createElement("div");
+        vw.className = "bi-verse";
+        var i = document.createElement("i");
+        i.textContent = "“" + b.verse + "”";
+        vw.appendChild(i);
+        if(b.verseRef){
+          var ref = document.createElement("span");
+          ref.className = "ref";
+          ref.textContent = b.verseRef;
+          vw.appendChild(ref);
+        }
+        item.appendChild(vw);
+      }
+
+      var dt = document.createElement("div");
+      dt.className = "bi-date";
+      dt.textContent = "Broken on " + b.date;
+      item.appendChild(dt);
+
+      list.appendChild(item);
+    });
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Limiting Belief Faith Breaker data — your draft and every broken belief? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { draft:{ belief:"", source:"", reframe:"", theme:"", verseIdx:"", ownVerse:"" }, broken:[] };
+      beliefEl.value = ""; sourceEl.value = ""; reframeEl.value = ""; ownVerseEl.value = "";
+      themeSel.value = ""; populateVerses("", "");
+      celebrateEl.classList.remove("show");
+      renderPreview(); renderCard(); renderList();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

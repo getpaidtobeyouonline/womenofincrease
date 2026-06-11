@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spiritual Warfare Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Summary banner ---------- */
+  .summary{
+    margin-top:18px; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.15); border-radius:14px;
+    padding:16px 18px; text-align:center;
+  }
+  .summary .counts{
+    display:flex; justify-content:center; gap:14px; margin-bottom:8px;
+  }
+  .summary .stat{
+    flex:1; max-width:140px; background:#fff; border:1px solid var(--line);
+    border-radius:12px; padding:10px 6px;
+  }
+  .summary .stat b{
+    display:block; font-family:'Fraunces',serif; color:var(--emerald);
+    font-size:24px; line-height:1;
+  }
+  .summary .stat span{ font-size:12px; color:var(--muted); letter-spacing:.02em; }
+  .summary .word{
+    font-family:'Fraunces',serif; font-style:italic; color:var(--emerald);
+    font-size:15px; line-height:1.4;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:0 0 12px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:74px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Scripture chips ---------- */
+  .chips-label{ font-weight:600; font-size:13px; color:var(--ink); margin:14px 0 8px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.18); border-radius:999px;
+    font-family:inherit; font-size:13px; font-weight:600;
+    padding:9px 13px; min-height:44px; cursor:pointer;
+    display:inline-flex; align-items:center; gap:5px;
+    transition:background .12s, border-color .12s;
+  }
+  .chip:hover{ background:var(--gold-soft); border-color:var(--gold); }
+  .chip:active{ transform:translateY(1px); }
+  .chip .plus{ color:var(--gold); font-weight:700; font-size:15px; }
+
+  /* ---------- Add button ---------- */
+  .add-btn{
+    width:100%; margin-top:18px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .add-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .add-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Battle plan cards ---------- */
+  .plans-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:20px; font-weight:600;
+    margin:30px 0 4px;
+  }
+  .plan{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:18px; margin-top:14px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+    position:relative; overflow:hidden;
+  }
+  .plan.won{
+    background:var(--emerald-soft); border-color:rgba(20,84,62,.22);
+  }
+  .plan-head{
+    display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+  }
+  .plan .attack{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--ink);
+    font-size:19px; line-height:1.2;
+  }
+  .plan.won .attack{ color:var(--emerald); }
+  .plan .won-flag{
+    display:inline-block; margin-top:4px; font-size:12px; font-weight:700;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--emerald);
+  }
+  .plan .note{ color:var(--muted); font-size:14px; margin-top:6px; }
+  .plan .label{
+    font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--gold); margin:14px 0 5px;
+  }
+  .plan .strategy{ font-size:14.5px; color:var(--ink); }
+  .plan .declaration{
+    margin-top:6px; background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:13px; padding:18px 18px; position:relative; overflow:hidden;
+  }
+  .plan .declaration::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-22px; left:8px; font-size:80px; color:rgba(231,211,161,.25);
+  }
+  .plan .declaration p{
+    font-family:'Fraunces',serif; font-weight:600; font-size:18px; line-height:1.4;
+    position:relative; z-index:1;
+  }
+  .plan .declaration .speak{
+    margin-top:8px; font-family:'Hanken Grotesk'; font-weight:600;
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .plan-actions{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:10px; margin-top:14px;
+  }
+  .victory-btn{
+    flex:1; min-height:44px; border-radius:10px; cursor:pointer;
+    font-family:inherit; font-weight:700; font-size:13.5px;
+    background:var(--gold-soft); color:var(--emerald); border:1px solid var(--gold);
+    transition:background .12s;
+  }
+  .victory-btn:hover{ background:var(--gold); }
+  .plan.won .victory-btn{
+    background:#fff; color:var(--emerald); border:1px solid rgba(20,84,62,.3);
+  }
+  .delete-btn{
+    flex:none; min-height:44px; min-width:44px; border-radius:10px; cursor:pointer;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    font-family:inherit; font-size:13px; padding:0 14px;
+  }
+  .delete-btn:hover{ border-color:#c0392b; color:#c0392b; }
+
+  /* ---------- Empty state ---------- */
+  .empty{
+    text-align:center; padding:24px 10px; color:var(--muted);
+  }
+  .empty .big{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:18px; font-weight:600;
+    margin-bottom:6px;
+  }
+  .empty .sm{ font-size:14px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+  .plan{ animation:rise .35s ease; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Spiritual Warfare Planner</h1>
+    <p class="subtitle">Name the battle. Plan your prayer. Speak your victory.</p>
+
+    <div class="summary">
+      <div class="counts">
+        <div class="stat"><b id="activeCount">0</b><span>battles standing</span></div>
+        <div class="stat"><b id="wonCount">0</b><span>victories won 🙌</span></div>
+      </div>
+      <div class="word" id="summaryWord">You are not fighting alone — the battle belongs to the Lord.</div>
+    </div>
+  </header>
+
+  <!-- New battle plan -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Name the battle</h2></div>
+    <p class="hint">What are you standing against today? Naming it is the first act of courage.</p>
+
+    <label class="field-label" for="attack">The area under attack</label>
+    <input type="text" id="attack" placeholder="Fear · discouragement · lack · a relationship…" maxlength="80">
+
+    <label class="field-label" for="note">How it's showing up <span class="opt">(optional)</span></label>
+    <textarea id="note" placeholder="Where you feel it, what it's whispering, when it hits hardest…"></textarea>
+
+    <div class="step" style="margin-top:18px;"><span class="num">2</span><h2>Plan your prayer</h2></div>
+    <p class="hint">How will you pray and stand your ground? You don't fight in your own strength.</p>
+    <label class="field-label" for="strategy">My prayer strategy</label>
+    <textarea id="strategy" placeholder="I'll pray each morning, fast on Fridays, worship through it, stand on His promises…"></textarea>
+
+    <div class="step" style="margin-top:18px;"><span class="num">3</span><h2>Speak your victory</h2></div>
+    <p class="hint">Write a faith statement — spoken as if it's already done. Tap a scripture to add it.</p>
+
+    <div class="chips-label">Victory scriptures &amp; declarations</div>
+    <div class="chips" id="chips"></div>
+
+    <label class="field-label" for="declaration">My declaration</label>
+    <textarea id="declaration" placeholder="This is mine to speak out loud — in victory."></textarea>
+
+    <button class="add-btn" id="addBtn" type="button">Add this battle plan ⚔️</button>
+  </section>
+
+  <!-- Plans list -->
+  <h2 class="plans-title">Your battle plans</h2>
+  <div id="plansList"></div>
+  <div class="empty card" id="emptyState">
+    <div class="big">No battles logged yet 💛</div>
+    <div class="sm">Whatever you're carrying, you don't carry it alone. Name your first battle above — and watch how faith answers.</div>
+  </div>
+
+  <div class="center" style="margin-top:26px;">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_spiritual_warfare";
+
+  // ---- Victory scriptures & declarations library ----
+  var SCRIPTURES = [
+    ["No weapon formed against me shall prosper.", "Isaiah 54:17"],
+    ["The Lord will fight for me; I need only to be still.", "Exodus 14:14"],
+    ["Greater is He who is in me than he who is in the world.", "1 John 4:4"],
+    ["God has not given me a spirit of fear, but of power, love, and a sound mind.", "2 Timothy 1:7"],
+    ["The battle is not mine, but God's.", "2 Chronicles 20:15"],
+    ["He gives His angels charge over me, to guard me in all my ways.", "Psalm 91:11"],
+    ["I am more than a conqueror through Him who loves me.", "Romans 8:37"],
+    ["Submit to God, resist the devil, and he will flee from me.", "James 4:7"],
+    ["The weapons of my warfare are mighty in God to tear down strongholds.", "2 Corinthians 10:4"],
+    ["When the enemy comes in like a flood, the Spirit of the Lord raises a standard against him.", "Isaiah 59:19"],
+    ["I am strong in the Lord and in the power of His might.", "Ephesians 6:10"],
+    ["He always leads me in triumph in Christ.", "2 Corinthians 2:14"],
+    ["No good thing will He withhold from those who walk uprightly.", "Psalm 84:11"],
+    ["This is my heritage as a servant of the Lord — and my victory is from Him.", "Isaiah 54:17"]
+  ];
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && Array.isArray(o.plans)) return o; }
+    }catch(e){}
+    return { plans:[] };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+  var attackEl = $("attack"), noteEl = $("note"), strategyEl = $("strategy"), declEl = $("declaration");
+
+  // ---- Draft auto-save (so a refresh never loses in-progress typing) ----
+  var draft = (data.draft) || { attack:"", note:"", strategy:"", declaration:"" };
+  attackEl.value = draft.attack || "";
+  noteEl.value = draft.note || "";
+  strategyEl.value = draft.strategy || "";
+  declEl.value = draft.declaration || "";
+
+  function saveDraft(){
+    data.draft = {
+      attack: attackEl.value, note: noteEl.value,
+      strategy: strategyEl.value, declaration: declEl.value
+    };
+    save();
+  }
+  [attackEl, noteEl, strategyEl, declEl].forEach(function(el){
+    el.addEventListener("input", saveDraft);
+  });
+
+  // ---- Scripture chips ----
+  var chipsEl = $("chips");
+  SCRIPTURES.forEach(function(s){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.innerHTML = '<span class="plus">+</span>' + escapeHtml(shorten(s[0]));
+    b.title = s[0] + " — " + s[1];
+    b.addEventListener("click", function(){ addScripture(s); });
+    chipsEl.appendChild(b);
+  });
+  function shorten(t){ return t.length > 42 ? t.slice(0,40).trim() + "…" : t; }
+  function addScripture(s){
+    var line = "“" + s[0] + "” (" + s[1] + ")";
+    var cur = declEl.value.trim();
+    declEl.value = cur ? (cur + "\n" + line) : line;
+    saveDraft();
+    declEl.focus();
+  }
+
+  // ---- Add a battle plan ----
+  $("addBtn").addEventListener("click", function(){
+    var attack = attackEl.value.trim();
+    var declaration = declEl.value.trim();
+    if(!attack){
+      attackEl.focus();
+      attackEl.style.borderColor = "#c0392b";
+      setTimeout(function(){ attackEl.style.borderColor=""; }, 1200);
+      return;
+    }
+    data.plans.unshift({
+      id: Date.now() + "-" + Math.random().toString(36).slice(2,7),
+      attack: attack,
+      note: noteEl.value.trim(),
+      strategy: strategyEl.value.trim(),
+      declaration: declaration || "I trust You with this, Lord. The victory is already mine in You.",
+      won: false
+    });
+    // clear the form + draft
+    attackEl.value=""; noteEl.value=""; strategyEl.value=""; declEl.value="";
+    data.draft = { attack:"", note:"", strategy:"", declaration:"" };
+    save();
+    render();
+    attackEl.focus();
+  });
+
+  // ---- Render plans + summary ----
+  function render(){
+    var list = $("plansList"), empty = $("emptyState");
+    list.innerHTML = "";
+
+    if(data.plans.length === 0){
+      empty.style.display = "block";
+    } else {
+      empty.style.display = "none";
+      data.plans.forEach(function(p){ list.appendChild(buildPlan(p)); });
+    }
+    renderSummary();
+  }
+
+  function renderSummary(){
+    var won = 0;
+    data.plans.forEach(function(p){ if(p.won) won++; });
+    var active = data.plans.length - won;
+    $("activeCount").textContent = active;
+    $("wonCount").textContent = won;
+
+    var word;
+    if(data.plans.length === 0){
+      word = "You are not fighting alone — the battle belongs to the Lord.";
+    } else if(active === 0){
+      word = "Every battle here is won. Look how faithful He has been. 🙌";
+    } else if(won === 0){
+      word = "You're standing strong on " + active + " front" + (active>1?"s":"") + " — and the Lord stands with you.";
+    } else {
+      word = won + " won, " + active + " still standing. He who began a good work in you will finish it.";
+    }
+    $("summaryWord").textContent = word;
+  }
+
+  function buildPlan(p){
+    var el = document.createElement("div");
+    el.className = "plan" + (p.won ? " won" : "");
+
+    var head = document.createElement("div");
+    head.className = "plan-head";
+    var titleWrap = document.createElement("div");
+    var attack = document.createElement("div");
+    attack.className = "attack";
+    attack.textContent = p.attack;
+    titleWrap.appendChild(attack);
+    if(p.won){
+      var flag = document.createElement("div");
+      flag.className = "won-flag";
+      flag.textContent = "Victory won 🙌";
+      titleWrap.appendChild(flag);
+    }
+    head.appendChild(titleWrap);
+    el.appendChild(head);
+
+    if(p.note){
+      var note = document.createElement("div");
+      note.className = "note";
+      note.textContent = p.note;
+      el.appendChild(note);
+    }
+
+    if(p.strategy){
+      var sLabel = document.createElement("div");
+      sLabel.className = "label";
+      sLabel.textContent = "Prayer strategy";
+      el.appendChild(sLabel);
+      var strat = document.createElement("div");
+      strat.className = "strategy";
+      strat.textContent = p.strategy;
+      el.appendChild(strat);
+    }
+
+    var dLabel = document.createElement("div");
+    dLabel.className = "label";
+    dLabel.textContent = "Declaration";
+    el.appendChild(dLabel);
+    var decl = document.createElement("div");
+    decl.className = "declaration";
+    var dp = document.createElement("p");
+    dp.textContent = p.declaration;
+    var speak = document.createElement("div");
+    speak.className = "speak";
+    speak.textContent = "↑ Say it out loud, in victory";
+    decl.appendChild(dp);
+    decl.appendChild(speak);
+    el.appendChild(decl);
+
+    var actions = document.createElement("div");
+    actions.className = "plan-actions";
+    var vBtn = document.createElement("button");
+    vBtn.type = "button";
+    vBtn.className = "victory-btn";
+    vBtn.textContent = p.won ? "↩ Mark as still standing" : "Mark victory won 🙌";
+    vBtn.addEventListener("click", function(){
+      p.won = !p.won;
+      save(); render();
+    });
+    var dBtn = document.createElement("button");
+    dBtn.type = "button";
+    dBtn.className = "delete-btn";
+    dBtn.setAttribute("aria-label", "Delete this battle plan");
+    dBtn.textContent = "Delete";
+    dBtn.addEventListener("click", function(){
+      if(confirm("Remove this battle plan? This can't be undone, sister.")){
+        data.plans = data.plans.filter(function(x){ return x.id !== p.id; });
+        save(); render();
+      }
+    });
+    actions.appendChild(vBtn);
+    actions.appendChild(dBtn);
+    el.appendChild(actions);
+
+    return el;
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your battle plans and declarations? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { plans:[] };
+      attackEl.value=""; noteEl.value=""; strategyEl.value=""; declEl.value="";
+      render();
+    }
+  });
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  // ---- Init ----
+  render();
+
+})();
+</script>
+</body>
+</html>

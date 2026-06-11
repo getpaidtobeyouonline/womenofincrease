@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word of the Year Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Word hero ---------- */
+  .word-hero{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:26px 20px; text-align:center;
+    position:relative; overflow:hidden;
+  }
+  .word-hero .year-tag{
+    font-family:'Hanken Grotesk'; font-weight:600; font-size:12.5px;
+    letter-spacing:.18em; text-transform:uppercase; color:var(--gold-soft);
+    margin-bottom:8px;
+  }
+  .word-hero .big-word{
+    font-family:'Fraunces',serif; font-weight:600; font-size:42px; line-height:1.1;
+    letter-spacing:-.5px; word-break:break-word;
+  }
+  .word-hero .placeholder-word{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500; font-size:26px;
+    color:rgba(252,248,239,.55);
+  }
+  .word-hero .tagline{
+    margin-top:10px; font-size:14px; color:rgba(252,248,239,.85);
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  .word-input{
+    text-align:center; font-family:'Fraunces',serif; font-size:24px;
+    color:var(--emerald); font-weight:600;
+  }
+
+  /* ---------- Suggestion chips ---------- */
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .chip{
+    min-height:40px; padding:8px 16px; border-radius:999px;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.14);
+    color:var(--emerald); font-family:'Fraunces',serif; font-weight:500; font-size:15px;
+    cursor:pointer; transition:background .12s, border-color .12s, transform .08s;
+  }
+  .chip:hover{ background:var(--gold-soft); border-color:var(--gold); }
+  .chip:active{ transform:translateY(1px); }
+  .chip.active{ background:var(--gold); border-color:var(--gold); color:var(--ink); }
+
+  /* ---------- Life areas ---------- */
+  .area-row{ margin-bottom:6px; }
+  .area-row label.field-label{ margin:12px 0 6px; }
+  .area-row .area-name{
+    display:inline-flex; align-items:center; gap:7px;
+  }
+  .area-row .area-name .dot{
+    flex:none; width:9px;height:9px;border-radius:50%;background:var(--gold);
+  }
+
+  /* ---------- Progress ---------- */
+  .progress-wrap{ margin-top:4px; }
+  .progress-meta{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:8px;
+  }
+  .progress-meta .count{
+    font-family:'Fraunces',serif; color:var(--emerald); font-weight:600; font-size:20px;
+  }
+  .progress-meta .count span{ color:var(--muted); font-size:14px; font-weight:400; font-family:'Hanken Grotesk'; }
+  .progress-meta .label{ color:var(--muted); font-size:13px; }
+  .bar{
+    height:12px; border-radius:999px; background:var(--emerald-soft);
+    overflow:hidden; border:1px solid rgba(20,84,62,.1);
+  }
+  .bar > span{
+    display:block; height:100%; width:0%;
+    background:linear-gradient(90deg, var(--gold-soft), var(--gold));
+    border-radius:999px; transition:width .35s ease;
+  }
+  .progress-note{ color:var(--muted); font-size:13px; margin-top:10px; font-style:italic; }
+
+  /* ---------- Months ---------- */
+  .month{
+    border:1px solid var(--line); border-radius:13px; padding:14px;
+    margin-top:12px; background:var(--cream);
+  }
+  .month.current{
+    border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,160,74,.14);
+  }
+  .month.filled{ background:#fff; }
+  .month-head{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .month-name{
+    font-family:'Fraunces',serif; font-weight:600; font-size:17px; color:var(--emerald);
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .month-name .now-tag{
+    font-family:'Hanken Grotesk'; font-weight:600; font-size:10px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink); background:var(--gold-soft);
+    padding:3px 8px; border-radius:999px;
+  }
+  .month-name .check{
+    color:var(--emerald); font-size:15px;
+  }
+  .month-body{ display:none; margin-top:12px; }
+  .month.open .month-body{ display:block; }
+  .month-toggle{
+    background:none; border:none; cursor:pointer; color:var(--muted);
+    font-family:inherit; font-size:13.5px; font-weight:600; min-height:40px;
+    display:inline-flex; align-items:center; gap:6px; padding:4px 2px;
+  }
+  .month-toggle .chev{ transition:transform .18s; display:inline-block; }
+  .month.open .month-toggle .chev{ transform:rotate(180deg); }
+  .month textarea{ min-height:70px; }
+
+  /* ---------- Rating ---------- */
+  .rating{ display:flex; gap:8px; margin-top:12px; }
+  .rating button{
+    flex:1; min-height:44px; border-radius:10px; cursor:pointer;
+    border:1px solid var(--line); background:#fff; color:var(--muted);
+    font-family:'Fraunces',serif; font-weight:600; font-size:16px;
+    transition:background .12s, border-color .12s, color .12s, transform .08s;
+  }
+  .rating button:hover{ border-color:var(--gold); }
+  .rating button:active{ transform:translateY(1px); }
+  .rating button.sel{ background:var(--gold); border-color:var(--gold); color:var(--ink); }
+  .rating-label{ font-weight:600; font-size:13px; color:var(--ink); margin-top:14px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Word of the Year Planner</h1>
+    <p class="subtitle">Choose one word. Build your whole year around it — one month at a time.</p>
+  </header>
+
+  <!-- 1. Your word -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Word</h2></div>
+    <p class="hint">One word to anchor your year. Let it rise from your heart — there's no wrong answer.</p>
+
+    <div class="word-hero">
+      <div class="year-tag" id="yearTag">Your Year</div>
+      <div class="big-word" id="heroWord"><span class="placeholder-word">Choose your word…</span></div>
+      <div class="tagline" id="heroTagline">Tap a word below or write your own.</div>
+    </div>
+
+    <label class="field-label" for="word" style="text-align:center;">My word of the year</label>
+    <input type="text" class="word-input" id="word" placeholder="Increase" maxlength="22" autocomplete="off">
+
+    <p class="hint" style="margin:12px 0 0;">Need a spark? Tap one to make it yours:</p>
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <!-- 2. Why this word -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Why This Word</h2></div>
+    <p class="hint">Name what drew you to it. You'll want to remember this when the year gets full.</p>
+    <label class="field-label" for="why">Why this word, for this year?</label>
+    <textarea id="why" placeholder="This year I'm choosing this word because…"></textarea>
+
+    <label class="field-label" for="scripture">A scripture to carry it <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <input type="text" id="scripture" placeholder="e.g. Isaiah 40:31">
+  </section>
+
+  <!-- 3. Life areas -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>What It Looks Like</h2></div>
+    <p class="hint">Picture this word alive in each area of your life. A few words for each is plenty.</p>
+    <div id="areas"></div>
+  </section>
+
+  <!-- 4. Progress -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Your Year So Far</h2></div>
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <div class="count"><span id="progDone">0</span><span> / 12 months</span></div>
+        <div class="label" id="progLabel">checked in</div>
+      </div>
+      <div class="bar"><span id="progBar"></span></div>
+      <p class="progress-note" id="progNote">Begin whenever you're ready. Even one check-in is movement.</p>
+    </div>
+  </section>
+
+  <!-- 5. Monthly check-ins -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>Monthly Check-ins</h2></div>
+    <p class="hint">Once a month, pause and notice: how am I living my word? The current month is highlighted for you.</p>
+    <div id="months"></div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_word_of_the_year";
+
+  var SUGGESTIONS = ["Increase","Rooted","Bold","Surrender","Bloom","Trust","Rise","Still","Faithful","Brave"];
+  var AREAS = ["Faith","Family","Health","Finances","Purpose"];
+  var MONTHS = ["January","February","March","April","May","June",
+                "July","August","September","October","November","December"];
+  var RATING_LABELS = { 1:"A hard stretch", 2:"Finding my feet", 3:"Steady", 4:"Living it", 5:"Fully alive" };
+
+  // ---- State ----
+  function freshMonth(){ return { note:"", rating:0 }; }
+  function defaults(){
+    var months = [];
+    for(var i=0;i<12;i++){ months.push(freshMonth()); }
+    var areas = {};
+    AREAS.forEach(function(a){ areas[a]=""; });
+    return {
+      year: new Date().getFullYear(),
+      word:"", why:"", scripture:"",
+      areas: areas,
+      months: months
+    };
+  }
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          var d = defaults();
+          d.year = o.year || d.year;
+          d.word = o.word || "";
+          d.why = o.why || "";
+          d.scripture = o.scripture || "";
+          if(o.areas){ AREAS.forEach(function(a){ d.areas[a] = o.areas[a] || ""; }); }
+          if(Array.isArray(o.months)){
+            for(var i=0;i<12;i++){
+              if(o.months[i]){
+                d.months[i].note = o.months[i].note || "";
+                d.months[i].rating = o.months[i].rating || 0;
+              }
+            }
+          }
+          return d;
+        }
+      }
+    }catch(e){}
+    return defaults();
+  }
+  var data = load();
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+  var CURRENT_MONTH = new Date().getMonth(); // 0-11
+
+  // ---- Header word hero ----
+  var heroWord = $("heroWord"), heroTagline = $("heroTagline"), yearTag = $("yearTag");
+  var wordEl = $("word");
+  function renderHero(){
+    yearTag.textContent = data.year;
+    if(data.word && data.word.trim()){
+      heroWord.textContent = data.word.trim();
+      heroTagline.textContent = "This is your word for " + data.year + ". Carry it well.";
+    }else{
+      heroWord.innerHTML = '<span class="placeholder-word">Choose your word…</span>';
+      heroTagline.textContent = "Tap a word below or write your own.";
+    }
+    renderChipsActive();
+  }
+
+  // ---- Chips ----
+  var chipsEl = $("chips");
+  SUGGESTIONS.forEach(function(w){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.textContent = w;
+    b.setAttribute("aria-label","Use the word "+w);
+    b.addEventListener("click", function(){
+      data.word = w;
+      wordEl.value = w;
+      renderHero();
+      save();
+    });
+    chipsEl.appendChild(b);
+  });
+  function renderChipsActive(){
+    var cur = (data.word||"").trim().toLowerCase();
+    var kids = chipsEl.children;
+    for(var i=0;i<kids.length;i++){
+      if(kids[i].textContent.toLowerCase() === cur) kids[i].classList.add("active");
+      else kids[i].classList.remove("active");
+    }
+  }
+
+  wordEl.value = data.word || "";
+  wordEl.addEventListener("input", function(){
+    data.word = wordEl.value;
+    renderHero();
+    save();
+  });
+
+  // ---- Why / scripture ----
+  var whyEl = $("why"), scriptureEl = $("scripture");
+  whyEl.value = data.why || "";
+  scriptureEl.value = data.scripture || "";
+  whyEl.addEventListener("input", function(){ data.why = whyEl.value; save(); });
+  scriptureEl.addEventListener("input", function(){ data.scripture = scriptureEl.value; save(); });
+
+  // ---- Life areas ----
+  var areasEl = $("areas");
+  AREAS.forEach(function(a){
+    var wrap = document.createElement("div");
+    wrap.className = "area-row";
+    var id = "area_" + a.toLowerCase();
+    var lab = document.createElement("label");
+    lab.className = "field-label";
+    lab.setAttribute("for", id);
+    lab.innerHTML = '<span class="area-name"><span class="dot"></span>'+a+'</span>';
+    var inp = document.createElement("input");
+    inp.type = "text";
+    inp.id = id;
+    inp.placeholder = "Living my word in " + a.toLowerCase() + " looks like…";
+    inp.value = data.areas[a] || "";
+    inp.addEventListener("input", function(){ data.areas[a] = inp.value; save(); });
+    wrap.appendChild(lab);
+    wrap.appendChild(inp);
+    areasEl.appendChild(wrap);
+  });
+
+  // ---- Months ----
+  var monthsEl = $("months");
+  function monthFilled(i){
+    var m = data.months[i];
+    return (m.note && m.note.trim()) || m.rating > 0;
+  }
+
+  function buildMonth(i){
+    var m = data.months[i];
+    var el = document.createElement("div");
+    el.className = "month";
+    el.id = "month_" + i;
+
+    var head = document.createElement("div");
+    head.className = "month-head";
+
+    var nameWrap = document.createElement("div");
+    nameWrap.className = "month-name";
+    var nameTxt = document.createElement("span");
+    nameTxt.textContent = MONTHS[i];
+    nameWrap.appendChild(nameTxt);
+    if(i === CURRENT_MONTH){
+      var now = document.createElement("span");
+      now.className = "now-tag";
+      now.textContent = "This month";
+      nameWrap.appendChild(now);
+    }
+    var check = document.createElement("span");
+    check.className = "check";
+    nameWrap.appendChild(check);
+
+    var toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "month-toggle";
+    toggle.innerHTML = '<span class="t-label"></span><span class="chev">⌄</span>';
+
+    head.appendChild(nameWrap);
+    head.appendChild(toggle);
+
+    var body = document.createElement("div");
+    body.className = "month-body";
+
+    var lab = document.createElement("label");
+    lab.className = "field-label";
+    lab.setAttribute("for","mnote_"+i);
+    lab.style.marginTop = "0";
+    lab.textContent = "How am I living my word this month?";
+    var ta = document.createElement("textarea");
+    ta.id = "mnote_"+i;
+    ta.placeholder = "This month, my word showed up when…";
+    ta.value = m.note || "";
+    ta.addEventListener("input", function(){
+      m.note = ta.value; save(); refreshMonthVisual(i);
+    });
+
+    var rlab = document.createElement("div");
+    rlab.className = "rating-label";
+    rlab.textContent = "How fully did I live it? (1–5)";
+
+    var rating = document.createElement("div");
+    rating.className = "rating";
+    rating.setAttribute("role","group");
+    rating.setAttribute("aria-label","Rating for "+MONTHS[i]);
+    for(var r=1;r<=5;r++){
+      (function(r){
+        var rb = document.createElement("button");
+        rb.type = "button";
+        rb.textContent = r;
+        rb.setAttribute("aria-label", r + " — " + RATING_LABELS[r]);
+        rb.addEventListener("click", function(){
+          m.rating = (m.rating === r) ? 0 : r;
+          save();
+          renderRating(rating, m.rating);
+          rmeaning.textContent = m.rating ? RATING_LABELS[m.rating] : "Tap a number when you're ready.";
+          refreshMonthVisual(i);
+          renderProgress();
+        });
+        rating.appendChild(rb);
+      })(r);
+    }
+    var rmeaning = document.createElement("p");
+    rmeaning.className = "hint";
+    rmeaning.style.margin = "8px 0 0";
+    rmeaning.textContent = m.rating ? RATING_LABELS[m.rating] : "Tap a number when you're ready.";
+
+    body.appendChild(lab);
+    body.appendChild(ta);
+    body.appendChild(rlab);
+    body.appendChild(rating);
+    body.appendChild(rmeaning);
+
+    el.appendChild(head);
+    el.appendChild(body);
+
+    // open/close
+    function setOpen(open){
+      if(open){ el.classList.add("open"); toggle.querySelector(".t-label").textContent = "Hide"; }
+      else{ el.classList.remove("open"); toggle.querySelector(".t-label").textContent = monthFilled(i) ? "Edit" : "Open"; }
+    }
+    toggle.addEventListener("click", function(){ setOpen(!el.classList.contains("open")); });
+    // current month opens by default; others open if not filled-collapsed
+    setOpen(i === CURRENT_MONTH);
+
+    monthsEl.appendChild(el);
+    renderRating(rating, m.rating);
+    refreshMonthVisual(i);
+  }
+
+  function renderRating(ratingEl, val){
+    var btns = ratingEl.children;
+    for(var i=0;i<btns.length;i++){
+      if((i+1) === val) btns[i].classList.add("sel");
+      else btns[i].classList.remove("sel");
+    }
+  }
+
+  function refreshMonthVisual(i){
+    var el = $("month_"+i);
+    if(!el) return;
+    var check = el.querySelector(".check");
+    if(monthFilled(i)){
+      el.classList.add("filled");
+      check.textContent = "✓";
+    }else{
+      el.classList.remove("filled");
+      check.textContent = "";
+    }
+    if(i === CURRENT_MONTH) el.classList.add("current");
+  }
+
+  for(var i=0;i<12;i++){ buildMonth(i); }
+
+  // ---- Progress ----
+  function renderProgress(){
+    var done = 0;
+    for(var i=0;i<12;i++){ if(monthFilled(i)) done++; }
+    $("progDone").textContent = done;
+    var pct = Math.round((done/12)*100);
+    $("progBar").style.width = pct + "%";
+    var note;
+    if(done === 0){ note = "Begin whenever you're ready. Even one check-in is movement."; }
+    else if(done < 4){ note = "You've started — that's the hardest part. Keep showing up, sister."; }
+    else if(done < 9){ note = "Look at you, faithful in the middle. Your word is taking root."; }
+    else if(done < 12){ note = "So close to a full year of living your word. Beautiful work."; }
+    else{ note = "Twelve months, one word, fully lived. What a testimony. 💛"; }
+    $("progNote").textContent = note;
+  }
+  renderProgress();
+  renderHero();
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Word of the Year data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = defaults();
+      save();
+      location.reload();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

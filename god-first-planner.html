@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>God First Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  /* Devotion card — clearly comes first, set apart with emerald frame */
+  .card.devotion{
+    border:1.5px solid rgba(20,84,62,.22);
+    box-shadow:0 8px 24px rgba(20,84,62,.08);
+    position:relative;
+  }
+  .first-flag{
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    padding:5px 11px; border-radius:999px; margin-bottom:14px;
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Scripture ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:19px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .verse-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:74px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  .surrender-row{
+    display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.14);
+    border-radius:12px; padding:14px;
+  }
+  .surrender-row .lead, .surrender-row .tail{
+    font-family:'Fraunces',serif; font-style:italic; color:var(--emerald); font-size:16px;
+  }
+  .surrender-row input{
+    flex:1; min-width:120px; min-height:44px; background:#fff;
+  }
+
+  /* ---------- Devotion acknowledgment ---------- */
+  .ack{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:16px; color:var(--emerald);
+  }
+  .ack.show{ display:block; animation:rise .4s ease; }
+  .ack .big{ font-family:'Fraunces',serif; font-weight:600; font-size:17px; margin-bottom:3px; }
+  .ack .sm{ font-size:13.5px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Priorities + todos ---------- */
+  .gate-note{
+    display:flex; align-items:center; gap:8px; color:var(--muted);
+    font-size:13px; font-style:italic; margin:-4px 0 14px;
+  }
+  .gate-note .star{ color:var(--gold); font-style:normal; }
+  .task-row{ display:flex; align-items:center; gap:11px; margin-bottom:10px; }
+  .check{
+    flex:none; width:26px; height:26px; border-radius:8px;
+    border:1.5px solid var(--line); background:var(--cream); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size:15px; color:transparent; transition:all .12s ease;
+  }
+  .check.on{ background:var(--emerald); border-color:var(--emerald); color:#FCF8EF; }
+  .task-row input.task-text{ flex:1; min-height:46px; }
+  .task-row input.done-text{ text-decoration:line-through; color:var(--muted); }
+  .priority-row .rank{
+    flex:none; width:24px; text-align:center;
+    font-family:'Fraunces',serif; font-weight:600; color:var(--gold); font-size:16px;
+  }
+  .del-x{
+    flex:none; width:36px; height:36px; border:none; background:none; cursor:pointer;
+    color:#BDB6A8; font-size:20px; border-radius:8px; line-height:1;
+  }
+  .del-x:hover{ color:var(--emerald); }
+  .add-btn{
+    width:100%; margin-top:6px; min-height:46px;
+    background:var(--emerald-soft); color:var(--emerald); border:1px dashed rgba(20,84,62,.3);
+    border-radius:11px; font-family:inherit; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  .add-btn:hover{ border-color:var(--emerald); }
+
+  /* ---------- Streak ---------- */
+  .streak{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:18px; color:var(--muted); font-size:14px;
+  }
+  .streak b{ color:var(--emerald); font-size:15px; }
+  .flame{ font-size:16px; }
+
+  /* ---------- History ---------- */
+  .history-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 4px;
+  }
+  .history-list{ list-style:none; }
+  .h-item{ border-bottom:1px solid var(--line); }
+  .h-item:last-child{ border-bottom:none; }
+  .h-head{
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+    padding:12px 2px; cursor:pointer;
+  }
+  .h-head .h-date{ color:var(--ink); font-weight:600; font-size:14px; }
+  .h-head .h-meta{ color:var(--muted); font-size:13px; display:flex; align-items:center; gap:8px; }
+  .h-head .h-fire{ font-size:13px; }
+  .h-body{ display:none; padding:0 2px 14px; font-size:14px; }
+  .h-body.open{ display:block; }
+  .h-body .h-line{ margin-bottom:8px; }
+  .h-body .h-label{ color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:2px; }
+  .h-body .h-verse{ font-family:'Fraunces',serif; font-style:italic; color:var(--emerald); }
+  .h-body ul{ list-style:none; margin-top:2px; }
+  .h-body ul li{ padding:1px 0; }
+  .h-body ul li.checked{ color:var(--muted); text-decoration:line-through; }
+  .h-del{
+    margin-top:6px; background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:9px; padding:8px 14px; min-height:40px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .h-del:hover{ border-color:var(--gold); color:var(--ink); }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Welcome (first run) ---------- */
+  .welcome{
+    display:none; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px; margin-top:16px; color:var(--emerald);
+  }
+  .welcome.show{ display:block; }
+  .welcome .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:6px; }
+  .welcome .sm{ font-size:14px; color:var(--muted); line-height:1.5; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>God First Planner</h1>
+    <p class="subtitle">Begin with Him — then build your day on a steady foundation.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- Welcome (first run) -->
+  <section class="welcome" id="welcome">
+    <div class="big">Welcome, sister. 💛</div>
+    <div class="sm">Before the to-do list, before the goals — come and sit with Him a moment. Soak in today's word, whisper a prayer, and lay something down. The day flows better when He goes first.</div>
+  </section>
+
+  <!-- 1. Devotion FIRST -->
+  <section class="card devotion">
+    <span class="first-flag">✦ First things first</span>
+    <div class="step"><span class="num">1</span><h2>Time With Him</h2></div>
+    <p class="hint">Before the day asks anything of you — let Him speak first.</p>
+
+    <div class="verse">
+      <p id="verseText">—</p>
+      <div class="ref" id="verseRef"></div>
+    </div>
+    <div class="verse-actions">
+      <button class="link-btn" id="anotherVerse" type="button">↻ Show me another</button>
+    </div>
+
+    <label class="field-label" for="prayer">My one-line prayer</label>
+    <input type="text" id="prayer" placeholder="Lord, today I ask You for…">
+
+    <label class="field-label" for="surrender">What I'm surrendering</label>
+    <div class="surrender-row">
+      <span class="lead">Today I surrender</span>
+      <input type="text" id="surrender" placeholder="my worry, my plans, this outcome…">
+      <span class="tail">to You.</span>
+    </div>
+
+    <div class="ack" id="ack">
+      <div class="big">You put God first today. 🌿</div>
+      <div class="sm">Everything else gets to follow from here.</div>
+    </div>
+  </section>
+
+  <!-- 2. Top 3 Priorities -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Today's Top 3</h2></div>
+    <p class="gate-note"><span class="star">✦</span> After your time with Him — the three that matter most.</p>
+    <div id="prioritiesList"></div>
+  </section>
+
+  <!-- 3. Wider to-do list -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>The Rest of the Day</h2></div>
+    <p class="hint">Everything else, held loosely. Add what you like, check it off as you go.</p>
+    <div id="todosList"></div>
+    <button class="add-btn" id="addTodo" type="button">+ Add a task</button>
+  </section>
+
+  <!-- 4. Intention -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Keeping Him First</h2></div>
+    <p class="hint">One way you'll come back to Him as the day moves.</p>
+    <label class="field-label" for="intention">How I'll keep Him first today</label>
+    <textarea id="intention" placeholder="A quick prayer between meetings · a worship song on the drive · pausing to give thanks…"></textarea>
+
+    <div class="streak">
+      <span class="flame">🔥</span>
+      <span><b id="streakCount">0</b> God-first day streak · <b id="totalCount">0</b> days total</span>
+    </div>
+  </section>
+
+  <!-- History -->
+  <section class="card">
+    <div class="history-title">Your recent days</div>
+    <ul class="history-list" id="historyList"></ul>
+    <p class="empty-note" id="historyEmpty">Your God-first days will gather here. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_god_first_planner";
+
+  // ---- A small, encouraging, inclusive scripture/word library ----
+  var VERSES = [
+    ["Seek first the kingdom of God and His righteousness, and all these things will be added to you.", "Matthew 6:33"],
+    ["Commit to the Lord whatever you do, and He will establish your plans.", "Proverbs 16:3"],
+    ["In their hearts humans plan their course, but the Lord establishes their steps.", "Proverbs 16:9"],
+    ["Be still, and know that I am God.", "Psalm 46:10"],
+    ["Trust in the Lord with all your heart, and lean not on your own understanding.", "Proverbs 3:5"],
+    ["This is the day the Lord has made; let us rejoice and be glad in it.", "Psalm 118:24"],
+    ["Cast all your anxiety on Him, because He cares for you.", "1 Peter 5:7"],
+    ["In the morning, Lord, You hear my voice; in the morning I lay my requests before You.", "Psalm 5:3"],
+    ["Whatever you do, work at it with all your heart, as working for the Lord.", "Colossians 3:23"],
+    ["Those who hope in the Lord will renew their strength. They will soar on wings like eagles.", "Isaiah 40:31"],
+    ["She is clothed with strength and dignity, and she laughs without fear of the future.", "Proverbs 31:25"],
+    ["The Lord your God is with you, the Mighty Warrior who saves.", "Zephaniah 3:17"],
+    ["His mercies are new every morning; great is your faithfulness.", "Lamentations 3:23"],
+    ["For I know the plans I have for you — plans to prosper you and not to harm you.", "Jeremiah 29:11"],
+    ["I can do all things through Christ who strengthens me.", "Philippians 4:13"],
+    ["Come to me, all you who are weary and burdened, and I will give you rest.", "Matthew 11:28"],
+    ["Do not be anxious about anything, but in every situation, by prayer, present your requests to God.", "Philippians 4:6"],
+    ["The Lord will fight for you; you need only to be still.", "Exodus 14:14"],
+    ["Above all else, guard your heart, for everything you do flows from it.", "Proverbs 4:23"],
+    ["Delight yourself in the Lord, and He will give you the desires of your heart.", "Psalm 37:4"],
+    ["Let everything you do be done in love.", "1 Corinthians 16:14"],
+    ["Be strong and courageous. Do not be afraid; the Lord your God will be with you wherever you go.", "Joshua 1:9"],
+    ["My grace is sufficient for you, for My power is made perfect in weakness.", "2 Corinthians 12:9"],
+    ["Unless the Lord builds the house, the builders labor in vain.", "Psalm 127:1"],
+    ["And we know that in all things God works for the good of those who love Him.", "Romans 8:28"],
+    ["You will keep in perfect peace those whose minds are steadfast, because they trust in You.", "Isaiah 26:3"],
+    ["He must increase, but I must decrease.", "John 3:30"],
+    ["You are a daughter of the King — start here, in His presence, and the rest will follow.", "A Word for You"],
+    ["Lay it all down first. He is faithful to carry what you cannot.", "A Word for You"]
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    var diff = d - start;
+    return Math.floor(diff / 86400000);
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+  }
+
+  // ---- State ----
+  function newEntry(){
+    return {
+      verse:null, prayer:"", surrender:"", intention:"",
+      priorities:[{t:"",done:false},{t:"",done:false},{t:"",done:false}],
+      todos:[]
+    };
+  }
+  var data = load();
+  var TODAY = todayKey();
+  var entry = data.entries[TODAY] || newEntry();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.entries) return o; }
+    }catch(e){}
+    return { entries:{} };
+  }
+  function save(){
+    data.entries[TODAY] = entry;
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var verseTextEl = $("verseText"), verseRefEl = $("verseRef");
+  var prayerEl = $("prayer"), surrenderEl = $("surrender"), intentionEl = $("intention");
+  var ackEl = $("ack"), welcomeEl = $("welcome");
+
+  // ---- Verse: deterministic daily default, user can cycle ----
+  if(entry.verse === null || entry.verse === undefined){
+    entry.verse = dayOfYear(new Date()) % VERSES.length;
+  }
+  function renderVerse(){
+    var v = VERSES[entry.verse];
+    verseTextEl.textContent = v[0];
+    verseRefEl.textContent = v[1];
+  }
+  $("anotherVerse").addEventListener("click", function(){
+    entry.verse = (entry.verse + 1) % VERSES.length;
+    renderVerse(); save();
+  });
+
+  // ---- Devotion "put God first" detection ----
+  function devotionFilled(e){
+    return !!((e.prayer && e.prayer.trim()) || (e.surrender && e.surrender.trim()));
+  }
+  function renderAck(){
+    if(devotionFilled(entry)){ ackEl.classList.add("show"); }
+    else{ ackEl.classList.remove("show"); }
+  }
+
+  // ---- First-run welcome ----
+  function renderWelcome(){
+    var hasAny = Object.keys(data.entries).length > 0;
+    var todayTouched = devotionFilled(entry) ||
+      entry.priorities.some(function(p){ return p.t.trim(); }) ||
+      entry.todos.length > 0 || (entry.intention && entry.intention.trim());
+    if(!hasAny || (!todayTouched && Object.keys(data.entries).length <= 1)){
+      welcomeEl.classList.add("show");
+    }else{
+      welcomeEl.classList.remove("show");
+    }
+  }
+
+  // ---- Priorities (fixed 3, checkable) ----
+  function renderPriorities(){
+    var box = $("prioritiesList");
+    box.innerHTML = "";
+    entry.priorities.forEach(function(p, i){
+      var row = document.createElement("div");
+      row.className = "task-row priority-row";
+
+      var rank = document.createElement("span");
+      rank.className = "rank";
+      rank.textContent = (i+1);
+
+      var check = document.createElement("button");
+      check.type = "button";
+      check.className = "check" + (p.done ? " on" : "");
+      check.setAttribute("aria-label", "Mark priority " + (i+1) + " done");
+      check.setAttribute("aria-pressed", p.done ? "true" : "false");
+      check.textContent = "✓";
+      check.addEventListener("click", function(){
+        p.done = !p.done; save(); renderPriorities();
+      });
+
+      var input = document.createElement("input");
+      input.type = "text";
+      input.className = "task-text" + (p.done ? " done-text" : "");
+      input.value = p.t;
+      input.placeholder = "Priority " + (i+1) + "…";
+      input.setAttribute("aria-label", "Priority " + (i+1));
+      input.addEventListener("input", function(){ p.t = input.value; save(); });
+
+      row.appendChild(rank);
+      row.appendChild(check);
+      row.appendChild(input);
+      box.appendChild(row);
+    });
+  }
+
+  // ---- Wider to-do list (addable, checkable, deletable) ----
+  function renderTodos(){
+    var box = $("todosList");
+    box.innerHTML = "";
+    entry.todos.forEach(function(td, i){
+      var row = document.createElement("div");
+      row.className = "task-row";
+
+      var check = document.createElement("button");
+      check.type = "button";
+      check.className = "check" + (td.done ? " on" : "");
+      check.setAttribute("aria-label", "Mark task done");
+      check.setAttribute("aria-pressed", td.done ? "true" : "false");
+      check.textContent = "✓";
+      check.addEventListener("click", function(){
+        td.done = !td.done; save(); renderTodos();
+      });
+
+      var input = document.createElement("input");
+      input.type = "text";
+      input.className = "task-text" + (td.done ? " done-text" : "");
+      input.value = td.t;
+      input.placeholder = "A task for today…";
+      input.setAttribute("aria-label", "Task");
+      input.addEventListener("input", function(){ td.t = input.value; save(); });
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "del-x";
+      del.setAttribute("aria-label", "Remove task");
+      del.textContent = "×";
+      del.addEventListener("click", function(){
+        entry.todos.splice(i,1); save(); renderTodos();
+      });
+
+      row.appendChild(check);
+      row.appendChild(input);
+      row.appendChild(del);
+      box.appendChild(row);
+    });
+  }
+  $("addTodo").addEventListener("click", function(){
+    entry.todos.push({t:"",done:false});
+    save(); renderTodos();
+    // focus the new field
+    var box = $("todosList");
+    var inputs = box.querySelectorAll("input.task-text");
+    if(inputs.length){ inputs[inputs.length-1].focus(); }
+  });
+
+  // ---- Restore inputs ----
+  $("todayDate").textContent = prettyDate(TODAY);
+  prayerEl.value = entry.prayer || "";
+  surrenderEl.value = entry.surrender || "";
+  intentionEl.value = entry.intention || "";
+  renderVerse();
+  renderPriorities();
+  renderTodos();
+  renderAck();
+  renderWelcome();
+  renderStreak();
+  renderHistory();
+
+  // ---- Auto-save on every change ----
+  function wire(el, fn){
+    el.addEventListener("input", function(){ fn(el.value); save(); });
+  }
+  wire(prayerEl, function(v){ entry.prayer=v; renderAck(); renderWelcome(); renderStreak(); renderHistory(); });
+  wire(surrenderEl, function(v){ entry.surrender=v; renderAck(); renderWelcome(); renderStreak(); renderHistory(); });
+  wire(intentionEl, function(v){ entry.intention=v; renderWelcome(); });
+
+  // ---- Streak + totals (a "God-first day" = devotion filled) ----
+  function renderStreak(){
+    var keys = Object.keys(data.entries).filter(function(k){ return devotionFilled(data.entries[k]); });
+    $("totalCount").textContent = keys.length;
+    var streak = 0;
+    var d = new Date();
+    while(true){
+      var m = String(d.getMonth()+1).padStart(2,"0");
+      var day = String(d.getDate()).padStart(2,"0");
+      var k = d.getFullYear()+"-"+m+"-"+day;
+      if(data.entries[k] && devotionFilled(data.entries[k])){ streak++; d.setDate(d.getDate()-1); }
+      else break;
+    }
+    $("streakCount").textContent = streak;
+  }
+
+  // ---- History (most recent first, expandable, deletable) ----
+  function renderHistory(){
+    var list = $("historyList"), empty = $("historyEmpty");
+    var keys = Object.keys(data.entries)
+      .filter(function(k){
+        var e = data.entries[k];
+        return devotionFilled(e) ||
+          e.priorities.some(function(p){ return p.t.trim(); }) ||
+          e.todos.some(function(t){ return t.t.trim(); }) ||
+          (e.intention && e.intention.trim());
+      })
+      .filter(function(k){ return k !== TODAY; })
+      .sort().reverse();
+    list.innerHTML = "";
+    if(keys.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+
+    keys.forEach(function(k){
+      var e = data.entries[k];
+      var li = document.createElement("li");
+      li.className = "h-item";
+
+      var head = document.createElement("div");
+      head.className = "h-head";
+      head.setAttribute("role","button");
+      head.setAttribute("tabindex","0");
+
+      var dateSpan = document.createElement("span");
+      dateSpan.className = "h-date";
+      dateSpan.textContent = prettyDate(k);
+
+      var meta = document.createElement("span");
+      meta.className = "h-meta";
+      var fire = document.createElement("span");
+      fire.className = "h-fire";
+      fire.textContent = devotionFilled(e) ? "🔥 God-first" : "—";
+      var caret = document.createElement("span");
+      caret.textContent = "▸";
+      meta.appendChild(fire);
+      meta.appendChild(caret);
+
+      head.appendChild(dateSpan);
+      head.appendChild(meta);
+
+      var body = document.createElement("div");
+      body.className = "h-body";
+      body.innerHTML = buildBody(e);
+
+      var delBtn = document.createElement("button");
+      delBtn.type = "button";
+      delBtn.className = "h-del";
+      delBtn.textContent = "Delete this day";
+      delBtn.addEventListener("click", function(ev){
+        ev.stopPropagation();
+        if(confirm("Delete your entry for " + prettyDate(k) + "? This can't be undone, sister.")){
+          delete data.entries[k];
+          try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+          renderStreak(); renderHistory();
+        }
+      });
+      body.appendChild(delBtn);
+
+      function toggle(){
+        var open = body.classList.toggle("open");
+        caret.textContent = open ? "▾" : "▸";
+      }
+      head.addEventListener("click", toggle);
+      head.addEventListener("keydown", function(ev){
+        if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); toggle(); }
+      });
+
+      li.appendChild(head);
+      li.appendChild(body);
+      list.appendChild(li);
+    });
+  }
+
+  function esc(s){
+    return String(s).replace(/[&<>"]/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];
+    });
+  }
+  function buildBody(e){
+    var html = "";
+    var v = (e.verse!==null && e.verse!==undefined) ? VERSES[e.verse] : null;
+    if(v){
+      html += '<div class="h-line"><span class="h-label">Word</span><span class="h-verse">"'+esc(v[0])+'" — '+esc(v[1])+'</span></div>';
+    }
+    if(e.prayer && e.prayer.trim()){
+      html += '<div class="h-line"><span class="h-label">Prayer</span>'+esc(e.prayer)+'</div>';
+    }
+    if(e.surrender && e.surrender.trim()){
+      html += '<div class="h-line"><span class="h-label">Surrendered</span>Today I surrendered '+esc(e.surrender)+' to You.</div>';
+    }
+    var pr = e.priorities.filter(function(p){ return p.t.trim(); });
+    if(pr.length){
+      html += '<div class="h-line"><span class="h-label">Top 3</span><ul>';
+      pr.forEach(function(p){ html += '<li class="'+(p.done?"checked":"")+'">'+(p.done?"✓ ":"○ ")+esc(p.t)+'</li>'; });
+      html += '</ul></div>';
+    }
+    var td = e.todos.filter(function(t){ return t.t.trim(); });
+    if(td.length){
+      html += '<div class="h-line"><span class="h-label">Tasks</span><ul>';
+      td.forEach(function(t){ html += '<li class="'+(t.done?"checked":"")+'">'+(t.done?"✓ ":"○ ")+esc(t.t)+'</li>'; });
+      html += '</ul></div>';
+    }
+    if(e.intention && e.intention.trim()){
+      html += '<div class="h-line"><span class="h-label">Keeping Him first</span>'+esc(e.intention)+'</div>';
+    }
+    if(!html){ html = '<div class="h-line" style="color:var(--muted);font-style:italic;">A quiet day.</div>'; }
+    return html;
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your God First Planner data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { entries:{} };
+      entry = newEntry();
+      entry.verse = dayOfYear(new Date()) % VERSES.length;
+      prayerEl.value=""; surrenderEl.value=""; intentionEl.value="";
+      renderVerse(); renderPriorities(); renderTodos();
+      renderAck(); renderWelcome(); renderStreak(); renderHistory();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

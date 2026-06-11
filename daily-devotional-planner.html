@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Devotional Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 18px; margin-top:16px; color:var(--emerald);
+  }
+  .welcome p{ font-size:14.5px; line-height:1.5; }
+  .welcome .lead{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:6px; }
+
+  /* ---------- Scripture ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:19px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .verse-actions{ display:flex; justify-content:space-between; align-items:center; margin-top:10px; gap:6px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:90px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Complete button ---------- */
+  .complete-btn{
+    width:100%; margin-top:8px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+  .complete-btn.done{
+    background:var(--emerald-soft); color:var(--emerald); box-shadow:none;
+    border:1px solid rgba(20,84,62,.2);
+  }
+
+  .blessing{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .blessing.show{ display:block; animation:rise .4s ease; }
+  .blessing .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .blessing .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Streak ---------- */
+  .streak{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:18px; color:var(--muted); font-size:14px;
+  }
+  .streak b{ color:var(--emerald); font-size:15px; }
+  .flame{ font-size:16px; }
+
+  /* ---------- History ---------- */
+  .history-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 10px;
+  }
+  .history-list{ list-style:none; }
+  .history-item{
+    border-bottom:1px solid var(--line);
+  }
+  .history-item:last-child{ border-bottom:none; }
+  .history-head{
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+    width:100%; background:none; border:none; cursor:pointer;
+    padding:12px 2px; min-height:44px; text-align:left; font-family:inherit;
+  }
+  .history-head .h-main{ display:flex; flex-direction:column; gap:2px; min-width:0; }
+  .history-head .h-date{ color:var(--ink); font-weight:600; font-size:14px; }
+  .history-head .h-ref{ color:var(--gold); font-family:'Fraunces',serif; font-style:italic; font-size:13.5px; }
+  .history-head .chev{ flex:none; color:var(--muted); font-size:13px; transition:transform .18s ease; }
+  .history-item.open .chev{ transform:rotate(180deg); }
+  .history-body{ display:none; padding:2px 2px 14px; }
+  .history-item.open .history-body{ display:block; animation:rise .3s ease; }
+  .h-verse{
+    font-family:'Fraunces',serif; font-style:italic; color:var(--emerald);
+    font-size:15px; line-height:1.45; margin-bottom:12px;
+  }
+  .h-field{ margin-bottom:10px; }
+  .h-field .lbl{
+    font-weight:700; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:2px;
+  }
+  .h-field .val{ font-size:14px; color:var(--ink); white-space:pre-wrap; }
+  .h-field .empty{ color:var(--muted); font-style:italic; }
+  .h-delete{
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:9px; padding:8px 14px; font-family:inherit; font-size:12.5px;
+    cursor:pointer; min-height:44px; margin-top:4px;
+  }
+  .h-delete:hover{ border-color:#b5483a; color:#b5483a; }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Daily Devotional Planner</h1>
+    <p class="subtitle">Scripture, reflection, application, prayer — your simple daily rhythm with God.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- First-run welcome -->
+  <section class="welcome" id="welcome" style="display:none;">
+    <p class="lead">Welcome, sister. 💛</p>
+    <p>This is your quiet place to meet with God each day. Read a little, reflect, decide how you'll live it, and pray. There's no perfect way — just show up, and watch the rhythm carry you.</p>
+  </section>
+
+  <!-- 1. Scripture -->
+  <section class="card">
+    <div class="step"><span class="num">S</span><h2>Scripture</h2></div>
+    <p class="hint">What you're reading today. Let it settle before you respond.</p>
+    <div class="verse">
+      <p id="verseText">—</p>
+      <div class="ref" id="verseRef"></div>
+    </div>
+    <div class="verse-actions">
+      <button class="link-btn" id="suggestVerse" type="button">✨ Give me a verse</button>
+      <button class="link-btn" id="shuffleVerse" type="button">↻ Shuffle</button>
+    </div>
+    <label class="field-label" for="scripture">Or write the passage you read</label>
+    <textarea id="scripture" placeholder="Type or paste the scripture you're sitting with today…"></textarea>
+  </section>
+
+  <!-- 2. Reflection -->
+  <section class="card">
+    <div class="step"><span class="num">O</span><h2>Reflection</h2></div>
+    <p class="hint">What is this saying to you? What stands out, gently?</p>
+    <label class="field-label" for="reflection">What I hear in this</label>
+    <textarea id="reflection" placeholder="A truth, a comfort, a nudge… what is God showing you here?"></textarea>
+  </section>
+
+  <!-- 3. Application -->
+  <section class="card">
+    <div class="step"><span class="num">A</span><h2>Application</h2></div>
+    <p class="hint">How will you live this out — today, in real life?</p>
+    <label class="field-label" for="application">How I'll live it today</label>
+    <textarea id="application" placeholder="One small, doable way to carry this into your day…"></textarea>
+  </section>
+
+  <!-- 4. Prayer -->
+  <section class="card">
+    <div class="step"><span class="num">P</span><h2>Prayer</h2></div>
+    <p class="hint">Talk to Him plainly. He's already listening.</p>
+    <label class="field-label" for="prayer">My prayer</label>
+    <textarea id="prayer" placeholder="Father, thank you… help me… I trust you with…"></textarea>
+
+    <button class="complete-btn" id="completeBtn" type="button">Complete today's devotional 🌿</button>
+    <div class="blessing" id="blessing">
+      <div class="big">Time well spent with Him. 💛</div>
+      <div class="sm">You showed up, and that matters. Carry His word with you today, sister.</div>
+    </div>
+
+    <div class="streak">
+      <span class="flame">🔥</span>
+      <span><b id="streakCount">0</b> day streak · <b id="totalCount">0</b> devotionals total</span>
+    </div>
+  </section>
+
+  <!-- History -->
+  <section class="card">
+    <div class="history-title">Your devotional history</div>
+    <ul class="history-list" id="historyList"></ul>
+    <p class="empty-note" id="historyEmpty">Complete today's devotional and it'll be saved here for you. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_daily_devotional";
+
+  // ---- A small, encouraging, inclusive scripture library (~20) ----
+  var VERSES = [
+    ["She is clothed with strength and dignity, and she laughs without fear of the future.", "Proverbs 31:25"],
+    ["I can do all things through Christ who strengthens me.", "Philippians 4:13"],
+    ["The Lord your God is with you, the Mighty Warrior who saves.", "Zephaniah 3:17"],
+    ["Be still, and know that I am God.", "Psalm 46:10"],
+    ["For I know the plans I have for you — plans to prosper you and not to harm you.", "Jeremiah 29:11"],
+    ["Cast all your anxiety on Him, because He cares for you.", "1 Peter 5:7"],
+    ["Those who hope in the Lord will renew their strength. They will soar on wings like eagles.", "Isaiah 40:31"],
+    ["The joy of the Lord is your strength.", "Nehemiah 8:10"],
+    ["Trust in the Lord with all your heart, and lean not on your own understanding.", "Proverbs 3:5"],
+    ["Do not be anxious about anything, but in every situation, by prayer, present your requests to God.", "Philippians 4:6"],
+    ["And we know that in all things God works for the good of those who love Him.", "Romans 8:28"],
+    ["Be strong and courageous. Do not be afraid; the Lord your God will be with you wherever you go.", "Joshua 1:9"],
+    ["Above all else, guard your heart, for everything you do flows from it.", "Proverbs 4:23"],
+    ["His mercies are new every morning; great is your faithfulness.", "Lamentations 3:23"],
+    ["Weeping may stay for the night, but rejoicing comes in the morning.", "Psalm 30:5"],
+    ["God is within her, she will not fall.", "Psalm 46:5"],
+    ["The Lord is my shepherd; I shall not want.", "Psalm 23:1"],
+    ["Come to me, all you who are weary and burdened, and I will give you rest.", "Matthew 11:28"],
+    ["Let us not become weary in doing good, for at the proper time we will reap a harvest.", "Galatians 6:9"],
+    ["You are a daughter of the King — chosen, loved, and never alone.", "A Word for You"]
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    var diff = d - start;
+    return Math.floor(diff / 86400000);
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+  }
+
+  // ---- State ----
+  var data = load();
+  var TODAY = todayKey();
+  var entry = data.entries[TODAY] || { scripture:"", reflection:"", application:"", prayer:"", verse:null, completed:false };
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.entries) return o; }
+    }catch(e){}
+    return { entries:{} };
+  }
+  function save(){
+    data.entries[TODAY] = entry;
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var verseTextEl = $("verseText"), verseRefEl = $("verseRef");
+  var scriptureEl = $("scripture"), reflectionEl = $("reflection");
+  var applicationEl = $("application"), prayerEl = $("prayer");
+  var completeBtn = $("completeBtn"), blessingEl = $("blessing");
+
+  // ---- Verse: deterministic daily default, user can suggest/shuffle ----
+  if(entry.verse === null || entry.verse === undefined){
+    entry.verse = dayOfYear(new Date()) % VERSES.length;
+  }
+  function renderVerse(){
+    var v = VERSES[entry.verse];
+    verseTextEl.textContent = v[0];
+    verseRefEl.textContent = v[1];
+  }
+  // Deterministic-by-date suggestion (resets to today's verse of the day)
+  $("suggestVerse").addEventListener("click", function(){
+    entry.verse = dayOfYear(new Date()) % VERSES.length;
+    renderVerse(); save();
+  });
+  // Shuffle to a different verse
+  $("shuffleVerse").addEventListener("click", function(){
+    var next = entry.verse;
+    if(VERSES.length > 1){
+      while(next === entry.verse){ next = Math.floor(Math.random()*VERSES.length); }
+    }
+    entry.verse = next;
+    renderVerse(); save();
+  });
+
+  // ---- Restore inputs ----
+  $("todayDate").textContent = prettyDate(TODAY);
+  scriptureEl.value = entry.scripture || "";
+  reflectionEl.value = entry.reflection || "";
+  applicationEl.value = entry.application || "";
+  prayerEl.value = entry.prayer || "";
+  renderVerse();
+  renderCompleted();
+
+  // ---- Auto-save on every change ----
+  function wire(el, fn){
+    el.addEventListener("input", function(){ fn(el.value); save(); });
+  }
+  wire(scriptureEl, function(v){ entry.scripture=v; });
+  wire(reflectionEl, function(v){ entry.reflection=v; });
+  wire(applicationEl, function(v){ entry.application=v; });
+  wire(prayerEl, function(v){ entry.prayer=v; });
+
+  // ---- Complete ----
+  function renderCompleted(){
+    if(entry.completed){
+      completeBtn.textContent = "Devotional complete for today ✓";
+      completeBtn.classList.add("done");
+    }else{
+      completeBtn.textContent = "Complete today's devotional 🌿";
+      completeBtn.classList.remove("done");
+    }
+    renderStreak();
+    renderHistory();
+  }
+  completeBtn.addEventListener("click", function(){
+    entry.completed = !entry.completed;
+    save();
+    if(entry.completed){
+      blessingEl.classList.add("show");
+    }else{
+      blessingEl.classList.remove("show");
+    }
+    renderCompleted();
+  });
+
+  // ---- Streak + totals ----
+  function renderStreak(){
+    var keys = Object.keys(data.entries).filter(function(k){ return data.entries[k].completed; });
+    $("totalCount").textContent = keys.length;
+    var streak = 0;
+    var d = new Date();
+    while(true){
+      var m = String(d.getMonth()+1).padStart(2,"0");
+      var day = String(d.getDate()).padStart(2,"0");
+      var k = d.getFullYear()+"-"+m+"-"+day;
+      if(data.entries[k] && data.entries[k].completed){ streak++; d.setDate(d.getDate()-1); }
+      else break;
+    }
+    $("streakCount").textContent = streak;
+  }
+
+  // ---- Welcome visibility (first run) ----
+  function renderWelcome(){
+    var any = Object.keys(data.entries).some(function(k){ return data.entries[k].completed; });
+    $("welcome").style.display = any ? "none" : "block";
+  }
+
+  // ---- History (most recent first, expandable) ----
+  function scriptureLabel(e){
+    if(e.scripture && e.scripture.trim()){
+      var t = e.scripture.trim().replace(/\s+/g," ");
+      return t.length > 42 ? t.slice(0,42)+"…" : t;
+    }
+    if(e.verse !== null && e.verse !== undefined && VERSES[e.verse]){
+      return VERSES[e.verse][1];
+    }
+    return "—";
+  }
+  function fieldBlock(label, value){
+    var wrap = document.createElement("div");
+    wrap.className = "h-field";
+    var lbl = document.createElement("div");
+    lbl.className = "lbl"; lbl.textContent = label;
+    var val = document.createElement("div");
+    val.className = "val";
+    if(value && value.trim()){ val.textContent = value; }
+    else{ val.className = "val empty"; val.textContent = "(left blank)"; }
+    wrap.appendChild(lbl); wrap.appendChild(val);
+    return wrap;
+  }
+  function renderHistory(){
+    var list = $("historyList"), empty = $("historyEmpty");
+    renderWelcome();
+    var keys = Object.keys(data.entries)
+      .filter(function(k){ return data.entries[k].completed; })
+      .sort().reverse();
+    list.innerHTML = "";
+    if(keys.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+
+    keys.forEach(function(k){
+      var e = data.entries[k];
+      var li = document.createElement("li");
+      li.className = "history-item";
+
+      var head = document.createElement("button");
+      head.type = "button"; head.className = "history-head";
+      var main = document.createElement("span"); main.className = "h-main";
+      var dateEl = document.createElement("span"); dateEl.className = "h-date"; dateEl.textContent = prettyDate(k);
+      var refEl = document.createElement("span"); refEl.className = "h-ref"; refEl.textContent = scriptureLabel(e);
+      main.appendChild(dateEl); main.appendChild(refEl);
+      var chev = document.createElement("span"); chev.className = "chev"; chev.textContent = "▾";
+      head.appendChild(main); head.appendChild(chev);
+
+      var body = document.createElement("div"); body.className = "history-body";
+      if(e.verse !== null && e.verse !== undefined && VERSES[e.verse]){
+        var v = document.createElement("div"); v.className = "h-verse";
+        v.textContent = "“" + VERSES[e.verse][0] + "” — " + VERSES[e.verse][1];
+        body.appendChild(v);
+      }
+      body.appendChild(fieldBlock("Scripture", e.scripture));
+      body.appendChild(fieldBlock("Reflection", e.reflection));
+      body.appendChild(fieldBlock("Application", e.application));
+      body.appendChild(fieldBlock("Prayer", e.prayer));
+
+      var del = document.createElement("button");
+      del.type = "button"; del.className = "h-delete"; del.textContent = "Delete this entry";
+      del.addEventListener("click", function(ev){
+        ev.stopPropagation();
+        if(confirm("Delete your devotional from " + prettyDate(k) + "? This can't be undone, sister.")){
+          delete data.entries[k];
+          if(k === TODAY){
+            entry = { scripture:"", reflection:"", application:"", prayer:"", verse: dayOfYear(new Date()) % VERSES.length, completed:false };
+            scriptureEl.value=""; reflectionEl.value=""; applicationEl.value=""; prayerEl.value="";
+            blessingEl.classList.remove("show");
+            renderVerse();
+          }
+          try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+          renderCompleted();
+        }
+      });
+      body.appendChild(del);
+
+      head.addEventListener("click", function(){ li.classList.toggle("open"); });
+
+      li.appendChild(head); li.appendChild(body);
+      list.appendChild(li);
+    });
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Daily Devotional data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { entries:{} };
+      entry = { scripture:"", reflection:"", application:"", prayer:"", verse: dayOfYear(new Date()) % VERSES.length, completed:false };
+      scriptureEl.value=""; reflectionEl.value=""; applicationEl.value=""; prayerEl.value="";
+      blessingEl.classList.remove("show");
+      renderVerse(); renderCompleted();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

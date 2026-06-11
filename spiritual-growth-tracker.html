@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spiritual Growth Tracker · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:2px 0 14px; }
+
+  /* ---------- Practice toggles ---------- */
+  .practices{ list-style:none; }
+  .practice{
+    display:flex; align-items:center; gap:14px;
+    min-height:56px; padding:10px 14px; margin-bottom:10px;
+    background:var(--cream); border:1px solid var(--line); border-radius:13px;
+    cursor:pointer; transition:border-color .15s, background .15s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .practice:last-child{ margin-bottom:0; }
+  .practice:hover{ border-color:var(--gold-soft); }
+  .practice input{ position:absolute; opacity:0; width:1px; height:1px; }
+  .practice .box{
+    flex:none; width:30px; height:30px; border-radius:9px;
+    border:2px solid var(--gold-soft); background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px; color:#fff; transition:background .15s, border-color .15s;
+  }
+  .practice .ico{ font-size:20px; flex:none; width:24px; text-align:center; }
+  .practice .pname{
+    font-weight:600; font-size:16px; color:var(--ink); flex:1;
+  }
+  .practice .psub{ display:block; font-weight:400; font-size:12.5px; color:var(--muted); }
+  .practice.on{ background:var(--emerald-soft); border-color:rgba(20,84,62,.25); }
+  .practice.on .box{ background:var(--emerald); border-color:var(--emerald); }
+  .practice input:focus-visible + .box{
+    box-shadow:0 0 0 3px rgba(200,160,74,.35);
+  }
+
+  .today-count{
+    margin-top:14px; text-align:center; font-size:13.5px; color:var(--muted);
+  }
+  .today-count b{ color:var(--emerald); }
+
+  /* ---------- Weekly grid ---------- */
+  .week-scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; padding-bottom:2px; }
+  .week{
+    display:grid; grid-template-columns:auto repeat(7, 1fr); gap:6px;
+    min-width:340px;
+  }
+  .week .corner{ }
+  .week .dcol{
+    text-align:center; font-size:11px; font-weight:700; color:var(--muted);
+    text-transform:uppercase; letter-spacing:.04em; padding-bottom:2px;
+  }
+  .week .dcol .dnum{
+    display:block; font-size:13px; color:var(--ink); font-weight:600; margin-top:2px;
+  }
+  .week .dcol.today .dnum{
+    color:var(--emerald);
+  }
+  .week .dcol.today{ color:var(--emerald); }
+  .week .rowlab{
+    display:flex; align-items:center; gap:6px; font-size:12.5px;
+    font-weight:600; color:var(--ink); padding-right:4px; white-space:nowrap;
+  }
+  .week .rowlab .ico{ font-size:14px; }
+  .week .cell{
+    aspect-ratio:1/1; border-radius:8px; border:1px solid var(--line);
+    background:var(--cream); cursor:pointer; min-height:34px;
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:13px; transition:background .12s, border-color .12s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .week .cell.on{ background:var(--emerald); border-color:var(--emerald); }
+  .week .cell.future{ opacity:.4; cursor:default; }
+  .week .cell.today-cell{ box-shadow:0 0 0 2px var(--gold-soft); }
+  .week-note{ color:var(--muted); font-size:12.5px; margin-top:12px; text-align:center; }
+
+  /* ---------- Streak ---------- */
+  .streak{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:4px; color:var(--muted); font-size:14px;
+  }
+  .streak b{ color:var(--emerald); font-size:15px; }
+  .flame{ font-size:16px; }
+
+  /* ---------- Encouragement ---------- */
+  .encourage{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:20px; position:relative; overflow:hidden;
+  }
+  .encourage::before{
+    content:"\2728"; position:absolute; top:8px; right:14px; font-size:34px; opacity:.25;
+  }
+  .encourage .big{
+    font-family:'Fraunces',serif; font-weight:500; font-style:italic;
+    font-size:19px; line-height:1.45; position:relative; z-index:1;
+  }
+  .encourage .sm{
+    margin-top:8px; font-size:13.5px; color:var(--gold-soft); position:relative; z-index:1;
+  }
+
+  /* ---------- Monthly overview ---------- */
+  .month-name{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    text-align:center; margin-bottom:14px;
+  }
+  .bar-row{ margin-bottom:14px; }
+  .bar-row:last-child{ margin-bottom:0; }
+  .bar-top{
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:13.5px; font-weight:600; color:var(--ink); margin-bottom:5px;
+  }
+  .bar-top .ico{ margin-right:6px; }
+  .bar-top .val{ color:var(--muted); font-weight:500; font-size:12.5px; }
+  .bar-track{
+    height:10px; border-radius:99px; background:var(--emerald-soft); overflow:hidden;
+  }
+  .bar-fill{
+    height:100%; border-radius:99px; background:var(--gold);
+    width:0%; transition:width .5s ease;
+  }
+  .consistency{
+    margin-top:18px; padding-top:16px; border-top:1px solid var(--line); text-align:center;
+  }
+  .consistency .pct{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:34px; font-weight:600; line-height:1;
+  }
+  .consistency .lab{ color:var(--muted); font-size:13px; margin-top:4px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .welcome .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .welcome .sm{ font-size:14px; color:var(--muted); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Spiritual Growth Tracker</h1>
+    <p class="subtitle">Tend to your walk — prayer, scripture, worship, fasting, and service.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- First-run welcome -->
+  <div class="welcome" id="welcome" style="display:none;">
+    <div class="big">Welcome, sister. 💛</div>
+    <div class="sm">This is your gentle space to notice your growth — not to grade it. Tap a practice below whenever you've tended to it today. Every small step counts.</div>
+  </div>
+
+  <!-- 1. Today's practices -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Today's Practices</h2></div>
+    <p class="hint">Tap each one you've tended to today. No pressure to do them all — presence over perfection.</p>
+    <ul class="practices" id="practices"></ul>
+    <div class="today-count" id="todayCount"></div>
+  </section>
+
+  <!-- 2. This week -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>This Week</h2></div>
+    <p class="hint">A picture of your week. Tap any past day to fill in what you remember.</p>
+    <div class="week-scroll">
+      <div class="week" id="week"></div>
+    </div>
+    <p class="week-note">Tap a cell to mark a practice for that day. Today is highlighted in gold.</p>
+  </section>
+
+  <!-- Encouragement -->
+  <section class="card">
+    <div class="encourage" id="encourage">
+      <div class="big" id="encourageBig">—</div>
+      <div class="sm" id="encourageSm"></div>
+    </div>
+    <div class="streak">
+      <span class="flame">🔥</span>
+      <span><b id="streakCount">0</b> day streak · <b id="totalDays">0</b> days engaged</span>
+    </div>
+  </section>
+
+  <!-- 3. This month -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>This Month</h2></div>
+    <p class="hint">How your practices have shown up this month — every mark is growth.</p>
+    <div class="month-name" id="monthName">This Month</div>
+    <div id="monthBars"></div>
+    <div class="consistency">
+      <div class="pct" id="consistencyPct">0%</div>
+      <div class="lab" id="consistencyLab">of days touched by a practice this month</div>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_spiritual_growth";
+
+  var PRACTICES = [
+    { id:"prayer",    name:"Prayer",    ico:"🙏", sub:"Time talking with God" },
+    { id:"scripture", name:"Scripture", ico:"📖", sub:"Reading His Word" },
+    { id:"worship",   name:"Worship",   ico:"🎶", sub:"Praise & adoration" },
+    { id:"fasting",   name:"Fasting",   ico:"🕊️", sub:"Setting something aside" },
+    { id:"service",   name:"Service",   ico:"🤲", sub:"Loving others well" }
+  ];
+
+  // ---- Date helpers (local) ----
+  function pad(n){ return String(n).padStart(2,"0"); }
+  function keyOf(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+  function todayKey(){ return keyOf(new Date()); }
+  function parseKey(key){ var p=key.split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
+  function prettyDate(key){
+    return parseKey(key).toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+  }
+
+  // ---- State ----
+  // data.days[ "YYYY-MM-DD" ] = { prayer:true, scripture:true, ... }
+  var data = load();
+  var TODAY = todayKey();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.days) return o; }
+    }catch(e){}
+    return { days:{} };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function dayFor(key){
+    if(!data.days[key]) data.days[key] = {};
+    return data.days[key];
+  }
+  function countDone(key){
+    var d = data.days[key]; if(!d) return 0;
+    var c=0; PRACTICES.forEach(function(p){ if(d[p.id]) c++; }); return c;
+  }
+  function isDone(key, pid){ return !!(data.days[key] && data.days[key][pid]); }
+  function toggle(key, pid){
+    var d = dayFor(key);
+    if(d[pid]) delete d[pid]; else d[pid] = true;
+    // tidy empties so streak/consistency stay honest
+    if(countDone(key)===0) delete data.days[key];
+    save();
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- First run / welcome ----
+  function isEmpty(){ return Object.keys(data.days).length === 0; }
+
+  // ---- Render: today's practices ----
+  function renderPractices(){
+    var ul = $("practices");
+    ul.innerHTML = "";
+    PRACTICES.forEach(function(p){
+      var on = isDone(TODAY, p.id);
+      var li = document.createElement("label");
+      li.className = "practice" + (on ? " on" : "");
+
+      var cb = document.createElement("input");
+      cb.type = "checkbox"; cb.checked = on;
+      cb.setAttribute("aria-label", p.name + " today");
+
+      var box = document.createElement("span");
+      box.className = "box"; box.setAttribute("aria-hidden","true");
+      box.textContent = on ? "✓" : "";
+
+      var ico = document.createElement("span");
+      ico.className = "ico"; ico.setAttribute("aria-hidden","true");
+      ico.textContent = p.ico;
+
+      var nameWrap = document.createElement("span");
+      nameWrap.className = "pname";
+      nameWrap.appendChild(document.createTextNode(p.name));
+      var sub = document.createElement("span");
+      sub.className = "psub"; sub.textContent = p.sub;
+      nameWrap.appendChild(sub);
+
+      cb.addEventListener("change", function(){
+        toggle(TODAY, p.id);
+        renderAll();
+      });
+
+      li.appendChild(cb);
+      li.appendChild(box);
+      li.appendChild(ico);
+      li.appendChild(nameWrap);
+      ul.appendChild(li);
+    });
+
+    var c = countDone(TODAY);
+    var msg;
+    if(c===0) msg = "Nothing marked yet — and that's perfectly okay. Begin whenever you're ready.";
+    else if(c===5) msg = "All five tended to today. What a beautiful, full day with Him. 💛";
+    else msg = "<b>"+c+" of 5</b> practices tended to today. Lovely.";
+    $("todayCount").innerHTML = msg;
+  }
+
+  // ---- Render: weekly grid (Mon–Sun, current week) ----
+  function startOfWeek(){
+    var d = new Date();
+    var day = d.getDay();            // 0 Sun … 6 Sat
+    var diff = (day === 0 ? -6 : 1 - day); // shift to Monday
+    d.setDate(d.getDate() + diff);
+    d.setHours(0,0,0,0);
+    return d;
+  }
+  function weekKeys(){
+    var s = startOfWeek(); var arr=[];
+    for(var i=0;i<7;i++){ var d=new Date(s); d.setDate(s.getDate()+i); arr.push(keyOf(d)); }
+    return arr;
+  }
+  function renderWeek(){
+    var grid = $("week");
+    grid.innerHTML = "";
+    var keys = weekKeys();
+    var dayShort = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+
+    // header row
+    var corner = document.createElement("div"); corner.className="corner";
+    grid.appendChild(corner);
+    keys.forEach(function(k, i){
+      var d = parseKey(k);
+      var h = document.createElement("div");
+      h.className = "dcol" + (k===TODAY ? " today" : "");
+      h.innerHTML = dayShort[i] + "<span class='dnum'>"+d.getDate()+"</span>";
+      grid.appendChild(h);
+    });
+
+    // one row per practice
+    PRACTICES.forEach(function(p){
+      var lab = document.createElement("div");
+      lab.className = "rowlab";
+      lab.innerHTML = "<span class='ico' aria-hidden='true'>"+p.ico+"</span>"+p.name;
+      grid.appendChild(lab);
+
+      keys.forEach(function(k){
+        var cell = document.createElement("button");
+        cell.type = "button";
+        var future = parseKey(k) > new Date(new Date().setHours(23,59,59,999));
+        var on = isDone(k, p.id);
+        cell.className = "cell" + (on?" on":"") + (future?" future":"") + (k===TODAY?" today-cell":"");
+        cell.textContent = on ? "✓" : "";
+        cell.setAttribute("aria-label", p.name + " on " + prettyDate(k) + (on?" — done":" — not yet"));
+        if(future){
+          cell.disabled = true;
+        }else{
+          cell.addEventListener("click", function(){
+            toggle(k, p.id);
+            renderAll();
+          });
+        }
+        grid.appendChild(cell);
+      });
+    });
+  }
+
+  // ---- Streak + days engaged ----
+  function computeStreak(){
+    var streak = 0;
+    var d = new Date();
+    while(true){
+      var k = keyOf(d);
+      if(countDone(k) > 0){ streak++; d.setDate(d.getDate()-1); }
+      else break;
+    }
+    return streak;
+  }
+  function renderStreak(){
+    $("streakCount").textContent = computeStreak();
+    $("totalDays").textContent = Object.keys(data.days).filter(function(k){ return countDone(k)>0; }).length;
+  }
+
+  // ---- Encouragement (based on this week) ----
+  function renderEncourage(){
+    var keys = weekKeys();
+    var now = new Date();
+    var activeDays = 0, totalMarks = 0, todayMarks = countDone(TODAY);
+    keys.forEach(function(k){
+      if(parseKey(k) > now) return;
+      var c = countDone(k);
+      if(c>0) activeDays++;
+      totalMarks += c;
+    });
+    var streak = computeStreak();
+    var big, sm;
+
+    if(isEmpty()){
+      big = "Your walk begins with a single, willing step.";
+      sm = "Mark your first practice above — He meets you right where you are.";
+    } else if(streak >= 5){
+      big = "Look at you — "+streak+" days of showing up. This is what rooted faith looks like.";
+      sm = "Consistency isn't about perfection; it's about returning. And you keep returning. 💛";
+    } else if(activeDays >= 4){
+      big = "A full, faithful week. You've tended to your spirit "+activeDays+" days running.";
+      sm = "Keep going gently — growth like this compounds quietly.";
+    } else if(activeDays >= 2){
+      big = "You've shown up "+activeDays+" days this week. That's real, and it matters.";
+      sm = "No need to do it all at once. One practice at a time is more than enough.";
+    } else if(activeDays === 1 || todayMarks > 0){
+      big = "One faithful moment this week is still a moment with Him.";
+      sm = "Don't measure yourself by the days you missed — celebrate the one you kept.";
+    } else {
+      big = "A quieter week, and grace covers it completely.";
+      sm = "There's no catching up to do, sister. Simply begin again today — He's already here.";
+    }
+    $("encourageBig").textContent = big;
+    $("encourageSm").textContent = sm;
+  }
+
+  // ---- Monthly overview ----
+  function monthKeys(){
+    var now = new Date();
+    var y = now.getFullYear(), m = now.getMonth();
+    return Object.keys(data.days).filter(function(k){
+      var d = parseKey(k);
+      return d.getFullYear()===y && d.getMonth()===m;
+    });
+  }
+  function daysElapsedThisMonth(){
+    return new Date().getDate(); // 1..today
+  }
+  function renderMonth(){
+    var now = new Date();
+    $("monthName").textContent = now.toLocaleDateString(undefined,{month:"long", year:"numeric"});
+    var mKeys = monthKeys();
+    var elapsed = daysElapsedThisMonth();
+
+    var wrap = $("monthBars");
+    wrap.innerHTML = "";
+    PRACTICES.forEach(function(p){
+      var total = 0;
+      mKeys.forEach(function(k){ if(isDone(k,p.id)) total++; });
+      var pct = elapsed>0 ? Math.round((total/elapsed)*100) : 0;
+      if(pct>100) pct=100;
+
+      var row = document.createElement("div");
+      row.className = "bar-row";
+      var top = document.createElement("div");
+      top.className = "bar-top";
+      top.innerHTML = "<span><span class='ico' aria-hidden='true'>"+p.ico+"</span>"+p.name+"</span>" +
+                      "<span class='val'>"+total+" day"+(total===1?"":"s")+"</span>";
+      var track = document.createElement("div");
+      track.className = "bar-track";
+      var fill = document.createElement("div");
+      fill.className = "bar-fill";
+      track.appendChild(fill);
+      row.appendChild(top); row.appendChild(track);
+      wrap.appendChild(row);
+      // animate width after insert
+      requestAnimationFrame(function(){ fill.style.width = pct + "%"; });
+    });
+
+    // overall consistency = % of elapsed days touched by at least one practice
+    var touched = mKeys.filter(function(k){ return countDone(k)>0; }).length;
+    var consistency = elapsed>0 ? Math.round((touched/elapsed)*100) : 0;
+    if(consistency>100) consistency=100;
+    $("consistencyPct").textContent = consistency + "%";
+    $("consistencyLab").textContent = touched + " of " + elapsed + " days this month touched by a practice";
+  }
+
+  // ---- Render everything ----
+  function renderAll(){
+    $("welcome").style.display = isEmpty() ? "block" : "none";
+    renderPractices();
+    renderWeek();
+    renderStreak();
+    renderEncourage();
+    renderMonth();
+  }
+
+  // ---- Init ----
+  $("todayDate").textContent = prettyDate(TODAY);
+  renderAll();
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Spiritual Growth Tracker data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { days:{} };
+      renderAll();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

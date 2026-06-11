@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Identity in Faith Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .claimed{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:70px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  .add-btn{
+    width:100%; margin-top:14px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .add-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .add-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Truth library chips ---------- */
+  .lib-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:4px 0 4px;
+  }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .chip{
+    text-align:left; background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.14); border-radius:12px;
+    padding:11px 13px; min-height:44px; cursor:pointer;
+    font-family:inherit; font-size:14px; font-weight:600; line-height:1.3;
+    transition:transform .08s ease, border-color .15s, background .15s; flex:1 1 100%;
+    display:flex; flex-direction:column; gap:2px;
+  }
+  .chip .chip-ref{
+    font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--gold); font-family:'Hanken Grotesk';
+  }
+  .chip:hover{ border-color:var(--gold); }
+  .chip:active{ transform:scale(.99); }
+  .chip[disabled]{ opacity:.45; cursor:default; }
+
+  /* ---------- Paired reflection entries ---------- */
+  .entry{
+    border:1px solid var(--line); border-radius:14px; padding:16px;
+    margin-top:12px; background:var(--cream);
+  }
+  .entry.lib{ background:#fff; }
+  .lie{
+    color:var(--muted); text-decoration:line-through; font-size:14.5px;
+    margin-bottom:8px; display:block;
+  }
+  .lie-tag, .truth-tag{
+    display:block; font-size:11px; font-weight:600; letter-spacing:.1em;
+    text-transform:uppercase; margin-bottom:3px;
+  }
+  .lie-tag{ color:var(--muted); }
+  .truth-tag{ color:var(--gold); }
+  .truth{
+    font-family:'Fraunces',serif; color:var(--emerald); font-weight:600;
+    font-size:18px; line-height:1.35;
+  }
+  .entry-ref{
+    margin-top:6px; font-size:12px; font-weight:600; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .entry-foot{
+    display:flex; justify-content:flex-end; gap:4px; margin-top:10px;
+  }
+  .icon-btn{
+    background:none; border:none; cursor:pointer; font-family:inherit;
+    min-height:44px; min-width:44px; display:inline-flex; align-items:center;
+    justify-content:center; gap:6px; font-size:13.5px; font-weight:600;
+    color:var(--muted); border-radius:10px; padding:0 10px;
+  }
+  .icon-btn:hover{ color:var(--ink); background:var(--emerald-soft); }
+  .icon-btn.fav.on{ color:var(--gold); }
+  .star{ font-size:17px; line-height:1; }
+
+  .empty-note{
+    color:var(--muted); font-size:14.5px; font-style:italic; text-align:center;
+    padding:18px 6px; line-height:1.6;
+  }
+
+  /* ---------- Statement card ---------- */
+  .statement{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:24px 20px; position:relative; overflow:hidden;
+    margin-top:14px; display:none;
+  }
+  .statement.show{ display:block; animation:rise .4s ease; }
+  .statement::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .statement h3{
+    font-family:'Fraunces',serif; font-weight:600; font-size:16px;
+    color:var(--gold-soft); margin-bottom:12px; position:relative; z-index:1;
+    letter-spacing:.02em;
+  }
+  .statement p{
+    font-family:'Fraunces',serif; font-weight:500; font-size:18px; line-height:1.5;
+    position:relative; z-index:1; margin-bottom:8px;
+  }
+  .statement .line-i{ display:block; }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  .compile-btn{
+    width:100%; margin-top:14px; min-height:50px;
+    background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.2); border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    transition:border-color .15s;
+  }
+  .compile-btn:hover{ border-color:var(--gold); }
+
+  .count-note{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:18px; color:var(--muted); font-size:14px; text-align:center;
+  }
+  .count-note b{ color:var(--emerald); font-size:15px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Identity in Faith</h1>
+    <p class="subtitle">Trade what the world said about you for what God says — and read it over yourself.</p>
+    <div class="claimed" id="claimedPill">0 truths claimed</div>
+  </header>
+
+  <!-- 1. Build a paired reflection -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Name it, then re-write it</h2></div>
+    <p class="hint">Write the lie or label you've carried — then the truth of who God says you are. You'll see them side by side, the old crossed out, the new standing tall.</p>
+
+    <label class="field-label" for="lieInput">What the world / my past said <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <textarea id="lieInput" placeholder="e.g. You're too much. You're not enough. You'll never change."></textarea>
+
+    <label class="field-label" for="truthInput">Who God says I am</label>
+    <textarea id="truthInput" placeholder="e.g. I am chosen, loved, and made on purpose."></textarea>
+
+    <label class="field-label" for="refInput">Scripture or reference <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <input type="text" id="refInput" placeholder="e.g. Psalm 139:14">
+
+    <button class="add-btn" id="addBtn" type="button">Add this truth 💛</button>
+  </section>
+
+  <!-- 2. Truth library -->
+  <section class="card">
+    <div class="lib-title">Truths you can claim in one tap</div>
+    <p class="hint" style="margin-top:4px;">Tap any that He's saying to you today — they'll join your declaration list.</p>
+    <div class="chips" id="libChips"></div>
+  </section>
+
+  <!-- 3. Declaration list -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>My Identity in Faith</h2></div>
+    <p class="hint">Read these slowly over yourself. Tap ★ to mark the ones you need most.</p>
+    <div id="entryList"></div>
+    <p class="empty-note" id="entryEmpty">Nothing here yet — and that's a beautiful place to begin. 💛<br>Add a truth above, or tap one from the library, and watch this fill with who you really are.</p>
+
+    <div class="count-note">
+      <span>You've claimed <b id="countNum">0</b> truths over your life.</span>
+    </div>
+  </section>
+
+  <!-- 4. This is who I am -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>This is who I am</h2></div>
+    <p class="hint">Compile your truths into one statement to read aloud — out loud, in your own voice.</p>
+    <button class="compile-btn" id="compileBtn" type="button">Build my "This is who I am" card 📖</button>
+    <div class="statement" id="statementCard">
+      <h3>This is who I am.</h3>
+      <p id="statementBody"></p>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_identity_in_faith";
+
+  // ---- Built-in library of identity truths ----
+  var LIBRARY = [
+    ["I am chosen, not leftover.", "Ephesians 1:4"],
+    ["I am loved on my worst day, not only my best.", "Romans 5:8"],
+    ["I am equipped for what I carry.", "2 Corinthians 9:8"],
+    ["I am fearfully and wonderfully made.", "Psalm 139:14"],
+    ["I am a daughter of the King.", "Galatians 3:26"],
+    ["I am held, even when I feel like I'm falling.", "Isaiah 41:10"],
+    ["I am forgiven and made new.", "2 Corinthians 5:17"],
+    ["I am more than a conqueror.", "Romans 8:37"],
+    ["I am never too far gone for grace.", "Lamentations 3:23"],
+    ["I am seen, known, and never alone.", "Psalm 139:1"],
+    ["I am clothed with strength and dignity.", "Proverbs 31:25"],
+    ["I am called by name — He knows me.", "Isaiah 43:1"],
+    ["I am enough because He is enough in me.", "2 Corinthians 12:9"],
+    ["I am free; what He sets free is free indeed.", "John 8:36"],
+    ["I am rooted, and I will not be shaken.", "Psalm 16:8"],
+    ["I am His masterpiece, made for good works.", "Ephesians 2:10"],
+    ["I am worthy of the love I keep trying to earn.", "1 John 3:1"],
+    ["I am becoming everything He already sees in me.", "Philippians 1:6"]
+  ];
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && Array.isArray(o.entries)) return o; }
+    }catch(e){}
+    return { entries:[], seq:0 };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var lieInput = $("lieInput"), truthInput = $("truthInput"), refInput = $("refInput");
+  var entryList = $("entryList"), entryEmpty = $("entryEmpty");
+  var libChips = $("libChips");
+  var statementCard = $("statementCard"), statementBody = $("statementBody");
+
+  // ---- Add an entry ----
+  function addEntry(lie, truth, ref, fromLib){
+    truth = (truth||"").trim();
+    if(!truth){ return false; }
+    data.seq = (data.seq||0) + 1;
+    data.entries.push({
+      id: data.seq,
+      lie: (lie||"").trim(),
+      truth: truth,
+      ref: (ref||"").trim(),
+      lib: !!fromLib,
+      fav: false
+    });
+    save();
+    render();
+    return true;
+  }
+
+  $("addBtn").addEventListener("click", function(){
+    var ok = addEntry(lieInput.value, truthInput.value, refInput.value, false);
+    if(!ok){
+      truthInput.focus();
+      return;
+    }
+    lieInput.value = ""; truthInput.value = ""; refInput.value = "";
+    truthInput.focus();
+  });
+
+  // ---- Library chips ----
+  function libUsed(truth){
+    return data.entries.some(function(e){ return e.lib && e.truth === truth; });
+  }
+  function renderLib(){
+    libChips.innerHTML = "";
+    LIBRARY.forEach(function(item){
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "chip";
+      var t = document.createElement("span");
+      t.textContent = item[0];
+      var r = document.createElement("span");
+      r.className = "chip-ref";
+      r.textContent = item[1];
+      btn.appendChild(t); btn.appendChild(r);
+      if(libUsed(item[0])){
+        btn.disabled = true;
+        var done = document.createElement("span");
+        done.className = "chip-ref";
+        done.style.color = "var(--emerald)";
+        done.textContent = "✓ Claimed";
+        btn.appendChild(done);
+      }else{
+        btn.addEventListener("click", function(){
+          addEntry("", item[0], item[1], true);
+        });
+      }
+      libChips.appendChild(btn);
+    });
+  }
+
+  // ---- Render declaration list ----
+  function render(){
+    entryList.innerHTML = "";
+    var n = data.entries.length;
+    entryEmpty.style.display = n === 0 ? "block" : "none";
+    $("countNum").textContent = n;
+    $("claimedPill").textContent = n === 1 ? "1 truth claimed" : (n + " truths claimed");
+
+    // newest first for the declaration list
+    data.entries.slice().reverse().forEach(function(e){
+      var box = document.createElement("div");
+      box.className = "entry" + (e.lib ? " lib" : "");
+
+      if(e.lie){
+        var lt = document.createElement("span");
+        lt.className = "lie-tag";
+        lt.textContent = "The world / my past said";
+        box.appendChild(lt);
+        var lie = document.createElement("span");
+        lie.className = "lie";
+        lie.textContent = e.lie;
+        box.appendChild(lie);
+      }
+
+      var tt = document.createElement("span");
+      tt.className = "truth-tag";
+      tt.textContent = "But God says I am";
+      box.appendChild(tt);
+
+      var truth = document.createElement("div");
+      truth.className = "truth";
+      truth.textContent = e.truth;
+      box.appendChild(truth);
+
+      if(e.ref){
+        var ref = document.createElement("div");
+        ref.className = "entry-ref";
+        ref.textContent = e.ref;
+        box.appendChild(ref);
+      }
+
+      var foot = document.createElement("div");
+      foot.className = "entry-foot";
+
+      var fav = document.createElement("button");
+      fav.type = "button";
+      fav.className = "icon-btn fav" + (e.fav ? " on" : "");
+      fav.innerHTML = '<span class="star">' + (e.fav ? "★" : "☆") + '</span>' + (e.fav ? "Favorite" : "Mark");
+      fav.setAttribute("aria-label", e.fav ? "Remove favorite" : "Mark as favorite");
+      fav.addEventListener("click", function(){
+        e.fav = !e.fav; save(); render();
+      });
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "icon-btn";
+      del.innerHTML = "🗑 Remove";
+      del.setAttribute("aria-label", "Remove this truth");
+      del.addEventListener("click", function(){
+        if(confirm("Remove this truth from your list, sister?")){
+          data.entries = data.entries.filter(function(x){ return x.id !== e.id; });
+          save(); render();
+        }
+      });
+
+      foot.appendChild(fav);
+      foot.appendChild(del);
+      box.appendChild(foot);
+
+      entryList.appendChild(box);
+    });
+
+    renderLib();
+    // keep an already-open statement fresh
+    if(statementCard.classList.contains("show")){ buildStatement(); }
+  }
+
+  // ---- Compile "This is who I am" ----
+  function buildStatement(){
+    statementBody.innerHTML = "";
+    if(data.entries.length === 0){
+      var p = document.createElement("span");
+      p.className = "line-i";
+      p.textContent = "Add a few truths above, then come back and read who you are.";
+      statementBody.appendChild(p);
+      return;
+    }
+    // favorites first, in original order, then the rest
+    var favs = data.entries.filter(function(e){ return e.fav; });
+    var rest = data.entries.filter(function(e){ return !e.fav; });
+    var ordered = favs.concat(rest);
+    ordered.forEach(function(e){
+      var line = document.createElement("span");
+      line.className = "line-i";
+      var text = e.truth;
+      // normalize so it reads as a flowing "I am" declaration where natural
+      line.textContent = text;
+      statementBody.appendChild(line);
+    });
+  }
+
+  $("compileBtn").addEventListener("click", function(){
+    buildStatement();
+    statementCard.classList.add("show");
+    statementCard.scrollIntoView({ behavior:"smooth", block:"nearest" });
+  });
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Identity in Faith truths? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { entries:[], seq:0 };
+      lieInput.value = ""; truthInput.value = ""; refInput.value = "";
+      statementCard.classList.remove("show");
+      render();
+    }
+  });
+
+  // ---- Initial render ----
+  render();
+
+})();
+</script>
+</body>
+</html>

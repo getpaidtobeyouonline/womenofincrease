@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faith Goals Setter · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Stats strip ---------- */
+  .stats{
+    display:flex; gap:12px; margin-top:18px;
+  }
+  .stat{
+    flex:1; background:#fff; border:1px solid var(--line); border-radius:14px;
+    padding:14px 10px; text-align:center; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .stat .num{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:26px; line-height:1;
+  }
+  .stat .lab{
+    color:var(--muted); font-size:12px; font-weight:600; letter-spacing:.04em;
+    text-transform:uppercase; margin-top:6px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:0 0 6px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="date"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="date"], select{ min-height:48px; }
+  textarea{ min-height:74px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  select{ -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236B655C' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:40px;
+  }
+
+  /* ---------- Add-step row (in form) ---------- */
+  .addstep-row{ display:flex; gap:8px; align-items:stretch; }
+  .addstep-row input{ flex:1; }
+  .mini-add{
+    flex:none; min-width:48px; min-height:48px;
+    background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.2);
+    border-radius:11px; font-family:inherit; font-weight:700; font-size:22px; line-height:1;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .mini-add:hover{ background:var(--emerald); color:#FCF8EF; }
+
+  .pending-steps{ list-style:none; margin-top:10px; }
+  .pending-steps li{
+    display:flex; align-items:center; gap:8px;
+    background:var(--cream); border:1px solid var(--line); border-radius:10px;
+    padding:9px 12px; margin-bottom:8px; font-size:14px;
+  }
+  .pending-steps .dot{ flex:none; width:8px;height:8px;border-radius:50%;background:var(--gold); }
+  .pending-steps .txt{ flex:1; }
+  .x-btn{
+    flex:none; background:none; border:none; color:var(--muted); font-size:18px;
+    cursor:pointer; line-height:1; min-width:32px; min-height:32px; border-radius:8px;
+  }
+  .x-btn:hover{ color:var(--emerald); }
+
+  /* ---------- Primary button ---------- */
+  .complete-btn{
+    width:100%; margin-top:16px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Goal cards ---------- */
+  .section-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:20px; font-weight:600;
+    margin:28px 0 2px;
+  }
+  .goal{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:18px; margin-top:14px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .goal.achieved{
+    background:var(--emerald-soft); border-color:rgba(20,84,62,.2);
+  }
+  .goal-top{ display:flex; align-items:flex-start; gap:10px; }
+  .goal-titles{ flex:1; }
+  .goal-title{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:18px; line-height:1.2;
+  }
+  .goal-meta{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; align-items:center; }
+  .tag{
+    background:var(--gold-soft); color:var(--emerald);
+    font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+    padding:4px 10px; border-radius:999px;
+  }
+  .tag.date{ background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.15); }
+  .tag.date.soon{ background:#F6E7C9; color:#8a6d1f; }
+  .del-goal{
+    flex:none; background:none; border:none; color:var(--muted); font-size:18px;
+    cursor:pointer; min-width:36px; min-height:36px; border-radius:8px; line-height:1;
+  }
+  .del-goal:hover{ color:#a23; }
+
+  .faith{
+    margin-top:12px; padding:12px 14px; border-left:3px solid var(--gold-soft);
+    background:var(--cream); border-radius:8px;
+  }
+  .faith .lab{
+    font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--gold);
+  }
+  .faith p{
+    font-family:'Fraunces',serif; font-style:italic; font-size:15px; color:var(--ink);
+    margin-top:3px; line-height:1.4;
+  }
+  .goal.achieved .faith{ background:#fff; }
+
+  /* progress */
+  .prog-wrap{ margin-top:14px; }
+  .prog-head{ display:flex; justify-content:space-between; font-size:12.5px; color:var(--muted); font-weight:600; margin-bottom:5px; }
+  .prog-bar{ height:9px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .prog-fill{ height:100%; background:var(--gold); border-radius:999px; transition:width .3s ease; }
+  .goal.achieved .prog-fill{ background:var(--emerald); }
+
+  /* steps */
+  .steps{ list-style:none; margin-top:14px; }
+  .steps li{
+    display:flex; align-items:flex-start; gap:10px; padding:9px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .steps li:last-child{ border-bottom:none; }
+  .steps .chk{
+    flex:none; width:24px; height:24px; margin-top:1px; cursor:pointer;
+    accent-color:var(--emerald);
+  }
+  .steps .s-label{ flex:1; font-size:14.5px; cursor:pointer; padding-top:1px; }
+  .steps .done .s-label{ text-decoration:line-through; color:var(--muted); }
+  .steps .x-btn{ margin-top:-2px; }
+
+  .goal-add-row{ display:flex; gap:8px; margin-top:12px; }
+  .goal-add-row input{ flex:1; min-height:44px; font-size:15px; padding:10px 12px; }
+  .goal-add-row .mini-add{ min-width:44px; min-height:44px; font-size:20px; }
+
+  .goal-actions{ display:flex; gap:8px; margin-top:14px; }
+  .pill-btn{
+    flex:1; min-height:44px; border-radius:11px; font-family:inherit; font-weight:600;
+    font-size:14px; cursor:pointer; border:1px solid rgba(20,84,62,.2);
+    background:var(--emerald); color:#FCF8EF;
+  }
+  .pill-btn:hover{ background:#0f3f2e; }
+  .pill-btn.ghost{ background:#fff; color:var(--emerald); }
+  .pill-btn.ghost:hover{ background:var(--emerald-soft); }
+
+  .achieved-banner{
+    margin-top:14px; text-align:center;
+    background:#fff; border:1px solid rgba(20,84,62,.18);
+    border-radius:12px; padding:14px 12px; color:var(--emerald);
+  }
+  .achieved-banner .big{ font-family:'Fraunces',serif; font-weight:600; font-size:17px; }
+  .achieved-banner .sm{ font-size:13px; color:var(--muted); margin-top:2px; }
+
+  /* ---------- Empty state ---------- */
+  .empty{
+    text-align:center; padding:30px 18px; margin-top:14px;
+    background:#fff; border:1px dashed var(--line); border-radius:16px;
+  }
+  .empty .emoji{ font-size:30px; }
+  .empty .big{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:18px; margin:8px 0 6px;
+  }
+  .empty .sm{ color:var(--muted); font-size:14px; line-height:1.5; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Faith Goals Setter</h1>
+    <p class="subtitle">Pair what you're believing God for with the steps you'll take to get there.</p>
+    <div class="stats">
+      <div class="stat"><div class="num" id="activeCount">0</div><div class="lab">Active</div></div>
+      <div class="stat"><div class="num" id="doneCount">0</div><div class="lab">Achieved</div></div>
+    </div>
+  </header>
+
+  <!-- New goal form -->
+  <section class="card">
+    <div class="step"><span class="num">+</span><h2>Set a new faith goal</h2></div>
+    <p class="hint">Big dreams held in open hands — then one small step at a time.</p>
+
+    <label class="field-label" for="gTitle">What's the goal?</label>
+    <input type="text" id="gTitle" placeholder="e.g. Grow a steady prayer life">
+
+    <label class="field-label" for="gCat">Life area</label>
+    <select id="gCat">
+      <option value="Spiritual">Spiritual</option>
+      <option value="Family">Family</option>
+      <option value="Finances">Finances</option>
+      <option value="Health">Health</option>
+      <option value="Purpose/Calling">Purpose / Calling</option>
+      <option value="Relationships">Relationships</option>
+    </select>
+
+    <label class="field-label" for="gFaith">The faith in it <span style="color:var(--muted);font-weight:400;">— what are you trusting God for, or a prayer / scripture</span></label>
+    <textarea id="gFaith" placeholder="Lord, I trust You to… &#10;or — &#34;Commit to the Lord whatever you do…&#34; (Prov 16:3)"></textarea>
+
+    <label class="field-label" for="gDate">Target date <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <input type="date" id="gDate">
+
+    <label class="field-label" for="gStep">Action steps <span style="color:var(--muted);font-weight:400;">— faith with works</span></label>
+    <div class="addstep-row">
+      <input type="text" id="gStep" placeholder="A small, doable step…">
+      <button type="button" class="mini-add" id="addPending" aria-label="Add action step">+</button>
+    </div>
+    <ul class="pending-steps" id="pendingSteps"></ul>
+
+    <button type="button" class="complete-btn" id="createBtn">Create this goal 🌿</button>
+  </section>
+
+  <!-- Goals list -->
+  <div class="section-title" id="goalsHeading" style="display:none;">Your goals</div>
+  <div id="goalsList"></div>
+
+  <!-- Empty state -->
+  <div class="empty" id="emptyState">
+    <div class="emoji">🌱</div>
+    <div class="big">No goals yet — and that's okay.</div>
+    <div class="sm">"Faith without works…" is just a wish waiting for a step. Name one thing you're believing God for, then add the first little action. He'll meet you in the doing, sister. 💛</div>
+  </div>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_faith_goals";
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- State ----
+  var data = load();          // { goals:[...] }
+  var pending = [];           // action steps queued in the new-goal form
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && Array.isArray(o.goals)) return o; }
+    }catch(e){}
+    return { goals:[] };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function uid(){ return "g"+Date.now()+Math.floor(Math.random()*1000); }
+
+  // ---- Date helpers ----
+  function prettyDate(iso){
+    if(!iso) return "";
+    var p = iso.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{month:"short", day:"numeric", year:"numeric"});
+  }
+  function isSoon(iso){
+    if(!iso) return false;
+    var p = iso.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    var now = new Date(); now.setHours(0,0,0,0);
+    var diff = (d - now) / 86400000;
+    return diff >= 0 && diff <= 7;
+  }
+
+  // ---- Pending steps (form) ----
+  function renderPending(){
+    var ul = $("pendingSteps");
+    ul.innerHTML = "";
+    pending.forEach(function(txt, i){
+      var li = document.createElement("li");
+      var dot = document.createElement("span"); dot.className="dot";
+      var span = document.createElement("span"); span.className="txt"; span.textContent = txt;
+      var x = document.createElement("button");
+      x.type="button"; x.className="x-btn"; x.setAttribute("aria-label","Remove step"); x.textContent="×";
+      x.addEventListener("click", function(){ pending.splice(i,1); renderPending(); });
+      li.appendChild(dot); li.appendChild(span); li.appendChild(x);
+      ul.appendChild(li);
+    });
+  }
+  function addPending(){
+    var v = $("gStep").value.trim();
+    if(!v) return;
+    pending.push(v);
+    $("gStep").value = "";
+    renderPending();
+    $("gStep").focus();
+  }
+  $("addPending").addEventListener("click", addPending);
+  $("gStep").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); addPending(); }
+  });
+
+  // ---- Create goal ----
+  $("createBtn").addEventListener("click", function(){
+    var title = $("gTitle").value.trim();
+    if(!title){
+      alert("Give your goal a name first, sister — even a few words will do. 💛");
+      $("gTitle").focus();
+      return;
+    }
+    // If user typed a step but didn't press +, include it.
+    var leftover = $("gStep").value.trim();
+    if(leftover){ pending.push(leftover); }
+
+    var goal = {
+      id: uid(),
+      title: title,
+      cat: $("gCat").value,
+      faith: $("gFaith").value.trim(),
+      date: $("gDate").value || "",
+      steps: pending.map(function(t){ return { text:t, done:false }; }),
+      achieved: false,
+      created: Date.now()
+    };
+    data.goals.unshift(goal);
+    save();
+
+    // reset form
+    $("gTitle").value = "";
+    $("gCat").value = "Spiritual";
+    $("gFaith").value = "";
+    $("gDate").value = "";
+    $("gStep").value = "";
+    pending = [];
+    renderPending();
+    render();
+  });
+
+  // ---- Achieved logic ----
+  function allDone(goal){
+    return goal.steps.length > 0 && goal.steps.every(function(s){ return s.done; });
+  }
+  function syncAchieved(goal){
+    // Auto-achieve when all steps done; auto-un-achieve if a step is unchecked
+    if(allDone(goal)) goal.achieved = true;
+    else if(goal.achieved && goal.steps.length > 0 && !allDone(goal)) goal.achieved = false;
+  }
+
+  // ---- Render everything ----
+  function render(){
+    var list = $("goalsList");
+    list.innerHTML = "";
+
+    var active = 0, done = 0;
+    data.goals.forEach(function(g){ if(g.achieved) done++; else active++; });
+    $("activeCount").textContent = active;
+    $("doneCount").textContent = done;
+
+    var hasGoals = data.goals.length > 0;
+    $("emptyState").style.display = hasGoals ? "none" : "block";
+    $("goalsHeading").style.display = hasGoals ? "block" : "none";
+
+    data.goals.forEach(function(goal){
+      list.appendChild(buildGoalCard(goal));
+    });
+  }
+
+  function buildGoalCard(goal){
+    var card = document.createElement("div");
+    card.className = "goal" + (goal.achieved ? " achieved" : "");
+
+    // top row
+    var top = document.createElement("div"); top.className="goal-top";
+    var titles = document.createElement("div"); titles.className="goal-titles";
+
+    var t = document.createElement("div"); t.className="goal-title";
+    t.textContent = (goal.achieved ? "🙌 " : "") + goal.title;
+    titles.appendChild(t);
+
+    var meta = document.createElement("div"); meta.className="goal-meta";
+    var tag = document.createElement("span"); tag.className="tag"; tag.textContent = goal.cat;
+    meta.appendChild(tag);
+    if(goal.date){
+      var dtag = document.createElement("span");
+      dtag.className = "tag date" + (!goal.achieved && isSoon(goal.date) ? " soon" : "");
+      dtag.textContent = "🎯 " + prettyDate(goal.date);
+      meta.appendChild(dtag);
+    }
+    titles.appendChild(meta);
+    top.appendChild(titles);
+
+    var del = document.createElement("button");
+    del.type="button"; del.className="del-goal"; del.setAttribute("aria-label","Delete goal"); del.textContent="🗑";
+    del.addEventListener("click", function(){
+      if(confirm("Release “"+goal.title+"” and remove it for good?")){
+        data.goals = data.goals.filter(function(x){ return x.id !== goal.id; });
+        save(); render();
+      }
+    });
+    top.appendChild(del);
+    card.appendChild(top);
+
+    // faith line
+    if(goal.faith){
+      var f = document.createElement("div"); f.className="faith";
+      var fl = document.createElement("div"); fl.className="lab"; fl.textContent="The faith in it";
+      var fp = document.createElement("p"); fp.textContent = goal.faith;
+      f.appendChild(fl); f.appendChild(fp);
+      card.appendChild(f);
+    }
+
+    // progress
+    var total = goal.steps.length;
+    var completed = goal.steps.filter(function(s){ return s.done; }).length;
+    var pct = total ? Math.round((completed/total)*100) : 0;
+
+    var pw = document.createElement("div"); pw.className="prog-wrap";
+    var ph = document.createElement("div"); ph.className="prog-head";
+    var phL = document.createElement("span"); phL.textContent = completed + " of " + total + " steps";
+    var phR = document.createElement("span"); phR.textContent = pct + "%";
+    ph.appendChild(phL); ph.appendChild(phR);
+    var pb = document.createElement("div"); pb.className="prog-bar";
+    var pf = document.createElement("div"); pf.className="prog-fill"; pf.style.width = pct + "%";
+    pb.appendChild(pf);
+    pw.appendChild(ph); pw.appendChild(pb);
+    card.appendChild(pw);
+
+    // steps
+    var ul = document.createElement("ul"); ul.className="steps";
+    goal.steps.forEach(function(step, idx){
+      var li = document.createElement("li"); if(step.done) li.className="done";
+      var cb = document.createElement("input");
+      cb.type="checkbox"; cb.className="chk"; cb.checked = step.done;
+      var cbId = goal.id + "-s" + idx;
+      cb.id = cbId;
+      cb.addEventListener("change", function(){
+        step.done = cb.checked;
+        syncAchieved(goal);
+        save(); render();
+      });
+      var lab = document.createElement("label");
+      lab.className="s-label"; lab.setAttribute("for", cbId); lab.textContent = step.text;
+      var x = document.createElement("button");
+      x.type="button"; x.className="x-btn"; x.setAttribute("aria-label","Remove step"); x.textContent="×";
+      x.addEventListener("click", function(){
+        goal.steps.splice(idx,1);
+        syncAchieved(goal);
+        save(); render();
+      });
+      li.appendChild(cb); li.appendChild(lab); li.appendChild(x);
+      ul.appendChild(li);
+    });
+    card.appendChild(ul);
+
+    // add a step to this goal
+    var addRow = document.createElement("div"); addRow.className="goal-add-row";
+    var addInput = document.createElement("input");
+    addInput.type="text"; addInput.placeholder="Add another step…";
+    addInput.setAttribute("aria-label","New action step for " + goal.title);
+    var addBtn = document.createElement("button");
+    addBtn.type="button"; addBtn.className="mini-add"; addBtn.setAttribute("aria-label","Add step"); addBtn.textContent="+";
+    function doAdd(){
+      var v = addInput.value.trim();
+      if(!v) return;
+      goal.steps.push({ text:v, done:false });
+      // adding a fresh undone step un-achieves a completed goal
+      syncAchieved(goal);
+      save(); render();
+    }
+    addBtn.addEventListener("click", doAdd);
+    addInput.addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); doAdd(); } });
+    addRow.appendChild(addInput); addRow.appendChild(addBtn);
+    card.appendChild(addRow);
+
+    // actions
+    var actions = document.createElement("div"); actions.className="goal-actions";
+    if(!goal.achieved){
+      var markBtn = document.createElement("button");
+      markBtn.type="button"; markBtn.className="pill-btn"; markBtn.textContent="🙌 Mark complete";
+      markBtn.addEventListener("click", function(){
+        goal.achieved = true;
+        save(); render();
+      });
+      actions.appendChild(markBtn);
+    } else {
+      var reopenBtn = document.createElement("button");
+      reopenBtn.type="button"; reopenBtn.className="pill-btn ghost"; reopenBtn.textContent="↩ Reopen goal";
+      reopenBtn.addEventListener("click", function(){
+        goal.achieved = false;
+        save(); render();
+      });
+      actions.appendChild(reopenBtn);
+    }
+    card.appendChild(actions);
+
+    // celebration banner
+    if(goal.achieved){
+      var ban = document.createElement("div"); ban.className="achieved-banner";
+      var big = document.createElement("div"); big.className="big"; big.textContent="Achieved! 💛";
+      var sm = document.createElement("div"); sm.className="sm";
+      sm.textContent = "You trusted, you took the steps, and He was faithful. Celebrate this one, sister.";
+      ban.appendChild(big); ban.appendChild(sm);
+      card.appendChild(ban);
+    }
+
+    return card;
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Faith Goals? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { goals:[] };
+      pending = [];
+      renderPending();
+      render();
+    }
+  });
+
+  // ---- Init ----
+  renderPending();
+  render();
+
+})();
+</script>
+</body>
+</html>

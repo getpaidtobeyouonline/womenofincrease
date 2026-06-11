@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faith Community Connection Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Stats ---------- */
+  .stats{ display:flex; gap:10px; margin-top:16px; }
+  .stat{
+    flex:1; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:14px; padding:14px 10px; text-align:center;
+  }
+  .stat .big{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:26px; line-height:1;
+  }
+  .stat .lbl{ color:var(--muted); font-size:12px; margin-top:5px; letter-spacing:.02em; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="date"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="date"], select{ min-height:48px; }
+  textarea{ min-height:78px; line-height:1.5; }
+  select{ -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2314543E' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:40px;
+  }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Primary button ---------- */
+  .complete-btn{
+    width:100%; margin-top:18px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Connection list ---------- */
+  .conn-list{ list-style:none; }
+  .conn{
+    border:1px solid var(--line); border-radius:14px; padding:16px;
+    margin-top:14px; background:var(--cream);
+  }
+  .conn.needs{ border-color:var(--gold-soft); background:#FFFDF7;
+    box-shadow:0 0 0 3px rgba(200,160,74,.10); }
+  .conn-head{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+  }
+  .conn-name{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:18px; line-height:1.2;
+  }
+  .conn-role{
+    display:inline-block; margin-top:6px;
+    background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.14);
+    font-size:11.5px; font-weight:600; letter-spacing:.03em;
+    padding:3px 10px; border-radius:999px;
+  }
+  .conn-notes{ color:var(--ink); font-size:14px; margin-top:10px; white-space:pre-wrap; }
+  .conn-meta{ color:var(--muted); font-size:12.5px; margin-top:10px; }
+  .conn-meta b{ color:var(--emerald); }
+
+  .nudge{
+    margin-top:10px; display:inline-flex; align-items:center; gap:6px;
+    background:rgba(200,160,74,.14); color:#8a6d22;
+    border-radius:999px; padding:4px 11px; font-size:12px; font-weight:600;
+  }
+
+  .conn-plan{
+    margin-top:12px; padding-top:12px; border-top:1px solid var(--line);
+  }
+  .plan-label{ display:block; font-size:12.5px; font-weight:600; color:var(--muted); margin-bottom:6px; }
+
+  .conn-actions{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .mini-btn{
+    flex:1; min-width:130px; min-height:44px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:14px; cursor:pointer;
+    box-shadow:0 4px 12px rgba(200,160,74,.28);
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  }
+  .mini-btn:active{ transform:translateY(1px); }
+  .del-btn{
+    min-height:44px; background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:11px; padding:0 16px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .del-btn:hover{ border-color:#c46a5a; color:#b04a3a; }
+
+  /* ---------- Empty state ---------- */
+  .empty{
+    text-align:center; padding:18px 10px 6px; color:var(--muted);
+  }
+  .empty .em-big{
+    font-family:'Fraunces',serif; font-style:italic; color:var(--emerald);
+    font-size:18px; margin-bottom:6px;
+  }
+  .empty .em-sm{ font-size:14px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Faith Community Connection</h1>
+    <p class="subtitle">Build your circle of faith — because you were never meant to grow alone.</p>
+  </header>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat"><div class="big" id="statTotal">0</div><div class="lbl">in your circle</div></div>
+    <div class="stat"><div class="big" id="statWeek">0</div><div class="lbl">reached this week</div></div>
+  </div>
+
+  <!-- 1. Add a connection -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Add to your faith circle</h2></div>
+    <p class="hint">The women and spaces that hold your faith — name them, so you can tend them.</p>
+
+    <label class="field-label" for="newName">Name</label>
+    <input type="text" id="newName" placeholder="Who comes to mind?" autocomplete="off">
+
+    <label class="field-label" for="newRole">Their role in your faith life</label>
+    <select id="newRole">
+      <option value="Mentor">Mentor</option>
+      <option value="Prayer partner">Prayer partner</option>
+      <option value="Sister/friend">Sister / friend</option>
+      <option value="Small group">Small group</option>
+      <option value="Church/community">Church / community</option>
+      <option value="Someone I'm pouring into">Someone I'm pouring into</option>
+    </select>
+
+    <label class="field-label" for="newNotes">Notes <span style="color:var(--muted);font-weight:400;">(how they encourage you / how you show up for them)</span></label>
+    <textarea id="newNotes" placeholder="What makes this connection a gift…"></textarea>
+
+    <button class="complete-btn" id="addBtn" type="button">Add to my circle 🤍</button>
+  </section>
+
+  <!-- 2. Your circle -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Your circle</h2></div>
+    <p class="hint">Plan your next reach-out, and mark it when you've connected.</p>
+    <ul class="conn-list" id="connList"></ul>
+    <div class="empty" id="emptyState">
+      <div class="em-big">Your circle is waiting to be named.</div>
+      <div class="em-sm">Faith grows in fellowship. Add one person above — a mentor, a prayer partner, a sister — and start tending the relationships that carry you. 🤍</div>
+    </div>
+  </section>
+
+  <!-- 3. Reflection -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Reflect on your season</h2></div>
+    <p class="hint">Knowing what you need — and how you'll give — keeps your circle honest and whole.</p>
+
+    <label class="field-label" for="reflNeed">What kind of community do I need in this season?</label>
+    <textarea id="reflNeed" placeholder="Maybe accountability, gentleness, deeper prayer, women further along…"></textarea>
+
+    <label class="field-label" for="reflGive">How can I show up for others?</label>
+    <textarea id="reflGive" placeholder="A text, a prayer, an invitation, simply being present…"></textarea>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_faith_community";
+  var STALE_DAYS = 14; // gentle nudge if no connection in this many days
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    return ymd(d);
+  }
+  function ymd(d){
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function parseKey(key){
+    var p = key.split("-");
+    return new Date(p[0], p[1]-1, p[2]);
+  }
+  function prettyDate(key){
+    return parseKey(key).toLocaleDateString(undefined,{month:"long", day:"numeric"});
+  }
+  function daysSince(key){
+    if(!key) return null;
+    var then = parseKey(key);
+    var now = parseKey(todayKey());
+    return Math.round((now - then) / 86400000);
+  }
+  function startOfWeek(){
+    // Sunday as start of week
+    var d = parseKey(todayKey());
+    d.setDate(d.getDate() - d.getDay());
+    return d;
+  }
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && Array.isArray(o.connections)) return o;
+      }
+    }catch(e){}
+    return { connections:[], reflNeed:"", reflGive:"" };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var newName = $("newName"), newRole = $("newRole"), newNotes = $("newNotes");
+  var connList = $("connList"), emptyState = $("emptyState");
+  var reflNeed = $("reflNeed"), reflGive = $("reflGive");
+
+  // ---- Restore reflection ----
+  reflNeed.value = data.reflNeed || "";
+  reflGive.value = data.reflGive || "";
+  reflNeed.addEventListener("input", function(){ data.reflNeed = reflNeed.value; save(); });
+  reflGive.addEventListener("input", function(){ data.reflGive = reflGive.value; save(); });
+
+  // ---- Add connection ----
+  $("addBtn").addEventListener("click", function(){
+    var name = newName.value.trim();
+    if(!name){
+      newName.focus();
+      newName.style.borderColor = "#C8A04A";
+      return;
+    }
+    data.connections.unshift({
+      id: Date.now()+"-"+Math.random().toString(36).slice(2,7),
+      name: name,
+      role: newRole.value,
+      notes: newNotes.value.trim(),
+      reachOut: "",
+      lastConnected: ""
+    });
+    newName.value = ""; newNotes.value = ""; newRole.selectedIndex = 0;
+    newName.style.borderColor = "";
+    save();
+    render();
+  });
+
+  // ---- Render ----
+  function render(){
+    renderStats();
+    renderList();
+  }
+
+  function renderStats(){
+    $("statTotal").textContent = data.connections.length;
+    var weekStart = startOfWeek();
+    var count = 0;
+    data.connections.forEach(function(c){
+      if(c.lastConnected){
+        var d = parseKey(c.lastConnected);
+        if(d >= weekStart) count++;
+      }
+    });
+    $("statWeek").textContent = count;
+  }
+
+  function renderList(){
+    connList.innerHTML = "";
+    if(data.connections.length === 0){
+      emptyState.style.display = "block";
+      return;
+    }
+    emptyState.style.display = "none";
+
+    data.connections.forEach(function(c){
+      var li = document.createElement("li");
+      li.className = "conn";
+
+      var since = daysSince(c.lastConnected);
+      var needs = (since === null) || (since >= STALE_DAYS);
+      if(needs) li.classList.add("needs");
+
+      // head: name + role
+      var head = document.createElement("div");
+      head.className = "conn-head";
+      var headLeft = document.createElement("div");
+      var nameEl = document.createElement("div");
+      nameEl.className = "conn-name";
+      nameEl.textContent = c.name;
+      var roleEl = document.createElement("span");
+      roleEl.className = "conn-role";
+      roleEl.textContent = c.role;
+      headLeft.appendChild(nameEl);
+      headLeft.appendChild(roleEl);
+      head.appendChild(headLeft);
+      li.appendChild(head);
+
+      // notes
+      if(c.notes){
+        var notesEl = document.createElement("div");
+        notesEl.className = "conn-notes";
+        notesEl.textContent = c.notes;
+        li.appendChild(notesEl);
+      }
+
+      // last connected meta
+      var meta = document.createElement("div");
+      meta.className = "conn-meta";
+      if(c.lastConnected){
+        meta.innerHTML = "Last connected: <b>" + prettyDate(c.lastConnected) + "</b>" +
+          (since === 0 ? " (today)" : since === 1 ? " (yesterday)" : " (" + since + " days ago)");
+      }else{
+        meta.innerHTML = "You haven't logged a connection yet.";
+      }
+      li.appendChild(meta);
+
+      // gentle nudge
+      if(needs){
+        var nudge = document.createElement("div");
+        nudge.className = "nudge";
+        nudge.textContent = (since === null)
+          ? "🤍 A good time to reach out"
+          : "🤍 It's been a while — she may love to hear from you";
+        li.appendChild(nudge);
+      }
+
+      // plan: reach-out date
+      var plan = document.createElement("div");
+      plan.className = "conn-plan";
+      var planLabel = document.createElement("label");
+      planLabel.className = "plan-label";
+      planLabel.textContent = "Plan my next reach-out";
+      planLabel.setAttribute("for", "reach-" + c.id);
+      var reachInput = document.createElement("input");
+      reachInput.type = "date";
+      reachInput.id = "reach-" + c.id;
+      reachInput.value = c.reachOut || "";
+      reachInput.addEventListener("change", function(){
+        c.reachOut = reachInput.value;
+        save();
+      });
+      plan.appendChild(planLabel);
+      plan.appendChild(reachInput);
+      li.appendChild(plan);
+
+      // actions
+      var actions = document.createElement("div");
+      actions.className = "conn-actions";
+
+      var markBtn = document.createElement("button");
+      markBtn.type = "button";
+      markBtn.className = "mini-btn";
+      markBtn.textContent = "Mark connected ✓";
+      markBtn.addEventListener("click", function(){
+        c.lastConnected = todayKey();
+        c.reachOut = ""; // fulfilled
+        save();
+        render();
+      });
+      actions.appendChild(markBtn);
+
+      var delBtn = document.createElement("button");
+      delBtn.type = "button";
+      delBtn.className = "del-btn";
+      delBtn.textContent = "Remove";
+      delBtn.addEventListener("click", function(){
+        if(confirm("Remove " + c.name + " from your circle? This can't be undone, sister.")){
+          data.connections = data.connections.filter(function(x){ return x.id !== c.id; });
+          save();
+          render();
+        }
+      });
+      actions.appendChild(delBtn);
+
+      li.appendChild(actions);
+      connList.appendChild(li);
+    });
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Faith Community data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { connections:[], reflNeed:"", reflGive:"" };
+      newName.value=""; newNotes.value=""; newRole.selectedIndex=0;
+      reflNeed.value=""; reflGive.value="";
+      render();
+    }
+  });
+
+  // ---- Init ----
+  render();
+
+})();
+</script>
+</body>
+</html>

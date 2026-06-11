@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abundance Mindset Builder · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Scripture / verse ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .verse-actions{ display:flex; justify-content:space-between; align-items:center; margin-top:10px; gap:8px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+  .link-btn.attached{ color:var(--gold); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:74px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Primary action ---------- */
+  .complete-btn{
+    width:100%; margin-top:14px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Reframe list ---------- */
+  .reframe-item{
+    border:1px solid var(--line); border-radius:14px; padding:16px;
+    margin-top:12px; background:var(--cream);
+  }
+  .reframe-item .old{
+    color:var(--muted); text-decoration:line-through; font-size:14.5px;
+    display:flex; align-items:flex-start; gap:8px;
+  }
+  .reframe-item .old::before{ content:"✕"; color:#C99; font-weight:700; }
+  .reframe-arrow{ color:var(--gold); font-size:15px; margin:8px 0 8px 2px; }
+  .reframe-item .new{
+    color:var(--emerald); font-family:'Fraunces',serif; font-weight:500;
+    font-size:17px; line-height:1.4;
+    display:flex; align-items:flex-start; gap:8px;
+  }
+  .reframe-item .new::before{ content:"✦"; color:var(--gold); }
+  .reframe-item .r-verse{
+    margin-top:10px; padding-top:10px; border-top:1px solid var(--line);
+    color:var(--emerald); font-style:italic; font-size:13.5px;
+  }
+  .reframe-item .r-verse .vref{
+    display:block; font-style:normal; font-weight:600; font-size:11px;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-top:3px;
+  }
+  .item-foot{ display:flex; justify-content:flex-end; margin-top:8px; }
+  .del-btn{
+    background:none; border:none; color:var(--muted); font-family:inherit;
+    font-size:13px; cursor:pointer; min-height:44px; padding:6px 8px;
+  }
+  .del-btn:hover{ color:#A33; }
+
+  /* ---------- Evidence ---------- */
+  .add-row{ display:flex; gap:8px; margin-top:8px; }
+  .add-row input{ flex:1; }
+  .mini-btn{
+    flex:none; min-width:52px; min-height:48px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:22px; line-height:1; cursor:pointer;
+    box-shadow:0 4px 12px rgba(200,160,74,.3);
+  }
+  .mini-btn:active{ transform:translateY(1px); }
+  .count-badge{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:16px; text-align:center; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:12px; padding:12px 14px; font-size:14px;
+  }
+  .count-badge b{ font-family:'Fraunces',serif; font-size:20px; }
+  .ev-list{ list-style:none; margin-top:6px; }
+  .ev-list li{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+    padding:12px 2px; border-bottom:1px solid var(--line); font-size:14.5px;
+  }
+  .ev-list li:last-child{ border-bottom:none; }
+  .ev-list .ev-text{ color:var(--ink); }
+  .ev-list .ev-date{ display:block; color:var(--muted); font-size:12px; margin-top:3px; }
+  .ev-list .del-x{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:16px; min-width:44px; min-height:44px;
+  }
+  .ev-list .del-x:hover{ color:#A33; }
+
+  /* ---------- Affirmations ---------- */
+  .affirm{
+    border-left:3px solid var(--gold); background:var(--cream);
+    border-radius:0 12px 12px 0; padding:12px 14px; margin-top:10px;
+    font-family:'Fraunces',serif; font-style:italic; font-size:16px; color:var(--emerald);
+  }
+  .affirm.mine::after{
+    content:"yours"; display:block; font-style:normal; font-family:'Hanken Grotesk';
+    font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold);
+    margin-top:6px;
+  }
+
+  /* ---------- Empty notes ---------- */
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; margin-top:6px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Abundance Mindset Builder</h1>
+    <p class="subtitle">Trade scarcity for trust in a God of more-than-enough.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- 1. Daily Prompt -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Today's Abundance Prompt</h2></div>
+    <p class="hint">A small invitation to notice the fullness already around you.</p>
+    <div class="verse">
+      <p id="promptText">—</p>
+    </div>
+    <div class="verse-actions">
+      <button class="link-btn" id="anotherPrompt" type="button">↻ Another prompt</button>
+    </div>
+    <label class="field-label" for="promptResponse">Your reflection <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <textarea id="promptResponse" placeholder="Sit with the prompt and let your heart answer…"></textarea>
+  </section>
+
+  <!-- 2. Reframe tool -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Scarcity → Abundance Reframe</h2></div>
+    <p class="hint">Name the scarcity thought, then speak the bigger truth over it.</p>
+
+    <label class="field-label" for="scarcityInput">The scarcity thought</label>
+    <input type="text" id="scarcityInput" placeholder="e.g. There's never enough…">
+
+    <label class="field-label" for="abundanceInput">Your abundance reframe</label>
+    <textarea id="abundanceInput" placeholder="In your own words — the truth you choose instead…"></textarea>
+
+    <div class="verse" style="margin-top:14px;">
+      <p id="reframeVerseText">—</p>
+      <div class="ref" id="reframeVerseRef"></div>
+    </div>
+    <div class="verse-actions">
+      <button class="link-btn" id="anotherReframeVerse" type="button">↻ Another verse</button>
+      <button class="link-btn" id="attachVerse" type="button">＋ Attach verse</button>
+    </div>
+
+    <button class="complete-btn" id="saveReframe" type="button">Save this reframe ✦</button>
+
+    <div id="reframeList"></div>
+    <p class="empty-note" id="reframeEmpty">No reframes yet. When a scarcity thought rises, meet it here with truth. 💛</p>
+  </section>
+
+  <!-- 3. Evidence log -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Abundance Evidence Log</h2></div>
+    <p class="hint">Record the proof. Provision, kindness, doors opened — every bit counts.</p>
+
+    <label class="field-label" for="evidenceInput">Today I saw abundance in…</label>
+    <div class="add-row">
+      <input type="text" id="evidenceInput" placeholder="e.g. An unexpected blessing arrived">
+      <button class="mini-btn" id="addEvidence" type="button" aria-label="Add evidence">＋</button>
+    </div>
+
+    <div class="count-badge">
+      <span>🌾</span>
+      <span><b id="evidenceCount">0</b> pieces of evidence that He provides</span>
+    </div>
+
+    <ul class="ev-list" id="evidenceList"></ul>
+    <p class="empty-note" id="evidenceEmpty">Your log is waiting. The good is already there — let's start naming it. 💛</p>
+  </section>
+
+  <!-- 4. Affirmations -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Abundance Affirmations</h2></div>
+    <p class="hint">Read these aloud, gently and boldly. Your saved reframes become declarations too.</p>
+    <div id="affirmList"></div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_abundance_mindset";
+
+  // ---- Provision / abundance verse library (~12) ----
+  var VERSES = [
+    ["And my God will meet all your needs according to the riches of His glory in Christ Jesus.", "Philippians 4:19"],
+    ["The Lord is my shepherd; I lack nothing.", "Psalm 23:1"],
+    ["Give, and it will be given to you. A good measure, pressed down, shaken together and running over.", "Luke 6:38"],
+    ["I have come that they may have life, and have it to the full.", "John 10:10"],
+    ["You open Your hand and satisfy the desires of every living thing.", "Psalm 145:16"],
+    ["Now to Him who is able to do immeasurably more than all we ask or imagine.", "Ephesians 3:20"],
+    ["The young lions lack and suffer hunger; but those who seek the Lord shall not lack any good thing.", "Psalm 34:10"],
+    ["Bring the whole tithe… and see if I will not throw open the floodgates of heaven.", "Malachi 3:10"],
+    ["And God is able to bless you abundantly, so that you will abound in every good work.", "2 Corinthians 9:8"],
+    ["Consider the lilies… they neither toil nor spin, yet your Father clothes them.", "Matthew 6:28-30"],
+    ["Every good and perfect gift is from above, coming down from the Father.", "James 1:17"],
+    ["He who did not spare His own Son… how will He not also graciously give us all things?", "Romans 8:32"],
+    ["You crown the year with Your bounty, and Your carts overflow with abundance.", "Psalm 65:11"],
+    ["The blessing of the Lord brings wealth, without painful toil for it.", "Proverbs 10:22"]
+  ];
+
+  // ---- Abundance prompts (deterministic by date + shuffle) ----
+  var PROMPTS = [
+    "Where did 'just enough' actually become 'more than enough' this week?",
+    "Name one thing you have today that you once prayed for.",
+    "What good has come to you that you didn't earn or strive for?",
+    "Who has been provision to you lately — a person God placed in your path?",
+    "What is overflowing in your life right now, even if other things feel scarce?",
+    "Where have you been counting lack instead of counting blessing?",
+    "What would change today if you truly believed there's always more where that came from?",
+    "Recall a time you were carried through. What did that teach you about His provision?",
+    "What small abundance is hiding in plain sight in your everyday life?",
+    "If God is a God of more-than-enough, what does He want you to release your grip on?",
+    "What are you grateful for that money could never buy?",
+    "Where is fear telling you to hoard, when faith is inviting you to trust?"
+  ];
+
+  // ---- Built-in affirmations ----
+  var AFFIRMATIONS = [
+    "I serve a God of more-than-enough, and His supply never runs dry.",
+    "There is always enough — enough time, enough provision, enough love.",
+    "What is meant for me will not pass me by.",
+    "I release scarcity and receive the abundance already prepared for me.",
+    "I give freely, because I trust the Source that fills me again."
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    var diff = d - start;
+    return Math.floor(diff / 86400000);
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+  }
+  function shortDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{month:"short", day:"numeric"});
+  }
+
+  // ---- State ----
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          o.reframes = o.reframes || [];
+          o.evidence = o.evidence || [];
+          return o;
+        }
+      }
+    }catch(e){}
+    return { reframes:[], evidence:[], promptResponse:"", promptIdx:null, draftScarcity:"", draftAbundance:"", reframeVerse:0, verseAttached:false };
+  }
+  var data = load();
+  var TODAY = todayKey();
+
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Daily prompt (deterministic by date, cycle on demand) ----
+  if(data.promptIdx === null || data.promptIdx === undefined){
+    data.promptIdx = dayOfYear(new Date()) % PROMPTS.length;
+  }
+  function renderPrompt(){
+    $("promptText").textContent = PROMPTS[data.promptIdx];
+  }
+  $("anotherPrompt").addEventListener("click", function(){
+    data.promptIdx = (data.promptIdx + 1) % PROMPTS.length;
+    renderPrompt(); save();
+  });
+
+  // ---- Reframe verse (tap to cycle, attach toggles) ----
+  if(data.reframeVerse === null || data.reframeVerse === undefined){
+    data.reframeVerse = dayOfYear(new Date()) % VERSES.length;
+  }
+  function renderReframeVerse(){
+    var v = VERSES[data.reframeVerse];
+    $("reframeVerseText").textContent = v[0];
+    $("reframeVerseRef").textContent = v[1];
+    var btn = $("attachVerse");
+    if(data.verseAttached){ btn.textContent = "✓ Verse attached"; btn.classList.add("attached"); }
+    else{ btn.textContent = "＋ Attach verse"; btn.classList.remove("attached"); }
+  }
+  $("anotherReframeVerse").addEventListener("click", function(){
+    data.reframeVerse = (data.reframeVerse + 1) % VERSES.length;
+    renderReframeVerse(); save();
+  });
+  $("attachVerse").addEventListener("click", function(){
+    data.verseAttached = !data.verseAttached;
+    renderReframeVerse(); save();
+  });
+
+  // ---- Restore drafts ----
+  $("todayDate").textContent = prettyDate(TODAY);
+  $("promptResponse").value = data.promptResponse || "";
+  $("scarcityInput").value = data.draftScarcity || "";
+  $("abundanceInput").value = data.draftAbundance || "";
+  renderPrompt();
+  renderReframeVerse();
+
+  // ---- Auto-save drafts ----
+  $("promptResponse").addEventListener("input", function(){ data.promptResponse = this.value; save(); });
+  $("scarcityInput").addEventListener("input", function(){ data.draftScarcity = this.value; save(); });
+  $("abundanceInput").addEventListener("input", function(){ data.draftAbundance = this.value; save(); });
+
+  // ---- Save reframe ----
+  $("saveReframe").addEventListener("click", function(){
+    var scarcity = $("scarcityInput").value.trim();
+    var abundance = $("abundanceInput").value.trim();
+    if(!scarcity && !abundance){
+      alert("Type the scarcity thought and the truth you choose instead, sister. 💛");
+      return;
+    }
+    var item = {
+      id: Date.now(),
+      date: TODAY,
+      scarcity: scarcity,
+      abundance: abundance
+    };
+    if(data.verseAttached){
+      item.verse = VERSES[data.reframeVerse][0];
+      item.verseRef = VERSES[data.reframeVerse][1];
+    }
+    data.reframes.unshift(item);
+    data.draftScarcity = ""; data.draftAbundance = ""; data.verseAttached = false;
+    $("scarcityInput").value = ""; $("abundanceInput").value = "";
+    renderReframeVerse();
+    save();
+    renderReframes();
+    renderAffirmations();
+  });
+
+  function renderReframes(){
+    var wrap = $("reframeList"), empty = $("reframeEmpty");
+    wrap.innerHTML = "";
+    if(!data.reframes.length){ empty.style.display = "block"; return; }
+    empty.style.display = "none";
+    data.reframes.forEach(function(r){
+      var div = document.createElement("div");
+      div.className = "reframe-item";
+
+      if(r.scarcity){
+        var old = document.createElement("div");
+        old.className = "old";
+        old.appendChild(document.createTextNode(r.scarcity));
+        div.appendChild(old);
+        var arrow = document.createElement("div");
+        arrow.className = "reframe-arrow";
+        arrow.textContent = "↓ becomes";
+        div.appendChild(arrow);
+      }
+
+      var nw = document.createElement("div");
+      nw.className = "new";
+      nw.appendChild(document.createTextNode(r.abundance || "—"));
+      div.appendChild(nw);
+
+      if(r.verse){
+        var vw = document.createElement("div");
+        vw.className = "r-verse";
+        vw.appendChild(document.createTextNode("“" + r.verse + "”"));
+        var vref = document.createElement("span");
+        vref.className = "vref";
+        vref.textContent = r.verseRef || "";
+        vw.appendChild(vref);
+        div.appendChild(vw);
+      }
+
+      var foot = document.createElement("div");
+      foot.className = "item-foot";
+      var del = document.createElement("button");
+      del.className = "del-btn";
+      del.type = "button";
+      del.textContent = "Remove";
+      del.addEventListener("click", function(){
+        if(confirm("Remove this reframe?")){
+          data.reframes = data.reframes.filter(function(x){ return x.id !== r.id; });
+          save(); renderReframes(); renderAffirmations();
+        }
+      });
+      foot.appendChild(del);
+      div.appendChild(foot);
+
+      wrap.appendChild(div);
+    });
+  }
+
+  // ---- Evidence log ----
+  function addEvidence(){
+    var input = $("evidenceInput");
+    var text = input.value.trim();
+    if(!text){ input.focus(); return; }
+    data.evidence.unshift({ id: Date.now(), date: TODAY, text: text });
+    input.value = "";
+    save();
+    renderEvidence();
+  }
+  $("addEvidence").addEventListener("click", addEvidence);
+  $("evidenceInput").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); addEvidence(); }
+  });
+
+  function renderEvidence(){
+    var list = $("evidenceList"), empty = $("evidenceEmpty");
+    $("evidenceCount").textContent = data.evidence.length;
+    list.innerHTML = "";
+    if(!data.evidence.length){ empty.style.display = "block"; return; }
+    empty.style.display = "none";
+    data.evidence.forEach(function(ev){
+      var li = document.createElement("li");
+      var left = document.createElement("div");
+      var t = document.createElement("span");
+      t.className = "ev-text";
+      t.textContent = ev.text;
+      var d = document.createElement("span");
+      d.className = "ev-date";
+      d.textContent = shortDate(ev.date);
+      left.appendChild(t); left.appendChild(d);
+      var del = document.createElement("button");
+      del.className = "del-x";
+      del.type = "button";
+      del.setAttribute("aria-label", "Remove entry");
+      del.textContent = "×";
+      del.addEventListener("click", function(){
+        if(confirm("Remove this piece of evidence?")){
+          data.evidence = data.evidence.filter(function(x){ return x.id !== ev.id; });
+          save(); renderEvidence();
+        }
+      });
+      li.appendChild(left); li.appendChild(del);
+      list.appendChild(li);
+    });
+  }
+
+  // ---- Affirmations (built-in + saved reframes as declarations) ----
+  function renderAffirmations(){
+    var wrap = $("affirmList");
+    wrap.innerHTML = "";
+    AFFIRMATIONS.forEach(function(a){
+      var d = document.createElement("div");
+      d.className = "affirm";
+      d.textContent = a;
+      wrap.appendChild(d);
+    });
+    data.reframes.forEach(function(r){
+      if(r.abundance){
+        var d = document.createElement("div");
+        d.className = "affirm mine";
+        d.textContent = r.abundance;
+        wrap.appendChild(d);
+      }
+    });
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Abundance Mindset data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { reframes:[], evidence:[], promptResponse:"", promptIdx: dayOfYear(new Date()) % PROMPTS.length, draftScarcity:"", draftAbundance:"", reframeVerse: dayOfYear(new Date()) % VERSES.length, verseAttached:false };
+      $("promptResponse").value = "";
+      $("scarcityInput").value = "";
+      $("abundanceInput").value = "";
+      $("evidenceInput").value = "";
+      renderPrompt(); renderReframeVerse();
+      renderReframes(); renderEvidence(); renderAffirmations();
+    }
+  });
+
+  // ---- Initial render ----
+  renderReframes();
+  renderEvidence();
+  renderAffirmations();
+
+})();
+</script>
+</body>
+</html>

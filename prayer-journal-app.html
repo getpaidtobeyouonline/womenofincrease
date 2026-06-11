@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prayer Journal App · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label:first-of-type{ margin-top:0; }
+  .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], select{ min-height:48px; }
+  textarea{ min-height:74px; line-height:1.5; }
+  select{ -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2314543E' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:40px;
+  }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Primary button ---------- */
+  .complete-btn{
+    width:100%; margin-top:18px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Stats strip ---------- */
+  .stats{
+    display:flex; gap:12px; margin-top:16px;
+  }
+  .stat{
+    flex:1; background:#fff; border:1px solid var(--line); border-radius:14px;
+    padding:14px 10px; text-align:center; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .stat .big{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:26px; line-height:1; }
+  .stat .lbl{ color:var(--muted); font-size:12px; margin-top:6px; letter-spacing:.02em; }
+  .stat.testify .big{ color:var(--gold); }
+  .testify-note{ text-align:center; color:var(--muted); font-size:12.5px; font-style:italic; margin-top:10px; }
+
+  /* ---------- Filter ---------- */
+  .filter-bar{
+    display:flex; gap:8px; margin-top:20px; margin-bottom:2px;
+  }
+  .filter-btn{
+    flex:1; min-height:44px; background:#fff; border:1px solid var(--line);
+    color:var(--muted); border-radius:999px; font-family:inherit; font-weight:600;
+    font-size:13px; cursor:pointer; padding:8px 6px; transition:all .15s;
+  }
+  .filter-btn:hover{ border-color:var(--gold-soft); }
+  .filter-btn.active{ background:var(--emerald); border-color:var(--emerald); color:#FCF8EF; }
+
+  /* ---------- Prayer cards ---------- */
+  .list-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:18px; font-weight:600;
+    margin:24px 0 2px;
+  }
+  .prayer{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:18px; margin-top:14px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+    animation:rise .35s ease;
+  }
+  .prayer.answered{
+    background:linear-gradient(180deg, var(--emerald-soft) 0%, #fff 70%);
+    border-color:rgba(20,84,62,.22);
+  }
+  .p-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .p-tag{
+    flex:none; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    padding:5px 10px; border-radius:999px; background:var(--gold-soft); color:var(--emerald);
+  }
+  .prayer.answered .p-tag{ background:var(--emerald); color:#FCF8EF; }
+  .p-date{ color:var(--muted); font-size:12px; white-space:nowrap; }
+  .p-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:19px; font-weight:600;
+    line-height:1.25; margin:12px 0 0;
+  }
+  .p-believe{ margin-top:8px; font-size:14px; color:var(--ink); }
+  .p-believe .lead{ color:var(--muted); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:.05em; display:block; margin-bottom:2px; }
+  .p-verse{
+    margin-top:12px; padding:10px 12px; border-left:3px solid var(--gold-soft);
+    background:var(--cream); border-radius:8px;
+    font-family:'Fraunces',serif; font-style:italic; font-size:14.5px; color:var(--emerald);
+  }
+  .p-answer{
+    margin-top:12px; padding:12px 14px; border-radius:12px;
+    background:var(--emerald); color:#FCF8EF;
+  }
+  .p-answer .lead{ color:var(--gold-soft); font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.06em; display:block; margin-bottom:4px; }
+  .p-answer .txt{ font-size:14.5px; line-height:1.5; }
+  .p-answer .when{ margin-top:6px; font-size:12px; color:var(--gold-soft); }
+
+  .p-actions{ display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; }
+  .answer-form{ display:none; margin-top:12px; }
+  .answer-form.show{ display:block; }
+
+  .btn-mark{
+    flex:1; min-height:44px; min-width:140px; background:var(--gold); color:var(--ink);
+    border:none; border-radius:11px; font-family:inherit; font-weight:700; font-size:14px;
+    cursor:pointer; box-shadow:0 4px 12px rgba(200,160,74,.28); transition:box-shadow .15s, transform .08s;
+  }
+  .btn-mark:hover{ box-shadow:0 6px 16px rgba(200,160,74,.36); }
+  .btn-mark:active{ transform:translateY(1px); }
+  .btn-mark.reopen{
+    background:var(--emerald-soft); color:var(--emerald); box-shadow:none;
+    border:1px solid rgba(20,84,62,.2);
+  }
+  .btn-ghost{
+    min-height:44px; background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:11px; padding:8px 14px; font-family:inherit; font-weight:600; font-size:13px; cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .btn-ghost:hover{ border-color:var(--gold); color:var(--ink); }
+  .btn-ghost.danger:hover{ border-color:#B4452F; color:#B4452F; }
+  .btn-save-answer{
+    margin-top:10px; min-height:44px; width:100%; background:var(--emerald); color:#FCF8EF;
+    border:none; border-radius:11px; font-family:inherit; font-weight:700; font-size:14px; cursor:pointer;
+    transition:opacity .15s;
+  }
+  .btn-save-answer:hover{ opacity:.93; }
+
+  /* ---------- Empty state ---------- */
+  .empty{
+    text-align:center; padding:30px 16px; color:var(--muted);
+  }
+  .empty .heart{ font-size:30px; }
+  .empty .big{ font-family:'Fraunces',serif; color:var(--emerald); font-size:18px; font-weight:600; margin:10px 0 4px; }
+  .empty .sm{ font-size:14px; }
+
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Prayer Journal</h1>
+    <p class="subtitle">Lay it before Him — and watch how faithful He is.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- Add a prayer -->
+  <section class="card">
+    <div class="step"><span class="num">+</span><h2>Bring it to prayer</h2></div>
+    <p class="hint">Write it down, sister. What you name in faith, you can watch Him answer.</p>
+
+    <form id="prayerForm" autocomplete="off">
+      <label class="field-label" for="title">What are you praying about?</label>
+      <input type="text" id="title" placeholder="e.g. My daughter's healing, a door at work…" required>
+
+      <label class="field-label" for="category">Category</label>
+      <select id="category">
+        <option>Family</option>
+        <option>Health</option>
+        <option>Provision</option>
+        <option>Guidance</option>
+        <option>Relationships</option>
+        <option>Breakthrough</option>
+        <option>Other</option>
+      </select>
+
+      <label class="field-label" for="believing">What I'm believing for <span class="opt">(optional)</span></label>
+      <textarea id="believing" placeholder="The outcome you're trusting God for…"></textarea>
+
+      <label class="field-label" for="verse">A scripture to stand on <span class="opt">(optional)</span></label>
+      <input type="text" id="verse" placeholder="Type one, or tap below for a word">
+      <div class="p-actions" style="margin-top:8px;">
+        <button class="btn-ghost" id="suggestVerse" type="button">✨ Give me a verse</button>
+      </div>
+
+      <button class="complete-btn" type="submit">Add to my journal 🙏</button>
+    </form>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat">
+      <div class="big" id="statTotal">0</div>
+      <div class="lbl">prayers lifted</div>
+    </div>
+    <div class="stat testify">
+      <div class="big" id="statAnswered">0</div>
+      <div class="lbl">answered 💛</div>
+    </div>
+  </div>
+  <p class="testify-note" id="testifyNote">Every answered prayer is a testimony of His faithfulness.</p>
+
+  <!-- Filter -->
+  <div class="filter-bar" role="group" aria-label="Filter prayers">
+    <button class="filter-btn active" data-filter="all" type="button">All</button>
+    <button class="filter-btn" data-filter="believing" type="button">Still believing</button>
+    <button class="filter-btn" data-filter="answered" type="button">Answered</button>
+  </div>
+
+  <h3 class="list-title">Your prayers</h3>
+  <div id="prayerList"></div>
+
+  <div class="empty" id="emptyState">
+    <div class="heart">💛</div>
+    <div class="big">Your journal is waiting.</div>
+    <div class="sm">Add your first prayer above. Nothing is too small to bring before Him.</div>
+  </div>
+
+  <div class="center" style="margin-top:26px;">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_prayer_journal";
+
+  // ---- A gentle, encouraging verse library (common paraphrases) ----
+  var VERSES = [
+    ["Do not be anxious about anything, but in every situation, by prayer, present your requests to God.", "Philippians 4:6"],
+    ["Ask and it will be given to you; seek and you will find.", "Matthew 7:7"],
+    ["The prayer of a righteous woman is powerful and effective.", "James 5:16"],
+    ["Cast all your anxiety on Him, because He cares for you.", "1 Peter 5:7"],
+    ["Call to me and I will answer you, and tell you great and unsearchable things.", "Jeremiah 33:3"],
+    ["For I know the plans I have for you — plans to prosper you and not to harm you.", "Jeremiah 29:11"],
+    ["Whatever you ask for in prayer, believe that you have received it, and it will be yours.", "Mark 11:24"],
+    ["Be still, and know that I am God.", "Psalm 46:10"],
+    ["Trust in the Lord with all your heart, and lean not on your own understanding.", "Proverbs 3:5"],
+    ["The Lord is near to all who call on Him in truth.", "Psalm 145:18"],
+    ["She is clothed with strength and dignity, and she laughs without fear of the future.", "Proverbs 31:25"],
+    ["Those who hope in the Lord will renew their strength.", "Isaiah 40:31"],
+    ["Weeping may stay for the night, but rejoicing comes in the morning.", "Psalm 30:5"],
+    ["And we know that in all things God works for the good of those who love Him.", "Romans 8:28"],
+    ["Be strong and courageous. Do not be afraid; the Lord your God is with you wherever you go.", "Joshua 1:9"],
+    ["His mercies are new every morning; great is your faithfulness.", "Lamentations 3:23"],
+    ["The Lord will fight for you; you need only to be still.", "Exodus 14:14"],
+    ["He gives strength to the weary and increases the power of the weak.", "Isaiah 40:29"],
+    ["You are a daughter of the King — heard, held, and never alone.", "A Word for You"],
+    ["The same God who carried you this far will carry you the rest of the way.", "A Word for You"]
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{month:"long", day:"numeric", year:"numeric"});
+  }
+  function prettyToday(){
+    return new Date().toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+  }
+
+  // ---- State ----
+  var data = load();
+  var filter = "all";
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && Array.isArray(o.prayers)) return o; }
+    }catch(e){}
+    return { prayers:[] };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function uid(){
+    return Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var form = $("prayerForm");
+  var titleEl = $("title"), categoryEl = $("category"),
+      believingEl = $("believing"), verseEl = $("verse");
+  var listEl = $("prayerList"), emptyEl = $("emptyState");
+
+  $("todayDate").textContent = prettyToday();
+
+  // ---- Suggest a verse ----
+  $("suggestVerse").addEventListener("click", function(){
+    var v = VERSES[Math.floor(Math.random()*VERSES.length)];
+    verseEl.value = v[0] + " — " + v[1];
+    verseEl.focus();
+  });
+
+  // ---- Add prayer ----
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var title = titleEl.value.trim();
+    if(!title){ titleEl.focus(); return; }
+    data.prayers.push({
+      id: uid(),
+      title: title,
+      category: categoryEl.value,
+      believing: believingEl.value.trim(),
+      verse: verseEl.value.trim(),
+      date: todayKey(),
+      status: "believing",
+      answer: "",
+      answeredDate: ""
+    });
+    save();
+    form.reset();
+    categoryEl.value = "Family";
+    render();
+    // smoothly bring the list into view
+    listEl.scrollIntoView({behavior:"smooth", block:"nearest"});
+  });
+
+  // ---- Filter buttons ----
+  Array.prototype.forEach.call(document.querySelectorAll(".filter-btn"), function(btn){
+    btn.addEventListener("click", function(){
+      filter = btn.getAttribute("data-filter");
+      Array.prototype.forEach.call(document.querySelectorAll(".filter-btn"), function(b){
+        b.classList.toggle("active", b===btn);
+      });
+      render();
+    });
+  });
+
+  // ---- Helpers to find a prayer ----
+  function find(id){
+    for(var i=0;i<data.prayers.length;i++){ if(data.prayers[i].id===id) return data.prayers[i]; }
+    return null;
+  }
+
+  // ---- Render ----
+  function render(){
+    renderStats();
+
+    var prayers = data.prayers.filter(function(p){
+      if(filter==="believing") return p.status!=="answered";
+      if(filter==="answered") return p.status==="answered";
+      return true;
+    }).slice().reverse(); // newest first
+
+    listEl.innerHTML = "";
+
+    if(data.prayers.length===0){
+      emptyEl.style.display = "block";
+      emptyEl.querySelector(".big").textContent = "Your journal is waiting.";
+      emptyEl.querySelector(".sm").textContent = "Add your first prayer above. Nothing is too small to bring before Him.";
+      return;
+    }
+    if(prayers.length===0){
+      emptyEl.style.display = "block";
+      if(filter==="answered"){
+        emptyEl.querySelector(".big").textContent = "No answers recorded yet.";
+        emptyEl.querySelector(".sm").textContent = "Keep believing — and come mark them here as He moves. 🙌";
+      }else{
+        emptyEl.querySelector(".big").textContent = "Nothing here right now.";
+        emptyEl.querySelector(".sm").textContent = "Every prayer you've lifted is being held. 💛";
+      }
+      return;
+    }
+    emptyEl.style.display = "none";
+
+    prayers.forEach(function(p){ listEl.appendChild(buildCard(p)); });
+  }
+
+  function buildCard(p){
+    var answered = p.status==="answered";
+    var card = document.createElement("article");
+    card.className = "prayer" + (answered ? " answered" : "");
+
+    var top = document.createElement("div");
+    top.className = "p-top";
+    var tag = document.createElement("span");
+    tag.className = "p-tag";
+    tag.textContent = p.category;
+    var date = document.createElement("span");
+    date.className = "p-date";
+    date.textContent = prettyDate(p.date);
+    top.appendChild(tag); top.appendChild(date);
+    card.appendChild(top);
+
+    var h = document.createElement("div");
+    h.className = "p-title";
+    h.textContent = (answered ? "🙌 " : "") + p.title;
+    card.appendChild(h);
+
+    if(p.believing){
+      var bel = document.createElement("div");
+      bel.className = "p-believe";
+      var lead = document.createElement("span");
+      lead.className = "lead"; lead.textContent = "Believing for";
+      bel.appendChild(lead);
+      bel.appendChild(document.createTextNode(p.believing));
+      card.appendChild(bel);
+    }
+
+    if(p.verse){
+      var ver = document.createElement("div");
+      ver.className = "p-verse";
+      ver.textContent = "“" + p.verse + "”";
+      card.appendChild(ver);
+    }
+
+    if(answered && p.answer){
+      var ans = document.createElement("div");
+      ans.className = "p-answer";
+      var al = document.createElement("span");
+      al.className = "lead"; al.textContent = "Answered 💛";
+      var at = document.createElement("div");
+      at.className = "txt"; at.textContent = p.answer;
+      ans.appendChild(al); ans.appendChild(at);
+      if(p.answeredDate){
+        var aw = document.createElement("div");
+        aw.className = "when"; aw.textContent = "Answered " + prettyDate(p.answeredDate);
+        ans.appendChild(aw);
+      }
+      card.appendChild(ans);
+    }
+
+    // ---- Actions ----
+    var actions = document.createElement("div");
+    actions.className = "p-actions";
+
+    var markBtn = document.createElement("button");
+    markBtn.type = "button";
+    markBtn.className = "btn-mark" + (answered ? " reopen" : "");
+    markBtn.textContent = answered ? "↩ Still believing" : "Mark as answered ✓";
+
+    var ansForm = document.createElement("div");
+    ansForm.className = "answer-form";
+
+    markBtn.addEventListener("click", function(){
+      if(answered){
+        // reopen
+        p.status = "believing";
+        p.answer = "";
+        p.answeredDate = "";
+        save(); render();
+      }else{
+        // toggle the inline answer form
+        ansForm.classList.toggle("show");
+        if(ansForm.classList.contains("show")){ ansTextarea.focus(); }
+      }
+    });
+
+    var delBtn = document.createElement("button");
+    delBtn.type = "button";
+    delBtn.className = "btn-ghost danger";
+    delBtn.textContent = "Delete";
+    delBtn.addEventListener("click", function(){
+      if(confirm("Delete this prayer? This can't be undone, sister.")){
+        data.prayers = data.prayers.filter(function(x){ return x.id!==p.id; });
+        save(); render();
+      }
+    });
+
+    actions.appendChild(markBtn);
+    actions.appendChild(delBtn);
+    card.appendChild(actions);
+
+    // ---- Inline answer form (revealed when marking answered) ----
+    var lbl = document.createElement("label");
+    lbl.className = "field-label";
+    lbl.textContent = "How did God answer? 🙌";
+    var ansTextarea = document.createElement("textarea");
+    ansTextarea.placeholder = "Record the answer — the testimony you'll want to remember…";
+    var saveAns = document.createElement("button");
+    saveAns.type = "button";
+    saveAns.className = "btn-save-answer";
+    saveAns.textContent = "Record this testimony 💛";
+    saveAns.addEventListener("click", function(){
+      var txt = ansTextarea.value.trim();
+      if(!txt){ ansTextarea.focus(); return; }
+      p.status = "answered";
+      p.answer = txt;
+      p.answeredDate = todayKey();
+      save(); render();
+    });
+    var lblId = "ans-" + p.id;
+    lbl.setAttribute("for", lblId);
+    ansTextarea.id = lblId;
+    ansForm.appendChild(lbl);
+    ansForm.appendChild(ansTextarea);
+    ansForm.appendChild(saveAns);
+    card.appendChild(ansForm);
+
+    return card;
+  }
+
+  // ---- Stats ----
+  function renderStats(){
+    var total = data.prayers.length;
+    var answered = data.prayers.filter(function(p){ return p.status==="answered"; }).length;
+    $("statTotal").textContent = total;
+    $("statAnswered").textContent = answered;
+    var note = $("testifyNote");
+    if(answered>0){
+      note.textContent = answered===1
+        ? "1 answered prayer — one testimony of His faithfulness. 🙌"
+        : answered + " answered prayers — that many testimonies of His faithfulness. 🙌";
+    }else{
+      note.textContent = "Every answered prayer is a testimony of His faithfulness.";
+    }
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your prayers? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { prayers:[] };
+      filter = "all";
+      Array.prototype.forEach.call(document.querySelectorAll(".filter-btn"), function(b){
+        b.classList.toggle("active", b.getAttribute("data-filter")==="all");
+      });
+      form.reset();
+      categoryEl.value = "Family";
+      render();
+    }
+  });
+
+  // ---- Init ----
+  render();
+
+})();
+</script>
+</body>
+</html>
