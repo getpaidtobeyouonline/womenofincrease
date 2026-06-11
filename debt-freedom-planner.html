@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debt Freedom Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="number"], select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; min-height:48px; transition:border-color .15s, box-shadow .15s;
+  }
+  select{ -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2314543E' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:38px;
+  }
+  input:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder{ color:#A7A095; }
+
+  /* ---------- Add debt form ---------- */
+  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px 12px; }
+  .form-grid .full{ grid-column:1 / -1; }
+  .form-grid label.field-label{ margin:0 0 5px; }
+  .optnote{ color:var(--muted); font-weight:400; }
+
+  .add-btn{
+    width:100%; margin-top:14px; min-height:50px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .add-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .add-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Total banner ---------- */
+  .total-banner{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:20px; text-align:center; margin-top:16px;
+  }
+  .total-banner .lbl{ font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft); font-weight:600; }
+  .total-banner .amt{ font-family:'Fraunces',serif; font-weight:600; font-size:34px; line-height:1.1; margin-top:4px; }
+  .total-banner .sub{ font-size:13.5px; color:rgba(252,248,239,.82); margin-top:6px; }
+
+  /* ---------- Progress bar ---------- */
+  .progress-wrap{ margin-top:16px; }
+  .progress-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:7px; }
+  .progress-top .plabel{ font-weight:600; font-size:13.5px; color:var(--ink); }
+  .progress-top .ppct{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:18px; }
+  .bar{ height:14px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; border:1px solid rgba(20,84,62,.1); }
+  .bar > span{ display:block; height:100%; background:linear-gradient(90deg,var(--gold-soft),var(--gold)); border-radius:999px; transition:width .4s ease; }
+  .paid-line{ text-align:center; color:var(--muted); font-size:13.5px; margin-top:9px; }
+  .paid-line b{ color:var(--emerald); }
+
+  /* ---------- Strategy toggle ---------- */
+  .seg{ display:flex; gap:8px; background:var(--cream); border:1px solid var(--line); border-radius:12px; padding:5px; }
+  .seg button{
+    flex:1; min-height:44px; border:none; border-radius:9px; cursor:pointer;
+    font-family:inherit; font-weight:600; font-size:14.5px; color:var(--muted); background:transparent;
+  }
+  .seg button.active{ background:var(--emerald); color:#FCF8EF; box-shadow:0 4px 12px rgba(20,84,62,.22); }
+  .strategy-note{ color:var(--muted); font-size:13.5px; margin-top:12px; line-height:1.5; }
+  .strategy-note b{ color:var(--emerald); }
+
+  /* ---------- Debt list ---------- */
+  .debt{
+    border:1px solid var(--line); border-radius:13px; padding:15px 15px 13px; margin-top:12px;
+    background:#fff; position:relative;
+  }
+  .debt.target{ border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,160,74,.16); background:#FFFDF8; }
+  .debt.paid{ background:var(--emerald-soft); border-color:rgba(20,84,62,.2); }
+  .debt-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .debt-name{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:18px; line-height:1.2; }
+  .debt.paid .debt-name{ text-decoration:line-through; text-decoration-color:rgba(20,84,62,.4); }
+  .debt-bal{ font-family:'Fraunces',serif; font-weight:600; color:var(--ink); font-size:18px; white-space:nowrap; }
+  .target-tag{
+    display:inline-block; margin-bottom:8px; font-size:11px; font-weight:700; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink); background:var(--gold-soft); padding:4px 10px; border-radius:999px;
+  }
+  .paid-tag{
+    display:inline-block; margin-bottom:8px; font-size:11px; font-weight:700; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--emerald); background:#fff; border:1px solid rgba(20,84,62,.25);
+    padding:4px 10px; border-radius:999px;
+  }
+  .debt-meta{ color:var(--muted); font-size:13px; margin-top:5px; }
+  .debt-meta span{ margin-right:12px; white-space:nowrap; }
+  .debt-bar{ height:9px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; margin-top:11px; border:1px solid rgba(20,84,62,.08); }
+  .debt-bar > span{ display:block; height:100%; background:linear-gradient(90deg,var(--gold-soft),var(--gold)); }
+  .debt.paid .debt-bar > span{ background:var(--emerald); }
+  .debt-actions{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+  .mini-btn{
+    flex:1; min-width:120px; min-height:44px; border-radius:10px; cursor:pointer; font-family:inherit;
+    font-weight:600; font-size:14px; border:1px solid var(--line); background:var(--cream); color:var(--ink);
+  }
+  .mini-btn.pay{ background:var(--gold); border-color:var(--gold); color:var(--ink); box-shadow:0 4px 12px rgba(200,160,74,.28); }
+  .mini-btn.celebrate{ background:var(--emerald); border-color:var(--emerald); color:#FCF8EF; }
+  .mini-btn.del{ flex:none; min-width:44px; max-width:52px; color:var(--muted); }
+  .mini-btn.del:hover{ border-color:#c0392b; color:#c0392b; }
+  .mini-btn:active{ transform:translateY(1px); }
+
+  .focus-line{
+    margin-top:13px; padding:13px 14px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.14);
+    border-radius:12px; color:var(--emerald); font-size:14px; line-height:1.5;
+  }
+  .focus-line b{ font-weight:700; }
+
+  /* ---------- Celebration ---------- */
+  .celebrate-box{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .celebrate-box.show{ display:block; animation:rise .4s ease; }
+  .celebrate-box .big{ font-family:'Fraunces',serif; font-weight:600; font-size:19px; margin-bottom:4px; }
+  .celebrate-box .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Encouragement / verse ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-weight:600; font-size:12.5px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--gold-soft);
+  }
+
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; text-align:center; padding:6px 4px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Debt Freedom Planner</h1>
+    <p class="subtitle">A clear payoff plan, real momentum, and a celebration for every win.</p>
+  </header>
+
+  <!-- Total banner -->
+  <section class="total-banner">
+    <div class="lbl">Total Remaining Debt</div>
+    <div class="amt" id="totalDebt">$0</div>
+    <div class="sub" id="totalSub">Add your first debt below — naming it is the brave first step.</div>
+  </section>
+
+  <!-- 1. Add debts -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Add a Debt</h2></div>
+    <p class="hint">List each balance honestly. No shame here — only a starting line.</p>
+    <div class="form-grid">
+      <div class="full">
+        <label class="field-label" for="dName">Debt name</label>
+        <input type="text" id="dName" placeholder="e.g. Visa card, Car loan" maxlength="40">
+      </div>
+      <div>
+        <label class="field-label" for="dBal">Balance ($)</label>
+        <input type="number" id="dBal" inputmode="decimal" min="0" step="0.01" placeholder="2400">
+      </div>
+      <div>
+        <label class="field-label" for="dMin">Min. payment ($)</label>
+        <input type="number" id="dMin" inputmode="decimal" min="0" step="0.01" placeholder="60">
+      </div>
+      <div class="full">
+        <label class="field-label" for="dRate">Interest rate <span class="optnote">(optional, % APR)</span></label>
+        <input type="number" id="dRate" inputmode="decimal" min="0" step="0.01" placeholder="19.99">
+      </div>
+    </div>
+    <button class="add-btn" id="addBtn" type="button">Add this debt +</button>
+  </section>
+
+  <!-- 2. Strategy -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Choose Your Strategy</h2></div>
+    <p class="hint">Both work, sister. Pick the one that keeps you going.</p>
+    <div class="seg" role="group" aria-label="Payoff strategy">
+      <button type="button" id="segSnow" class="active">❄️ Snowball</button>
+      <button type="button" id="segAval">📈 Avalanche</button>
+    </div>
+    <p class="strategy-note" id="strategyNote"></p>
+  </section>
+
+  <!-- 3. Extra payment -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Your Extra Power</h2></div>
+    <p class="hint">Anything extra you can put toward debt each month speeds up your freedom.</p>
+    <label class="field-label" for="extra">Extra monthly payment ($)</label>
+    <input type="number" id="extra" inputmode="decimal" min="0" step="0.01" placeholder="100">
+    <div class="focus-line" id="focusLine" style="display:none;"></div>
+  </section>
+
+  <!-- 4. Your plan -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Your Payoff Plan</h2></div>
+    <p class="hint">Your target is at the top. Throw everything extra at it — then roll forward.</p>
+
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span class="plabel">% to debt-free</span>
+        <span class="ppct" id="freePct">0%</span>
+      </div>
+      <div class="bar"><span id="freeBar" style="width:0%"></span></div>
+      <div class="paid-line">Total paid off so far: <b id="paidOff">$0</b></div>
+    </div>
+
+    <div id="debtList"></div>
+    <p class="empty-note" id="planEmpty">No debts yet — add one above and your plan will appear here. 💛</p>
+
+    <div class="celebrate-box" id="celebrate">
+      <div class="big" id="celebrateBig">🎉 One down!</div>
+      <div class="sm" id="celebrateSm">Roll that payment to the next — your snowball is growing.</div>
+    </div>
+  </section>
+
+  <!-- Encouragement -->
+  <section class="card">
+    <div class="verse">
+      <p id="verseText">The borrower is slave to the lender — but freedom is your portion, and increase is your inheritance.</p>
+      <div class="ref" id="verseRef">Proverbs 22:7 · A Word for You</div>
+    </div>
+    <p class="strategy-note" id="milestoneNote" style="text-align:center;"></p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_debt_freedom";
+
+  var ENCOURAGEMENTS = [
+    ["The borrower is slave to the lender — but freedom is your portion, and increase is your inheritance.", "Proverbs 22:7 · A Word for You"],
+    ["The plans of the diligent lead surely to abundance.", "Proverbs 21:5"],
+    ["She considers a field and buys it; with the fruit of her hands she plants.", "Proverbs 31:16"],
+    ["Owe no one anything, except to love one another.", "Romans 13:8"],
+    ["Let your peace return to you — every dollar freed is a chain broken.", "A Word for You"],
+    ["He who is faithful with little will be trusted with much.", "Luke 16:10"],
+    ["You did not come this far to only come this far. Keep going, sister.", "A Word for You"]
+  ];
+
+  // ---------- State ----------
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && Array.isArray(o.debts)){
+          if(o.strategy !== "snowball" && o.strategy !== "avalanche") o.strategy = "snowball";
+          if(typeof o.extra !== "number") o.extra = 0;
+          return o;
+        }
+      }
+    }catch(e){}
+    return { debts:[], strategy:"snowball", extra:0, celebratedIds:[] };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---------- Helpers ----------
+  var $ = function(id){ return document.getElementById(id); };
+  function money(n){
+    n = Number(n)||0;
+    var neg = n < 0; n = Math.abs(n);
+    var s = n.toLocaleString(undefined, {minimumFractionDigits: (n % 1 === 0 ? 0 : 2), maximumFractionDigits:2});
+    return (neg?"-$":"$") + s;
+  }
+  function uid(){ return "d" + Date.now() + Math.floor(Math.random()*1000); }
+  function num(v){ var x = parseFloat(v); return isFinite(x) && x > 0 ? x : 0; }
+
+  // ---------- Elements ----------
+  var nameEl=$("dName"), balEl=$("dBal"), minEl=$("dMin"), rateEl=$("dRate");
+  var extraEl=$("extra");
+  var segSnow=$("segSnow"), segAval=$("segAval");
+
+  // ---------- Strategy ordering ----------
+  // Active (unpaid) debts ordered by strategy. Snowball = smallest balance first.
+  // Avalanche = highest interest first (untyped rates sink to the bottom).
+  function orderedActive(){
+    var act = data.debts.filter(function(d){ return !d.paid; });
+    act.sort(function(a,b){
+      if(data.strategy === "avalanche"){
+        var ra = (a.rate||0), rb = (b.rate||0);
+        if(rb !== ra) return rb - ra;
+        return a.balance - b.balance; // tiebreak: smaller balance first
+      }else{
+        if(a.balance !== b.balance) return a.balance - b.balance;
+        return (b.rate||0) - (a.rate||0);
+      }
+    });
+    return act;
+  }
+
+  function totals(){
+    var remaining = 0, original = 0, paidOff = 0, minSum = 0;
+    data.debts.forEach(function(d){
+      original += (d.original || d.balance);
+      if(d.paid){ paidOff += (d.original || d.balance); }
+      else{ remaining += d.balance; paidOff += ((d.original||d.balance) - d.balance); minSum += (d.min||0); }
+    });
+    return { remaining:remaining, original:original, paidOff:paidOff, minSum:minSum };
+  }
+
+  // ---------- Strategy explanation ----------
+  function renderStrategyNote(){
+    segSnow.classList.toggle("active", data.strategy==="snowball");
+    segAval.classList.toggle("active", data.strategy==="avalanche");
+    segSnow.setAttribute("aria-pressed", data.strategy==="snowball");
+    segAval.setAttribute("aria-pressed", data.strategy==="avalanche");
+    if(data.strategy === "snowball"){
+      $("strategyNote").innerHTML = "<b>Snowball:</b> you pay off your <b>smallest balance first</b> — so you feel a win fast, and that joy carries you all the way to free.";
+    }else{
+      $("strategyNote").innerHTML = "<b>Avalanche:</b> you pay off your <b>highest-interest debt first</b> — so you keep more of your own money and reach freedom for the lowest cost.";
+    }
+  }
+
+  // ---------- Roll-forward focus estimate ----------
+  // Simple, sound estimate (ignores ongoing interest for clarity):
+  // The target gets every extra dollar PLUS the minimums freed from any paid debts.
+  function renderFocus(){
+    var act = orderedActive();
+    var fl = $("focusLine");
+    if(act.length === 0){ fl.style.display="none"; return; }
+    var target = act[0];
+    // Freed minimums from already-paid debts roll into the snowball power.
+    var freed = 0;
+    data.debts.forEach(function(d){ if(d.paid) freed += (d.min||0); });
+    var power = (data.extra||0) + (target.min||0) + freed;
+    fl.style.display="block";
+    if(power <= 0){
+      fl.innerHTML = "Add a minimum payment or some extra, and we'll estimate how fast <b>"+escapeHtml(target.name)+"</b> falls.";
+      return;
+    }
+    var months = Math.ceil(target.balance / power);
+    var monthLabel = months === 1 ? "about 1 month" : "about " + months + " months";
+    var rollMsg = freed > 0 ? " You've already freed <b>"+money(freed)+"/mo</b> from paid debts — that's rolling into this one. " : " ";
+    fl.innerHTML = "At <b>"+money(power)+"/mo</b> toward <b>"+escapeHtml(target.name)+"</b>, you could clear it in <b>"+monthLabel+"</b>." + rollMsg + "Then roll it all to the next. 💪";
+  }
+
+  function escapeHtml(s){
+    return String(s||"").replace(/[&<>"']/g, function(c){
+      return ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c];
+    });
+  }
+
+  // ---------- Render debt list ----------
+  function renderList(){
+    var listEl = $("debtList"), empty = $("planEmpty");
+    listEl.innerHTML = "";
+    if(data.debts.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+
+    var act = orderedActive();
+    var targetId = act.length ? act[0].id : null;
+
+    // Active debts in strategy order, then paid debts at the bottom.
+    var ordered = act.concat(data.debts.filter(function(d){ return d.paid; }));
+
+    ordered.forEach(function(d){
+      var card = document.createElement("div");
+      card.className = "debt" + (d.paid ? " paid" : (d.id===targetId ? " target" : ""));
+
+      var original = d.original || d.balance;
+      var pct = original > 0 ? Math.min(100, Math.round((1 - d.balance/original)*100)) : (d.paid?100:0);
+      if(d.paid) pct = 100;
+
+      var tag = d.paid ? '<span class="paid-tag">✓ Paid off 🎉</span>'
+                       : (d.id===targetId ? '<span class="target-tag">★ The Target</span>' : '');
+
+      var metaParts = [];
+      if(!d.paid){
+        if(d.min) metaParts.push('<span>Min '+money(d.min)+'/mo</span>');
+        if(d.rate) metaParts.push('<span>'+d.rate+'% APR</span>');
+        if(pct>0) metaParts.push('<span>'+pct+'% paid</span>');
+      }
+      var meta = metaParts.length ? '<div class="debt-meta">'+metaParts.join("")+'</div>' : '';
+
+      var actions = d.paid
+        ? '<button class="mini-btn del" type="button" data-del="'+d.id+'" aria-label="Delete debt">🗑</button>'
+        : '<button class="mini-btn pay" type="button" data-pay="'+d.id+'">Log a payment</button>'
+          + '<button class="mini-btn celebrate" type="button" data-done="'+d.id+'">Mark paid 🎉</button>'
+          + '<button class="mini-btn del" type="button" data-del="'+d.id+'" aria-label="Delete debt">🗑</button>';
+
+      card.innerHTML =
+        tag +
+        '<div class="debt-head">'+
+          '<div class="debt-name">'+escapeHtml(d.name)+'</div>'+
+          '<div class="debt-bal">'+(d.paid? money(original) : money(d.balance))+'</div>'+
+        '</div>'+
+        meta +
+        '<div class="debt-bar"><span style="width:'+pct+'%"></span></div>'+
+        '<div class="debt-actions">'+actions+'</div>';
+
+      listEl.appendChild(card);
+    });
+  }
+
+  // ---------- Render totals + progress ----------
+  function renderTotals(){
+    var t = totals();
+    $("totalDebt").textContent = money(t.remaining);
+    var sub = $("totalSub");
+    if(data.debts.length === 0){
+      sub.textContent = "Add your first debt below — naming it is the brave first step.";
+    }else if(t.remaining <= 0){
+      sub.textContent = "You are DEBT-FREE. 🎉 Look how far you've come, sister.";
+    }else{
+      var n = data.debts.filter(function(d){return !d.paid;}).length;
+      sub.textContent = "Across " + n + (n===1?" debt":" debts") + " · min " + money(t.minSum) + "/mo to stay steady.";
+    }
+
+    var pct = t.original > 0 ? Math.round((t.paidOff / t.original)*100) : 0;
+    pct = Math.max(0, Math.min(100, pct));
+    $("freePct").textContent = pct + "%";
+    $("freeBar").style.width = pct + "%";
+    $("paidOff").textContent = money(t.paidOff);
+
+    renderMilestone(pct, t);
+  }
+
+  function renderMilestone(pct, t){
+    var note = $("milestoneNote");
+    if(data.debts.length === 0){ note.textContent = ""; return; }
+    var msg;
+    if(t.remaining <= 0) msg = "Every chain is broken. This is your testimony. 👑";
+    else if(pct >= 75) msg = "Over three-quarters free — the finish line is in sight. Don't stop now.";
+    else if(pct >= 50) msg = "Halfway home. 🎉 What felt impossible is now in motion.";
+    else if(pct >= 25) msg = "A quarter of the way free — your momentum is real.";
+    else if(pct > 0) msg = "You've already started paying it down. Every dollar counts.";
+    else msg = "Today you begin. The first payment is the hardest and the bravest.";
+    note.textContent = msg;
+  }
+
+  function renderAll(){
+    renderStrategyNote();
+    renderList();
+    renderTotals();
+    renderFocus();
+  }
+
+  // ---------- Celebration ----------
+  function celebrate(name){
+    var box = $("celebrate");
+    var act = orderedActive();
+    $("celebrateBig").textContent = "🎉 " + name + " is GONE!";
+    if(act.length > 0){
+      $("celebrateSm").innerHTML = "Roll that payment straight to <b>"+escapeHtml(act[0].name)+"</b> — your snowball just got bigger. 💛";
+    }else{
+      $("celebrateSm").textContent = "That was your last one. You are DEBT-FREE, sister. 👑";
+    }
+    box.classList.add("show");
+    clearTimeout(box._t);
+    box._t = setTimeout(function(){ box.classList.remove("show"); }, 7000);
+  }
+
+  // ---------- Add debt ----------
+  $("addBtn").addEventListener("click", function(){
+    var name = nameEl.value.trim();
+    var bal = num(balEl.value);
+    if(!name){ nameEl.focus(); return; }
+    if(bal <= 0){ balEl.focus(); return; }
+    var d = {
+      id: uid(),
+      name: name,
+      balance: bal,
+      original: bal,
+      min: num(minEl.value),
+      rate: num(rateEl.value),
+      paid: false
+    };
+    data.debts.push(d);
+    save();
+    nameEl.value=""; balEl.value=""; minEl.value=""; rateEl.value="";
+    nameEl.focus();
+    renderAll();
+  });
+
+  // ---------- List actions (delegated) ----------
+  $("debtList").addEventListener("click", function(e){
+    var btn = e.target.closest("button");
+    if(!btn) return;
+    var id;
+    if((id = btn.getAttribute("data-pay"))){
+      var d = find(id); if(!d) return;
+      var def = d.min ? String(d.min) : "";
+      var amt = prompt("How much did you pay toward " + d.name + "? 💪", def);
+      if(amt === null) return;
+      var p = num(amt);
+      if(p <= 0) return;
+      d.balance = Math.max(0, d.balance - p);
+      if(d.balance === 0){ markPaid(d); }
+      save(); renderAll();
+    }else if((id = btn.getAttribute("data-done"))){
+      var d2 = find(id); if(!d2) return;
+      if(confirm('Mark "'+d2.name+'" as fully PAID OFF? 🎉')){
+        markPaid(d2); save(); renderAll();
+      }
+    }else if((id = btn.getAttribute("data-del"))){
+      var d3 = find(id); if(!d3) return;
+      if(confirm('Remove "'+d3.name+'" from your plan? This can\'t be undone.')){
+        data.debts = data.debts.filter(function(x){ return x.id !== id; });
+        save(); renderAll();
+      }
+    }
+  });
+
+  function find(id){ for(var i=0;i<data.debts.length;i++){ if(data.debts[i].id===id) return data.debts[i]; } return null; }
+  function markPaid(d){
+    d.balance = 0;
+    d.paid = true;
+    if(data.celebratedIds.indexOf(d.id) === -1){
+      data.celebratedIds.push(d.id);
+      celebrate(d.name);
+    }
+  }
+
+  // ---------- Strategy toggle ----------
+  segSnow.addEventListener("click", function(){ data.strategy="snowball"; save(); renderAll(); });
+  segAval.addEventListener("click", function(){ data.strategy="avalanche"; save(); renderAll(); });
+
+  // ---------- Extra payment ----------
+  extraEl.addEventListener("input", function(){
+    data.extra = num(extraEl.value);
+    save(); renderFocus();
+  });
+
+  // ---------- Reset ----------
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Debt Freedom Planner data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { debts:[], strategy:"snowball", extra:0, celebratedIds:[] };
+      extraEl.value="";
+      $("celebrate").classList.remove("show");
+      renderAll();
+    }
+  });
+
+  // ---------- First-run restore ----------
+  extraEl.value = data.extra ? String(data.extra) : "";
+  // Rotating encouragement (stable per load)
+  var pick = ENCOURAGEMENTS[Math.floor(Math.random()*ENCOURAGEMENTS.length)];
+  $("verseText").textContent = pick[0];
+  $("verseRef").textContent = pick[1];
+
+  renderAll();
+})();
+</script>
+</body>
+</html>

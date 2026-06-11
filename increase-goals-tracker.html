@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Increase Goals Tracker · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Increase Score (hero) ---------- */
+  .score{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:24px 20px; position:relative; overflow:hidden;
+    text-align:center;
+  }
+  .score::before{
+    content:"\2191"; font-family:'Fraunces',serif; position:absolute;
+    top:-26px; right:14px; font-size:120px; color:rgba(231,211,161,.16); line-height:1;
+  }
+  .score .label{
+    font-family:'Hanken Grotesk'; font-weight:600; font-size:12.5px;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+    position:relative; z-index:1;
+  }
+  .score .figure{
+    font-family:'Fraunces',serif; font-weight:600; font-size:40px; line-height:1.1;
+    margin:8px 0 4px; position:relative; z-index:1;
+  }
+  .score .movement{
+    font-size:13.5px; color:#E7D3A1; position:relative; z-index:1; min-height:20px;
+  }
+  .score .movement.up{ color:#BFE3C9; }
+  .score .breakdown{
+    display:flex; justify-content:center; gap:14px; flex-wrap:wrap;
+    margin-top:14px; position:relative; z-index:1;
+    font-size:12.5px; color:rgba(252,248,239,.85);
+  }
+  .score .breakdown span b{ color:#FCF8EF; }
+
+  /* ---------- Pillars ---------- */
+  .pillar{
+    border:1px solid var(--line); border-radius:14px; padding:16px;
+    margin-top:14px; background:var(--cream);
+  }
+  .pillar:first-of-type{ margin-top:4px; }
+  .pillar-head{
+    display:flex; align-items:center; gap:9px; margin-bottom:4px;
+  }
+  .pillar-icon{
+    flex:none; width:30px;height:30px;border-radius:9px;
+    display:flex;align-items:center;justify-content:center; font-size:16px;
+    background:var(--emerald-soft);
+  }
+  .pillar-name{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:17px;
+  }
+  .pillar-tag{
+    margin-left:auto; font-size:11px; font-weight:700; letter-spacing:.08em;
+    text-transform:uppercase; padding:3px 9px; border-radius:999px;
+  }
+  .pillar-tag.grow{ background:var(--emerald-soft); color:var(--emerald); }
+  .pillar-tag.reduce{ background:var(--gold-soft); color:#7a5e1d; }
+  .pillar-desc{ color:var(--muted); font-size:12.5px; margin-bottom:12px; }
+
+  .fields{ display:flex; gap:10px; }
+  .fields .fld{ flex:1; }
+  label.field-label{
+    display:block; font-weight:600; font-size:12px; color:var(--ink);
+    margin:0 0 5px; letter-spacing:.01em;
+  }
+  .money-wrap{ position:relative; }
+  .money-wrap .cur{
+    position:absolute; left:12px; top:50%; transform:translateY(-50%);
+    color:var(--muted); font-size:15px; pointer-events:none;
+  }
+  input[type="text"], input[type="number"]{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:#fff; border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; min-height:48px; transition:border-color .15s, box-shadow .15s;
+  }
+  .money-wrap input{ padding-left:26px; }
+  input:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder{ color:#A7A095; }
+
+  /* progress */
+  .prog-wrap{ margin-top:13px; }
+  .prog-meta{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-size:12.5px; color:var(--muted); margin-bottom:6px;
+  }
+  .prog-meta b{ color:var(--emerald); font-size:13.5px; }
+  .bar{
+    height:10px; border-radius:999px; background:var(--emerald-soft); overflow:hidden;
+  }
+  .bar .fill{
+    height:100%; border-radius:999px; width:0%;
+    background:linear-gradient(90deg, var(--gold-soft), var(--gold));
+    transition:width .35s ease;
+  }
+  .pillar.reduce-p .bar .fill{
+    background:linear-gradient(90deg, #BFE3C9, var(--emerald));
+  }
+  .micro{ font-size:12px; color:var(--muted); margin-top:7px; min-height:16px; }
+  .micro.win{ color:var(--emerald); font-weight:600; }
+
+  /* ---------- Milestone button + snapshot ---------- */
+  .complete-btn{
+    width:100%; margin-top:8px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+
+  .blessing{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .blessing.show{ display:block; animation:rise .4s ease; }
+  .blessing .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .blessing .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Trend / milestones ---------- */
+  .history-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 4px;
+  }
+  .mile-list{ list-style:none; margin-top:6px; }
+  .mile-row{
+    padding:12px 2px; border-bottom:1px solid var(--line);
+  }
+  .mile-row:last-child{ border-bottom:none; }
+  .mile-top{
+    display:flex; justify-content:space-between; align-items:baseline; margin-bottom:7px;
+  }
+  .mile-date{ color:var(--ink); font-weight:700; font-size:14px; }
+  .mile-net{ font-family:'Fraunces',serif; color:var(--emerald); font-weight:600; font-size:15px; }
+  .mile-net .chg{ font-family:'Hanken Grotesk'; font-weight:600; font-size:12px; margin-left:6px; }
+  .chg.up{ color:#1d8a55; }
+  .chg.down{ color:#b06a2e; }
+  .chg.flat{ color:var(--muted); }
+  .minibar-track{
+    display:flex; align-items:flex-end; gap:5px; height:42px; margin-top:2px;
+  }
+  .minibar{
+    flex:1; background:var(--gold-soft); border-radius:4px 4px 0 0; min-height:4px;
+    position:relative;
+  }
+  .minibar.best{ background:var(--gold); }
+  .minibar-row{ display:flex; gap:5px; margin-top:5px; }
+  .minibar-row span{ flex:1; text-align:center; font-size:10px; color:var(--muted); }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer / reset ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Increase Goals Tracker</h1>
+    <p class="subtitle">Watch your income, savings, assets, and freedom from debt grow — one faithful month at a time.</p>
+  </header>
+
+  <!-- Increase Score -->
+  <section class="card">
+    <div class="score">
+      <div class="label">Your Increase Score</div>
+      <div class="figure" id="scoreFigure">$0</div>
+      <div class="movement" id="scoreMovement">Set your targets below and log your first numbers, sister. 💛</div>
+      <div class="breakdown">
+        <span>Assets <b id="bdAssets">$0</b></span>
+        <span>+ Savings <b id="bdSavings">$0</b></span>
+        <span>− Debt <b id="bdDebt">$0</b></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pillars -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Four Pillars of Increase</h2></div>
+    <p class="hint">Set a target for each, then log where you stand today. We'll do the math — you just keep moving.</p>
+
+    <!-- Income -->
+    <div class="pillar" id="p-income">
+      <div class="pillar-head">
+        <span class="pillar-icon">💵</span>
+        <span class="pillar-name">Income</span>
+        <span class="pillar-tag grow">Grow</span>
+      </div>
+      <p class="pillar-desc">Your monthly or yearly income — the seed you're growing.</p>
+      <div class="fields">
+        <div class="fld">
+          <label class="field-label" for="income_target">Target</label>
+          <div class="money-wrap"><span class="cur">$</span>
+            <input type="number" inputmode="decimal" id="income_target" placeholder="0" min="0" step="any"></div>
+        </div>
+        <div class="fld">
+          <label class="field-label" for="income_current">Current</label>
+          <div class="money-wrap"><span class="cur">$</span>
+            <input type="number" inputmode="decimal" id="income_current" placeholder="0" min="0" step="any"></div>
+        </div>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-meta"><span id="income_pctlabel">No target yet</span><b id="income_pct">0%</b></div>
+        <div class="bar"><div class="fill" id="income_fill"></div></div>
+        <div class="micro" id="income_micro"></div>
+      </div>
+    </div>
+
+    <!-- Savings -->
+    <div class="pillar" id="p-savings">
+      <div class="pillar-head">
+        <span class="pillar-icon">🌱</span>
+        <span class="pillar-name">Savings</span>
+        <span class="pillar-tag grow">Grow</span>
+      </div>
+      <p class="pillar-desc">Your safety, your cushion, your future opportunities.</p>
+      <div class="fields">
+        <div class="fld">
+          <label class="field-label" for="savings_target">Target</label>
+          <div class="money-wrap"><span class="cur">$</span>
+            <input type="number" inputmode="decimal" id="savings_target" placeholder="0" min="0" step="any"></div>
+        </div>
+        <div class="fld">
+          <label class="field-label" for="savings_current">Current</label>
+          <div class="money-wrap"><span class="cur">$</span>
+            <input type="number" inputmode="decimal" id="savings_current" placeholder="0" min="0" step="any"></div>
+        </div>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-meta"><span id="savings_pctlabel">No target yet</span><b id="savings_pct">0%</b></div>
+        <div class="bar"><div class="fill" id="savings_fill"></div></div>
+        <div class="micro" id="savings_micro"></div>
+      </div>
+    </div>
+
+    <!-- Assets -->
+    <div class="pillar" id="p-assets">
+      <div class="pillar-head">
+        <span class="pillar-icon">🏡</span>
+        <span class="pillar-name">Assets</span>
+        <span class="pillar-tag grow">Grow</span>
+      </div>
+      <p class="pillar-desc">What you own that holds and builds value over time.</p>
+      <div class="fields">
+        <div class="fld">
+          <label class="field-label" for="assets_target">Target</label>
+          <div class="money-wrap"><span class="cur">$</span>
+            <input type="number" inputmode="decimal" id="assets_target" placeholder="0" min="0" step="any"></div>
+        </div>
+        <div class="fld">
+          <label class="field-label" for="assets_current">Current</label>
+          <div class="money-wrap"><span class="cur">$</span>
+            <input type="number" inputmode="decimal" id="assets_current" placeholder="0" min="0" step="any"></div>
+        </div>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-meta"><span id="assets_pctlabel">No target yet</span><b id="assets_pct">0%</b></div>
+        <div class="bar"><div class="fill" id="assets_fill"></div></div>
+        <div class="micro" id="assets_micro"></div>
+      </div>
+    </div>
+
+    <!-- Debt -->
+    <div class="pillar reduce-p" id="p-debt">
+      <div class="pillar-head">
+        <span class="pillar-icon">⛓️</span>
+        <span class="pillar-name">Debt</span>
+        <span class="pillar-tag reduce">Reduce</span>
+      </div>
+      <p class="pillar-desc">Paying this down is increase too — every dollar buys back your freedom.</p>
+      <div class="fields">
+        <div class="fld">
+          <label class="field-label" for="debt_start">Starting balance</label>
+          <div class="money-wrap"><span class="cur">$</span>
+            <input type="number" inputmode="decimal" id="debt_start" placeholder="0" min="0" step="any"></div>
+        </div>
+        <div class="fld">
+          <label class="field-label" for="debt_current">Current owed</label>
+          <div class="money-wrap"><span class="cur">$</span>
+            <input type="number" inputmode="decimal" id="debt_current" placeholder="0" min="0" step="any"></div>
+        </div>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-meta"><span id="debt_pctlabel">No balance yet</span><b id="debt_pct">0%</b></div>
+        <div class="bar"><div class="fill" id="debt_fill"></div></div>
+        <div class="micro" id="debt_micro"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Monthly milestone -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Log This Month's Milestone</h2></div>
+    <p class="hint">Capture today's numbers as a snapshot. Come back each month and watch the line rise.</p>
+    <button class="complete-btn" id="snapshotBtn" type="button">Save this month's snapshot 📈</button>
+    <div class="blessing" id="blessing">
+      <div class="big" id="blessBig">Snapshot saved. 💛</div>
+      <div class="sm" id="blessSm">Your increase is recorded. Keep showing up — it compounds.</div>
+    </div>
+  </section>
+
+  <!-- Trend / history -->
+  <section class="card">
+    <div class="history-title">Your increase over time</div>
+    <div id="miniChart"></div>
+    <ul class="mile-list" id="mileList"></ul>
+    <p class="empty-note" id="mileEmpty">Save your first monthly snapshot and your trend will appear here. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_increase_goals";
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && o.pillars) {
+          o.snapshots = o.snapshots || [];
+          return o;
+        }
+      }
+    }catch(e){}
+    return {
+      pillars:{
+        income:{ target:"", current:"" },
+        savings:{ target:"", current:"" },
+        assets:{ target:"", current:"" },
+        debt:{ start:"", current:"" }
+      },
+      snapshots:[]
+    };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Helpers ----
+  var $ = function(id){ return document.getElementById(id); };
+  function num(v){ var n = parseFloat(v); return isFinite(n) ? n : 0; }
+  function money(n){
+    var neg = n < 0;
+    n = Math.abs(Math.round(n));
+    var s = n.toLocaleString("en-US");
+    return (neg ? "-$" : "$") + s;
+  }
+  function clampPct(p){ return Math.max(0, Math.min(100, p)); }
+  function monthKey(d){
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    return d.getFullYear()+"-"+m;
+  }
+  function prettyMonth(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, 1);
+    return d.toLocaleDateString(undefined,{month:"short", year:"numeric"});
+  }
+
+  // ---- Restore inputs ----
+  var P = data.pillars;
+  $("income_target").value  = P.income.target;
+  $("income_current").value = P.income.current;
+  $("savings_target").value  = P.savings.target;
+  $("savings_current").value = P.savings.current;
+  $("assets_target").value  = P.assets.target;
+  $("assets_current").value = P.assets.current;
+  $("debt_start").value   = P.debt.start;
+  $("debt_current").value = P.debt.current;
+
+  // ---- Net / score ----
+  function net(){
+    return num(P.assets.current) + num(P.savings.current) - num(P.debt.current);
+  }
+
+  // ---- Grow-pillar render ----
+  function renderGrow(name, winWord){
+    var p = P[name];
+    var t = num(p.target), c = num(p.current);
+    var fill = $(name+"_fill"), pctEl = $(name+"_pct"),
+        lblEl = $(name+"_pctlabel"), micro = $(name+"_micro");
+    if(t <= 0){
+      fill.style.width = "0%";
+      pctEl.textContent = "0%";
+      lblEl.textContent = "Set a target to begin";
+      micro.textContent = "";
+      micro.className = "micro";
+      return;
+    }
+    var pct = clampPct((c / t) * 100);
+    fill.style.width = pct + "%";
+    pctEl.textContent = Math.round(pct) + "%";
+    lblEl.textContent = money(c) + " of " + money(t);
+    if(c >= t){
+      micro.textContent = "🎉 You reached it. Look at what faithful increase built.";
+      micro.className = "micro win";
+    } else {
+      var remaining = t - c;
+      micro.textContent = money(remaining) + " to go — you're " + Math.round(pct) + "% of the way there.";
+      micro.className = "micro";
+    }
+  }
+
+  // ---- Debt render (progress = paid down) ----
+  function renderDebt(){
+    var start = num(P.debt.start), cur = num(P.debt.current);
+    var fill = $("debt_fill"), pctEl = $("debt_pct"),
+        lblEl = $("debt_pctlabel"), micro = $("debt_micro");
+    if(start <= 0){
+      fill.style.width = "0%";
+      pctEl.textContent = "0%";
+      lblEl.textContent = "Enter your starting balance";
+      micro.textContent = "";
+      micro.className = "micro";
+      return;
+    }
+    var paid = start - cur;
+    var pct = clampPct((paid / start) * 100);
+    fill.style.width = pct + "%";
+    pctEl.textContent = Math.round(pct) + "%";
+    lblEl.textContent = money(paid < 0 ? 0 : paid) + " paid off";
+    if(cur <= 0){
+      micro.textContent = "🎉 Debt-free. That chain is broken — walk in your freedom.";
+      micro.className = "micro win";
+    } else if(paid > 0){
+      micro.textContent = money(cur) + " left — every payment is increase in disguise.";
+      micro.className = "micro";
+    } else {
+      micro.textContent = money(cur) + " owed. One step at a time, you've got this.";
+      micro.className = "micro";
+    }
+  }
+
+  // ---- Score render ----
+  function renderScore(){
+    var n = net();
+    $("scoreFigure").textContent = money(n);
+    $("bdAssets").textContent  = money(num(P.assets.current));
+    $("bdSavings").textContent = money(num(P.savings.current));
+    $("bdDebt").textContent    = money(num(P.debt.current));
+
+    var moveEl = $("scoreMovement");
+    var snaps = data.snapshots;
+    if(snaps.length === 0){
+      moveEl.textContent = "This is your starting line. Log a snapshot below to begin your trend.";
+      moveEl.className = "movement";
+      return;
+    }
+    var last = snaps[snaps.length-1].net;
+    var diff = n - last;
+    if(diff > 0){
+      moveEl.textContent = "↑ Up " + money(diff) + " since your last snapshot. Increase, sister!";
+      moveEl.className = "movement up";
+    } else if(diff < 0){
+      moveEl.textContent = "Down " + money(Math.abs(diff)) + " from last snapshot — seasons shift. Stay steady.";
+      moveEl.className = "movement";
+    } else {
+      moveEl.textContent = "Holding steady since your last snapshot. Steady is still faithful.";
+      moveEl.className = "movement";
+    }
+  }
+
+  function renderAll(){
+    renderGrow("income");
+    renderGrow("savings");
+    renderGrow("assets");
+    renderDebt();
+    renderScore();
+    renderTrend();
+  }
+
+  // ---- Wire inputs (auto-save + live recalc) ----
+  function wire(id, setter){
+    $(id).addEventListener("input", function(){
+      setter(this.value);
+      save();
+      renderAll();
+    });
+  }
+  wire("income_target",  function(v){ P.income.target=v; });
+  wire("income_current", function(v){ P.income.current=v; });
+  wire("savings_target",  function(v){ P.savings.target=v; });
+  wire("savings_current", function(v){ P.savings.current=v; });
+  wire("assets_target",  function(v){ P.assets.target=v; });
+  wire("assets_current", function(v){ P.assets.current=v; });
+  wire("debt_start",   function(v){ P.debt.start=v; });
+  wire("debt_current", function(v){ P.debt.current=v; });
+
+  // ---- Snapshot ----
+  $("snapshotBtn").addEventListener("click", function(){
+    var key = monthKey(new Date());
+    var snap = {
+      month: key,
+      income: num(P.income.current),
+      savings: num(P.savings.current),
+      assets: num(P.assets.current),
+      debt: num(P.debt.current),
+      net: net()
+    };
+    // replace this month's snapshot if it exists
+    var prevNet = data.snapshots.length ? data.snapshots[data.snapshots.length-1].net : null;
+    var existingIdx = -1;
+    for(var i=0;i<data.snapshots.length;i++){
+      if(data.snapshots[i].month === key){ existingIdx = i; break; }
+    }
+    if(existingIdx >= 0){
+      // recompute prevNet relative to the one before this month
+      prevNet = existingIdx > 0 ? data.snapshots[existingIdx-1].net : null;
+      data.snapshots[existingIdx] = snap;
+    } else {
+      data.snapshots.push(snap);
+    }
+    save();
+
+    var big = $("blessBig"), sm = $("blessSm");
+    if(prevNet === null){
+      big.textContent = "Your first snapshot. 💛";
+      sm.textContent = "This is the day your increase began. Come back next month.";
+    } else {
+      var diff = snap.net - prevNet;
+      if(diff > 0){
+        big.textContent = "Up " + money(diff) + " this month! 🎉";
+        sm.textContent = "That's real increase. Faithful in little, faithful in much.";
+      } else if(diff < 0){
+        big.textContent = "Snapshot saved. 💛";
+        sm.textContent = "A softer month — and that's okay. Showing up is the win.";
+      } else {
+        big.textContent = "Steady this month. 💛";
+        sm.textContent = "Holding ground is its own kind of strength, sister.";
+      }
+    }
+    $("blessing").classList.add("show");
+    renderAll();
+  });
+
+  // ---- Trend render (mini bars + list) ----
+  function renderTrend(){
+    var list = $("mileList"), empty = $("mileEmpty"), chart = $("miniChart");
+    var snaps = data.snapshots.slice(); // chronological
+    list.innerHTML = "";
+    chart.innerHTML = "";
+    if(snaps.length === 0){
+      empty.style.display = "block";
+      return;
+    }
+    empty.style.display = "none";
+
+    // mini-bars of net (last 8)
+    var recent = snaps.slice(-8);
+    var nets = recent.map(function(s){ return s.net; });
+    var maxN = Math.max.apply(null, nets);
+    var minN = Math.min.apply(null, nets);
+    var span = (maxN - minN) || 1;
+    var bestVal = maxN;
+
+    var track = document.createElement("div");
+    track.className = "minibar-track";
+    var labels = document.createElement("div");
+    labels.className = "minibar-row";
+    recent.forEach(function(s){
+      var bar = document.createElement("div");
+      bar.className = "minibar" + (s.net === bestVal ? " best" : "");
+      // normalize 8% min so even the lowest shows
+      var h = 8 + ((s.net - minN) / span) * 92;
+      bar.style.height = h + "%";
+      bar.title = prettyMonth(s.month) + ": " + money(s.net);
+      track.appendChild(bar);
+
+      var lab = document.createElement("span");
+      lab.textContent = s.month.split("-")[1];
+      labels.appendChild(lab);
+    });
+    chart.appendChild(track);
+    chart.appendChild(labels);
+
+    // list newest first
+    var rev = snaps.slice().reverse();
+    rev.forEach(function(s, idx){
+      // the earlier snapshot in chronological order
+      var chronoIdx = snaps.length - 1 - idx;
+      var prev = chronoIdx > 0 ? snaps[chronoIdx-1] : null;
+
+      var li = document.createElement("li");
+      li.className = "mile-row";
+
+      var top = document.createElement("div");
+      top.className = "mile-top";
+
+      var dt = document.createElement("span");
+      dt.className = "mile-date";
+      dt.textContent = prettyMonth(s.month);
+
+      var netEl = document.createElement("span");
+      netEl.className = "mile-net";
+      netEl.textContent = money(s.net);
+
+      if(prev){
+        var diff = s.net - prev.net;
+        var chg = document.createElement("span");
+        if(diff > 0){ chg.className = "chg up"; chg.textContent = "↑ " + money(diff); }
+        else if(diff < 0){ chg.className = "chg down"; chg.textContent = "↓ " + money(Math.abs(diff)); }
+        else { chg.className = "chg flat"; chg.textContent = "→ steady"; }
+        netEl.appendChild(chg);
+      }
+      top.appendChild(dt);
+      top.appendChild(netEl);
+      li.appendChild(top);
+      list.appendChild(li);
+    });
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Increase Goals data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = load();
+      P = data.pillars;
+      var ids = ["income_target","income_current","savings_target","savings_current",
+                 "assets_target","assets_current","debt_start","debt_current"];
+      ids.forEach(function(id){ $(id).value = ""; });
+      $("blessing").classList.remove("show");
+      renderAll();
+    }
+  });
+
+  // ---- First paint ----
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

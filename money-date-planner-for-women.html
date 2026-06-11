@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Money Date Planner for Women · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px; font-weight:600;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Ritual / invitation banner ---------- */
+  .ritual{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .ritual::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .ritual p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .ritual .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .ritual-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="date"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="date"]{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  .optional{ color:var(--muted); font-weight:400; }
+
+  /* ---------- Checklist toggle ---------- */
+  .check-row{
+    display:flex; align-items:flex-start; gap:11px; margin:14px 0 6px;
+  }
+  .check-row input[type="checkbox"]{
+    appearance:none; -webkit-appearance:none; flex:none;
+    width:24px; height:24px; margin-top:1px; border:1.5px solid var(--gold);
+    border-radius:7px; background:var(--cream); cursor:pointer; position:relative;
+    transition:background .15s, border-color .15s;
+  }
+  .check-row input[type="checkbox"]:checked{ background:var(--gold); border-color:var(--gold); }
+  .check-row input[type="checkbox"]:checked::after{
+    content:"✓"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    color:var(--ink); font-size:15px; font-weight:700;
+  }
+  .check-row input[type="checkbox"]:focus-visible{
+    outline:none; box-shadow:0 0 0 3px rgba(200,160,74,.3);
+  }
+  .check-row label{
+    font-weight:600; font-size:14.5px; color:var(--ink); cursor:pointer; padding-top:2px;
+    min-height:24px; line-height:1.35;
+  }
+
+  .two-col{ display:flex; gap:10px; }
+  .two-col > div{ flex:1; }
+
+  /* ---------- Next date highlight ---------- */
+  .next-date-box{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:16px; margin-top:4px;
+  }
+  .next-date-box .lbl{
+    font-family:'Fraunces',serif; color:var(--emerald); font-weight:600; font-size:16px; margin-bottom:8px;
+  }
+  .next-date-display{ color:var(--muted); font-size:13.5px; margin-top:8px; }
+  .next-date-display b{ color:var(--emerald); }
+
+  /* ---------- Save / complete button ---------- */
+  .complete-btn{
+    width:100%; margin-top:8px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+
+  .blessing{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .blessing.show{ display:block; animation:rise .4s ease; }
+  .blessing .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .blessing .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Streak / count ---------- */
+  .streak{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:18px; color:var(--muted); font-size:14px;
+  }
+  .streak b{ color:var(--emerald); font-size:15px; }
+  .flame{ font-size:16px; }
+
+  /* ---------- Welcome (first run) ---------- */
+  .welcome{
+    text-align:center; padding:26px 20px;
+  }
+  .welcome .em{ font-size:30px; }
+  .welcome h2{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:22px; font-weight:600;
+    margin:10px 0 8px;
+  }
+  .welcome p{ color:var(--muted); font-size:14.5px; }
+
+  /* ---------- History ---------- */
+  .history-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 4px;
+  }
+  .history-list{ list-style:none; }
+  .history-list li{
+    padding:12px 2px; border-bottom:1px solid var(--line); font-size:14px;
+  }
+  .history-list li:last-child{ border-bottom:none; }
+  .h-head{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .history-list .h-date{ color:var(--ink); font-weight:600; }
+  .history-list .h-goal{ color:var(--gold); font-family:'Fraunces',serif; font-style:italic; margin-top:4px; font-size:14px; }
+  .del-btn{
+    background:none; border:none; color:var(--muted); cursor:pointer;
+    font-family:inherit; font-size:13px; min-height:44px; padding:0 6px;
+  }
+  .del-btn:hover{ color:#9c3a2e; }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Money Date Planner</h1>
+    <p class="subtitle">A monthly date with your money — review, breathe, and set your intentions.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- First-run welcome -->
+  <section class="card welcome" id="welcomeCard" style="display:none;">
+    <div class="em">🕯️🍵</div>
+    <h2>Welcome to your first money date</h2>
+    <p>Light a candle, pour some tea, and settle in. This is your time — no shame, no rush. Just you and your money, getting reacquainted. Let's begin gently below.</p>
+  </section>
+
+  <!-- Ritual invitation -->
+  <section class="card">
+    <div class="ritual">
+      <p id="ritualText">—</p>
+      <div class="ref">Your Monthly Money Date</div>
+    </div>
+    <div class="ritual-actions">
+      <button class="link-btn" id="anotherPrompt" type="button">↻ Another invitation</button>
+    </div>
+    <label class="field-label" for="faithPrompt">A faith &amp; gratitude moment <span class="optional">(optional)</span></label>
+    <p class="hint" style="margin:-2px 0 8px;">Before the numbers — where have you seen provision this month?</p>
+    <textarea id="faithPrompt" placeholder="Thank You for…  /  I trust You with…"></textarea>
+  </section>
+
+  <!-- 1. Review last month -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Look Back with Grace</h2></div>
+    <p class="hint">Tick each as you move through it — no perfection required, just presence.</p>
+
+    <div class="check-row">
+      <input type="checkbox" id="chkWins">
+      <label for="chkWins">I celebrated my wins from last month</label>
+    </div>
+    <label class="field-label" for="wins">Wins from last month</label>
+    <textarea id="wins" placeholder="Paid a bill on time… said no to an impulse buy… asked for what I'm worth…"></textarea>
+
+    <div class="check-row">
+      <input type="checkbox" id="chkFlow">
+      <label for="chkFlow">I looked at what came in &amp; went out</label>
+    </div>
+    <div class="two-col">
+      <div>
+        <label class="field-label" for="cameIn">What came in <span class="optional">(at a glance)</span></label>
+        <textarea id="cameIn" placeholder="Paycheck, side income, a gift…" style="min-height:72px;"></textarea>
+      </div>
+      <div>
+        <label class="field-label" for="wentOut">What went out</label>
+        <textarea id="wentOut" placeholder="Rent, groceries, the fun stuff…" style="min-height:72px;"></textarea>
+      </div>
+    </div>
+
+    <div class="check-row">
+      <input type="checkbox" id="chkDebt">
+      <label for="chkDebt">I checked my debts &amp; savings progress</label>
+    </div>
+    <label class="field-label" for="debtSavings">Debts &amp; savings progress</label>
+    <textarea id="debtSavings" placeholder="Card down to £…  Savings up to £…  Every step counts."></textarea>
+
+    <div class="check-row">
+      <input type="checkbox" id="chkReflect">
+      <label for="chkReflect">I reflected on what worked &amp; what to adjust</label>
+    </div>
+    <div class="two-col">
+      <div>
+        <label class="field-label" for="worked">What worked</label>
+        <textarea id="worked" placeholder="Keep doing this…" style="min-height:72px;"></textarea>
+      </div>
+      <div>
+        <label class="field-label" for="adjust">What to adjust</label>
+        <textarea id="adjust" placeholder="Soften this next month…" style="min-height:72px;"></textarea>
+      </div>
+    </div>
+
+    <div class="check-row">
+      <input type="checkbox" id="chkBills">
+      <label for="chkBills">I noted bills &amp; dates coming up</label>
+    </div>
+    <label class="field-label" for="upcoming">Bills &amp; dates coming up</label>
+    <textarea id="upcoming" placeholder="Insurance due the 15th… birthday… subscription renews…"></textarea>
+
+    <div class="check-row">
+      <input type="checkbox" id="chkGratitude">
+      <label for="chkGratitude">I paused in gratitude for provision</label>
+    </div>
+    <label class="field-label" for="provision">Gratitude for provision</label>
+    <textarea id="provision" placeholder="I've always had enough. I'm grateful for…"></textarea>
+  </section>
+
+  <!-- 2. Set next month's intentions -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Set Next Month's Intentions</h2></div>
+    <p class="hint">Bold but soft — name where you're headed, then trust yourself to walk it.</p>
+
+    <label class="field-label" for="spendingIntention">My spending intentions</label>
+    <textarea id="spendingIntention" placeholder="This month, my money will go toward what truly matters to me…"></textarea>
+
+    <label class="field-label" for="savingGiving">A savings or giving intention</label>
+    <input type="text" id="savingGiving" placeholder="Tuck away £…  /  Give generously to…">
+
+    <label class="field-label" for="moneyGoal">One money goal</label>
+    <input type="text" id="moneyGoal" placeholder="My focus this month is…">
+
+    <label class="field-label" for="moneyHabit">One money habit to practice</label>
+    <input type="text" id="moneyHabit" placeholder="Check my balance every Sunday with tea…">
+  </section>
+
+  <!-- 3. Schedule next date -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Schedule Your Next Money Date</h2></div>
+    <p class="hint">Keep the rhythm, sister. Put it on the calendar like the sacred appointment it is.</p>
+    <div class="next-date-box">
+      <div class="lbl">My next money date 💛</div>
+      <label class="field-label" for="nextDate" style="margin-top:0;">Choose a date</label>
+      <input type="date" id="nextDate">
+      <div class="next-date-display" id="nextDateDisplay">No date set yet — pick one above to hold your rhythm.</div>
+    </div>
+
+    <button class="complete-btn" id="completeBtn" type="button">Save this money date 🕯️</button>
+    <div class="blessing" id="blessing">
+      <div class="big">Money date complete. 💛</div>
+      <div class="sm">You showed up for yourself today. That's the increase. Go on and bloom, sister.</div>
+    </div>
+
+    <div class="streak">
+      <span class="flame">🕯️</span>
+      <span><b id="totalCount">0</b> money dates kept · <b id="monthsCount">0</b> months of showing up</span>
+    </div>
+  </section>
+
+  <!-- History -->
+  <section class="card">
+    <div class="history-title">Your money dates</div>
+    <ul class="history-list" id="historyList"></ul>
+    <p class="empty-note" id="historyEmpty">Save your first money date and your record of growth begins here. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_money_date";
+
+  // ---- Inviting ritual prompts ----
+  var PROMPTS = [
+    "Light a candle, pour some tea, and let this be the gentlest hour of your month. Money grows where love and attention go.",
+    "This is a date, not a chore. Sit with your numbers the way you'd sit with a dear friend — honest, warm, no judgement.",
+    "You are not behind. You are exactly where your next good decision begins. Breathe, and let's review together.",
+    "Provision has carried you this far. Today you simply say thank you, look clearly, and choose your next gentle step.",
+    "There is no shame in this room — only you, your tea, and a fresh page. Increase begins with showing up.",
+    "Wrap yourself in something soft. Steadiness, not perfection, is what builds wealth. You're building it right now.",
+    "Your money is a tool for your purpose, not a measure of your worth. Tend it with peace this evening.",
+    "Every woman of increase keeps her own counsel hour. Welcome to yours — calm, clear, and fully yours."
+  ];
+
+  // ---- Date helpers (local) ----
+  function pad(n){ return String(n).padStart(2,"0"); }
+  function todayKey(){
+    var d = new Date();
+    return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+  }
+  function prettyDate(key){
+    if(!key) return "";
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric", year:"numeric"});
+  }
+  function monthName(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{month:"long", year:"numeric"});
+  }
+
+  // ---- State ----
+  // data = { sessions:[ {id, date, fields...} ], draft:{...}, promptIdx, nextDate }
+  var data = load();
+
+  function blankDraft(){
+    return {
+      faithPrompt:"", wins:"", cameIn:"", wentOut:"", debtSavings:"",
+      worked:"", adjust:"", upcoming:"", provision:"",
+      spendingIntention:"", savingGiving:"", moneyGoal:"", moneyHabit:"",
+      chkWins:false, chkFlow:false, chkDebt:false, chkReflect:false,
+      chkBills:false, chkGratitude:false
+    };
+  }
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && Array.isArray(o.sessions)){
+          if(!o.draft) o.draft = null;
+          if(typeof o.promptIdx !== "number") o.promptIdx = 0;
+          if(typeof o.nextDate !== "string") o.nextDate = "";
+          return o;
+        }
+      }
+    }catch(e){}
+    return { sessions:[], draft:null, promptIdx: (new Date().getMonth()) % PROMPTS.length, nextDate:"" };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  if(!data.draft) data.draft = blankDraft();
+  var draft = data.draft;
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+
+  var textFields = ["faithPrompt","wins","cameIn","wentOut","debtSavings","worked","adjust",
+                    "upcoming","provision","spendingIntention","savingGiving","moneyGoal","moneyHabit"];
+  var checkFields = ["chkWins","chkFlow","chkDebt","chkReflect","chkBills","chkGratitude"];
+
+  var completeBtn = $("completeBtn"), blessingEl = $("blessing");
+  var ritualTextEl = $("ritualText");
+  var nextDateEl = $("nextDate"), nextDateDisplay = $("nextDateDisplay");
+
+  // ---- Ritual prompt ----
+  function renderPrompt(){
+    ritualTextEl.textContent = PROMPTS[data.promptIdx % PROMPTS.length];
+  }
+  $("anotherPrompt").addEventListener("click", function(){
+    data.promptIdx = (data.promptIdx + 1) % PROMPTS.length;
+    renderPrompt(); save();
+  });
+
+  // ---- Restore inputs ----
+  $("todayDate").textContent = prettyDate(todayKey());
+
+  textFields.forEach(function(id){ $(id).value = draft[id] || ""; });
+  checkFields.forEach(function(id){ $(id).checked = !!draft[id]; });
+  nextDateEl.value = data.nextDate || "";
+
+  renderPrompt();
+  renderNextDate();
+  renderHistory();
+  renderCounts();
+  renderWelcome();
+
+  // ---- Auto-save on every change ----
+  textFields.forEach(function(id){
+    $(id).addEventListener("input", function(){ draft[id] = $(id).value; save(); });
+  });
+  checkFields.forEach(function(id){
+    $(id).addEventListener("change", function(){ draft[id] = $(id).checked; save(); });
+  });
+
+  nextDateEl.addEventListener("change", function(){
+    data.nextDate = nextDateEl.value;
+    save(); renderNextDate();
+  });
+
+  function renderNextDate(){
+    if(data.nextDate){
+      nextDateDisplay.innerHTML = "You're booked for <b>" + prettyDate(data.nextDate) + "</b>. The rhythm is everything. 💛";
+    }else{
+      nextDateDisplay.textContent = "No date set yet — pick one above to hold your rhythm.";
+    }
+  }
+
+  function renderWelcome(){
+    $("welcomeCard").style.display = (data.sessions.length === 0) ? "block" : "none";
+  }
+
+  // ---- Save session ----
+  completeBtn.addEventListener("click", function(){
+    var session = {
+      id: Date.now() + "-" + Math.random().toString(36).slice(2,7),
+      date: todayKey()
+    };
+    textFields.forEach(function(id){ session[id] = draft[id] || ""; });
+    checkFields.forEach(function(id){ session[id] = !!draft[id]; });
+    session.nextDate = data.nextDate || "";
+
+    data.sessions.push(session);
+    data.draft = blankDraft();
+    draft = data.draft;
+    save();
+
+    // clear form for a fresh next date
+    textFields.forEach(function(id){ $(id).value = ""; });
+    checkFields.forEach(function(id){ $(id).checked = false; });
+
+    blessingEl.classList.add("show");
+    renderHistory();
+    renderCounts();
+    renderWelcome();
+    blessingEl.scrollIntoView({behavior:"smooth", block:"center"});
+  });
+
+  // ---- Counts ----
+  function renderCounts(){
+    $("totalCount").textContent = data.sessions.length;
+    var months = {};
+    data.sessions.forEach(function(s){
+      var p = s.date.split("-");
+      months[p[0]+"-"+p[1]] = true;
+    });
+    $("monthsCount").textContent = Object.keys(months).length;
+  }
+
+  // ---- History ----
+  function renderHistory(){
+    var list = $("historyList"), empty = $("historyEmpty");
+    list.innerHTML = "";
+    if(data.sessions.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+
+    var sorted = data.sessions.slice().sort(function(a,b){
+      return a.date < b.date ? 1 : (a.date > b.date ? -1 : (a.id < b.id ? 1 : -1));
+    });
+
+    sorted.forEach(function(s){
+      var li = document.createElement("li");
+
+      var head = document.createElement("div");
+      head.className = "h-head";
+
+      var left = document.createElement("span");
+      left.className = "h-date";
+      left.textContent = prettyDate(s.date);
+
+      var del = document.createElement("button");
+      del.className = "del-btn";
+      del.type = "button";
+      del.textContent = "Delete";
+      del.addEventListener("click", function(){
+        if(confirm("Delete this money date from " + prettyDate(s.date) + "? This can't be undone, sister.")){
+          data.sessions = data.sessions.filter(function(x){ return x.id !== s.id; });
+          save(); renderHistory(); renderCounts(); renderWelcome();
+        }
+      });
+
+      head.appendChild(left);
+      head.appendChild(del);
+      li.appendChild(head);
+
+      var goalText = s.moneyGoal || s.spendingIntention || s.moneyHabit || "";
+      if(goalText){
+        var goal = document.createElement("div");
+        goal.className = "h-goal";
+        goal.textContent = "✨ " + goalText;
+        li.appendChild(goal);
+      }
+
+      list.appendChild(li);
+    });
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Money Date data — every saved session and intention? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { sessions:[], draft: blankDraft(), promptIdx: (new Date().getMonth()) % PROMPTS.length, nextDate:"" };
+      draft = data.draft;
+      textFields.forEach(function(id){ $(id).value = ""; });
+      checkFields.forEach(function(id){ $(id).checked = false; });
+      nextDateEl.value = "";
+      blessingEl.classList.remove("show");
+      renderPrompt(); renderNextDate(); renderHistory(); renderCounts(); renderWelcome();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

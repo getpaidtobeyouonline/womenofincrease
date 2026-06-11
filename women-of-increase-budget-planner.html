@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budget Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:0 0 14px; }
+
+  /* ---------- Currency control ---------- */
+  .cur-row{
+    display:flex; align-items:center; gap:8px; justify-content:center;
+    margin-top:14px; color:var(--muted); font-size:13px;
+  }
+  .cur-row label{ font-weight:600; }
+  .cur-row select{
+    font-family:inherit; font-size:14px; color:var(--ink);
+    background:#fff; border:1px solid var(--line); border-radius:9px;
+    padding:8px 10px; min-height:40px;
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="number"]{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; min-height:48px; transition:border-color .15s, box-shadow .15s;
+  }
+  input:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder{ color:#A7A095; }
+  input[type=number]{ -moz-appearance:textfield; }
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+
+  /* ---------- Line item rows ---------- */
+  .line-row{ display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+  .line-row .dot{ flex:none; width:9px;height:9px;border-radius:50%;background:var(--gold); }
+  .line-row .li-name{ flex:1; min-width:0; }
+  .line-row .amt-wrap{
+    flex:none; display:flex; align-items:center; gap:4px;
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:0 12px; min-height:48px; width:130px;
+  }
+  .line-row .amt-wrap:focus-within{ border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,160,74,.18); }
+  .line-row .amt-wrap .sym{ color:var(--muted); font-weight:600; font-size:15px; }
+  .line-row .amt-wrap input{
+    border:none; background:none; padding:8px 0; min-height:auto;
+    text-align:right; box-shadow:none !important;
+  }
+  .line-row .amt-wrap input:focus{ box-shadow:none; }
+  .del-btn{
+    flex:none; width:40px; height:44px; border:none; background:none;
+    color:#B9A98A; font-size:20px; cursor:pointer; border-radius:9px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .del-btn:hover{ color:#b5563f; background:#fbeae6; }
+
+  .add-btn{
+    width:100%; margin-top:4px; min-height:46px;
+    background:var(--emerald-soft); color:var(--emerald);
+    border:1px solid rgba(20,84,62,.18); border-radius:11px;
+    font-family:inherit; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  .add-btn:hover{ border-color:var(--emerald); }
+
+  /* ---------- Category blocks ---------- */
+  .cat{ margin-top:6px; padding:14px 0 4px; border-top:1px solid var(--line); }
+  .cat:first-of-type{ border-top:none; padding-top:4px; }
+  .cat-head{
+    display:flex; align-items:baseline; justify-content:space-between; margin-bottom:10px;
+  }
+  .cat-head .cat-name{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:16px;
+  }
+  .cat-head .cat-sub{ font-weight:700; font-size:14px; color:var(--ink); }
+
+  /* ---------- Totals / summary ---------- */
+  .total-line{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:11px 2px; font-size:15px; border-bottom:1px solid var(--line);
+  }
+  .total-line:last-child{ border-bottom:none; }
+  .total-line .lbl{ color:var(--muted); }
+  .total-line .lbl b{ color:var(--ink); font-weight:600; }
+  .total-line .val{ font-weight:700; font-feature-settings:"tnum"; font-variant-numeric:tabular-nums; }
+  .val.pos{ color:var(--emerald); }
+  .val.neg{ color:#b5563f; }
+
+  .summary-card{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:16px; padding:22px 20px; margin-top:16px;
+  }
+  .summary-card h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:19px; color:#FCF8EF; margin-bottom:4px;
+  }
+  .summary-card .s-hint{ color:var(--gold-soft); font-size:13px; margin-bottom:14px; }
+  .s-row{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:9px 0; font-size:14.5px; border-bottom:1px solid rgba(231,211,161,.18);
+  }
+  .s-row .sval{ font-weight:600; font-variant-numeric:tabular-nums; }
+  .s-remaining{
+    margin-top:14px; text-align:center; padding:16px;
+    background:rgba(252,248,239,.08); border:1px solid rgba(231,211,161,.25); border-radius:13px;
+  }
+  .s-remaining .cap{
+    font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-soft); margin-bottom:4px;
+  }
+  .s-remaining .big{
+    font-family:'Fraunces',serif; font-weight:600; font-size:32px; line-height:1.1;
+    font-variant-numeric:tabular-nums;
+  }
+  .s-remaining .big.over{ color:#F2C9BC; }
+  .s-remaining .msg{ font-size:13px; color:#EFE9DC; margin-top:6px; }
+
+  /* ---------- Spending breakdown bars ---------- */
+  .bar-row{ margin:12px 0; }
+  .bar-top{ display:flex; justify-content:space-between; font-size:13.5px; margin-bottom:5px; }
+  .bar-top .b-name{ color:var(--ink); font-weight:600; }
+  .bar-top .b-pct{ color:var(--muted); font-variant-numeric:tabular-nums; }
+  .bar-track{ height:10px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .bar-fill{ height:100%; background:linear-gradient(90deg, var(--gold) 0%, var(--gold-soft) 100%); border-radius:999px; transition:width .3s ease; }
+
+  /* ---------- Goal / progress ---------- */
+  .goal-track{ height:14px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; margin:10px 0 6px; }
+  .goal-fill{ height:100%; background:linear-gradient(90deg, var(--emerald) 0%, #1f7a59 100%); border-radius:999px; transition:width .3s ease; }
+  .goal-meta{ display:flex; justify-content:space-between; font-size:13px; color:var(--muted); }
+  .goal-meta b{ color:var(--emerald); }
+
+  .increase-note{
+    margin-top:14px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:13px; padding:16px; color:var(--emerald); font-size:14px;
+  }
+  .increase-note .gap-big{
+    font-family:'Fraunces',serif; font-weight:600; font-size:22px; display:block; margin:4px 0;
+    font-variant-numeric:tabular-nums;
+  }
+  .increase-note .nudge{ color:var(--muted); font-size:13px; margin-top:6px; }
+
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; padding:6px 0; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Budget Planner</h1>
+    <p class="subtitle">See your money clearly — and plan for the increase you're believing for.</p>
+    <div class="cur-row">
+      <label for="curSel">Currency</label>
+      <select id="curSel" aria-label="Currency symbol">
+        <option value="$">$ &nbsp;Dollar</option>
+        <option value="£">£ &nbsp;Pound</option>
+        <option value="€">€ &nbsp;Euro</option>
+        <option value="₦">₦ &nbsp;Naira</option>
+        <option value="R">R &nbsp;Rand</option>
+        <option value="₹">₹ &nbsp;Rupee</option>
+        <option value="¥">¥ &nbsp;Yen</option>
+        <option value="">— &nbsp;None</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- 1. Income -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Income Coming In</h2></div>
+    <p class="hint">Every stream counts — name what flows to you each month.</p>
+    <div id="incomeList"></div>
+    <button class="add-btn" id="addIncome" type="button">+ Add an income source</button>
+    <div class="total-line" style="margin-top:12px;">
+      <span class="lbl"><b>Total monthly income</b></span>
+      <span class="val pos" id="incomeTotal">—</span>
+    </div>
+  </section>
+
+  <!-- 2. Expenses -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Where It Goes</h2></div>
+    <p class="hint">Add what you spend, grouped by category — clarity, not shame.</p>
+    <div id="categories"></div>
+    <div class="total-line" style="margin-top:6px;">
+      <span class="lbl"><b>Total monthly expenses</b></span>
+      <span class="val neg" id="expenseTotal">—</span>
+    </div>
+  </section>
+
+  <!-- 3. Savings -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Pay Yourself First</h2></div>
+    <p class="hint">A planned savings amount each month — building your future, on purpose.</p>
+    <label class="field-label" for="savingsMonthly">Planned monthly savings</label>
+    <div class="line-row" style="margin-bottom:6px;">
+      <div class="amt-wrap" style="width:100%;">
+        <span class="sym" id="symSavings">$</span>
+        <input type="number" inputmode="decimal" min="0" step="any" id="savingsMonthly" placeholder="0">
+      </div>
+    </div>
+
+    <label class="field-label" for="savingsGoal">Savings goal (optional)</label>
+    <div class="line-row" style="margin-bottom:6px;">
+      <div class="amt-wrap" style="width:100%;">
+        <span class="sym" id="symGoal">$</span>
+        <input type="number" inputmode="decimal" min="0" step="any" id="savingsGoal" placeholder="0">
+      </div>
+    </div>
+    <label class="field-label" for="savingsSaved">Already saved toward it</label>
+    <div class="line-row" style="margin-bottom:6px;">
+      <div class="amt-wrap" style="width:100%;">
+        <span class="sym" id="symSaved">$</span>
+        <input type="number" inputmode="decimal" min="0" step="any" id="savingsSaved" placeholder="0">
+      </div>
+    </div>
+    <div id="goalProgress" style="display:none;">
+      <div class="goal-track"><div class="goal-fill" id="goalFill" style="width:0%"></div></div>
+      <div class="goal-meta">
+        <span id="goalText">—</span>
+        <span><b id="goalPct">0%</b> there</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Summary -->
+  <section class="summary-card">
+    <h2>Your Monthly Snapshot</h2>
+    <p class="s-hint">Income, minus what you spend, minus what you save.</p>
+    <div class="s-row"><span>Income</span><span class="sval" id="sumIncome">—</span></div>
+    <div class="s-row"><span>Expenses</span><span class="sval" id="sumExpense">—</span></div>
+    <div class="s-row"><span>Savings set aside</span><span class="sval" id="sumSavings">—</span></div>
+    <div class="s-remaining">
+      <div class="cap" id="remCap">Money remaining</div>
+      <div class="big" id="remaining">—</div>
+      <div class="msg" id="remMsg">Add your numbers above to see your snapshot. 💛</div>
+    </div>
+  </section>
+
+  <!-- Breakdown -->
+  <section class="card">
+    <div class="step"><span class="num">★</span><h2>Spending Breakdown</h2></div>
+    <p class="hint">Where your money is working — by category.</p>
+    <div id="breakdown"></div>
+    <p class="empty-note" id="breakdownEmpty">Add a few expenses and your breakdown will appear here.</p>
+  </section>
+
+  <!-- 5. Increase target -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>The Increase You're Believing For</h2></div>
+    <p class="hint">Name the monthly income you're praying and working toward. Then watch the gap close.</p>
+    <label class="field-label" for="increaseTarget">Income I'm believing for (per month)</label>
+    <div class="line-row" style="margin-bottom:6px;">
+      <div class="amt-wrap" style="width:100%;">
+        <span class="sym" id="symInc">$</span>
+        <input type="number" inputmode="decimal" min="0" step="any" id="increaseTarget" placeholder="0">
+      </div>
+    </div>
+
+    <label class="field-label" for="tithe">Giving / tithe each month <span style="color:var(--muted);font-weight:400;">(a value, optional)</span></label>
+    <div class="line-row" style="margin-bottom:6px;">
+      <div class="amt-wrap" style="width:100%;">
+        <span class="sym" id="symTithe">$</span>
+        <input type="number" inputmode="decimal" min="0" step="any" id="tithe" placeholder="0">
+      </div>
+    </div>
+
+    <div class="increase-note" id="increaseNote">
+      Set a target above and we'll show you the gap to believe for. 💛
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_budget_planner";
+
+  var DEFAULT_CATS = [
+    "Housing","Food","Transport","Utilities","Debt",
+    "Family / Kids","Giving","Personal","Other"
+  ];
+
+  function blankData(){
+    return {
+      currency: "$",
+      income: [],            // {name, amount}
+      cats: DEFAULT_CATS.map(function(n){ return { name:n, items:[] }; }), // items: {name, amount}
+      savingsMonthly: "",
+      savingsGoal: "",
+      savingsSaved: "",
+      increaseTarget: "",
+      tithe: ""
+    };
+  }
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && o.cats && o.income){
+          // backfill any missing fields
+          var d = blankData();
+          for(var k in d){ if(!(k in o)) o[k] = d[k]; }
+          return o;
+        }
+      }
+    }catch(e){}
+    return blankData();
+  }
+  var data = load();
+
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Number helpers ----
+  function num(v){
+    var n = parseFloat(v);
+    return (isFinite(n) && n > 0) ? n : (isFinite(n) ? n : 0);
+  }
+  function fmt(n){
+    if(!isFinite(n)) n = 0;
+    var neg = n < 0;
+    var a = Math.abs(n);
+    var s = a.toLocaleString(undefined, {minimumFractionDigits:0, maximumFractionDigits:2});
+    return (neg ? "-" : "") + data.currency + s;
+  }
+
+  // ---- Totals ----
+  function incomeTotal(){
+    return data.income.reduce(function(s,it){ return s + num(it.amount); }, 0);
+  }
+  function catTotal(cat){
+    return cat.items.reduce(function(s,it){ return s + num(it.amount); }, 0);
+  }
+  function expenseTotal(){
+    return data.cats.reduce(function(s,c){ return s + catTotal(c); }, 0);
+  }
+
+  // ============ RENDER: Currency ============
+  function applyCurrency(){
+    var sym = data.currency;
+    ["symSavings","symGoal","symSaved","symInc","symTithe"].forEach(function(id){
+      $(id).textContent = sym || "";
+    });
+    document.querySelectorAll(".amt-wrap .sym").forEach(function(el){
+      // only static ones already handled; dynamic rows re-render below
+    });
+  }
+
+  // ============ RENDER: Income ============
+  function renderIncome(){
+    var host = $("incomeList");
+    host.innerHTML = "";
+    if(data.income.length === 0){
+      var p = document.createElement("p");
+      p.className = "empty-note";
+      p.textContent = "No income added yet — tap below to add your first source.";
+      host.appendChild(p);
+    }
+    data.income.forEach(function(it, idx){
+      host.appendChild(lineRow(it, "income source (e.g. Salary, Side hustle)", function(field, val){
+        it[field] = val;
+      }, function(){
+        data.income.splice(idx,1);
+        save(); renderAll();
+      }));
+    });
+  }
+
+  // ============ RENDER: Expenses ============
+  function renderCategories(){
+    var host = $("categories");
+    host.innerHTML = "";
+    data.cats.forEach(function(cat, ci){
+      var block = document.createElement("div");
+      block.className = "cat";
+
+      var head = document.createElement("div");
+      head.className = "cat-head";
+      var nm = document.createElement("span");
+      nm.className = "cat-name";
+      nm.textContent = cat.name;
+      var sub = document.createElement("span");
+      sub.className = "cat-sub";
+      sub.textContent = fmt(catTotal(cat));
+      head.appendChild(nm); head.appendChild(sub);
+      block.appendChild(head);
+
+      cat.items.forEach(function(it, idx){
+        block.appendChild(lineRow(it, "expense (e.g. Rent, Groceries)", function(field,val){
+          it[field] = val;
+        }, function(){
+          cat.items.splice(idx,1);
+          save(); renderAll();
+        }));
+      });
+
+      var add = document.createElement("button");
+      add.type = "button";
+      add.className = "add-btn";
+      add.textContent = "+ Add to " + cat.name;
+      add.addEventListener("click", function(){
+        cat.items.push({ name:"", amount:"" });
+        save(); renderAll();
+        // focus the newly added name input
+        var rows = block.querySelectorAll(".li-name");
+        if(rows.length){ rows[rows.length-1].focus(); }
+      });
+      block.appendChild(add);
+
+      host.appendChild(block);
+    });
+  }
+
+  // ---- Reusable line row builder ----
+  function lineRow(item, placeholder, onChange, onDelete){
+    var row = document.createElement("div");
+    row.className = "line-row";
+
+    var dot = document.createElement("span");
+    dot.className = "dot";
+    row.appendChild(dot);
+
+    var name = document.createElement("input");
+    name.type = "text";
+    name.className = "li-name";
+    name.placeholder = placeholder;
+    name.value = item.name || "";
+    name.setAttribute("aria-label","Name");
+    name.addEventListener("input", function(){
+      onChange("name", name.value); save();
+    });
+    row.appendChild(name);
+
+    var wrap = document.createElement("div");
+    wrap.className = "amt-wrap";
+    var sym = document.createElement("span");
+    sym.className = "sym";
+    sym.textContent = data.currency || "";
+    var amt = document.createElement("input");
+    amt.type = "number";
+    amt.setAttribute("inputmode","decimal");
+    amt.min = "0"; amt.step = "any";
+    amt.placeholder = "0";
+    amt.value = (item.amount === "" || item.amount === undefined) ? "" : item.amount;
+    amt.setAttribute("aria-label","Amount");
+    amt.addEventListener("input", function(){
+      onChange("amount", amt.value); save(); recalcOnly();
+    });
+    wrap.appendChild(sym); wrap.appendChild(amt);
+    row.appendChild(wrap);
+
+    var del = document.createElement("button");
+    del.type = "button";
+    del.className = "del-btn";
+    del.setAttribute("aria-label","Remove");
+    del.innerHTML = "&times;";
+    del.addEventListener("click", onDelete);
+    row.appendChild(del);
+
+    return row;
+  }
+
+  // ============ RENDER: Savings goal progress ============
+  function renderSavings(){
+    var goal = num($("savingsGoal").value);
+    var saved = num($("savingsSaved").value);
+    var box = $("goalProgress");
+    if(goal > 0){
+      box.style.display = "block";
+      var pct = Math.max(0, Math.min(100, (saved/goal)*100));
+      $("goalFill").style.width = pct + "%";
+      $("goalPct").textContent = Math.round(pct) + "%";
+      var left = goal - saved;
+      if(left <= 0){
+        $("goalText").textContent = "Goal reached — beautiful work. 💛";
+      }else{
+        $("goalText").textContent = fmt(left) + " to go";
+      }
+    }else{
+      box.style.display = "none";
+    }
+  }
+
+  // ============ RENDER: Summary ============
+  function renderSummary(){
+    var inc = incomeTotal();
+    var exp = expenseTotal();
+    var sav = num($("savingsMonthly").value);
+
+    $("incomeTotal").textContent = fmt(inc);
+    $("expenseTotal").textContent = fmt(exp);
+    $("sumIncome").textContent = fmt(inc);
+    $("sumExpense").textContent = fmt(exp);
+    $("sumSavings").textContent = fmt(sav);
+
+    var remaining = inc - exp - sav;
+    var remEl = $("remaining");
+    var capEl = $("remCap");
+    var msgEl = $("remMsg");
+    remEl.textContent = fmt(remaining);
+
+    if(inc === 0 && exp === 0 && sav === 0){
+      remEl.classList.remove("over");
+      capEl.textContent = "Money remaining";
+      msgEl.textContent = "Add your numbers above to see your snapshot. 💛";
+    }else if(remaining >= 0){
+      remEl.classList.remove("over");
+      capEl.textContent = "Money remaining";
+      if(remaining === 0){
+        msgEl.textContent = "Every dollar has a home — that's a plan in motion.";
+      }else{
+        msgEl.textContent = "You have room to breathe. Consider sending some toward your goals.";
+      }
+    }else{
+      remEl.classList.add("over");
+      capEl.textContent = "Over budget by";
+      msgEl.textContent = "No shame here — just clarity. Trim a little or grow your income, one step at a time.";
+    }
+  }
+
+  // ============ RENDER: Breakdown bars ============
+  function renderBreakdown(){
+    var host = $("breakdown");
+    var empty = $("breakdownEmpty");
+    host.innerHTML = "";
+    var total = expenseTotal();
+    var rows = data.cats
+      .map(function(c){ return { name:c.name, val:catTotal(c) }; })
+      .filter(function(r){ return r.val > 0; })
+      .sort(function(a,b){ return b.val - a.val; });
+
+    if(total <= 0 || rows.length === 0){
+      empty.style.display = "block";
+      return;
+    }
+    empty.style.display = "none";
+    rows.forEach(function(r){
+      var pct = (r.val/total)*100;
+      var box = document.createElement("div");
+      box.className = "bar-row";
+      var top = document.createElement("div");
+      top.className = "bar-top";
+      var n = document.createElement("span"); n.className="b-name"; n.textContent = r.name + " · " + fmt(r.val);
+      var p = document.createElement("span"); p.className="b-pct"; p.textContent = Math.round(pct) + "%";
+      top.appendChild(n); top.appendChild(p);
+      var track = document.createElement("div"); track.className="bar-track";
+      var fill = document.createElement("div"); fill.className="bar-fill"; fill.style.width = pct + "%";
+      track.appendChild(fill);
+      box.appendChild(top); box.appendChild(track);
+      host.appendChild(box);
+    });
+  }
+
+  // ============ RENDER: Increase target ============
+  function renderIncrease(){
+    var target = num($("increaseTarget").value);
+    var inc = incomeTotal();
+    var tithe = num($("tithe").value);
+    var note = $("increaseNote");
+
+    if(target <= 0){
+      note.innerHTML = "Set a target above and we'll show you the gap to believe for. 💛";
+      return;
+    }
+    var gap = target - inc;
+    var html = "";
+    if(gap <= 0){
+      html = "You've reached the increase you named — and then some. Keep going, sister. 🌿"
+           + "<span class='gap-big'>" + fmt(inc) + " / " + fmt(target) + "</span>";
+    }else{
+      html = "You're believing for"
+           + "<span class='gap-big'>+" + fmt(gap) + " more / month</span>"
+           + "to reach " + fmt(target) + ". That's your faith goal — name it, then take one step toward it."
+           + "<div class='nudge'>Tip: explore the income-growth tools in your library to start closing this gap.</div>";
+    }
+    if(tithe > 0){
+      html += "<div class='nudge'>Giving " + fmt(tithe) + " each month — sowing into what you believe. 💛</div>";
+    }
+    note.innerHTML = html;
+  }
+
+  // ---- Recalc without rebuilding inputs (keeps focus) ----
+  function recalcOnly(){
+    // update category subtotals
+    var heads = document.querySelectorAll("#categories .cat");
+    data.cats.forEach(function(cat, i){
+      if(heads[i]){
+        var sub = heads[i].querySelector(".cat-sub");
+        if(sub) sub.textContent = fmt(catTotal(cat));
+      }
+    });
+    renderSummary();
+    renderBreakdown();
+    renderSavings();
+    renderIncrease();
+  }
+
+  // ---- Full render (rebuilds lists) ----
+  function renderAll(){
+    applyCurrency();
+    renderIncome();
+    renderCategories();
+    renderSummary();
+    renderBreakdown();
+    renderSavings();
+    renderIncrease();
+  }
+
+  // ---- Static field wiring ----
+  $("addIncome").addEventListener("click", function(){
+    data.income.push({ name:"", amount:"" });
+    save(); renderAll();
+    var rows = $("incomeList").querySelectorAll(".li-name");
+    if(rows.length){ rows[rows.length-1].focus(); }
+  });
+
+  function wireField(id, key){
+    var el = $(id);
+    el.value = data[key] || "";
+    el.addEventListener("input", function(){
+      data[key] = el.value; save(); recalcOnly();
+    });
+  }
+  wireField("savingsMonthly","savingsMonthly");
+  wireField("savingsGoal","savingsGoal");
+  wireField("savingsSaved","savingsSaved");
+  wireField("increaseTarget","increaseTarget");
+  wireField("tithe","tithe");
+
+  // ---- Currency selector ----
+  var curSel = $("curSel");
+  curSel.value = data.currency;
+  if(curSel.value !== data.currency){ curSel.value = "$"; }
+  curSel.addEventListener("change", function(){
+    data.currency = curSel.value;
+    save(); renderAll();
+  });
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your budget data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = blankData();
+      ["savingsMonthly","savingsGoal","savingsSaved","increaseTarget","tithe"].forEach(function(id){ $(id).value=""; });
+      curSel.value = data.currency;
+      renderAll();
+    }
+  });
+
+  // ---- First paint ----
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

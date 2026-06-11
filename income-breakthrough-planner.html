@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Income Breakthrough Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .welcome p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .welcome .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:74px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* money input with currency prefix */
+  .money-field{ position:relative; }
+  .money-field .cur{
+    position:absolute; left:14px; top:50%; transform:translateY(-50%);
+    color:var(--emerald); font-weight:700; font-size:16px; pointer-events:none;
+  }
+  .money-field input{ padding-left:30px; }
+
+  /* ---------- Gap summary ---------- */
+  .gap-box{
+    margin-top:18px; border-radius:14px; border:1px solid rgba(20,84,62,.14);
+    background:var(--emerald-soft); padding:18px 16px; text-align:center;
+  }
+  .gap-box .label{
+    font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--emerald); font-weight:700; margin-bottom:4px;
+  }
+  .gap-box .amount{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:34px; line-height:1.1;
+  }
+  .gap-box .pct{ color:var(--muted); font-size:14px; margin-top:4px; }
+  .gap-box.reached .amount{ color:var(--gold); }
+
+  /* ---------- Add-list rows ---------- */
+  .row{
+    display:flex; align-items:flex-start; gap:10px; padding:10px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .row:last-of-type{ border-bottom:none; }
+  .check{
+    flex:none; width:26px;height:26px;border-radius:8px; margin-top:1px;
+    border:1.5px solid var(--gold); background:var(--cream); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size:15px; color:transparent; transition:background .12s, color .12s;
+    -webkit-appearance:none; appearance:none; padding:0;
+  }
+  .check.on{ background:var(--gold); color:var(--ink); }
+  .row .txt{ flex:1; font-size:15px; padding-top:3px; word-break:break-word; }
+  .row .txt.done{ text-decoration:line-through; color:var(--muted); }
+  .row .del{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:18px; line-height:1; padding:6px; min-width:34px; min-height:34px;
+  }
+  .row .del:hover{ color:#b4452f; }
+  .pill-tag{
+    display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--emerald); background:var(--emerald-soft);
+    border-radius:999px; padding:2px 8px; margin-bottom:3px;
+  }
+
+  .add-row{ display:flex; gap:8px; margin-top:12px; }
+  .add-row input{ flex:1; }
+  .add-btn{
+    flex:none; min-height:48px; min-width:48px; padding:0 16px;
+    background:var(--emerald); color:#FCF8EF; border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    transition:opacity .12s;
+  }
+  .add-btn:hover{ opacity:.92; }
+
+  /* lever chips */
+  .levers{ display:flex; flex-wrap:wrap; gap:7px; margin-bottom:4px; }
+  .lever{
+    background:var(--cream); border:1px solid var(--line); color:var(--ink);
+    border-radius:999px; padding:8px 12px; font-family:inherit; font-size:12.5px;
+    font-weight:600; cursor:pointer; min-height:38px;
+  }
+  .lever:hover{ border-color:var(--gold); color:var(--emerald); }
+
+  /* ---------- Math helper ---------- */
+  .math-grid{ display:flex; gap:10px; flex-wrap:wrap; }
+  .math-grid .mcol{ flex:1; min-width:130px; }
+  .path-out{
+    margin-top:14px; border-radius:12px; border:1px dashed var(--gold);
+    background:var(--cream); padding:16px;
+  }
+  .path-line{
+    display:flex; align-items:baseline; gap:8px; padding:8px 0;
+    border-bottom:1px solid var(--line); font-size:15px;
+  }
+  .path-line:last-child{ border-bottom:none; }
+  .path-line b{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:22px; font-weight:600;
+  }
+  .path-line .lbl{ color:var(--muted); font-size:13.5px; }
+  .path-note{ color:var(--muted); font-size:13px; margin-top:10px; font-style:italic; }
+
+  /* ---------- Blocks / reframes ---------- */
+  .block-item{
+    border:1px solid var(--line); border-radius:12px; padding:14px;
+    margin-top:12px; background:var(--cream);
+  }
+  .block-item label.field-label:first-child{ margin-top:0; }
+  .block-item .del-block{
+    float:right; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:13px; min-height:34px; padding:4px 8px;
+  }
+  .block-item .del-block:hover{ color:#b4452f; }
+  .truth-lead{
+    font-size:12px; letter-spacing:.1em; text-transform:uppercase; font-weight:700;
+    color:var(--gold); margin:14px 0 6px;
+  }
+
+  /* ---------- Progress ---------- */
+  .progress-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin:4px 0 8px; font-size:14px; color:var(--muted);
+  }
+  .progress-head b{ color:var(--emerald); }
+  .bar{
+    height:12px; background:var(--emerald-soft); border-radius:999px; overflow:hidden;
+    border:1px solid rgba(20,84,62,.1);
+  }
+  .bar > span{
+    display:block; height:100%; width:0%;
+    background:linear-gradient(90deg, var(--gold-soft), var(--gold));
+    border-radius:999px; transition:width .3s ease;
+  }
+
+  .date-input{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink); min-height:48px;
+    background:var(--cream); border:1px solid var(--line); border-radius:11px; padding:13px 14px;
+  }
+  .date-input:focus{ outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,160,74,.18); }
+  .date-note{ color:var(--emerald); font-size:13.5px; margin-top:8px; font-weight:600; }
+
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; padding:6px 0; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Income Breakthrough Planner</h1>
+    <p class="subtitle">Name your next level — then map exactly what must change to reach it.</p>
+  </header>
+
+  <!-- Welcome / first-run -->
+  <section class="card" id="welcomeCard" style="display:none;">
+    <div class="welcome">
+      <p>Welcome to your next income level, sister. Wanting more isn't greed — it's good stewardship of the gifts you carry. Let's get honest, get specific, and make the breakthrough feel reachable.</p>
+      <div class="ref">Begin below — start with the numbers</div>
+    </div>
+  </section>
+
+  <!-- 1. The numbers -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Numbers</h2></div>
+    <p class="hint">Two honest figures. No judgment here — just clarity.</p>
+
+    <label class="field-label" for="current">Current monthly income</label>
+    <div class="money-field">
+      <span class="cur">$</span>
+      <input type="text" id="current" inputmode="decimal" placeholder="0">
+    </div>
+
+    <label class="field-label" for="target">Target (breakthrough) monthly income</label>
+    <div class="money-field">
+      <span class="cur">$</span>
+      <input type="text" id="target" inputmode="decimal" placeholder="0">
+    </div>
+
+    <div class="gap-box" id="gapBox">
+      <div class="label" id="gapLabel">Your breakthrough gap</div>
+      <div class="amount" id="gapAmount">$0</div>
+      <div class="pct" id="gapPct">Enter your numbers to see the gap</div>
+    </div>
+  </section>
+
+  <!-- 2. What must change -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>What Must Change</h2></div>
+    <p class="hint">Income rarely shifts by accident. Tap a lever to add it, or write your own. Check each one off as a commitment.</p>
+
+    <div class="levers" id="leverChips"></div>
+
+    <div id="changeList"></div>
+    <p class="empty-note" id="changeEmpty">Nothing added yet — choose a lever above to begin. 💛</p>
+
+    <div class="add-row">
+      <input type="text" id="changeInput" placeholder="A specific change I'll make…">
+      <button class="add-btn" id="changeAdd" type="button">Add</button>
+    </div>
+  </section>
+
+  <!-- 3. Math to target -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Math to Your Target</h2></div>
+    <p class="hint">Let's make the gap concrete. Enter your prices and see exactly how few sales it really takes.</p>
+
+    <div class="math-grid">
+      <div class="mcol">
+        <label class="field-label" for="clientPrice">A client / service is worth</label>
+        <div class="money-field">
+          <span class="cur">$</span>
+          <input type="text" id="clientPrice" inputmode="decimal" placeholder="0">
+        </div>
+      </div>
+      <div class="mcol">
+        <label class="field-label" for="productPrice">A product / offer sells for</label>
+        <div class="money-field">
+          <span class="cur">$</span>
+          <input type="text" id="productPrice" inputmode="decimal" placeholder="0">
+        </div>
+      </div>
+    </div>
+
+    <div class="path-out" id="pathOut">
+      <p class="empty-note" id="pathEmpty" style="padding:0;">Enter a gap above and a price here to see your paths to target.</p>
+    </div>
+  </section>
+
+  <!-- 4. Identify blocks -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Name the Inner Blocks</h2></div>
+    <p class="hint">What story tells you that you can't earn more? Name it gently — then answer it with truth.</p>
+
+    <div id="blockList"></div>
+    <p class="empty-note" id="blockEmpty">No blocks named yet. It's okay to be honest — naming it loosens its grip. 💛</p>
+
+    <button class="add-btn" id="blockAdd" type="button" style="width:100%; margin-top:12px;">＋ Name a block & its reframe</button>
+  </section>
+
+  <!-- 5. Action steps -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>Action Steps</h2></div>
+    <p class="hint">Small, doable moves toward the breakthrough. Check them off and watch it grow.</p>
+
+    <div class="progress-head">
+      <span><b id="progDone">0</b> of <b id="progTotal">0</b> done</span>
+      <span id="progPct">0%</span>
+    </div>
+    <div class="bar"><span id="progFill"></span></div>
+
+    <div id="actionList" style="margin-top:8px;"></div>
+    <p class="empty-note" id="actionEmpty">Add your first step below. Every breakthrough begins with one. 💛</p>
+
+    <div class="add-row">
+      <input type="text" id="actionInput" placeholder="One step I'll take…">
+      <button class="add-btn" id="actionAdd" type="button">Add</button>
+    </div>
+
+    <label class="field-label" for="targetDate">I believe my breakthrough arrives by</label>
+    <input type="date" id="targetDate" class="date-input">
+    <div class="date-note" id="dateNote"></div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_income_breakthrough";
+
+  var LEVERS = [
+    "Raise my rates / prices",
+    "Add a new income stream",
+    "More clients / sales",
+    "Learn a new skill",
+    "Promotion / new role",
+    "Remove a bottleneck",
+    "Mindset / belief shift"
+  ];
+
+  // ---- State ----
+  var data = load();
+
+  function blankData(){
+    return {
+      current:"", target:"",
+      changes:[],        // {id, text, done}
+      clientPrice:"", productPrice:"",
+      blocks:[],         // {id, block, truth}
+      actions:[],        // {id, text, done}
+      targetDate:""
+    };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && typeof o === "object"){ return Object.assign(blankData(), o); } }
+    }catch(e){}
+    return blankData();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+  // ---- Helpers ----
+  var $ = function(id){ return document.getElementById(id); };
+  function num(v){
+    var n = parseFloat(String(v).replace(/[^0-9.]/g,""));
+    return isFinite(n) && n > 0 ? n : 0;
+  }
+  function money(n){
+    return "$" + Math.round(n).toLocaleString();
+  }
+
+  // ---- First-run welcome ----
+  function maybeWelcome(){
+    var empty = !data.current && !data.target && data.changes.length===0 &&
+                data.blocks.length===0 && data.actions.length===0;
+    $("welcomeCard").style.display = empty ? "block" : "none";
+  }
+
+  // ---- 1. Numbers + gap ----
+  var currentEl = $("current"), targetEl = $("target");
+  currentEl.value = data.current;
+  targetEl.value = data.target;
+
+  function renderGap(){
+    var c = num(data.current), t = num(data.target);
+    var gap = t - c;
+    var box = $("gapBox"), amt = $("gapAmount"), pct = $("gapPct"), lbl = $("gapLabel");
+    box.classList.remove("reached");
+    if(c===0 && t===0){
+      lbl.textContent = "Your breakthrough gap";
+      amt.textContent = "$0";
+      pct.textContent = "Enter your numbers to see the gap";
+      return;
+    }
+    if(gap <= 0 && t>0){
+      box.classList.add("reached");
+      lbl.textContent = "You've reached it";
+      amt.textContent = money(t);
+      pct.textContent = "You're at or above your target — set a bolder one. 💛";
+      return;
+    }
+    lbl.textContent = "Your breakthrough gap";
+    amt.textContent = money(gap);
+    if(c>0){
+      var growth = Math.round((gap / c) * 100);
+      pct.textContent = "That's a " + growth + "% increase — from " + money(c) + " to " + money(t) + " a month.";
+    }else{
+      pct.textContent = "To reach " + money(t) + " a month.";
+    }
+  }
+  function currentGap(){
+    var g = num(data.target) - num(data.current);
+    return g > 0 ? g : 0;
+  }
+
+  currentEl.addEventListener("input", function(){ data.current = currentEl.value; save(); renderGap(); renderPaths(); maybeWelcome(); });
+  targetEl.addEventListener("input", function(){ data.target = targetEl.value; save(); renderGap(); renderPaths(); maybeWelcome(); });
+
+  // ---- 2. What must change ----
+  function renderLevers(){
+    var wrap = $("leverChips");
+    wrap.innerHTML = "";
+    LEVERS.forEach(function(lev){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "lever";
+      b.textContent = "＋ " + lev;
+      b.addEventListener("click", function(){ addChange(lev); });
+      wrap.appendChild(b);
+    });
+  }
+  function addChange(text){
+    text = (text||"").trim();
+    if(!text) return;
+    data.changes.push({ id:uid(), text:text, done:false });
+    save(); renderChanges(); maybeWelcome();
+  }
+  function renderChanges(){
+    var list = $("changeList"), empty = $("changeEmpty");
+    list.innerHTML = "";
+    if(data.changes.length===0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+    data.changes.forEach(function(item){
+      var row = document.createElement("div");
+      row.className = "row";
+
+      var chk = document.createElement("button");
+      chk.type="button"; chk.className="check" + (item.done?" on":"");
+      chk.setAttribute("aria-pressed", item.done?"true":"false");
+      chk.setAttribute("aria-label","Mark commitment complete");
+      chk.textContent = "✓";
+      chk.addEventListener("click", function(){ item.done=!item.done; save(); renderChanges(); });
+
+      var txt = document.createElement("div");
+      txt.className = "txt" + (item.done?" done":"");
+      txt.textContent = item.text;
+
+      var del = document.createElement("button");
+      del.type="button"; del.className="del"; del.setAttribute("aria-label","Remove"); del.textContent="×";
+      del.addEventListener("click", function(){
+        data.changes = data.changes.filter(function(x){ return x.id!==item.id; });
+        save(); renderChanges(); maybeWelcome();
+      });
+
+      row.appendChild(chk); row.appendChild(txt); row.appendChild(del);
+      list.appendChild(row);
+    });
+  }
+  $("changeAdd").addEventListener("click", function(){
+    addChange($("changeInput").value); $("changeInput").value="";
+  });
+  $("changeInput").addEventListener("keydown", function(e){
+    if(e.key==="Enter"){ e.preventDefault(); $("changeAdd").click(); }
+  });
+
+  // ---- 3. Math to target ----
+  var clientEl = $("clientPrice"), productEl = $("productPrice");
+  clientEl.value = data.clientPrice;
+  productEl.value = data.productPrice;
+
+  function renderPaths(){
+    var out = $("pathOut");
+    var gap = currentGap();
+    var cp = num(data.clientPrice), pp = num(data.productPrice);
+    out.innerHTML = "";
+
+    if(gap===0 || (cp===0 && pp===0)){
+      var p = document.createElement("p");
+      p.className = "empty-note"; p.style.padding="0";
+      p.textContent = "Enter a gap above and a price here to see your paths to target.";
+      out.appendChild(p);
+      return;
+    }
+
+    function addLine(count, label){
+      var line = document.createElement("div");
+      line.className = "path-line";
+      var b = document.createElement("b"); b.textContent = count;
+      var span = document.createElement("span"); span.className="lbl"; span.textContent = label;
+      line.appendChild(b); line.appendChild(span);
+      out.appendChild(line);
+    }
+    if(cp>0){
+      var nC = Math.ceil(gap / cp);
+      addLine(nC, "client" + (nC===1?"":"s") + " at " + money(cp) + " each = " + money(gap) + "/mo");
+    }
+    if(pp>0){
+      var nP = Math.ceil(gap / pp);
+      addLine(nP, "product sale" + (nP===1?"":"s") + " at " + money(pp) + " each = " + money(gap) + "/mo");
+    }
+    if(cp>0 && pp>0){
+      var perWeek = Math.ceil((gap / cp) / 4.33);
+      var note = document.createElement("p");
+      note.className = "path-note";
+      note.textContent = "That's about " + perWeek + " new client" + (perWeek===1?"":"s") + " a week. Suddenly the breakthrough has a shape. 💛";
+      out.appendChild(note);
+    }
+  }
+  clientEl.addEventListener("input", function(){ data.clientPrice = clientEl.value; save(); renderPaths(); maybeWelcome(); });
+  productEl.addEventListener("input", function(){ data.productPrice = productEl.value; save(); renderPaths(); maybeWelcome(); });
+
+  // ---- 4. Blocks + reframes ----
+  function addBlock(){
+    data.blocks.push({ id:uid(), block:"", truth:"" });
+    save(); renderBlocks(); maybeWelcome();
+  }
+  function renderBlocks(){
+    var list = $("blockList"), empty = $("blockEmpty");
+    list.innerHTML = "";
+    empty.style.display = data.blocks.length===0 ? "block" : "none";
+    data.blocks.forEach(function(item){
+      var box = document.createElement("div");
+      box.className = "block-item";
+
+      var del = document.createElement("button");
+      del.type="button"; del.className="del-block"; del.textContent="remove";
+      del.addEventListener("click", function(){
+        data.blocks = data.blocks.filter(function(x){ return x.id!==item.id; });
+        save(); renderBlocks(); maybeWelcome();
+      });
+      box.appendChild(del);
+
+      var l1 = document.createElement("label");
+      l1.className="field-label"; l1.textContent="The limiting belief";
+      var ta1 = document.createElement("textarea");
+      ta1.value = item.block || "";
+      ta1.placeholder = "e.g. \"Wanting more money makes me greedy.\"";
+      ta1.style.minHeight = "60px";
+      ta1.addEventListener("input", function(){ item.block = ta1.value; save(); });
+      l1.setAttribute("for","");
+      box.appendChild(l1); box.appendChild(ta1);
+
+      var lead = document.createElement("div");
+      lead.className="truth-lead"; lead.textContent="The truth that frees me";
+      box.appendChild(lead);
+
+      var ta2 = document.createElement("textarea");
+      ta2.value = item.truth || "";
+      ta2.placeholder = "e.g. \"I'm allowed to want more — increase is stewardship, and I can do real good with it.\"";
+      ta2.style.minHeight = "60px";
+      ta2.addEventListener("input", function(){ item.truth = ta2.value; save(); });
+      box.appendChild(ta2);
+
+      list.appendChild(box);
+    });
+  }
+  $("blockAdd").addEventListener("click", addBlock);
+
+  // ---- 5. Action steps + progress ----
+  function addAction(text){
+    text = (text||"").trim();
+    if(!text) return;
+    data.actions.push({ id:uid(), text:text, done:false });
+    save(); renderActions(); maybeWelcome();
+  }
+  function renderActions(){
+    var list = $("actionList"), empty = $("actionEmpty");
+    list.innerHTML = "";
+    empty.style.display = data.actions.length===0 ? "block" : "none";
+    data.actions.forEach(function(item){
+      var row = document.createElement("div");
+      row.className = "row";
+
+      var chk = document.createElement("button");
+      chk.type="button"; chk.className="check" + (item.done?" on":"");
+      chk.setAttribute("aria-pressed", item.done?"true":"false");
+      chk.setAttribute("aria-label","Mark step done");
+      chk.textContent = "✓";
+      chk.addEventListener("click", function(){ item.done=!item.done; save(); renderActions(); });
+
+      var txt = document.createElement("div");
+      txt.className = "txt" + (item.done?" done":"");
+      txt.textContent = item.text;
+
+      var del = document.createElement("button");
+      del.type="button"; del.className="del"; del.setAttribute("aria-label","Remove"); del.textContent="×";
+      del.addEventListener("click", function(){
+        data.actions = data.actions.filter(function(x){ return x.id!==item.id; });
+        save(); renderActions(); maybeWelcome();
+      });
+
+      row.appendChild(chk); row.appendChild(txt); row.appendChild(del);
+      list.appendChild(row);
+    });
+    renderProgress();
+  }
+  function renderProgress(){
+    var total = data.actions.length;
+    var done = data.actions.filter(function(a){ return a.done; }).length;
+    var pct = total ? Math.round((done/total)*100) : 0;
+    $("progDone").textContent = done;
+    $("progTotal").textContent = total;
+    $("progPct").textContent = pct + "%";
+    $("progFill").style.width = pct + "%";
+  }
+  $("actionAdd").addEventListener("click", function(){
+    addAction($("actionInput").value); $("actionInput").value="";
+  });
+  $("actionInput").addEventListener("keydown", function(e){
+    if(e.key==="Enter"){ e.preventDefault(); $("actionAdd").click(); }
+  });
+
+  // ---- Target date ----
+  var dateEl = $("targetDate");
+  dateEl.value = data.targetDate || "";
+  function renderDateNote(){
+    var note = $("dateNote");
+    if(!data.targetDate){ note.textContent=""; return; }
+    var parts = data.targetDate.split("-");
+    var d = new Date(parts[0], parts[1]-1, parts[2]);
+    var today = new Date(); today.setHours(0,0,0,0);
+    var days = Math.round((d - today) / 86400000);
+    var pretty = d.toLocaleDateString(undefined,{month:"long", day:"numeric", year:"numeric"});
+    if(days > 0){
+      note.textContent = pretty + " — " + days + " day" + (days===1?"":"s") + " to your breakthrough. You have time, and you have what it takes. 💛";
+    }else if(days === 0){
+      note.textContent = "Today is the day you named. Step boldly. 💛";
+    }else{
+      note.textContent = "This date has passed — honor how far you've come, then set a fresh one. 💛";
+    }
+  }
+  dateEl.addEventListener("change", function(){ data.targetDate = dateEl.value; save(); renderDateNote(); maybeWelcome(); });
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Income Breakthrough data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = blankData();
+      currentEl.value=""; targetEl.value=""; clientEl.value=""; productEl.value="";
+      dateEl.value="";
+      renderAll();
+    }
+  });
+
+  // ---- Initial render ----
+  function renderAll(){
+    renderGap();
+    renderLevers();
+    renderChanges();
+    renderPaths();
+    renderBlocks();
+    renderActions();
+    renderDateNote();
+    maybeWelcome();
+  }
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

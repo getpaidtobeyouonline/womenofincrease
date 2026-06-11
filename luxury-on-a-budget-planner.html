@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxury on a Budget Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:16px; padding:22px 20px; margin-top:18px;
+    position:relative; overflow:hidden; box-shadow:0 6px 18px rgba(20,84,62,.18);
+  }
+  .welcome::before{
+    content:"\2728"; position:absolute; top:14px; right:16px; font-size:24px; opacity:.6;
+  }
+  .welcome h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:21px; margin-bottom:8px; color:#FCF8EF;
+  }
+  .welcome p{ font-size:14.5px; line-height:1.55; color:rgba(252,248,239,.92); }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="number"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="number"]{ min-height:48px; }
+  textarea{ min-height:72px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Starter chips ---------- */
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
+  .chip{
+    background:var(--cream); border:1px solid var(--line); color:var(--ink);
+    border-radius:999px; padding:9px 14px; min-height:40px; font-family:inherit;
+    font-size:13.5px; cursor:pointer; transition:all .12s ease;
+    display:inline-flex; align-items:center;
+  }
+  .chip:hover{ border-color:var(--gold); color:var(--emerald); }
+  .chip:active{ transform:translateY(1px); }
+
+  .add-row{ display:flex; gap:8px; margin-top:12px; }
+  .add-row input{ flex:1; }
+  .add-btn{
+    flex:none; min-width:48px; min-height:48px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:22px; cursor:pointer;
+    box-shadow:0 4px 12px rgba(200,160,74,.3); line-height:1;
+  }
+  .add-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Luxury list ---------- */
+  .lux-list{ list-style:none; margin-top:14px; }
+  .lux-list li{
+    display:flex; align-items:center; gap:10px;
+    padding:11px 12px; margin-bottom:8px;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:12px; font-size:14.5px; color:var(--ink);
+  }
+  .lux-list li .dot{ flex:none; width:9px;height:9px;border-radius:50%;background:var(--gold); }
+  .lux-list li span.txt{ flex:1; }
+  .del-btn{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:18px; min-width:44px; min-height:44px; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .del-btn:hover{ color:var(--gold); }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; margin-top:6px; }
+
+  /* ---------- Strategic swaps ---------- */
+  .swap{
+    border:1px solid var(--line); border-radius:13px; padding:14px;
+    margin-top:12px; background:var(--cream);
+  }
+  .swap .swap-area{
+    font-family:'Fraunces',serif; color:var(--emerald); font-weight:600; font-size:16px;
+    margin-bottom:4px;
+  }
+  .swap .swap-tag{ font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+  .swap-line{ margin-top:8px; }
+  .swap-line label{
+    display:flex; align-items:center; gap:7px; font-weight:600; font-size:12.5px; margin-bottom:4px;
+  }
+  .pill{ font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; padding:3px 9px; border-radius:999px; font-weight:700; }
+  .pill.splurge{ background:var(--gold-soft); color:var(--emerald); }
+  .pill.save{ background:var(--emerald-soft); color:var(--emerald); }
+  .swap input[type="text"]{ background:#fff; }
+
+  /* ---------- Luxury fund ---------- */
+  .fund-grid{ display:flex; gap:10px; }
+  .fund-grid > div{ flex:1; }
+  .fund-grid label.field-label{ margin-top:0; }
+  .progress-wrap{ margin-top:16px; }
+  .progress-track{
+    height:14px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:999px; overflow:hidden;
+  }
+  .progress-fill{
+    height:100%; width:0%;
+    background:linear-gradient(90deg, var(--gold-soft), var(--gold));
+    border-radius:999px; transition:width .3s ease;
+  }
+  .progress-meta{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-top:10px; font-size:13.5px; color:var(--muted);
+  }
+  .progress-meta b{ color:var(--emerald); font-family:'Fraunces',serif; font-size:18px; font-weight:600; }
+  .fund-note{
+    margin-top:12px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:12px; padding:12px 14px; color:var(--emerald); font-size:13.5px; text-align:center;
+    display:none;
+  }
+  .fund-note.show{ display:block; animation:rise .4s ease; }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Idea library ---------- */
+  .idea{
+    display:flex; align-items:center; gap:12px;
+    padding:12px; border:1px solid var(--line); border-radius:12px; margin-bottom:8px;
+    background:var(--cream);
+  }
+  .idea .idea-txt{ flex:1; font-size:14px; }
+  .idea .idea-txt .cost{ display:block; color:var(--muted); font-size:12px; margin-top:2px; }
+  .save-star{
+    flex:none; background:none; border:1px solid var(--line); border-radius:10px;
+    color:var(--muted); cursor:pointer; min-width:44px; min-height:44px; font-size:18px;
+    display:flex; align-items:center; justify-content:center; transition:all .12s;
+  }
+  .save-star.saved{ background:var(--gold-soft); border-color:var(--gold); color:var(--emerald); }
+  .save-star:hover{ border-color:var(--gold); }
+  .lib-actions{ display:flex; justify-content:center; margin-top:10px; }
+
+  .fav-list{ list-style:none; margin-top:6px; }
+  .fav-list li{
+    display:flex; align-items:center; gap:8px; font-size:14px;
+    padding:9px 2px; border-bottom:1px solid var(--line);
+  }
+  .fav-list li:last-child{ border-bottom:none; }
+  .fav-list li .star{ color:var(--gold); }
+
+  /* ---------- Monthly treat ---------- */
+  .treat-card{ display:flex; align-items:flex-start; gap:12px; }
+  .treat-check{
+    flex:none; width:30px; height:30px; margin-top:2px;
+    border:2px solid var(--gold); border-radius:9px; background:#fff; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; font-size:18px; color:var(--emerald);
+    transition:all .15s;
+  }
+  .treat-check.done{ background:var(--gold-soft); }
+  .treat-body{ flex:1; }
+  .month-label{
+    display:inline-block; color:var(--emerald); background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.12); font-weight:600; font-size:12.5px; letter-spacing:.04em;
+    padding:5px 12px; border-radius:999px; margin-bottom:10px;
+  }
+  .treat-done-note{
+    display:none; margin-top:12px; text-align:center; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:12px; padding:14px; font-family:'Fraunces',serif; font-size:16px;
+  }
+  .treat-done-note.show{ display:block; animation:rise .4s ease; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Luxury on a Budget Planner</h1>
+    <p class="subtitle">Elevate your everyday — feel rich within your real income.</p>
+  </header>
+
+  <!-- Welcome / first-run -->
+  <section class="welcome" id="welcome">
+    <h2>Soft life, real budget.</h2>
+    <p>Luxury isn't a price tag — it's how cared-for you feel. Here you'll name what makes <em>you</em> feel rich, spend where it matters, save where it doesn't, and plan small treats on purpose. Elevate without overspending. Let's begin, sister. 💛</p>
+  </section>
+
+  <!-- 1. Define luxury for her -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>What Luxury Means to You</h2></div>
+    <p class="hint">It's personal. Maybe it's fresh flowers, quiet mornings, a clean home, soft sheets, a good candle. Tap an idea or add your own — the small things that make you feel rich.</p>
+    <div class="chips" id="luxStarters"></div>
+    <div class="add-row">
+      <label for="luxInput" style="position:absolute;left:-9999px;">Add a small luxury</label>
+      <input type="text" id="luxInput" placeholder="Add your own small luxury…" maxlength="60">
+      <button class="add-btn" id="luxAdd" type="button" aria-label="Add luxury">+</button>
+    </div>
+    <ul class="lux-list" id="luxList"></ul>
+    <p class="empty-note" id="luxEmpty">Your little luxuries will gather here. 🤍</p>
+  </section>
+
+  <!-- 2. Strategic swaps -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Strategic Swaps</h2></div>
+    <p class="hint">Spend where it matters, save where it doesn't. For each area, name one place to <b>splurge</b> (the everyday touch you'll feel) and one place to <b>save</b> (what no one notices).</p>
+    <div id="swaps"></div>
+  </section>
+
+  <!-- 3. Luxury fund -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Your Little Luxury Fund</h2></div>
+    <p class="hint">Set aside a small amount for intentional treats — so luxury is planned, not guilt-spending. Optional, and always within means.</p>
+    <div class="fund-grid">
+      <div>
+        <label class="field-label" for="fundGoal">Goal amount</label>
+        <input type="number" id="fundGoal" inputmode="decimal" min="0" step="1" placeholder="50">
+      </div>
+      <div>
+        <label class="field-label" for="fundSaved">Saved so far</label>
+        <input type="number" id="fundSaved" inputmode="decimal" min="0" step="1" placeholder="0">
+      </div>
+    </div>
+    <label class="field-label" for="fundFor">What this little fund is for <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <input type="text" id="fundFor" placeholder="A monthly spa morning, fresh blooms, a slow brunch…" maxlength="80">
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="fundFill"></div></div>
+      <div class="progress-meta">
+        <span id="fundPct">0% there</span>
+        <span><b id="fundSavedLbl">0</b> / <span id="fundGoalLbl">0</span></span>
+      </div>
+    </div>
+    <div class="fund-note" id="fundNote">You did it — luxury, planned and guilt-free. Enjoy it fully. ✨</div>
+  </section>
+
+  <!-- 4. Free / low-cost luxe library -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Free &amp; Low-Cost Luxe Library</h2></div>
+    <p class="hint">Elevated rituals that cost little or nothing. Browse, then tap the star to save your favorites.</p>
+    <div id="ideaLib"></div>
+    <div class="lib-actions">
+      <button class="link-btn reset-btn" id="shuffleIdeas" type="button" style="min-height:44px;">↻ Show me more ideas</button>
+    </div>
+    <div style="margin-top:14px;">
+      <div class="step" style="margin-bottom:8px;"><h2 style="font-size:16px;">Your saved luxe ✨</h2></div>
+      <ul class="fav-list" id="favList"></ul>
+      <p class="empty-note" id="favEmpty">Star the ones that feel like you — they'll live here.</p>
+    </div>
+  </section>
+
+  <!-- 5. Monthly intentional treat -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>One Intentional Treat</h2></div>
+    <p class="hint">One planned treat this month — chosen on purpose, enjoyed without guilt.</p>
+    <span class="month-label" id="monthLabel">This month</span>
+    <div class="treat-card">
+      <button class="treat-check" id="treatCheck" type="button" aria-label="Mark treat enjoyed"></button>
+      <div class="treat-body">
+        <label class="field-label" for="treatText" style="margin-top:0;">My treat for this month</label>
+        <input type="text" id="treatText" placeholder="e.g. a candlelit bath, a bookshop hour, fresh peonies…" maxlength="90">
+      </div>
+    </div>
+    <div class="treat-done-note" id="treatDone">Enjoyed &amp; well-deserved. You elevate on purpose. 💛</div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_luxury_on_budget";
+
+  // ---- Starter luxury ideas (tappable) ----
+  var LUX_STARTERS = [
+    "Fresh flowers", "Quiet mornings", "Soft, clean sheets", "A good candle",
+    "A tidy, clean home", "Slow coffee ritual", "Cozy robe", "A made bed",
+    "Real glass, not plastic", "Bath, lights low"
+  ];
+
+  // ---- Strategic swap areas ----
+  var SWAP_AREAS = [
+    { key:"home", area:"Home", tag:"the space you live in" },
+    { key:"selfcare", area:"Self-care", tag:"how you tend to you" },
+    { key:"food", area:"Food", tag:"the everyday table" },
+    { key:"style", area:"Style", tag:"what you wear & carry" },
+    { key:"experiences", area:"Experiences", tag:"moments & memories" }
+  ];
+
+  // ---- Free / low-cost luxe idea library ----
+  var IDEAS = [
+    ["A single stem of grocery-store flowers on the counter", "Under $5"],
+    ["A real bath: warm water, low light, no phone", "Free"],
+    ["Pretty water — glass carafe + a slice of lemon", "Free"],
+    ["A slow Sunday morning with nowhere to be", "Free"],
+    ["Hotel-fold your towels and freshen one drawer", "Free"],
+    ["A nice candle, lit at dinner — not saved for 'someday'", "Low-cost"],
+    ["Make your bed like a boutique hotel", "Free"],
+    ["A walk dressed up, just for you", "Free"],
+    ["Cloth napkins for an ordinary Tuesday dinner", "Low-cost"],
+    ["A standing 'do not disturb' hour, calendar-blocked", "Free"],
+    ["A small dish of good chocolate or fruit, plated", "Low-cost"],
+    ["A fresh, clean scent for your space — linen spray", "Low-cost"],
+    ["A gratitude moment with your morning coffee", "Free"],
+    ["One uninterrupted chapter of a good book", "Free"],
+    ["Soft music + a tidy 15 minutes in your favorite room", "Free"],
+    ["A face mask from what's already in the cabinet", "Free"],
+    ["Charge your phone in another room overnight", "Free"],
+    ["Light, fresh-pressed sheets dried in the sun", "Free"]
+  ];
+
+  // ---- Month helpers ----
+  function monthKey(){
+    var d = new Date();
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+  }
+  function prettyMonth(){
+    return new Date().toLocaleDateString(undefined,{month:"long", year:"numeric"});
+  }
+
+  // ---- State ----
+  var data = load();
+  var THIS_MONTH = monthKey();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && typeof o === "object") return normalize(o); }
+    }catch(e){}
+    return normalize({});
+  }
+  function normalize(o){
+    o.luxuries = Array.isArray(o.luxuries) ? o.luxuries : [];
+    o.swaps = (o.swaps && typeof o.swaps === "object") ? o.swaps : {};
+    o.fund = (o.fund && typeof o.fund === "object") ? o.fund : { goal:"", saved:"", forWhat:"" };
+    o.favorites = Array.isArray(o.favorites) ? o.favorites : [];
+    o.ideaOffset = typeof o.ideaOffset === "number" ? o.ideaOffset : 0;
+    o.treats = (o.treats && typeof o.treats === "object") ? o.treats : {};
+    return o;
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* ============ 1. LUXURIES ============ */
+  function renderStarters(){
+    var box = $("luxStarters"); box.innerHTML = "";
+    LUX_STARTERS.forEach(function(s){
+      if(data.luxuries.indexOf(s) !== -1) return; // hide already-added
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "chip"; b.textContent = "+ " + s;
+      b.addEventListener("click", function(){ addLuxury(s); });
+      box.appendChild(b);
+    });
+  }
+  function addLuxury(text){
+    text = (text||"").trim();
+    if(!text) return;
+    if(data.luxuries.indexOf(text) !== -1) return;
+    data.luxuries.push(text);
+    save(); renderLuxuries(); renderStarters();
+  }
+  function renderLuxuries(){
+    var list = $("luxList"), empty = $("luxEmpty");
+    list.innerHTML = "";
+    if(data.luxuries.length === 0){ empty.style.display = "block"; return; }
+    empty.style.display = "none";
+    data.luxuries.forEach(function(text, i){
+      var li = document.createElement("li");
+      var dot = document.createElement("span"); dot.className = "dot";
+      var txt = document.createElement("span"); txt.className = "txt"; txt.textContent = text;
+      var del = document.createElement("button");
+      del.type = "button"; del.className = "del-btn"; del.innerHTML = "&times;";
+      del.setAttribute("aria-label", "Remove " + text);
+      del.addEventListener("click", function(){
+        data.luxuries.splice(i,1); save(); renderLuxuries(); renderStarters();
+      });
+      li.appendChild(dot); li.appendChild(txt); li.appendChild(del);
+      list.appendChild(li);
+    });
+  }
+  $("luxAdd").addEventListener("click", function(){
+    addLuxury($("luxInput").value); $("luxInput").value = "";
+  });
+  $("luxInput").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); addLuxury(this.value); this.value=""; }
+  });
+
+  /* ============ 2. STRATEGIC SWAPS ============ */
+  function renderSwaps(){
+    var wrap = $("swaps"); wrap.innerHTML = "";
+    SWAP_AREAS.forEach(function(a){
+      var cur = data.swaps[a.key] || { splurge:"", save:"", note:"" };
+      var div = document.createElement("div");
+      div.className = "swap";
+
+      var head = document.createElement("div");
+      head.className = "swap-area"; head.textContent = a.area;
+      var tag = document.createElement("div");
+      tag.className = "swap-tag"; tag.textContent = a.tag;
+      div.appendChild(head); div.appendChild(tag);
+
+      div.appendChild(swapField(a.key, "splurge", "Splurge here", cur.splurge, "The everyday-touch worth investing in…"));
+      div.appendChild(swapField(a.key, "save", "Save here", cur.save, "What you won't even miss cutting…"));
+      div.appendChild(swapField(a.key, "note", "", cur.note, "Notes (optional)…"));
+      wrap.appendChild(div);
+    });
+  }
+  function swapField(areaKey, kind, labelText, value, ph){
+    var line = document.createElement("div"); line.className = "swap-line";
+    var id = "swap-" + areaKey + "-" + kind;
+    var lab = document.createElement("label"); lab.setAttribute("for", id);
+    if(kind === "splurge"){
+      var p1 = document.createElement("span"); p1.className = "pill splurge"; p1.textContent = "Splurge";
+      lab.appendChild(p1); lab.appendChild(document.createTextNode(" " + labelText));
+    } else if(kind === "save"){
+      var p2 = document.createElement("span"); p2.className = "pill save"; p2.textContent = "Save";
+      lab.appendChild(p2); lab.appendChild(document.createTextNode(" " + labelText));
+    } else {
+      lab.style.position = "absolute"; lab.style.left = "-9999px"; lab.textContent = "Notes for " + areaKey;
+    }
+    var inp = document.createElement("input");
+    inp.type = "text"; inp.id = id; inp.value = value || ""; inp.placeholder = ph; inp.maxLength = 120;
+    inp.addEventListener("input", function(){
+      if(!data.swaps[areaKey]) data.swaps[areaKey] = { splurge:"", save:"", note:"" };
+      data.swaps[areaKey][kind] = inp.value;
+      save();
+    });
+    line.appendChild(lab); line.appendChild(inp);
+    return line;
+  }
+
+  /* ============ 3. LUXURY FUND ============ */
+  var fundGoal = $("fundGoal"), fundSaved = $("fundSaved"), fundFor = $("fundFor");
+  function renderFund(){
+    fundGoal.value = data.fund.goal || "";
+    fundSaved.value = data.fund.saved || "";
+    fundFor.value = data.fund.forWhat || "";
+    updateFundProgress();
+  }
+  function updateFundProgress(){
+    var goal = parseFloat(data.fund.goal) || 0;
+    var saved = parseFloat(data.fund.saved) || 0;
+    var pct = goal > 0 ? Math.min(100, Math.round((saved/goal)*100)) : 0;
+    $("fundFill").style.width = pct + "%";
+    $("fundPct").textContent = goal > 0 ? pct + "% there" : "Set a goal to begin";
+    $("fundSavedLbl").textContent = fmt(saved);
+    $("fundGoalLbl").textContent = fmt(goal);
+    $("fundNote").classList.toggle("show", goal > 0 && saved >= goal);
+  }
+  function fmt(n){
+    if(!n) return "0";
+    return (Math.round(n*100)/100).toLocaleString();
+  }
+  fundGoal.addEventListener("input", function(){ data.fund.goal = this.value; save(); updateFundProgress(); });
+  fundSaved.addEventListener("input", function(){ data.fund.saved = this.value; save(); updateFundProgress(); });
+  fundFor.addEventListener("input", function(){ data.fund.forWhat = this.value; save(); });
+
+  /* ============ 4. IDEA LIBRARY ============ */
+  var SHOW_N = 4;
+  function ideaId(text){ return text; }
+  function renderIdeaLib(){
+    var box = $("ideaLib"); box.innerHTML = "";
+    for(var k=0;k<SHOW_N;k++){
+      var idx = (data.ideaOffset + k) % IDEAS.length;
+      box.appendChild(ideaRow(IDEAS[idx]));
+    }
+  }
+  function ideaRow(pair){
+    var text = pair[0], cost = pair[1];
+    var row = document.createElement("div"); row.className = "idea";
+    var body = document.createElement("div"); body.className = "idea-txt";
+    body.appendChild(document.createTextNode(text));
+    var c = document.createElement("span"); c.className = "cost"; c.textContent = cost;
+    body.appendChild(c);
+    var star = document.createElement("button");
+    star.type = "button"; star.className = "save-star";
+    var isSaved = data.favorites.indexOf(text) !== -1;
+    star.innerHTML = isSaved ? "&#9733;" : "&#9734;";
+    if(isSaved) star.classList.add("saved");
+    star.setAttribute("aria-label", (isSaved ? "Unsave " : "Save ") + text);
+    star.addEventListener("click", function(){
+      var at = data.favorites.indexOf(text);
+      if(at === -1){ data.favorites.push(text); }
+      else { data.favorites.splice(at,1); }
+      save(); renderIdeaLib(); renderFavorites();
+    });
+    row.appendChild(body); row.appendChild(star);
+    return row;
+  }
+  $("shuffleIdeas").addEventListener("click", function(){
+    data.ideaOffset = (data.ideaOffset + SHOW_N) % IDEAS.length;
+    save(); renderIdeaLib();
+  });
+  function renderFavorites(){
+    var list = $("favList"), empty = $("favEmpty");
+    list.innerHTML = "";
+    if(data.favorites.length === 0){ empty.style.display = "block"; return; }
+    empty.style.display = "none";
+    data.favorites.forEach(function(text, i){
+      var li = document.createElement("li");
+      var s = document.createElement("span"); s.className = "star"; s.innerHTML = "&#9733;";
+      var t = document.createElement("span"); t.style.flex = "1"; t.textContent = text;
+      var del = document.createElement("button");
+      del.type = "button"; del.className = "del-btn"; del.innerHTML = "&times;";
+      del.setAttribute("aria-label", "Remove " + text);
+      del.addEventListener("click", function(){
+        data.favorites.splice(i,1); save(); renderFavorites(); renderIdeaLib();
+      });
+      li.appendChild(s); li.appendChild(t); li.appendChild(del);
+      list.appendChild(li);
+    });
+  }
+
+  /* ============ 5. MONTHLY TREAT ============ */
+  var treatText = $("treatText"), treatCheck = $("treatCheck");
+  function curTreat(){
+    if(!data.treats[THIS_MONTH]) data.treats[THIS_MONTH] = { text:"", done:false };
+    return data.treats[THIS_MONTH];
+  }
+  function renderTreat(){
+    $("monthLabel").textContent = prettyMonth();
+    var t = curTreat();
+    treatText.value = t.text || "";
+    treatCheck.innerHTML = t.done ? "&#10003;" : "";
+    treatCheck.classList.toggle("done", t.done);
+    $("treatDone").classList.toggle("show", t.done);
+  }
+  treatText.addEventListener("input", function(){ curTreat().text = this.value; save(); });
+  treatCheck.addEventListener("click", function(){
+    var t = curTreat(); t.done = !t.done; save(); renderTreat();
+  });
+
+  /* ============ RESET ============ */
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Luxury on a Budget data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = normalize({});
+      renderAll();
+      $("luxInput").value = "";
+    }
+  });
+
+  /* ============ INIT ============ */
+  function renderAll(){
+    renderStarters();
+    renderLuxuries();
+    renderSwaps();
+    renderFund();
+    renderIdeaLib();
+    renderFavorites();
+    renderTreat();
+  }
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

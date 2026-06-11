@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial Vision Board Builder · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:760px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; max-width:460px; margin:0 auto; }
+
+  /* ---------- Stat bar ---------- */
+  .stats{
+    display:flex; gap:10px; justify-content:center; flex-wrap:wrap;
+    margin-top:16px;
+  }
+  .stat{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:999px; padding:6px 14px; color:var(--emerald);
+    font-weight:600; font-size:13px; letter-spacing:.02em;
+  }
+  .stat b{ font-size:14px; }
+
+  /* ---------- Toolbar ---------- */
+  .toolbar{
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    margin-top:18px;
+  }
+  .toolbar .grow{ flex:1; }
+  .btn{
+    min-height:48px; background:var(--gold); color:var(--ink); border:none;
+    border-radius:13px; font-family:inherit; font-weight:700; font-size:15px;
+    letter-spacing:.01em; cursor:pointer; padding:0 18px;
+    box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  }
+  .btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .btn:active{ transform:translateY(1px); }
+  .btn.ghost{
+    background:#fff; color:var(--emerald); border:1px solid var(--line);
+    box-shadow:none; font-weight:600;
+  }
+  .btn.ghost:hover{ border-color:var(--gold); box-shadow:none; }
+  .select-wrap{ display:inline-flex; align-items:center; gap:8px; color:var(--muted); font-size:13px; }
+  select{
+    font-family:inherit; font-size:14px; color:var(--ink); background:#fff;
+    border:1px solid var(--line); border-radius:11px; padding:11px 12px; min-height:44px; cursor:pointer;
+  }
+  select:focus{ outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,160,74,.18); }
+
+  /* ---------- Vision board grid ---------- */
+  .board{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:16px; margin-top:18px;
+  }
+
+  /* ---------- Goal card ---------- */
+  .goal{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:18px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+    display:flex; flex-direction:column;
+  }
+  .goal.achieved{
+    background:linear-gradient(180deg,#fff 0%, var(--emerald-soft) 100%);
+    border-color:rgba(20,84,62,.25);
+  }
+  .goal-top{ display:flex; align-items:flex-start; gap:12px; }
+  .goal-emoji{
+    flex:none; width:46px;height:46px;border-radius:12px;
+    background:var(--gold-soft); display:flex;align-items:center;justify-content:center;
+    font-size:24px;
+  }
+  .goal-title{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px; line-height:1.2;
+  }
+  .goal-time{ color:var(--muted); font-size:13px; margin-top:3px; }
+  .badge{
+    display:inline-block; background:var(--emerald); color:#FCF8EF;
+    font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    padding:3px 9px; border-radius:999px; margin-top:6px;
+  }
+
+  .goal-numbers{
+    display:flex; align-items:baseline; gap:6px; margin-top:14px;
+    font-family:'Fraunces',serif; color:var(--emerald);
+  }
+  .goal-numbers .cur{ font-size:24px; font-weight:600; }
+  .goal-numbers .sep{ color:var(--muted); font-size:14px; font-family:'Hanken Grotesk'; }
+  .goal-numbers .tgt{ font-size:16px; color:var(--muted); }
+
+  .bar{
+    height:8px; border-radius:999px; background:var(--emerald-soft);
+    overflow:hidden; margin-top:8px;
+  }
+  .bar > span{ display:block; height:100%; background:var(--gold); border-radius:999px; transition:width .3s ease; }
+  .bar-label{ font-size:12px; color:var(--muted); margin-top:5px; }
+
+  .goal-why{
+    margin-top:12px; font-size:14px; color:var(--ink); line-height:1.5;
+  }
+  .goal-faith{
+    margin-top:12px; background:var(--emerald-soft); border-left:3px solid var(--gold);
+    border-radius:8px; padding:11px 13px;
+    font-family:'Fraunces',serif; font-style:italic; font-size:14.5px; color:var(--emerald); line-height:1.5;
+  }
+  .goal-faith .tag{
+    display:block; font-family:'Hanken Grotesk'; font-style:normal; font-weight:700;
+    font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold);
+    margin-bottom:5px;
+  }
+
+  /* ---------- Action steps ---------- */
+  .steps{ list-style:none; margin-top:14px; }
+  .steps li{
+    display:flex; align-items:flex-start; gap:9px; padding:7px 0;
+    font-size:14px; border-bottom:1px solid var(--line);
+  }
+  .steps li:last-child{ border-bottom:none; }
+  .steps .chk{
+    flex:none; width:22px;height:22px;border-radius:6px; border:2px solid var(--gold);
+    background:#fff; cursor:pointer; display:flex;align-items:center;justify-content:center;
+    margin-top:1px; padding:0; color:transparent; font-size:13px; font-weight:700;
+    transition:background .12s, color .12s;
+  }
+  .steps .chk.on{ background:var(--gold); color:var(--ink); }
+  .steps .txt{ flex:1; line-height:1.4; cursor:default; }
+  .steps li.on .txt{ color:var(--muted); text-decoration:line-through; }
+  .steps .rm{
+    flex:none; background:none; border:none; color:#C09A9A; cursor:pointer;
+    font-size:16px; line-height:1; padding:4px; min-width:28px; min-height:28px;
+  }
+  .steps .rm:hover{ color:#A45; }
+  .add-step{ display:flex; gap:8px; margin-top:10px; }
+  .add-step input{
+    flex:1; font-family:inherit; font-size:15px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:10px;
+    padding:10px 12px; min-height:42px;
+  }
+  .add-step input:focus{ outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,160,74,.18); }
+  .add-step button{
+    flex:none; min-height:42px; padding:0 14px; border-radius:10px; border:1px solid var(--line);
+    background:#fff; color:var(--emerald); font-family:inherit; font-weight:700; font-size:18px; cursor:pointer;
+  }
+  .add-step button:hover{ border-color:var(--gold); }
+
+  .goal-actions{
+    display:flex; gap:8px; margin-top:16px; padding-top:14px; border-top:1px solid var(--line);
+  }
+  .mini{
+    flex:1; min-height:42px; border-radius:10px; border:1px solid var(--line);
+    background:#fff; font-family:inherit; font-weight:600; font-size:13px; cursor:pointer;
+    color:var(--emerald); display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  }
+  .mini:hover{ border-color:var(--gold); }
+  .mini.gold{ background:var(--gold); color:var(--ink); border-color:var(--gold); font-weight:700; }
+  .mini.danger{ color:#A45; }
+  .mini.danger:hover{ border-color:#C99; }
+
+  /* ---------- Empty state ---------- */
+  .empty{
+    grid-column:1 / -1; text-align:center; background:#fff; border:1px dashed var(--gold-soft);
+    border-radius:16px; padding:38px 24px;
+  }
+  .empty .em-emoji{ font-size:40px; }
+  .empty h3{ font-family:'Fraunces',serif; color:var(--emerald); font-size:22px; font-weight:600; margin:12px 0 8px; }
+  .empty p{ color:var(--muted); font-size:15px; max-width:420px; margin:0 auto 18px; }
+
+  /* ---------- Modal (editor + declare) ---------- */
+  .overlay{
+    display:none; position:fixed; inset:0; background:rgba(20,27,24,.55);
+    z-index:50; padding:16px; overflow-y:auto;
+  }
+  .overlay.show{ display:flex; align-items:flex-start; justify-content:center; }
+  .modal{
+    background:var(--cream); border-radius:18px; max-width:520px; width:100%;
+    margin:32px auto; padding:24px 22px; box-shadow:0 20px 60px rgba(0,0,0,.3);
+  }
+  .modal h2{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:23px; font-weight:600; margin-bottom:4px;
+  }
+  .modal .lead{ color:var(--muted); font-size:14px; margin-bottom:8px; }
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea, input[type="date"]{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:#fff; border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s; min-height:48px;
+  }
+  textarea{ min-height:74px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  .two{ display:flex; gap:12px; }
+  .two > div{ flex:1; }
+
+  .emoji-picker{ display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+  .emoji-opt{
+    width:44px;height:44px;border-radius:11px; border:1px solid var(--line); background:#fff;
+    font-size:22px; cursor:pointer; display:flex;align-items:center;justify-content:center;
+  }
+  .emoji-opt.sel{ border-color:var(--gold); background:var(--gold-soft); box-shadow:0 0 0 2px rgba(200,160,74,.25); }
+
+  .modal-actions{ display:flex; gap:10px; margin-top:22px; }
+  .modal-actions .btn{ flex:1; }
+
+  /* ---------- Declare mode ---------- */
+  .declare-card{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; margin-bottom:14px; position:relative;
+  }
+  .declare-card .d-title{ font-family:'Fraunces',serif; font-weight:600; font-size:21px; margin-bottom:4px; }
+  .declare-card .d-num{ color:var(--gold-soft); font-size:14px; font-weight:600; margin-bottom:10px; }
+  .declare-card .d-faith{
+    font-family:'Fraunces',serif; font-style:italic; font-size:17px; line-height:1.5;
+  }
+  .declare-card .d-faith::before{ content:"\201C"; }
+  .declare-card .d-faith::after{ content:"\201D"; }
+  .declare-intro{ color:var(--muted); font-size:14px; margin-bottom:16px; line-height:1.55; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:24px auto 18px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  .sr-only{ position:absolute; width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0; }
+
+  @media (max-width:560px){
+    .board{ grid-template-columns:1fr; }
+    h1{ font-size:26px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Financial Vision Board Builder</h1>
+    <p class="subtitle">See your financial future on purpose — real numbers, real timelines, and the faith to carry them.</p>
+    <div class="stats">
+      <span class="stat"><b id="statGoals">0</b> goals in view</span>
+      <span class="stat"><b id="statAchieved">0</b> achieved 🎉</span>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <button class="btn" id="addBtn" type="button">＋ Add a financial goal</button>
+    <span class="grow"></span>
+    <span class="select-wrap">
+      <label for="sortSel">Order by</label>
+      <select id="sortSel" aria-label="Order goals by">
+        <option value="created">Date added</option>
+        <option value="timeline">Timeline (soonest first)</option>
+        <option value="progress">Progress</option>
+      </select>
+    </span>
+    <button class="btn ghost" id="declareBtn" type="button">🕊 Declare my vision</button>
+  </div>
+
+  <main class="board" id="board" aria-live="polite"></main>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<!-- ---------- Editor Modal ---------- -->
+<div class="overlay" id="editOverlay" role="dialog" aria-modal="true" aria-labelledby="editTitle">
+  <div class="modal">
+    <h2 id="editTitle">Name your vision</h2>
+    <p class="lead">Be specific, sister. Clear numbers and dates turn a wish into a plan you can pray over.</p>
+
+    <label class="field-label" for="fTitle">What are you believing for?</label>
+    <input type="text" id="fTitle" placeholder="e.g. Debt-free · Own a home · $10k saved" maxlength="80">
+
+    <label class="field-label">Pick an icon <span class="opt">(optional)</span></label>
+    <div class="emoji-picker" id="emojiPicker"></div>
+
+    <div class="two">
+      <div>
+        <label class="field-label" for="fTarget">Target number <span class="opt">(if it has one)</span></label>
+        <input type="text" id="fTarget" placeholder="e.g. 10000" inputmode="decimal">
+      </div>
+      <div>
+        <label class="field-label" for="fCurrent">Where you are now</label>
+        <input type="text" id="fCurrent" placeholder="e.g. 2500" inputmode="decimal">
+      </div>
+    </div>
+
+    <div class="two">
+      <div>
+        <label class="field-label" for="fUnit">Symbol <span class="opt">(opt.)</span></label>
+        <input type="text" id="fUnit" placeholder="$" maxlength="4" value="$">
+      </div>
+      <div>
+        <label class="field-label" for="fDate">Target date <span class="opt">(optional)</span></label>
+        <input type="date" id="fDate">
+      </div>
+    </div>
+
+    <label class="field-label" for="fWhy">Why this matters to you <span class="opt">(optional)</span></label>
+    <textarea id="fWhy" placeholder="The freedom, the peace, the legacy this makes possible…"></textarea>
+
+    <label class="field-label" for="fFaith">Your faith step <span class="opt">— a prayer, declaration, or the trust you're holding</span></label>
+    <textarea id="fFaith" placeholder="e.g. I trust God to provide above and beyond, and I steward what He sends with wisdom."></textarea>
+
+    <div class="modal-actions">
+      <button class="btn ghost" id="cancelEdit" type="button">Cancel</button>
+      <button class="btn" id="saveEdit" type="button">Save to my board</button>
+    </div>
+  </div>
+</div>
+
+<!-- ---------- Declare Modal ---------- -->
+<div class="overlay" id="declareOverlay" role="dialog" aria-modal="true" aria-labelledby="declareTitle">
+  <div class="modal">
+    <h2 id="declareTitle">Declare your vision 🕊</h2>
+    <p class="declare-intro">Speak these over your future — out loud if you can. Faith calls things that are not as though they were. This is yours.</p>
+    <div id="declareList"></div>
+    <div class="modal-actions">
+      <button class="btn" id="closeDeclare" type="button">Amen — close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_financial_vision_board";
+
+  var EMOJIS = ["💰","🏠","🚗","✈️","🎓","💳","📈","🏦","💍","👶","🌴","💼","🎯","🙌","🕊","💎","🌱","🔑","🛡","💛"];
+
+  // ---- State ----
+  var data = load();
+  var editingId = null;
+  var pickedEmoji = "";
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && Array.isArray(o.goals)) return o; }
+    }catch(e){}
+    return { goals:[], sort:"created" };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function uid(){ return "g"+Date.now()+Math.floor(Math.random()*1000); }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Helpers ----
+  function num(v){
+    if(v === null || v === undefined) return null;
+    var n = parseFloat(String(v).replace(/[^0-9.\-]/g,""));
+    return isNaN(n) ? null : n;
+  }
+  function fmtNum(n, unit){
+    if(n === null) return "";
+    var s = (Math.round(n*100)/100).toLocaleString();
+    return (unit || "") + s;
+  }
+  function prettyDate(iso){
+    if(!iso) return "";
+    var p = iso.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{month:"short", day:"numeric", year:"numeric"});
+  }
+  function escapeHtml(s){
+    return String(s||"").replace(/[&<>"']/g,function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  function progressPct(g){
+    var t = num(g.target);
+    if(t !== null && t > 0){
+      var c = num(g.current) || 0;
+      return Math.max(0, Math.min(100, Math.round((c / t) * 100)));
+    }
+    // fall back to action steps done
+    if(g.steps && g.steps.length){
+      var done = g.steps.filter(function(s){ return s.done; }).length;
+      return Math.round((done / g.steps.length) * 100);
+    }
+    return null;
+  }
+
+  // ---- Sorting ----
+  function sortedGoals(){
+    var gs = data.goals.slice();
+    var s = data.sort || "created";
+    if(s === "timeline"){
+      gs.sort(function(a,b){
+        var ad = a.date || "9999-12-31", bd = b.date || "9999-12-31";
+        return ad < bd ? -1 : ad > bd ? 1 : 0;
+      });
+    }else if(s === "progress"){
+      gs.sort(function(a,b){ return (progressPct(b)||0) - (progressPct(a)||0); });
+    }
+    // "created" keeps natural array order
+    return gs;
+  }
+
+  // ---- Render board ----
+  var board = $("board");
+  function render(){
+    board.innerHTML = "";
+    if(data.goals.length === 0){
+      board.innerHTML =
+        '<div class="empty">'+
+          '<div class="em-emoji">💛</div>'+
+          '<h3>Your financial future, in full view</h3>'+
+          '<p>This is your space to dream on purpose. Add the homes, the savings, the debt that gets paid off, the year you go six figures — with real numbers, real dates, and the faith you’re holding for each one. Let’s build it.</p>'+
+          '<button class="btn" id="emptyAdd" type="button">＋ Add your first goal</button>'+
+        '</div>';
+      $("emptyAdd").addEventListener("click", openNew);
+      updateStats();
+      return;
+    }
+    var gs = sortedGoals();
+    gs.forEach(function(g){ board.appendChild(goalCard(g)); });
+    updateStats();
+  }
+
+  function updateStats(){
+    $("statGoals").textContent = data.goals.length;
+    $("statAchieved").textContent = data.goals.filter(function(g){ return g.achieved; }).length;
+  }
+
+  function goalCard(g){
+    var el = document.createElement("article");
+    el.className = "goal" + (g.achieved ? " achieved" : "");
+
+    var pct = progressPct(g);
+    var t = num(g.target);
+    var html = "";
+
+    html += '<div class="goal-top">';
+    html +=   '<div class="goal-emoji">'+(g.emoji || "🎯")+'</div>';
+    html +=   '<div style="flex:1;min-width:0;">';
+    html +=     '<div class="goal-title">'+escapeHtml(g.title || "Untitled goal")+'</div>';
+    if(g.date){ html += '<div class="goal-time">🗓 by '+escapeHtml(prettyDate(g.date))+'</div>'; }
+    if(g.achieved){ html += '<span class="badge">Achieved 🎉</span>'; }
+    html +=   '</div>';
+    html += '</div>';
+
+    if(t !== null){
+      html += '<div class="goal-numbers">';
+      html +=   '<span class="cur">'+escapeHtml(fmtNum(num(g.current)||0, g.unit))+'</span>';
+      html +=   '<span class="sep">of</span>';
+      html +=   '<span class="tgt">'+escapeHtml(fmtNum(t, g.unit))+'</span>';
+      html += '</div>';
+    }
+
+    if(pct !== null){
+      html += '<div class="bar"><span style="width:'+pct+'%"></span></div>';
+      var lbl = t !== null ? (pct+"% there") : (pct+"% of steps done");
+      html += '<div class="bar-label">'+lbl+'</div>';
+    }
+
+    if(g.why){ html += '<div class="goal-why">'+escapeHtml(g.why)+'</div>'; }
+    if(g.faith){
+      html += '<div class="goal-faith"><span class="tag">Faith step</span>'+escapeHtml(g.faith)+'</div>';
+    }
+
+    // steps
+    html += '<ul class="steps" data-steps></ul>';
+    html += '<div class="add-step">'+
+              '<label class="sr-only" for="addstep-'+g.id+'">Add an action step</label>'+
+              '<input type="text" id="addstep-'+g.id+'" placeholder="Add an action step…">'+
+              '<button type="button" data-addstep aria-label="Add step">＋</button>'+
+            '</div>';
+
+    html += '<div class="goal-actions">';
+    html +=   '<button class="mini gold" data-achieve type="button">'+(g.achieved ? "↩ Not yet" : "✓ Achieved 🎉")+'</button>';
+    html +=   '<button class="mini" data-edit type="button">✎ Edit</button>';
+    html +=   '<button class="mini danger" data-del type="button">🗑 Delete</button>';
+    html += '</div>';
+
+    el.innerHTML = html;
+
+    // render steps
+    var stepsUl = el.querySelector("[data-steps]");
+    (g.steps || []).forEach(function(s){
+      var li = document.createElement("li");
+      if(s.done) li.className = "on";
+      var chk = document.createElement("button");
+      chk.type = "button";
+      chk.className = "chk" + (s.done ? " on" : "");
+      chk.setAttribute("aria-pressed", s.done ? "true" : "false");
+      chk.setAttribute("aria-label", "Mark step done");
+      chk.textContent = "✓";
+      chk.addEventListener("click", function(){
+        s.done = !s.done; save(); render();
+      });
+      var txt = document.createElement("span");
+      txt.className = "txt";
+      txt.textContent = s.text;
+      var rm = document.createElement("button");
+      rm.type = "button"; rm.className = "rm"; rm.setAttribute("aria-label","Remove step"); rm.textContent = "×";
+      rm.addEventListener("click", function(){
+        g.steps = g.steps.filter(function(x){ return x !== s; });
+        save(); render();
+      });
+      li.appendChild(chk); li.appendChild(txt); li.appendChild(rm);
+      stepsUl.appendChild(li);
+    });
+
+    // add step
+    var addInput = el.querySelector("#addstep-"+g.id);
+    var addBtn = el.querySelector("[data-addstep]");
+    function addStep(){
+      var v = addInput.value.trim();
+      if(!v) return;
+      if(!g.steps) g.steps = [];
+      g.steps.push({ text:v, done:false });
+      addInput.value = "";
+      save(); render();
+    }
+    addBtn.addEventListener("click", addStep);
+    addInput.addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); addStep(); } });
+
+    el.querySelector("[data-achieve]").addEventListener("click", function(){
+      g.achieved = !g.achieved; save(); render();
+    });
+    el.querySelector("[data-edit]").addEventListener("click", function(){ openEdit(g.id); });
+    el.querySelector("[data-del]").addEventListener("click", function(){
+      if(confirm('Delete "'+(g.title || "this goal")+'" from your vision board? This can’t be undone, sister.')){
+        data.goals = data.goals.filter(function(x){ return x.id !== g.id; });
+        save(); render();
+      }
+    });
+
+    return el;
+  }
+
+  // ---- Editor modal ----
+  var editOverlay = $("editOverlay");
+  function buildEmojiPicker(){
+    var p = $("emojiPicker");
+    p.innerHTML = "";
+    EMOJIS.forEach(function(em){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "emoji-opt"; b.textContent = em;
+      b.setAttribute("aria-label", "Choose icon " + em);
+      b.addEventListener("click", function(){
+        pickedEmoji = (pickedEmoji === em) ? "" : em;
+        syncEmoji();
+      });
+      p.appendChild(b);
+    });
+  }
+  function syncEmoji(){
+    var nodes = $("emojiPicker").querySelectorAll(".emoji-opt");
+    nodes.forEach(function(n){ n.classList.toggle("sel", n.textContent === pickedEmoji && pickedEmoji !== ""); });
+  }
+
+  function openNew(){
+    editingId = null;
+    pickedEmoji = "";
+    $("editTitle").textContent = "Name your vision";
+    $("fTitle").value = ""; $("fTarget").value = ""; $("fCurrent").value = "";
+    $("fUnit").value = "$"; $("fDate").value = ""; $("fWhy").value = ""; $("fFaith").value = "";
+    syncEmoji();
+    showOverlay(editOverlay);
+    setTimeout(function(){ $("fTitle").focus(); }, 50);
+  }
+  function openEdit(id){
+    var g = data.goals.filter(function(x){ return x.id === id; })[0];
+    if(!g) return;
+    editingId = id;
+    pickedEmoji = g.emoji || "";
+    $("editTitle").textContent = "Edit your vision";
+    $("fTitle").value = g.title || "";
+    $("fTarget").value = g.target || "";
+    $("fCurrent").value = g.current || "";
+    $("fUnit").value = g.unit || "";
+    $("fDate").value = g.date || "";
+    $("fWhy").value = g.why || "";
+    $("fFaith").value = g.faith || "";
+    syncEmoji();
+    showOverlay(editOverlay);
+    setTimeout(function(){ $("fTitle").focus(); }, 50);
+  }
+  function saveEdit(){
+    var title = $("fTitle").value.trim();
+    if(!title){ $("fTitle").focus(); return; }
+    var fields = {
+      title: title,
+      emoji: pickedEmoji,
+      target: $("fTarget").value.trim(),
+      current: $("fCurrent").value.trim(),
+      unit: $("fUnit").value.trim(),
+      date: $("fDate").value,
+      why: $("fWhy").value.trim(),
+      faith: $("fFaith").value.trim()
+    };
+    if(editingId){
+      var g = data.goals.filter(function(x){ return x.id === editingId; })[0];
+      if(g){ for(var k in fields){ g[k] = fields[k]; } }
+    }else{
+      fields.id = uid();
+      fields.steps = [];
+      fields.achieved = false;
+      fields.created = Date.now();
+      data.goals.push(fields);
+    }
+    save();
+    hideOverlay(editOverlay);
+    render();
+  }
+
+  $("addBtn").addEventListener("click", openNew);
+  $("saveEdit").addEventListener("click", saveEdit);
+  $("cancelEdit").addEventListener("click", function(){ hideOverlay(editOverlay); });
+
+  // ---- Declare modal ----
+  var declareOverlay = $("declareOverlay");
+  $("declareBtn").addEventListener("click", function(){
+    var list = $("declareList");
+    list.innerHTML = "";
+    var gs = sortedGoals();
+    if(gs.length === 0){
+      list.innerHTML = '<p class="declare-intro">Add a goal first, then come back and speak it over your future. 💛</p>';
+    }else{
+      gs.forEach(function(g){
+        var c = document.createElement("div");
+        c.className = "declare-card";
+        var t = num(g.target);
+        var n = t !== null ? '<div class="d-num">'+escapeHtml(fmtNum(t, g.unit))+(g.date ? " · by "+escapeHtml(prettyDate(g.date)) : "")+'</div>' :
+                (g.date ? '<div class="d-num">by '+escapeHtml(prettyDate(g.date))+'</div>' : "");
+        var faith = g.faith ? '<div class="d-faith">'+escapeHtml(g.faith)+'</div>' : '<div class="d-faith">I am believing for this, and I trust the One who provides.</div>';
+        c.innerHTML = '<div class="d-title">'+(g.emoji ? g.emoji+" " : "")+escapeHtml(g.title || "My goal")+'</div>'+ n + faith;
+        list.appendChild(c);
+      });
+    }
+    showOverlay(declareOverlay);
+  });
+  $("closeDeclare").addEventListener("click", function(){ hideOverlay(declareOverlay); });
+
+  // ---- Overlay helpers ----
+  function showOverlay(o){ o.classList.add("show"); document.body.style.overflow = "hidden"; }
+  function hideOverlay(o){ o.classList.remove("show"); document.body.style.overflow = ""; }
+  [editOverlay, declareOverlay].forEach(function(o){
+    o.addEventListener("click", function(e){ if(e.target === o) hideOverlay(o); });
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape"){ hideOverlay(editOverlay); hideOverlay(declareOverlay); }
+  });
+
+  // ---- Sort control ----
+  var sortSel = $("sortSel");
+  sortSel.value = data.sort || "created";
+  sortSel.addEventListener("change", function(){
+    data.sort = sortSel.value; save(); render();
+  });
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your financial vision board? This can’t be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { goals:[], sort:"created" };
+      sortSel.value = "created";
+      render();
+    }
+  });
+
+  // ---- Init ----
+  buildEmojiPicker();
+  render();
+})();
+</script>
+</body>
+</html>

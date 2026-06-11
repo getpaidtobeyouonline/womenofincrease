@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abundance Journal for Finances · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Scripture ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:19px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .verse-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:80px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  .reframe-grid{ display:grid; gap:10px; }
+  @media(min-width:440px){ .reframe-grid{ grid-template-columns:1fr 1fr; align-items:start; } }
+  .reframe-arrow{
+    text-align:center; color:var(--gold); font-weight:700; font-size:18px;
+    margin:-2px 0;
+  }
+  @media(min-width:440px){ .reframe-arrow{ display:none; } }
+
+  /* ---------- Save / log button ---------- */
+  .complete-btn{
+    width:100%; margin-top:16px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+  .complete-btn.done{
+    background:var(--emerald-soft); color:var(--emerald); box-shadow:none;
+    border:1px solid rgba(20,84,62,.2);
+  }
+
+  .blessing{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .blessing.show{ display:block; animation:rise .4s ease; }
+  .blessing .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .blessing .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Stats ---------- */
+  .stats{
+    display:flex; gap:12px; margin-top:18px;
+  }
+  .stat{
+    flex:1; text-align:center; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.12); border-radius:13px; padding:14px 8px;
+  }
+  .stat .big{ font-family:'Fraunces',serif; color:var(--emerald); font-weight:600; font-size:24px; line-height:1; }
+  .stat .lbl{ color:var(--muted); font-size:12px; margin-top:5px; letter-spacing:.02em; }
+  .stat .flame{ font-size:14px; }
+
+  /* ---------- Evidence tally ---------- */
+  .evidence{
+    margin-top:16px; text-align:center; color:var(--muted); font-size:14px;
+  }
+  .evidence b{ color:var(--gold); font-family:'Fraunces',serif; font-style:italic; font-size:16px; }
+
+  /* ---------- History ---------- */
+  .history-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 8px;
+  }
+  .history-list{ list-style:none; }
+  .h-item{
+    border:1px solid var(--line); border-radius:13px; margin-bottom:10px;
+    overflow:hidden; background:var(--cream);
+  }
+  .h-head{
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+    padding:13px 14px; cursor:pointer; min-height:44px;
+  }
+  .h-head:hover{ background:#fff; }
+  .h-date{ color:var(--ink); font-weight:600; font-size:14px; }
+  .h-win{ color:var(--gold); font-family:'Fraunces',serif; font-style:italic; font-size:14px;
+    flex:1; text-align:right; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .h-caret{ flex:none; color:var(--muted); font-size:12px; transition:transform .2s; }
+  .h-item.open .h-caret{ transform:rotate(90deg); }
+  .h-body{ display:none; padding:0 14px 14px; }
+  .h-item.open .h-body{ display:block; }
+  .h-row{ font-size:13.5px; margin-top:8px; }
+  .h-row .lab{
+    display:block; font-weight:600; color:var(--emerald); font-size:11.5px;
+    letter-spacing:.06em; text-transform:uppercase; margin-bottom:2px;
+  }
+  .h-row .val{ color:var(--ink); }
+  .h-row .reframe-line{ color:var(--muted); }
+  .h-row .reframe-line .truth{ color:var(--emerald); font-weight:600; }
+  .h-delete{
+    margin-top:12px; min-height:40px; background:none; border:1px solid var(--line);
+    color:var(--muted); border-radius:9px; padding:8px 14px; font-family:inherit;
+    font-size:12.5px; cursor:pointer;
+  }
+  .h-delete:hover{ border-color:#c0392b; color:#c0392b; }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 18px; margin-top:16px; color:var(--emerald);
+  }
+  .welcome .w-title{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:6px; }
+  .welcome p{ font-size:14px; color:var(--muted); }
+  .welcome p + p{ margin-top:8px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Abundance Journal for Finances</h1>
+    <p class="subtitle">Track the real money. Reframe the fear. Trust the Provider.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- Welcome (first run) -->
+  <section class="welcome" id="welcome" style="display:none;">
+    <div class="w-title">Welcome, sister. 💛</div>
+    <p>Money can carry a lot of fear — but it doesn't have to. This is a gentle space to notice where provision is already showing up, name your gratitude, and trade scarcity thoughts for the truth that you are cared for.</p>
+    <p>Start with one small money win below. One honest line is enough today.</p>
+  </section>
+
+  <!-- 1. Provision scripture -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Today's Provision Word</h2></div>
+    <p class="hint">Let this settle before you look at a single number.</p>
+    <div class="verse">
+      <p id="verseText">—</p>
+      <div class="ref" id="verseRef"></div>
+    </div>
+    <div class="verse-actions">
+      <button class="link-btn" id="anotherVerse" type="button">↻ Show me another</button>
+    </div>
+    <label class="field-label" for="reflection">What does this stir about your finances? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <textarea id="reflection" placeholder="A line of reflection, a prayer over your provision…"></textarea>
+  </section>
+
+  <!-- 2. Money win -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Money Win / Provision Today</h2></div>
+    <p class="hint">Something good with money — a payment made, money came in, an impulse resisted, a need met. Small counts.</p>
+    <label class="field-label" for="win">Today's provision win</label>
+    <input type="text" id="win" placeholder="e.g. Covered groceries without stress">
+
+    <label class="field-label" for="gratitude">Grateful for provision in…</label>
+    <input type="text" id="gratitude" placeholder="e.g. A roof over my head, a paid bill, a kind gift">
+
+    <label class="field-label" for="intention">A light money intention for today <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <input type="text" id="intention" placeholder="Today, I will…">
+  </section>
+
+  <!-- 3. Abundance reframe -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Abundance Reframe</h2></div>
+    <p class="hint">Caught a money fear today? Name it honestly — then meet it with truth.</p>
+    <div class="reframe-grid">
+      <div>
+        <label class="field-label" for="fear">The scarcity thought</label>
+        <textarea id="fear" placeholder="e.g. There's never going to be enough."></textarea>
+      </div>
+      <div class="reframe-arrow">↓</div>
+      <div>
+        <label class="field-label" for="truth">The abundance truth</label>
+        <textarea id="truth" placeholder="e.g. I have always been provided for. I trust that to continue."></textarea>
+      </div>
+    </div>
+
+    <button class="complete-btn" id="completeBtn" type="button">Log today's entry 🌿</button>
+    <div class="blessing" id="blessing">
+      <div class="big">Logged with grace. 💛</div>
+      <div class="sm">That's one more piece of evidence that you're provided for. Keep going, sister.</div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="big"><span class="flame">🔥</span> <span id="streakCount">0</span></div>
+        <div class="lbl">day streak</div>
+      </div>
+      <div class="stat">
+        <div class="big" id="winCount">0</div>
+        <div class="lbl">provision wins</div>
+      </div>
+      <div class="stat">
+        <div class="big" id="entryCount">0</div>
+        <div class="lbl">days journaled</div>
+      </div>
+    </div>
+
+    <div class="evidence" id="evidence"></div>
+  </section>
+
+  <!-- Evidence / History -->
+  <section class="card">
+    <div class="history-title">Evidence of provision — your past entries</div>
+    <ul class="history-list" id="historyList"></ul>
+    <p class="empty-note" id="historyEmpty">Log today's entry and your trail of provision begins here. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_abundance_finances";
+
+  // ---- Provision-focused scripture & abundance library ----
+  var VERSES = [
+    ["And my God will meet all your needs according to the riches of His glory in Christ Jesus.", "Philippians 4:19"],
+    ["The Lord is my shepherd; I shall not want.", "Psalm 23:1"],
+    ["Give, and it will be given to you. A good measure, pressed down, shaken together and running over.", "Luke 6:38"],
+    ["Bring the whole tithe into the storehouse… and see if I will not throw open the floodgates of heaven.", "Malachi 3:10"],
+    ["But remember the Lord your God, for it is He who gives you the ability to produce wealth.", "Deuteronomy 8:18"],
+    ["Look at the birds of the air; they do not sow or reap… yet your heavenly Father feeds them.", "Matthew 6:26"],
+    ["She is clothed with strength and dignity, and she laughs without fear of the future.", "Proverbs 31:25"],
+    ["The blessing of the Lord brings wealth, without painful toil for it.", "Proverbs 10:22"],
+    ["Cast all your anxiety on Him, because He cares for you.", "1 Peter 5:7"],
+    ["Honor the Lord with your wealth, with the firstfruits of all your crops.", "Proverbs 3:9"],
+    ["Keep your lives free from the love of money and be content with what you have.", "Hebrews 13:5"],
+    ["For I know the plans I have for you — plans to prosper you and not to harm you.", "Jeremiah 29:11"],
+    ["A generous person will prosper; whoever refreshes others will be refreshed.", "Proverbs 11:25"],
+    ["You crown the year with Your bounty, and Your carts overflow with abundance.", "Psalm 65:11"],
+    ["Seek first His kingdom and His righteousness, and all these things will be given to you as well.", "Matthew 6:33"],
+    ["The earth is the Lord's, and everything in it.", "Psalm 24:1"],
+    ["Trust in the Lord with all your heart, and lean not on your own understanding.", "Proverbs 3:5"],
+    ["He who supplies seed to the sower will supply and increase your store of seed.", "2 Corinthians 9:10"],
+    ["Whoever sows generously will also reap generously.", "2 Corinthians 9:6"],
+    ["I have been young, and now am old, yet I have not seen the righteous forsaken.", "Psalm 37:25"],
+    ["Do not store up treasures on earth… but store up treasures in heaven.", "Matthew 6:19-20"],
+    ["My cup overflows. Surely goodness and mercy shall follow me all the days of my life.", "Psalm 23:5-6"],
+    ["The same God who carried you through before is making a way through this too.", "A Word for You"],
+    ["There has always been enough. Look back — provision has a track record in your life.", "A Word for You"],
+    ["You are not behind. You are being provided for, one day at a time.", "A Word for You"]
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    var diff = d - start;
+    return Math.floor(diff / 86400000);
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+  }
+
+  // ---- State ----
+  var data = load();
+  var TODAY = todayKey();
+  var entry = data.entries[TODAY] || {
+    win:"", gratitude:"", intention:"", reflection:"",
+    fear:"", truth:"", verse:null, completed:false
+  };
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.entries) return o; }
+    }catch(e){}
+    return { entries:{} };
+  }
+  function save(){
+    data.entries[TODAY] = entry;
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var verseTextEl = $("verseText"), verseRefEl = $("verseRef");
+  var winEl = $("win"), gratEl = $("gratitude"), intentionEl = $("intention");
+  var reflectionEl = $("reflection"), fearEl = $("fear"), truthEl = $("truth");
+  var completeBtn = $("completeBtn"), blessingEl = $("blessing");
+
+  // ---- Verse: deterministic by date + shuffle offset ----
+  if(entry.verse === null || entry.verse === undefined){
+    var d = new Date();
+    entry.verse = (dayOfYear(d) * 7 + d.getDay() * 3) % VERSES.length;
+  }
+  function renderVerse(){
+    var v = VERSES[entry.verse];
+    verseTextEl.textContent = v[0];
+    verseRefEl.textContent = v[1];
+  }
+  $("anotherVerse").addEventListener("click", function(){
+    entry.verse = (entry.verse + 1) % VERSES.length;
+    renderVerse(); save();
+  });
+
+  // ---- Restore inputs ----
+  $("todayDate").textContent = prettyDate(TODAY);
+  winEl.value = entry.win || "";
+  gratEl.value = entry.gratitude || "";
+  intentionEl.value = entry.intention || "";
+  reflectionEl.value = entry.reflection || "";
+  fearEl.value = entry.fear || "";
+  truthEl.value = entry.truth || "";
+  renderVerse();
+  renderCompleted();
+  renderWelcome();
+
+  // ---- Auto-save on every change ----
+  function wire(el, fn){
+    el.addEventListener("input", function(){ fn(el.value); save(); });
+  }
+  wire(winEl, function(v){ entry.win=v; });
+  wire(gratEl, function(v){ entry.gratitude=v; });
+  wire(intentionEl, function(v){ entry.intention=v; });
+  wire(reflectionEl, function(v){ entry.reflection=v; });
+  wire(fearEl, function(v){ entry.fear=v; });
+  wire(truthEl, function(v){ entry.truth=v; });
+
+  // ---- Welcome (first run only) ----
+  function renderWelcome(){
+    var hasAny = Object.keys(data.entries).some(function(k){ return data.entries[k].completed; });
+    $("welcome").style.display = hasAny ? "none" : "block";
+  }
+
+  // ---- Complete / log ----
+  function renderCompleted(){
+    if(entry.completed){
+      completeBtn.textContent = "Entry logged for today ✓";
+      completeBtn.classList.add("done");
+    }else{
+      completeBtn.textContent = "Log today's entry 🌿";
+      completeBtn.classList.remove("done");
+    }
+    renderStats();
+    renderHistory();
+  }
+  completeBtn.addEventListener("click", function(){
+    entry.completed = !entry.completed;
+    save();
+    if(entry.completed){
+      blessingEl.classList.add("show");
+    }else{
+      blessingEl.classList.remove("show");
+    }
+    renderCompleted();
+    renderWelcome();
+  });
+
+  // ---- Stats: streak, provision wins, days journaled ----
+  function completedKeys(){
+    return Object.keys(data.entries).filter(function(k){ return data.entries[k].completed; });
+  }
+  function renderStats(){
+    var keys = completedKeys();
+    $("entryCount").textContent = keys.length;
+
+    var wins = keys.filter(function(k){
+      return data.entries[k].win && data.entries[k].win.trim() !== "";
+    }).length;
+    $("winCount").textContent = wins;
+
+    // streak: consecutive completed days back from today
+    var streak = 0;
+    var d = new Date();
+    while(true){
+      var m = String(d.getMonth()+1).padStart(2,"0");
+      var day = String(d.getDate()).padStart(2,"0");
+      var k = d.getFullYear()+"-"+m+"-"+day;
+      if(data.entries[k] && data.entries[k].completed){ streak++; d.setDate(d.getDate()-1); }
+      else break;
+    }
+    $("streakCount").textContent = streak;
+
+    // evidence line
+    var ev = $("evidence");
+    if(wins > 0){
+      ev.innerHTML = "Provision has come through <b>" + wins + "</b> " +
+        (wins === 1 ? "time" : "times") + " you've written down. It has a track record, sister. 💛";
+    }else{
+      ev.textContent = "";
+    }
+  }
+
+  // ---- History (recent first, expandable) ----
+  function esc(s){
+    var d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML;
+  }
+  function renderHistory(){
+    var list = $("historyList"), empty = $("historyEmpty");
+    var keys = completedKeys().sort().reverse();
+    list.innerHTML = "";
+    if(keys.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+
+    keys.forEach(function(k){
+      var e = data.entries[k];
+      var item = document.createElement("li");
+      item.className = "h-item";
+
+      var head = document.createElement("div");
+      head.className = "h-head";
+      head.setAttribute("role","button");
+      head.setAttribute("tabindex","0");
+      head.setAttribute("aria-expanded","false");
+      head.innerHTML =
+        '<span class="h-date">' + esc(prettyDate(k)) + '</span>' +
+        '<span class="h-win">' + (e.win ? esc(e.win) : "—") + '</span>' +
+        '<span class="h-caret">▶</span>';
+
+      var body = document.createElement("div");
+      body.className = "h-body";
+      var html = "";
+      if(e.win) html += '<div class="h-row"><span class="lab">Provision win</span><span class="val">' + esc(e.win) + '</span></div>';
+      if(e.gratitude) html += '<div class="h-row"><span class="lab">Grateful for</span><span class="val">' + esc(e.gratitude) + '</span></div>';
+      if(e.intention) html += '<div class="h-row"><span class="lab">Intention</span><span class="val">' + esc(e.intention) + '</span></div>';
+      if(e.fear || e.truth){
+        html += '<div class="h-row"><span class="lab">Reframe</span><span class="val reframe-line">' +
+          (e.fear ? esc(e.fear) : "—") + ' → <span class="truth">' + (e.truth ? esc(e.truth) : "—") + '</span></span></div>';
+      }
+      if(e.reflection) html += '<div class="h-row"><span class="lab">Reflection</span><span class="val">' + esc(e.reflection) + '</span></div>';
+      if(!html) html = '<div class="h-row"><span class="val reframe-line">A quiet day — but you still showed up. 💛</span></div>';
+      html += '<button class="h-delete" type="button" data-key="' + esc(k) + '">Delete this entry</button>';
+      body.innerHTML = html;
+
+      function toggle(){
+        var open = item.classList.toggle("open");
+        head.setAttribute("aria-expanded", open ? "true" : "false");
+      }
+      head.addEventListener("click", toggle);
+      head.addEventListener("keydown", function(ev){
+        if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); toggle(); }
+      });
+
+      body.querySelector(".h-delete").addEventListener("click", function(){
+        if(confirm("Delete your entry for " + prettyDate(k) + "? This can't be undone.")){
+          delete data.entries[k];
+          try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e2){}
+          if(k === TODAY){
+            entry = { win:"", gratitude:"", intention:"", reflection:"", fear:"", truth:"",
+              verse: entry.verse, completed:false };
+            winEl.value=""; gratEl.value=""; intentionEl.value="";
+            reflectionEl.value=""; fearEl.value=""; truthEl.value="";
+            blessingEl.classList.remove("show");
+          }
+          renderCompleted();
+          renderWelcome();
+        }
+      });
+
+      item.appendChild(head);
+      item.appendChild(body);
+      list.appendChild(item);
+    });
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Abundance Journal data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { entries:{} };
+      var d = new Date();
+      entry = { win:"", gratitude:"", intention:"", reflection:"", fear:"", truth:"",
+        verse: (dayOfYear(d) * 7 + d.getDay() * 3) % VERSES.length, completed:false };
+      winEl.value=""; gratEl.value=""; intentionEl.value="";
+      reflectionEl.value=""; fearEl.value=""; truthEl.value="";
+      blessingEl.classList.remove("show");
+      renderVerse(); renderCompleted(); renderWelcome();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

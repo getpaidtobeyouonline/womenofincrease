@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investment First Steps Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Disclaimer ---------- */
+  .disclaimer{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.18);
+    border-radius:14px; padding:16px 18px; margin-top:16px;
+  }
+  .disclaimer .d-head{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:15.5px; display:flex; align-items:center; gap:8px; margin-bottom:6px;
+  }
+  .disclaimer p{ color:var(--emerald); font-size:13.5px; line-height:1.5; }
+  .disclaimer p + p{ margin-top:8px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .welcome p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .welcome .sm{
+    font-family:'Hanken Grotesk',sans-serif; font-style:normal; font-weight:500;
+    font-size:14px; margin-top:10px; color:var(--gold-soft); position:relative; z-index:1;
+  }
+
+  /* ---------- Learn cards ---------- */
+  .learn-item{
+    border:1px solid var(--line); border-radius:13px; padding:15px 16px; margin-top:12px;
+    background:var(--cream); transition:border-color .15s, background .15s;
+  }
+  .learn-item.understood{ border-color:rgba(20,84,62,.35); background:var(--emerald-soft); }
+  .learn-item h3{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:16.5px; margin-bottom:6px;
+  }
+  .learn-item p{ font-size:14px; color:var(--ink); line-height:1.5; }
+  .understand-btn{
+    margin-top:12px; min-height:44px; width:100%;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 14px; font-family:inherit; font-weight:600;
+    font-size:13.5px; cursor:pointer; transition:all .15s;
+    display:inline-flex; align-items:center; justify-content:center; gap:7px;
+  }
+  .understand-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .learn-item.understood .understand-btn{
+    background:var(--emerald); border-color:var(--emerald); color:#FCF8EF;
+  }
+  .learn-progress{
+    text-align:center; color:var(--muted); font-size:13.5px; margin-top:16px;
+  }
+  .learn-progress b{ color:var(--emerald); }
+
+  /* ---------- Checklist ---------- */
+  .check-row{
+    display:flex; align-items:flex-start; gap:12px; padding:12px 2px;
+    border-bottom:1px solid var(--line); cursor:pointer; min-height:44px;
+  }
+  .check-row:last-of-type{ border-bottom:none; }
+  .check-row input[type="checkbox"]{
+    flex:none; width:22px; height:22px; margin-top:2px; accent-color:var(--emerald);
+    cursor:pointer;
+  }
+  .check-row .c-text{ font-size:14.5px; }
+  .check-row .c-text .c-title{ font-weight:600; color:var(--ink); display:block; }
+  .check-row .c-text .c-sub{ color:var(--muted); font-size:13px; }
+  .check-row input:checked ~ .c-text .c-title{ color:var(--emerald); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="number"]{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; min-height:48px; transition:border-color .15s, box-shadow .15s;
+  }
+  input:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder{ color:#A7A095; }
+  .input-grid{ display:flex; gap:10px; flex-wrap:wrap; }
+  .input-grid .ig-col{ flex:1 1 130px; min-width:130px; }
+  .field-note{ color:var(--muted); font-size:12px; margin-top:5px; }
+
+  /* ---------- Illustration result ---------- */
+  .calc-btn{
+    width:100%; margin-top:16px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .calc-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .calc-btn:active{ transform:translateY(1px); }
+  .result{
+    display:none; margin-top:16px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.18);
+    border-radius:14px; padding:20px 16px;
+  }
+  .result.show{ display:block; animation:rise .4s ease; }
+  .result .r-label{ color:var(--emerald); font-size:13px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; }
+  .result .r-big{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:34px; line-height:1.1; margin:8px 0 4px;
+  }
+  .result .r-detail{ color:var(--muted); font-size:13.5px; line-height:1.5; }
+  .result .r-detail b{ color:var(--ink); }
+  .result .r-note{
+    margin-top:12px; font-size:12px; color:var(--emerald);
+    font-style:italic; line-height:1.45;
+  }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- First steps action list ---------- */
+  .step-row{
+    display:flex; align-items:flex-start; gap:12px; padding:12px 2px;
+    border-bottom:1px solid var(--line); min-height:44px;
+  }
+  .step-row:last-of-type{ border-bottom:none; }
+  .step-row input[type="checkbox"]{
+    flex:none; width:22px; height:22px; margin-top:2px; accent-color:var(--emerald); cursor:pointer;
+  }
+  .step-row label{ font-size:14.5px; cursor:pointer; }
+  .step-row input:checked ~ label{ color:var(--muted); text-decoration:line-through; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Investment First Steps</h1>
+    <p class="subtitle">Demystify the basics, build a steady foundation, and start small — at your own pace.</p>
+  </header>
+
+  <!-- Welcome / first-run -->
+  <section class="card" id="welcomeCard">
+    <div class="welcome">
+      <p id="welcomeText">Investing isn't reserved for experts or the already-wealthy, sister. It's simply putting a little money to work over time. You don't need a lot — you need a little understanding and a steady start.</p>
+      <div class="sm">Take it one card at a time. There's no rush, and there's no wrong place to begin. 🌿</div>
+    </div>
+  </section>
+
+  <!-- Disclaimer -->
+  <div class="disclaimer">
+    <div class="d-head">💛 A gentle, important note</div>
+    <p>This tool is for <b>general education only</b> — it is <b>not financial advice</b>, and it doesn't recommend any specific product, account, or company.</p>
+    <p>Everyone's situation is different. Before you invest, please do your own research and consider speaking with a qualified, licensed financial advisor you trust. The illustration below is a rough estimate to show how growth can work — not a promise of any return.</p>
+  </div>
+
+  <!-- 1. Learn -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Learn the basics</h2></div>
+    <p class="hint">Short, plain-language cards. Tap "I understand this" as each one clicks for you.</p>
+    <div id="learnList"></div>
+    <div class="learn-progress">You've understood <b id="learnDone">0</b> of <b id="learnTotal">0</b> concepts. <span id="learnCheer"></span></div>
+  </section>
+
+  <!-- 2. Readiness -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Are you ready to start?</h2></div>
+    <p class="hint">Investing works best from a healthy foundation. Tick what's true for you — no pressure, just honesty.</p>
+    <div id="readyList"></div>
+    <div class="learn-progress" style="margin-top:14px;" id="readyMsg"></div>
+  </section>
+
+  <!-- 3. Small amounts illustrator -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>See how small + consistent grows</h2></div>
+    <p class="hint">Enter a small amount you could set aside. Watch how steadiness over time adds up.</p>
+
+    <label class="field-label" for="monthly">Amount you'd set aside each month</label>
+    <input type="number" id="monthly" inputmode="decimal" min="0" step="1" placeholder="e.g. 25">
+    <div class="field-note">Even a small, consistent amount matters more than you'd think.</div>
+
+    <div class="input-grid" style="margin-top:14px;">
+      <div class="ig-col">
+        <label class="field-label" for="years" style="margin-top:0;">Number of years</label>
+        <input type="number" id="years" inputmode="numeric" min="1" max="60" step="1" placeholder="e.g. 20">
+      </div>
+      <div class="ig-col">
+        <label class="field-label" for="rate" style="margin-top:0;">Assumed yearly growth %</label>
+        <input type="number" id="rate" inputmode="decimal" min="0" max="30" step="0.5" placeholder="e.g. 6">
+      </div>
+    </div>
+    <div class="field-note">The growth rate is just an assumption for the illustration — real markets rise and fall, and nothing is guaranteed.</div>
+
+    <button class="calc-btn" id="calcBtn" type="button">Show me the illustration 🌱</button>
+
+    <div class="result" id="result">
+      <div class="r-label">Rough illustration only</div>
+      <div class="r-big" id="rFuture">—</div>
+      <div class="r-detail">
+        You'd have set aside <b id="rContrib">—</b> of your own money.<br>
+        The rest — about <b id="rGrowth">—</b> — would be illustrated growth over time.
+      </div>
+      <div class="r-note">This is an estimate to show the <i>idea</i> of compound growth, not a prediction or a promise. Your real results would differ.</div>
+    </div>
+  </section>
+
+  <!-- 4. First steps -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>My first steps</h2></div>
+    <p class="hint">Gentle, generic next moves. Check them off as you go — at whatever pace feels right.</p>
+    <div id="stepsList"></div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_investment_first_steps";
+
+  // ---- Content ----
+  var LEARN = [
+    ["What investing actually is", "Investing simply means putting money into something — often a mix of many companies — with the hope it grows over time. Instead of sitting still, your money gets a chance to work for you."],
+    ["Why time in the market matters", "The longer your money stays invested, the more time it has to grow. Time is one of the kindest gifts a beginner has — and you don't need to be wealthy to use it."],
+    ["Compound growth, in plain terms", "Growth can earn its own growth. A little earns a little more, then that larger amount earns more still. Over many years, those small gains can quietly snowball."],
+    ["Start small, stay consistent", "You don't need a big sum. A small amount set aside regularly — and left alone to grow — often beats waiting until you 'have enough.' Consistency is the real superpower."],
+    ["Foundation first: cushion + debt", "Before investing, it's wise to start an emergency cushion and tackle high-interest debt (like credit cards). That debt often grows faster than investments do, so clearing it first protects you."],
+    ["Risk, honestly", "Investments can go up and down — that's normal. You only invest money you won't need soon, so you can ride out the dips. Higher possible reward usually comes with more ups and downs."]
+  ];
+
+  var READY = [
+    ["I've started an emergency cushion", "Even a small buffer for surprises means you won't have to sell investments at a bad time."],
+    ["High-interest debt is handled or being paid down", "Clearing costly debt (like credit cards) is often the best 'return' you can get."],
+    ["My monthly budget feels stable", "You can comfortably cover your needs and still set a little aside."],
+    ["I'm investing money I won't need soon", "Money you can leave alone for years has the best chance to grow."],
+    ["I understand I could lose money short-term", "Values rise and fall — you're okay riding out the bumps."]
+  ];
+
+  var STEPS = [
+    "Learn one more thing about investing this week",
+    "Decide a small amount I'm comfortable starting with",
+    "Build or top up my emergency cushion first",
+    "Do my own research on how beginners commonly start",
+    "Consider talking to a qualified, licensed advisor",
+    "Open the type of account I've researched, when I'm ready",
+    "Set up a small, regular contribution I can keep up",
+    "Review gently every few months — no daily checking"
+  ];
+
+  // ---- State ----
+  var data = load();
+
+  function blankState(){
+    return {
+      learn: {},        // index -> true
+      ready: {},        // index -> true
+      steps: {},        // index -> true
+      calc: { monthly:"", years:"", rate:"" }
+    };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          if(!o.learn) o.learn = {};
+          if(!o.ready) o.ready = {};
+          if(!o.steps) o.steps = {};
+          if(!o.calc) o.calc = { monthly:"", years:"", rate:"" };
+          return o;
+        }
+      }
+    }catch(e){}
+    return blankState();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Render Learn ----
+  var learnList = $("learnList");
+  $("learnTotal").textContent = LEARN.length;
+  LEARN.forEach(function(item, i){
+    var box = document.createElement("div");
+    box.className = "learn-item" + (data.learn[i] ? " understood" : "");
+    var h = document.createElement("h3"); h.textContent = item[0];
+    var p = document.createElement("p"); p.textContent = item[1];
+    var btn = document.createElement("button");
+    btn.type = "button"; btn.className = "understand-btn";
+    btn.textContent = data.learn[i] ? "I understand this ✓" : "I understand this";
+    btn.setAttribute("aria-pressed", data.learn[i] ? "true" : "false");
+    btn.addEventListener("click", function(){
+      if(data.learn[i]){ delete data.learn[i]; }
+      else { data.learn[i] = true; }
+      box.classList.toggle("understood", !!data.learn[i]);
+      btn.textContent = data.learn[i] ? "I understand this ✓" : "I understand this";
+      btn.setAttribute("aria-pressed", data.learn[i] ? "true" : "false");
+      save(); renderLearnProgress();
+    });
+    box.appendChild(h); box.appendChild(p); box.appendChild(btn);
+    learnList.appendChild(box);
+  });
+  function renderLearnProgress(){
+    var done = Object.keys(data.learn).filter(function(k){ return data.learn[k]; }).length;
+    $("learnDone").textContent = done;
+    var cheer = "";
+    if(done === LEARN.length) cheer = "Look at you — the basics are no longer a mystery. 💛";
+    else if(done >= 3) cheer = "You're building real confidence. Keep going. 🌿";
+    else if(done >= 1) cheer = "A beautiful start.";
+    $("learnCheer").textContent = cheer;
+  }
+  renderLearnProgress();
+
+  // ---- Render Readiness ----
+  var readyList = $("readyList");
+  READY.forEach(function(item, i){
+    var id = "ready_" + i;
+    var row = document.createElement("label");
+    row.className = "check-row"; row.setAttribute("for", id);
+    var cb = document.createElement("input");
+    cb.type = "checkbox"; cb.id = id; cb.checked = !!data.ready[i];
+    var txt = document.createElement("span"); txt.className = "c-text";
+    var t = document.createElement("span"); t.className = "c-title"; t.textContent = item[0];
+    var s = document.createElement("span"); s.className = "c-sub"; s.textContent = item[1];
+    txt.appendChild(t); txt.appendChild(s);
+    cb.addEventListener("change", function(){
+      if(cb.checked){ data.ready[i] = true; } else { delete data.ready[i]; }
+      save(); renderReadyMsg();
+    });
+    row.appendChild(cb); row.appendChild(txt);
+    readyList.appendChild(row);
+  });
+  function renderReadyMsg(){
+    var done = Object.keys(data.ready).filter(function(k){ return data.ready[k]; }).length;
+    var el = $("readyMsg");
+    if(done === READY.length){
+      el.innerHTML = "<b>You've built a healthy foundation.</b> When you're ready, you can start with confidence. 💛";
+    } else if(done === 0){
+      el.textContent = "No checkmarks yet — and that's perfectly okay. A strong foundation is worth taking your time on.";
+    } else {
+      el.innerHTML = "<b>" + done + " of " + READY.length + "</b> in place. Tend to the rest gently before investing more — your future self will thank you.";
+    }
+  }
+  renderReadyMsg();
+
+  // ---- Calculator ----
+  var monthlyEl = $("monthly"), yearsEl = $("years"), rateEl = $("rate");
+  monthlyEl.value = data.calc.monthly || "";
+  yearsEl.value = data.calc.years || "";
+  rateEl.value = data.calc.rate || "";
+
+  function wireCalc(el, field){
+    el.addEventListener("input", function(){ data.calc[field] = el.value; save(); });
+  }
+  wireCalc(monthlyEl, "monthly");
+  wireCalc(yearsEl, "years");
+  wireCalc(rateEl, "rate");
+
+  function fmtMoney(n){
+    if(!isFinite(n)) n = 0;
+    return n.toLocaleString(undefined, { style:"currency", currency:"USD", maximumFractionDigits:0 });
+  }
+
+  $("calcBtn").addEventListener("click", function(){
+    var m = parseFloat(monthlyEl.value);
+    var y = parseFloat(yearsEl.value);
+    var r = parseFloat(rateEl.value);
+
+    if(!(m > 0)){ alert("Pop in a small monthly amount above 0, sister."); monthlyEl.focus(); return; }
+    if(!(y >= 1)){ alert("Enter how many years (1 or more)."); yearsEl.focus(); return; }
+    if(isNaN(r) || r < 0){ alert("Enter an assumed yearly growth rate (try something modest, like 6)."); rateEl.focus(); return; }
+
+    // Compound growth of a monthly contribution, compounded monthly.
+    var months = Math.round(y * 12);
+    var monthlyRate = (r / 100) / 12;
+    var future;
+    if(monthlyRate === 0){
+      future = m * months;
+    } else {
+      future = m * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
+    }
+    var contrib = m * months;
+    var growth = future - contrib;
+
+    $("rFuture").textContent = fmtMoney(future);
+    $("rContrib").textContent = fmtMoney(contrib);
+    $("rGrowth").textContent = fmtMoney(growth < 0 ? 0 : growth);
+    $("result").classList.add("show");
+  });
+
+  // ---- First steps ----
+  var stepsList = $("stepsList");
+  STEPS.forEach(function(text, i){
+    var id = "step_" + i;
+    var row = document.createElement("div");
+    row.className = "step-row";
+    var cb = document.createElement("input");
+    cb.type = "checkbox"; cb.id = id; cb.checked = !!data.steps[i];
+    var lab = document.createElement("label"); lab.setAttribute("for", id); lab.textContent = text;
+    cb.addEventListener("change", function(){
+      if(cb.checked){ data.steps[i] = true; } else { delete data.steps[i]; }
+      save();
+    });
+    row.appendChild(cb); row.appendChild(lab);
+    stepsList.appendChild(row);
+  });
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Investment First Steps data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = blankState();
+      // learn
+      var boxes = learnList.querySelectorAll(".learn-item");
+      boxes.forEach(function(b){
+        b.classList.remove("understood");
+        var btn = b.querySelector(".understand-btn");
+        btn.textContent = "I understand this";
+        btn.setAttribute("aria-pressed", "false");
+      });
+      renderLearnProgress();
+      // ready & steps checkboxes
+      readyList.querySelectorAll("input[type=checkbox]").forEach(function(c){ c.checked = false; });
+      stepsList.querySelectorAll("input[type=checkbox]").forEach(function(c){ c.checked = false; });
+      renderReadyMsg();
+      // calc
+      monthlyEl.value = ""; yearsEl.value = ""; rateEl.value = "";
+      $("result").classList.remove("show");
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

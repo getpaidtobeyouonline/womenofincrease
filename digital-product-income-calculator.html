@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Product Income Calculator · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .welcome p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .welcome .sm{
+    margin-top:10px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:500;
+    font-size:13.5px; color:var(--gold-soft); position:relative; z-index:1;
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label:first-of-type{ margin-top:0; }
+  .label-note{ color:var(--muted); font-weight:400; }
+  .input-wrap{ position:relative; }
+  .input-wrap .prefix{
+    position:absolute; left:14px; top:50%; transform:translateY(-50%);
+    color:var(--muted); font-size:16px; pointer-events:none;
+  }
+  .input-wrap .suffix{
+    position:absolute; right:14px; top:50%; transform:translateY(-50%);
+    color:var(--muted); font-size:15px; pointer-events:none;
+  }
+  input[type="number"], input[type="text"]{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; min-height:48px; transition:border-color .15s, box-shadow .15s;
+    -moz-appearance:textfield;
+  }
+  input.has-prefix{ padding-left:30px; }
+  input.has-suffix{ padding-right:34px; }
+  input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  input:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder{ color:#A7A095; }
+
+  .field-row{ display:flex; gap:12px; }
+  .field-row > div{ flex:1; }
+
+  /* ---------- Slider ---------- */
+  .slider-head{ display:flex; justify-content:space-between; align-items:baseline; margin:14px 0 8px; }
+  .slider-head .lbl{ font-weight:600; font-size:13.5px; color:var(--ink); }
+  .slider-head .val{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; color:var(--emerald); }
+  input[type="range"]{
+    -webkit-appearance:none; appearance:none; width:100%; height:8px;
+    background:var(--emerald-soft); border-radius:999px; outline:none; margin:6px 0;
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none; width:26px; height:26px; border-radius:50%;
+    background:var(--gold); border:3px solid #fff; cursor:pointer;
+    box-shadow:0 2px 8px rgba(200,160,74,.45);
+  }
+  input[type="range"]::-moz-range-thumb{
+    width:26px; height:26px; border-radius:50%;
+    background:var(--gold); border:3px solid #fff; cursor:pointer;
+    box-shadow:0 2px 8px rgba(200,160,74,.45);
+  }
+  input[type="range"]:focus{ box-shadow:0 0 0 3px rgba(200,160,74,.18); }
+
+  .toggle-row{ display:flex; gap:8px; margin:4px 0 14px; }
+  .toggle-btn{
+    flex:1; min-height:44px; background:var(--cream); color:var(--muted);
+    border:1px solid var(--line); border-radius:11px; font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; transition:all .12s;
+  }
+  .toggle-btn.active{
+    background:var(--emerald-soft); color:var(--emerald); border-color:rgba(20,84,62,.3);
+  }
+
+  /* ---------- Results ---------- */
+  .result-hero{
+    text-align:center; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.15); border-radius:14px; padding:20px 16px;
+  }
+  .result-hero .label-sm{
+    font-weight:600; font-size:12px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--emerald); margin-bottom:4px;
+  }
+  .result-hero .net{
+    font-family:'Fraunces',serif; font-weight:600; font-size:40px; line-height:1.05;
+    color:var(--emerald); letter-spacing:-1px;
+  }
+  .result-hero .per{ color:var(--muted); font-size:13px; margin-top:2px; }
+
+  .breakdown{ list-style:none; margin-top:8px; }
+  .breakdown li{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:11px 2px; border-bottom:1px solid var(--line); font-size:14.5px;
+  }
+  .breakdown li:last-child{ border-bottom:none; }
+  .breakdown .k{ color:var(--muted); }
+  .breakdown .v{ font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums; }
+  .breakdown li.minus .v{ color:#A6584C; }
+  .breakdown li.annual{ margin-top:4px; }
+  .breakdown li.annual .k{ color:var(--emerald); font-weight:600; }
+  .breakdown li.annual .v{
+    color:var(--emerald); font-family:'Fraunces',serif; font-size:19px;
+  }
+
+  /* ---------- Price comparison ---------- */
+  .compare{ list-style:none; }
+  .compare li{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:12px 14px; border:1px solid var(--line); border-radius:11px;
+    margin-bottom:8px; background:var(--cream); font-size:14.5px;
+  }
+  .compare li.current{
+    background:var(--emerald-soft); border-color:rgba(20,84,62,.3);
+  }
+  .compare .price{ font-family:'Fraunces',serif; font-weight:600; font-size:17px; color:var(--emerald); }
+  .compare li.current .tag{
+    font-size:10.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--gold); margin-left:7px;
+  }
+  .compare .net-col{ text-align:right; }
+  .compare .net-col .big{ font-weight:700; font-variant-numeric:tabular-nums; }
+  .compare .net-col .yr{ color:var(--muted); font-size:12px; }
+
+  /* ---------- Goal helper ---------- */
+  .goal-out{
+    margin-top:14px; background:var(--cream); border:1px solid var(--line);
+    border-radius:13px; padding:16px;
+  }
+  .goal-out .big{
+    font-family:'Fraunces',serif; font-weight:600; font-size:17px; color:var(--emerald);
+    line-height:1.35;
+  }
+  .goal-out .big b{ color:var(--gold); }
+  .goal-out .sm{ color:var(--muted); font-size:13.5px; margin-top:6px; }
+
+  .encourage{
+    margin-top:16px; text-align:center; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:13px; padding:14px 16px; font-size:14px;
+  }
+  .encourage b{ font-family:'Fraunces',serif; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Digital Product Income Calculator</h1>
+    <p class="subtitle">See the real, honest math of one product — sold many times.</p>
+  </header>
+
+  <!-- Welcome / first run -->
+  <section class="card" id="welcomeCard">
+    <div class="welcome">
+      <p>You don't need a huge crowd to build real income. One good product, priced with confidence and sold steadily, can change your numbers.</p>
+      <div class="sm">Twenty sales a month at a fair price is real money. Let's do the math together.</div>
+    </div>
+  </section>
+
+  <!-- 1. Your product -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Product</h2></div>
+    <p class="hint">Start with your price. You can always adjust it below and watch the numbers move.</p>
+
+    <label class="field-label" for="price">Product price</label>
+    <div class="input-wrap">
+      <span class="prefix" id="pfx1">$</span>
+      <input type="number" id="price" class="has-prefix" inputmode="decimal" min="0" step="1" placeholder="47">
+    </div>
+
+    <label class="field-label" for="currency">Currency symbol <span class="label-note">(just for display)</span></label>
+    <input type="text" id="currency" maxlength="3" placeholder="$">
+  </section>
+
+  <!-- 2. Sales volume -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>How Many Will Sell?</h2></div>
+    <p class="hint">Estimate gently and honestly. You can model it two ways.</p>
+
+    <div class="toggle-row" role="group" aria-label="Volume model">
+      <button type="button" class="toggle-btn active" id="modeSales">Sales per month</button>
+      <button type="button" class="toggle-btn" id="modeAudience">Audience &amp; conversion</button>
+    </div>
+
+    <!-- Direct sales mode -->
+    <div id="salesMode">
+      <div class="slider-head">
+        <span class="lbl">Sales per month</span>
+        <span class="val" id="salesVal">20</span>
+      </div>
+      <input type="range" id="salesRange" min="0" max="500" step="1" value="20" aria-label="Sales per month">
+    </div>
+
+    <!-- Audience mode -->
+    <div id="audienceMode" style="display:none;">
+      <label class="field-label" for="audience">People who'll see it each month</label>
+      <input type="number" id="audience" inputmode="numeric" min="0" step="10" placeholder="1000">
+
+      <div class="slider-head">
+        <span class="lbl">Conversion rate</span>
+        <span class="val" id="convVal">2%</span>
+      </div>
+      <input type="range" id="convRange" min="0" max="20" step="0.5" value="2" aria-label="Conversion rate percent">
+      <p class="hint" style="margin-top:8px;">A 1–3% conversion is realistic and healthy for a warm audience. <b id="estSales">≈ 20 sales/month</b></p>
+    </div>
+  </section>
+
+  <!-- 3. Fees -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Fees &amp; Costs</h2></div>
+    <p class="hint">Optional — leave at zero if you're not sure. Honest numbers serve you best.</p>
+
+    <div class="field-row">
+      <div>
+        <label class="field-label" for="feePct">Platform / processing fee</label>
+        <div class="input-wrap">
+          <input type="number" id="feePct" class="has-suffix" inputmode="decimal" min="0" max="100" step="0.1" placeholder="0">
+          <span class="suffix">%</span>
+        </div>
+      </div>
+      <div>
+        <label class="field-label" for="perSale">Cost per sale</label>
+        <div class="input-wrap">
+          <span class="prefix" id="pfx2">$</span>
+          <input type="number" id="perSale" class="has-prefix" inputmode="decimal" min="0" step="0.1" placeholder="0">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Your Numbers</h2></div>
+    <div class="result-hero">
+      <div class="label-sm">Net monthly income</div>
+      <div class="net" id="netMonthly">$0</div>
+      <div class="per" id="perLine">from 0 sales/month</div>
+    </div>
+    <ul class="breakdown">
+      <li><span class="k">Gross monthly income</span><span class="v" id="grossMonthly">$0</span></li>
+      <li class="minus"><span class="k">Fees &amp; costs</span><span class="v" id="feesMonthly">$0</span></li>
+      <li><span class="k">Net per sale</span><span class="v" id="netPerSale">$0</span></li>
+      <li class="annual"><span class="k">Projected annual income</span><span class="v" id="netAnnual">$0</span></li>
+    </ul>
+    <div class="encourage" id="encourage">
+      <b>That's real money.</b> Steady beats spectacular — keep showing up.
+    </div>
+  </section>
+
+  <!-- Price comparison -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>What If You Priced It Differently?</h2></div>
+    <p class="hint">Same effort, same volume — here's how the price shapes your year. (Net monthly · annual)</p>
+    <ul class="compare" id="compareList"></ul>
+  </section>
+
+  <!-- Goal helper -->
+  <section class="card">
+    <div class="step"><span class="num">6</span><h2>Reach Your Goal</h2></div>
+    <p class="hint">Name the monthly income you're believing for — we'll show what it takes at your current price.</p>
+
+    <label class="field-label" for="goal">My monthly income goal</label>
+    <div class="input-wrap">
+      <span class="prefix" id="pfx3">$</span>
+      <input type="number" id="goal" class="has-prefix" inputmode="decimal" min="0" step="50" placeholder="2000">
+    </div>
+
+    <div class="goal-out" id="goalOut">
+      <div class="big">Enter a goal above and your price, and I'll show you the path. 💛</div>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_digital_product_calc";
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- State / defaults ----
+  function defaults(){
+    return {
+      price: "",
+      currency: "$",
+      mode: "sales",        // "sales" | "audience"
+      sales: 20,
+      audience: "",
+      conv: 2,
+      feePct: "",
+      perSale: "",
+      goal: ""
+    };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && typeof o === "object"){ var d = defaults(); for(var k in d){ if(o[k] !== undefined) d[k] = o[k]; } return d; } }
+    }catch(e){}
+    return defaults();
+  }
+  var state = load();
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+
+  // ---- Elements ----
+  var priceEl=$("price"), currencyEl=$("currency"), feePctEl=$("feePct"), perSaleEl=$("perSale"), goalEl=$("goal");
+  var salesRange=$("salesRange"), salesVal=$("salesVal");
+  var audienceEl=$("audience"), convRange=$("convRange"), convVal=$("convVal"), estSales=$("estSales");
+  var modeSalesBtn=$("modeSales"), modeAudienceBtn=$("modeAudience");
+  var salesModeBox=$("salesMode"), audienceModeBox=$("audienceMode");
+
+  // ---- Helpers ----
+  function num(v){ var n = parseFloat(v); return isFinite(n) && n > 0 ? n : 0; }
+  function sym(){ return (state.currency && state.currency.trim()) ? state.currency.trim() : "$"; }
+  function money(n){
+    if(!isFinite(n)) n = 0;
+    var rounded = Math.round(n);
+    return sym() + rounded.toLocaleString();
+  }
+  function money2(n){
+    if(!isFinite(n)) n = 0;
+    return sym() + n.toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:2});
+  }
+
+  // Effective sales/month from whichever model is active
+  function salesPerMonth(){
+    if(state.mode === "audience"){
+      return Math.round(num(state.audience) * (num(state.conv) / 100));
+    }
+    return Math.round(num(state.sales));
+  }
+
+  // Compute net monthly for a given price + the current volume/fees
+  function computeFor(price){
+    var s = salesPerMonth();
+    var gross = price * s;
+    var fees = gross * (num(state.feePct)/100) + (num(state.perSale) * s);
+    var net = gross - fees;
+    return { sales:s, gross:gross, fees:fees, net:net, perSale: s>0 ? net/s : (price - price*(num(state.feePct)/100) - num(state.perSale)) };
+  }
+
+  // ---- Restore UI from state ----
+  function syncPrefixes(){ $("pfx1").textContent = sym(); $("pfx2").textContent = sym(); $("pfx3").textContent = sym(); }
+  function restore(){
+    priceEl.value = state.price;
+    currencyEl.value = state.currency;
+    feePctEl.value = state.feePct;
+    perSaleEl.value = state.perSale;
+    goalEl.value = state.goal;
+    salesRange.value = state.sales;
+    salesVal.textContent = Math.round(num(state.sales));
+    audienceEl.value = state.audience;
+    convRange.value = state.conv;
+    convVal.textContent = (parseFloat(state.conv)||0) + "%";
+    setMode(state.mode, true);
+    syncPrefixes();
+  }
+
+  function setMode(m, silent){
+    state.mode = m;
+    if(m === "audience"){
+      modeAudienceBtn.classList.add("active"); modeSalesBtn.classList.remove("active");
+      audienceModeBox.style.display="block"; salesModeBox.style.display="none";
+    }else{
+      modeSalesBtn.classList.add("active"); modeAudienceBtn.classList.remove("active");
+      salesModeBox.style.display="block"; audienceModeBox.style.display="none";
+    }
+    if(!silent){ save(); render(); }
+  }
+
+  // ---- Render everything live ----
+  function render(){
+    syncPrefixes();
+    var price = num(state.price);
+    var r = computeFor(price);
+
+    // hero + breakdown
+    $("netMonthly").textContent = money(r.net);
+    $("perLine").textContent = "from " + r.sales.toLocaleString() + " sale" + (r.sales===1?"":"s") + "/month";
+    $("grossMonthly").textContent = money(r.gross);
+    $("feesMonthly").textContent = (r.fees > 0 ? "−" : "") + money(r.fees).replace(sym(), sym());
+    $("netPerSale").textContent = money2(price>0 ? (price - price*(num(state.feePct)/100) - num(state.perSale)) : 0);
+    $("netAnnual").textContent = money(r.net * 12);
+
+    // estimated sales note (audience mode)
+    var est = salesPerMonth();
+    estSales.textContent = "≈ " + est.toLocaleString() + " sale" + (est===1?"":"s") + "/month";
+
+    // encouragement, grounded
+    var enc = $("encourage");
+    if(price <= 0 || r.sales <= 0){
+      enc.innerHTML = "<b>Start with a number.</b> Even a small, fair price tells the world your work has worth.";
+    }else if(r.net < 500){
+      enc.innerHTML = "<b>This is a real beginning.</b> " + money(r.net) + " a month is income that didn't exist before — and it grows.";
+    }else if(r.net < 3000){
+      enc.innerHTML = "<b>That's real money.</b> " + money(r.net*12) + " a year from one product. Steady beats spectacular.";
+    }else{
+      enc.innerHTML = "<b>Look at that.</b> " + money(r.net*12) + " a year is life-changing — and it's built on one product sold faithfully.";
+    }
+
+    renderCompare(price, r.sales);
+    renderGoal(price);
+  }
+
+  // ---- Price comparison ----
+  function renderCompare(price, sales){
+    var list = $("compareList");
+    list.innerHTML = "";
+    if(price <= 0){
+      var li0 = document.createElement("li");
+      li0.innerHTML = '<span class="price" style="font-size:14.5px;font-family:inherit;color:var(--muted);font-style:italic;">Enter a price to compare points</span>';
+      list.appendChild(li0);
+      return;
+    }
+    // Build a set of price points around the entered price
+    var pts = [];
+    var step = price < 20 ? 5 : (price < 100 ? 10 : (price < 500 ? 25 : 100));
+    pts.push(price);
+    pts.push(price - step);
+    pts.push(price - 2*step);
+    pts.push(price + step);
+    pts.push(price + 2*step);
+    // clean: positive, unique, sorted
+    var seen = {};
+    pts = pts.filter(function(p){ p = Math.round(p*100)/100; if(p>0 && !seen[p]){ seen[p]=1; return true; } return false; })
+             .map(function(p){ return Math.round(p*100)/100; })
+             .sort(function(a,b){ return a-b; });
+
+    pts.forEach(function(p){
+      var r = computeFor(p);
+      var li = document.createElement("li");
+      var current = Math.abs(p - price) < 0.001;
+      if(current) li.className = "current";
+      var left = document.createElement("span");
+      left.innerHTML = '<span class="price">' + money(p) + '</span>' + (current ? '<span class="tag">your price</span>' : '');
+      var right = document.createElement("span");
+      right.className = "net-col";
+      right.innerHTML = '<span class="big">' + money(r.net) + '/mo</span><br><span class="yr">' + money(r.net*12) + '/yr</span>';
+      li.appendChild(left); li.appendChild(right);
+      list.appendChild(li);
+    });
+  }
+
+  // ---- Goal reverse calc ----
+  function renderGoal(price){
+    var out = $("goalOut");
+    var goal = num(state.goal);
+    if(goal <= 0 || price <= 0){
+      out.innerHTML = '<div class="big">Enter a goal above and your price, and I\'ll show you the path. 💛</div>';
+      return;
+    }
+    // Net per sale at current price
+    var netPer = price - price*(num(state.feePct)/100) - num(state.perSale);
+    if(netPer <= 0){
+      out.innerHTML = '<div class="big">At this price your fees and costs eat the whole sale.</div><div class="sm">Try raising your price or trimming costs so each sale earns you something.</div>';
+      return;
+    }
+    var needed = Math.ceil(goal / netPer);
+    var perWeek = Math.ceil(needed / 4.33);
+    var current = salesPerMonth();
+    var gap = needed - current;
+
+    var msg = '<div class="big">To reach <b>' + money(goal) + '/month</b>, you\'d sell about <b>' + needed.toLocaleString() + '</b> ' + (needed===1?'copy':'copies') + ' a month at ' + money(price) + '.</div>';
+    msg += '<div class="sm">That\'s roughly ' + perWeek.toLocaleString() + ' a week. ';
+    if(current > 0){
+      if(gap <= 0){
+        msg += "You're already there at your current pace — keep going, sister. 💛";
+      }else{
+        msg += "You're at " + current.toLocaleString() + " now — just " + gap.toLocaleString() + " more sale" + (gap===1?"":"s") + " a month to close the gap.";
+      }
+    }else{
+      msg += "One faithful sale at a time gets you there.";
+    }
+    msg += '</div>';
+    out.innerHTML = msg;
+  }
+
+  // ---- Wire inputs (auto-save on every change) ----
+  function wireText(el, key, isNumber){
+    el.addEventListener("input", function(){
+      state[key] = el.value;
+      save(); render();
+    });
+  }
+  wireText(priceEl, "price");
+  wireText(feePctEl, "feePct");
+  wireText(perSaleEl, "perSale");
+  wireText(goalEl, "goal");
+  wireText(audienceEl, "audience");
+
+  currencyEl.addEventListener("input", function(){
+    state.currency = currencyEl.value; save(); render();
+  });
+
+  salesRange.addEventListener("input", function(){
+    state.sales = parseInt(salesRange.value,10) || 0;
+    salesVal.textContent = state.sales.toLocaleString();
+    save(); render();
+  });
+  convRange.addEventListener("input", function(){
+    state.conv = parseFloat(convRange.value) || 0;
+    convVal.textContent = state.conv + "%";
+    save(); render();
+  });
+
+  modeSalesBtn.addEventListener("click", function(){ setMode("sales"); });
+  modeAudienceBtn.addEventListener("click", function(){ setMode("audience"); });
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your calculator inputs? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      state = defaults();
+      restore();
+      render();
+    }
+  });
+
+  // ---- Init ----
+  restore();
+  render();
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paycheck Stretcher Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="date"], input[type="number"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="date"], input[type="number"], select{ min-height:48px; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* money input with symbol */
+  .money-wrap{ position:relative; }
+  .money-wrap .sym{
+    position:absolute; left:14px; top:50%; transform:translateY(-50%);
+    color:var(--muted); font-weight:600; font-size:16px; pointer-events:none;
+  }
+  .money-wrap input{ padding-left:30px; }
+
+  /* big paycheck input */
+  .paycheck-input{
+    text-align:left; font-family:'Fraunces',serif; font-size:26px;
+    color:var(--emerald); font-weight:600;
+  }
+
+  /* ---------- Bills list ---------- */
+  .bill-row{
+    display:flex; align-items:center; gap:8px; margin-bottom:10px;
+  }
+  .bill-row .b-name{ flex:1.4; }
+  .bill-row .b-amt-wrap{ flex:1; position:relative; }
+  .bill-row .b-amt-wrap .sym{
+    position:absolute; left:12px; top:50%; transform:translateY(-50%);
+    color:var(--muted); font-weight:600; font-size:15px; pointer-events:none;
+  }
+  .bill-row .b-amt-wrap input{ padding-left:26px; }
+  .bill-row .b-date{ flex:1.1; }
+  .bill-row input{ font-size:15px; min-height:44px; padding:11px 12px; }
+  .bill-del{
+    flex:none; width:44px; height:44px; border:1px solid var(--line);
+    background:#fff; border-radius:10px; color:var(--muted); font-size:18px;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .bill-del:hover{ border-color:var(--gold); color:var(--ink); }
+  .bill-head{
+    display:flex; gap:8px; font-size:11.5px; font-weight:600; color:var(--muted);
+    text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; padding:0 2px;
+  }
+  .bill-head .h-name{ flex:1.4; }
+  .bill-head .h-amt{ flex:1; }
+  .bill-head .h-date{ flex:1.1; }
+  .bill-head .h-spacer{ flex:none; width:44px; }
+  .add-btn{
+    width:100%; min-height:46px; margin-top:4px;
+    background:var(--emerald-soft); color:var(--emerald); border:1px dashed rgba(20,84,62,.3);
+    border-radius:11px; font-family:inherit; font-weight:600; font-size:14.5px; cursor:pointer;
+  }
+  .add-btn:hover{ border-color:var(--emerald); }
+
+  /* ---------- Summary panel ---------- */
+  .summary{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:20px; margin-top:16px;
+  }
+  .sum-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:9px 0; border-bottom:1px solid rgba(231,211,161,.18); font-size:14.5px;
+  }
+  .sum-row:last-of-type{ border-bottom:none; }
+  .sum-row .lbl{ color:var(--gold-soft); font-weight:500; }
+  .sum-row .val{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; }
+  .sum-left{ text-align:center; margin-top:14px; padding-top:16px; border-top:1px solid rgba(231,211,161,.25); }
+  .sum-left .label{ font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-soft); }
+  .sum-left .amount{ font-family:'Fraunces',serif; font-size:38px; font-weight:600; line-height:1.1; margin-top:4px; }
+  .sum-left.neg .amount{ color:#F2C9B8; }
+  .sum-left.pos .amount{ color:#D8EAD0; }
+
+  .safe-spend{
+    margin-top:14px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:12px; padding:14px 16px; text-align:center; color:var(--emerald);
+  }
+  .safe-spend .ss-amt{ font-family:'Fraunces',serif; font-size:28px; font-weight:600; }
+  .safe-spend .ss-lbl{ font-size:13px; color:var(--muted); margin-top:2px; }
+  .safe-note{ color:var(--muted); font-size:13px; text-align:center; margin-top:10px; font-style:italic; }
+  .safe-note.warn{ color:#9A4A30; font-style:normal; font-weight:500; }
+
+  /* payday picker */
+  .payday-grid{ display:flex; gap:10px; align-items:flex-end; }
+  .payday-grid > div{ flex:1; }
+
+  /* ---------- Allocation ---------- */
+  .alloc-row{ margin-bottom:14px; }
+  .alloc-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; }
+  .alloc-top .a-name{ font-weight:600; font-size:14px; color:var(--ink); }
+  .alloc-top .a-val{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:15px; }
+  input[type="range"]{ width:100%; accent-color:var(--gold); height:32px; }
+  .alloc-sum{ font-size:13px; color:var(--muted); text-align:center; margin-top:4px; }
+
+  /* ---------- Strategies checklist ---------- */
+  .strat{
+    display:flex; align-items:flex-start; gap:12px; padding:12px 4px;
+    border-bottom:1px solid var(--line); cursor:pointer;
+  }
+  .strat:last-child{ border-bottom:none; }
+  .strat .box{
+    flex:none; width:24px; height:24px; border-radius:7px; border:2px solid var(--gold-soft);
+    background:#fff; margin-top:2px; display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:14px; font-weight:700; transition:background .12s, border-color .12s;
+  }
+  .strat.on .box{ background:var(--emerald); border-color:var(--emerald); }
+  .strat .txt .t-title{ font-weight:600; font-size:15px; color:var(--ink); }
+  .strat.on .txt .t-title{ color:var(--emerald); }
+  .strat .txt .t-desc{ color:var(--muted); font-size:13px; margin-top:1px; }
+  .strat-count{ font-size:13px; color:var(--muted); text-align:center; margin-top:12px; }
+  .strat-count b{ color:var(--emerald); }
+
+  /* ---------- Found money ---------- */
+  .fm-form{ display:flex; gap:8px; align-items:flex-end; }
+  .fm-form .fm-what{ flex:1.5; }
+  .fm-form .fm-amt-wrap{ flex:1; position:relative; }
+  .fm-form .fm-amt-wrap .sym{
+    position:absolute; left:12px; top:50%; transform:translateY(-50%);
+    color:var(--muted); font-weight:600; font-size:15px; pointer-events:none;
+  }
+  .fm-form .fm-amt-wrap input{ padding-left:26px; }
+  .fm-form input{ font-size:15px; min-height:46px; padding:12px; }
+  .fm-add{
+    flex:none; min-height:46px; padding:0 16px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    box-shadow:0 4px 12px rgba(200,160,74,.3);
+  }
+  .fm-add:active{ transform:translateY(1px); }
+  .fm-total{
+    margin-top:14px; text-align:center; background:var(--gold-soft);
+    border-radius:12px; padding:14px; color:var(--emerald);
+  }
+  .fm-total .ft-amt{ font-family:'Fraunces',serif; font-size:30px; font-weight:600; }
+  .fm-total .ft-lbl{ font-size:13px; color:var(--emerald); margin-top:2px; font-weight:500; }
+  .fm-list{ list-style:none; margin-top:14px; }
+  .fm-list li{
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+    padding:10px 2px; border-bottom:1px solid var(--line); font-size:14px;
+  }
+  .fm-list li:last-child{ border-bottom:none; }
+  .fm-list .fm-l-what{ color:var(--ink); }
+  .fm-list .fm-l-right{ display:flex; align-items:center; gap:10px; }
+  .fm-list .fm-l-amt{ color:var(--gold); font-family:'Fraunces',serif; font-weight:600; font-style:italic; }
+  .fm-list .fm-l-del{
+    background:none; border:none; color:var(--muted); cursor:pointer; font-size:18px;
+    width:34px; height:34px; line-height:1;
+  }
+  .fm-list .fm-l-del:hover{ color:var(--ink); }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; text-align:center; padding:6px 0; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Paycheck Stretcher</h1>
+    <p class="subtitle">Make every dollar reach further — with a clear plan and gentle momentum.</p>
+  </header>
+
+  <!-- 1. Paycheck Planner -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Paycheck Plan</h2></div>
+    <p class="hint">Start with what came in, then name what's due. We'll show you what's truly yours to spend — calmly, no guilt.</p>
+
+    <label class="field-label" for="paycheck">This paycheck amount</label>
+    <div class="money-wrap">
+      <span class="sym">$</span>
+      <input type="number" inputmode="decimal" min="0" step="0.01" class="paycheck-input" id="paycheck" placeholder="0.00">
+    </div>
+
+    <div class="payday-grid">
+      <div>
+        <label class="field-label" for="nextPayday">Next payday <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+        <input type="date" id="nextPayday">
+      </div>
+    </div>
+
+    <label class="field-label" style="margin-top:18px;">Bills &amp; needs due before then</label>
+    <p class="hint" style="margin-top:0;">Rent, groceries, gas, a minimum payment — whatever has to be covered.</p>
+
+    <div class="bill-head">
+      <span class="h-name">What</span>
+      <span class="h-amt">Amount</span>
+      <span class="h-date">Due</span>
+      <span class="h-spacer"></span>
+    </div>
+    <div id="billList"></div>
+    <button class="add-btn" id="addBill" type="button">+ Add a bill or need</button>
+
+    <!-- Summary -->
+    <div class="summary">
+      <div class="sum-row"><span class="lbl">Paycheck</span><span class="val" id="sumPaycheck">$0</span></div>
+      <div class="sum-row"><span class="lbl">Committed to bills &amp; needs</span><span class="val" id="sumCommitted">$0</span></div>
+      <div class="sum-left pos" id="leftBlock">
+        <div class="label">What's left for you</div>
+        <div class="amount" id="sumLeft">$0</div>
+      </div>
+    </div>
+
+    <div class="safe-spend">
+      <div class="ss-amt" id="safeSpend">$0</div>
+      <div class="ss-lbl" id="safeLbl">safe to spend per day until payday</div>
+    </div>
+    <p class="safe-note" id="safeNote">Add your paycheck and bills above to see your daily number.</p>
+  </section>
+
+  <!-- 2. Allocation -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Gentle Allocation</h2></div>
+    <p class="hint">From what's left, even a little set aside builds a cushion. Adjust to fit your real life — there's no wrong split.</p>
+
+    <div class="alloc-row">
+      <div class="alloc-top"><span class="a-name">Everyday spending</span><span class="a-val" id="allocNeedsVal">$0</span></div>
+      <input type="range" id="allocNeeds" min="0" max="100" value="80" aria-label="Percent for everyday spending">
+    </div>
+    <div class="alloc-row">
+      <div class="alloc-top"><span class="a-name">A little savings</span><span class="a-val" id="allocSaveVal">$0</span></div>
+      <input type="range" id="allocSave" min="0" max="100" value="10" aria-label="Percent for savings">
+    </div>
+    <div class="alloc-row">
+      <div class="alloc-top"><span class="a-name">A little buffer</span><span class="a-val" id="allocBufferVal">$0</span></div>
+      <input type="range" id="allocBuffer" min="0" max="100" value="10" aria-label="Percent for buffer">
+    </div>
+    <p class="alloc-sum" id="allocSum">100% of what's left · splitting $0</p>
+  </section>
+
+  <!-- 3. Stretch Strategies -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Stretch Strategies</h2></div>
+    <p class="hint">Pick a few to try this paycheck. Small, doable moves — tap any you're working on.</p>
+    <div id="stratList"></div>
+    <p class="strat-count">You're working on <b id="stratCount">0</b> strategies. Every one counts. 💛</p>
+  </section>
+
+  <!-- 4. Found Money -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Found Money</h2></div>
+    <p class="hint">Log every little win from stretching — cooked instead of takeout, skipped a buy, sold something. Watch it add up.</p>
+
+    <div class="fm-form">
+      <div class="fm-what">
+        <label class="field-label" for="fmWhat" style="margin-top:0;">What you saved on</label>
+        <input type="text" id="fmWhat" placeholder="Cooked dinner in">
+      </div>
+      <div class="fm-amt-wrap">
+        <label class="field-label" for="fmAmt" style="margin-top:0;">Amount</label>
+        <span class="sym" style="top:auto;bottom:13px;transform:none;">$</span>
+        <input type="number" inputmode="decimal" min="0" step="0.01" id="fmAmt" placeholder="12">
+      </div>
+      <button class="fm-add" id="fmAdd" type="button">Add</button>
+    </div>
+
+    <div class="fm-total">
+      <div class="ft-amt" id="fmTotal">$0</div>
+      <div class="ft-lbl">stretched and saved so far</div>
+    </div>
+
+    <ul class="fm-list" id="fmList"></ul>
+    <p class="empty-note" id="fmEmpty">No wins logged yet — your first one is coming. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_paycheck_stretcher";
+
+  // ---- Built-in strategy library ----
+  var STRATEGIES = [
+    ["Meal plan from what you have", "Shop your own pantry and freezer first before buying more."],
+    ["Pause non-essentials", "Put subscriptions or wants on hold for one paycheck cycle."],
+    ["Negotiate a bill", "Call one provider and ask for a lower rate or a hardship plan."],
+    ["Buy generic", "Swap name brands for store brands on staples you already use."],
+    ["Have a no-spend day", "Pick one day this week where nothing extra goes out."],
+    ["Sell something unused", "Turn an idle item into a few real dollars."],
+    ["Batch your errands", "One trip instead of many — save gas, time, and impulse buys."],
+    ["Use cash for spending", "Pull out your daily number and let the envelope guide you."],
+    ["Cook a double batch", "Make extra tonight so tomorrow's meal is already covered."],
+    ["Wait 24 hours to buy", "Sleep on any non-essential purchase before saying yes."],
+    ["Drink water, pack snacks", "Skip the gas-station and drive-thru add-ons."],
+    ["Use the library", "Free books, classes, and entertainment instead of paid."]
+  ];
+
+  // ---- State ----
+  var data = load();
+
+  function blankData(){
+    return {
+      paycheck:"",
+      nextPayday:"",
+      bills:[],          // {name, amount, due}
+      alloc:{needs:80, save:10, buffer:10},
+      strategies:{},     // index -> true
+      found:[]           // {what, amount}
+    };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          var b = blankData();
+          // merge to be safe across versions
+          b.paycheck = o.paycheck || "";
+          b.nextPayday = o.nextPayday || "";
+          b.bills = Array.isArray(o.bills) ? o.bills : [];
+          b.alloc = o.alloc && typeof o.alloc==="object" ? o.alloc : b.alloc;
+          b.strategies = o.strategies && typeof o.strategies==="object" ? o.strategies : {};
+          b.found = Array.isArray(o.found) ? o.found : [];
+          return b;
+        }
+      }
+    }catch(e){}
+    return blankData();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Helpers ----
+  var $ = function(id){ return document.getElementById(id); };
+  function num(v){ var n = parseFloat(v); return isFinite(n) && n>0 ? n : 0; }
+  function money(n){
+    n = Math.round(n*100)/100;
+    var hasCents = Math.abs(n % 1) > 0.0001;
+    return "$" + n.toLocaleString(undefined, {
+      minimumFractionDigits: hasCents ? 2 : 0,
+      maximumFractionDigits: 2
+    });
+  }
+  function daysUntil(dateStr){
+    if(!dateStr) return 0;
+    var parts = dateStr.split("-");
+    if(parts.length !== 3) return 0;
+    var target = new Date(parts[0], parts[1]-1, parts[2]);
+    var now = new Date();
+    var t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var diff = Math.ceil((target - t0) / 86400000);
+    return diff > 0 ? diff : 0;
+  }
+
+  // ---- Elements ----
+  var paycheckEl = $("paycheck"), nextPaydayEl = $("nextPayday"), billListEl = $("billList");
+
+  // ===== Paycheck + payday =====
+  paycheckEl.value = data.paycheck;
+  nextPaydayEl.value = data.nextPayday;
+  paycheckEl.addEventListener("input", function(){ data.paycheck = paycheckEl.value; save(); recalc(); });
+  nextPaydayEl.addEventListener("input", function(){ data.nextPayday = nextPaydayEl.value; save(); recalc(); });
+
+  // ===== Bills =====
+  function renderBills(){
+    billListEl.innerHTML = "";
+    data.bills.forEach(function(bill, idx){
+      var row = document.createElement("div");
+      row.className = "bill-row";
+
+      var name = document.createElement("input");
+      name.type = "text"; name.className = "b-name";
+      name.placeholder = "e.g. Groceries"; name.value = bill.name || "";
+      name.setAttribute("aria-label", "Bill name");
+      name.addEventListener("input", function(){ data.bills[idx].name = name.value; save(); });
+
+      var amtWrap = document.createElement("div");
+      amtWrap.className = "b-amt-wrap";
+      var sym = document.createElement("span"); sym.className = "sym"; sym.textContent = "$";
+      var amt = document.createElement("input");
+      amt.type = "number"; amt.inputMode = "decimal"; amt.min = "0"; amt.step = "0.01";
+      amt.placeholder = "0"; amt.value = (bill.amount === 0 || bill.amount) ? bill.amount : "";
+      amt.setAttribute("aria-label", "Bill amount");
+      amt.addEventListener("input", function(){ data.bills[idx].amount = amt.value; save(); recalc(); });
+      amtWrap.appendChild(sym); amtWrap.appendChild(amt);
+
+      var due = document.createElement("input");
+      due.type = "date"; due.className = "b-date"; due.value = bill.due || "";
+      due.setAttribute("aria-label", "Due date");
+      due.addEventListener("input", function(){ data.bills[idx].due = due.value; save(); });
+
+      var del = document.createElement("button");
+      del.type = "button"; del.className = "bill-del"; del.textContent = "×";
+      del.setAttribute("aria-label", "Remove this bill");
+      del.addEventListener("click", function(){
+        data.bills.splice(idx, 1); save(); renderBills(); recalc();
+      });
+
+      row.appendChild(name); row.appendChild(amtWrap); row.appendChild(due); row.appendChild(del);
+      billListEl.appendChild(row);
+    });
+  }
+  $("addBill").addEventListener("click", function(){
+    data.bills.push({ name:"", amount:"", due:"" });
+    save(); renderBills(); recalc();
+  });
+
+  // ===== Recalculate the plan =====
+  function recalc(){
+    var paycheck = num(data.paycheck);
+    var committed = 0;
+    data.bills.forEach(function(b){ committed += num(b.amount); });
+    var left = paycheck - committed;
+
+    $("sumPaycheck").textContent = money(paycheck);
+    $("sumCommitted").textContent = money(committed);
+    $("sumLeft").textContent = money(left);
+
+    var leftBlock = $("leftBlock");
+    leftBlock.classList.remove("pos","neg");
+    leftBlock.classList.add(left < 0 ? "neg" : "pos");
+
+    // Safe-to-spend per day
+    var days = daysUntil(data.nextPayday);
+    var safeEl = $("safeSpend"), safeLbl = $("safeLbl"), note = $("safeNote");
+    note.classList.remove("warn");
+
+    if(paycheck === 0){
+      safeEl.textContent = money(0);
+      safeLbl.textContent = "safe to spend per day until payday";
+      note.textContent = "Add your paycheck and bills above to see your daily number.";
+    } else if(left < 0){
+      safeEl.textContent = money(0);
+      safeLbl.textContent = "your bills are over this paycheck right now";
+      note.classList.add("warn");
+      note.textContent = "You're short by " + money(Math.abs(left)) + " — that's okay. Try the stretch strategies below, or see which bill can move. You've got this.";
+    } else if(days > 0){
+      var perDay = left / days;
+      safeEl.textContent = money(perDay);
+      safeLbl.textContent = "safe to spend per day for the next " + days + " day" + (days===1?"":"s");
+      note.textContent = "That's your gentle daily ceiling until payday. Some days you'll spend less — let it carry over.";
+    } else {
+      safeEl.textContent = money(left);
+      safeLbl.textContent = "left for you this paycheck";
+      note.textContent = "Add your next payday above and we'll turn this into a calm daily number.";
+    }
+
+    renderAlloc(left);
+  }
+
+  // ===== Allocation =====
+  var allocNeeds = $("allocNeeds"), allocSave = $("allocSave"), allocBuffer = $("allocBuffer");
+  allocNeeds.value = data.alloc.needs;
+  allocSave.value = data.alloc.save;
+  allocBuffer.value = data.alloc.buffer;
+
+  function renderAlloc(left){
+    if(typeof left === "undefined"){
+      left = num(data.paycheck);
+      data.bills.forEach(function(b){ left -= num(b.amount); });
+    }
+    if(left < 0) left = 0;
+    var n = parseInt(allocNeeds.value,10) || 0;
+    var s = parseInt(allocSave.value,10) || 0;
+    var bf = parseInt(allocBuffer.value,10) || 0;
+    var total = n + s + bf;
+
+    $("allocNeedsVal").textContent = money(left * (n/100));
+    $("allocSaveVal").textContent = money(left * (s/100));
+    $("allocBufferVal").textContent = money(left * (bf/100));
+    $("allocSum").textContent = total + "% allocated · splitting " + money(left);
+  }
+  function wireAlloc(el, k){
+    el.addEventListener("input", function(){
+      data.alloc[k] = parseInt(el.value,10) || 0;
+      save(); renderAlloc();
+    });
+  }
+  wireAlloc(allocNeeds, "needs");
+  wireAlloc(allocSave, "save");
+  wireAlloc(allocBuffer, "buffer");
+
+  // ===== Strategies =====
+  function renderStrategies(){
+    var list = $("stratList");
+    list.innerHTML = "";
+    var count = 0;
+    STRATEGIES.forEach(function(s, idx){
+      var on = !!data.strategies[idx];
+      if(on) count++;
+      var row = document.createElement("div");
+      row.className = "strat" + (on ? " on" : "");
+      row.setAttribute("role","button");
+      row.setAttribute("tabindex","0");
+      row.setAttribute("aria-pressed", on ? "true" : "false");
+
+      var box = document.createElement("span");
+      box.className = "box";
+      box.textContent = on ? "✓" : "";
+
+      var txt = document.createElement("span");
+      txt.className = "txt";
+      var t = document.createElement("div"); t.className = "t-title"; t.textContent = s[0];
+      var d = document.createElement("div"); d.className = "t-desc"; d.textContent = s[1];
+      txt.appendChild(t); txt.appendChild(d);
+
+      row.appendChild(box); row.appendChild(txt);
+
+      function toggle(){
+        if(data.strategies[idx]) delete data.strategies[idx];
+        else data.strategies[idx] = true;
+        save(); renderStrategies();
+      }
+      row.addEventListener("click", toggle);
+      row.addEventListener("keydown", function(e){
+        if(e.key === " " || e.key === "Enter"){ e.preventDefault(); toggle(); }
+      });
+
+      list.appendChild(row);
+    });
+    $("stratCount").textContent = count;
+  }
+
+  // ===== Found Money =====
+  var fmWhat = $("fmWhat"), fmAmt = $("fmAmt");
+  function renderFound(){
+    var list = $("fmList"), empty = $("fmEmpty");
+    var total = 0;
+    data.found.forEach(function(f){ total += num(f.amount); });
+    $("fmTotal").textContent = money(total);
+
+    list.innerHTML = "";
+    if(data.found.length === 0){ empty.style.display = "block"; return; }
+    empty.style.display = "none";
+
+    // newest first
+    data.found.slice().reverse().forEach(function(f, i){
+      var realIdx = data.found.length - 1 - i;
+      var li = document.createElement("li");
+      var what = document.createElement("span");
+      what.className = "fm-l-what";
+      what.textContent = f.what || "A little win";
+      var right = document.createElement("span");
+      right.className = "fm-l-right";
+      var amt = document.createElement("span");
+      amt.className = "fm-l-amt";
+      amt.textContent = "+" + money(num(f.amount));
+      var del = document.createElement("button");
+      del.type = "button"; del.className = "fm-l-del"; del.textContent = "×";
+      del.setAttribute("aria-label", "Remove this win");
+      del.addEventListener("click", function(){
+        data.found.splice(realIdx, 1); save(); renderFound();
+      });
+      right.appendChild(amt); right.appendChild(del);
+      li.appendChild(what); li.appendChild(right);
+      list.appendChild(li);
+    });
+  }
+  function addFound(){
+    var amt = num(fmAmt.value);
+    if(amt <= 0){ fmAmt.focus(); return; }
+    data.found.push({ what: fmWhat.value.trim(), amount: fmAmt.value });
+    fmWhat.value = ""; fmAmt.value = "";
+    save(); renderFound(); fmWhat.focus();
+  }
+  $("fmAdd").addEventListener("click", addFound);
+  fmAmt.addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); addFound(); } });
+  fmWhat.addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); fmAmt.focus(); } });
+
+  // ===== Reset =====
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Paycheck Stretcher data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = blankData();
+      paycheckEl.value = ""; nextPaydayEl.value = "";
+      allocNeeds.value = data.alloc.needs;
+      allocSave.value = data.alloc.save;
+      allocBuffer.value = data.alloc.buffer;
+      fmWhat.value = ""; fmAmt.value = "";
+      renderBills(); renderStrategies(); renderFound(); recalc();
+    }
+  });
+
+  // ---- First render ----
+  renderBills();
+  renderStrategies();
+  renderFound();
+  recalc();
+
+})();
+</script>
+</body>
+</html>

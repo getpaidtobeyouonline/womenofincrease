@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multiple Streams of Income Mapper · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Verse / encouragement ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="number"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="number"], select{ min-height:48px; }
+  textarea{ min-height:72px; line-height:1.5; }
+  select{ -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2314543E' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:40px;
+  }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  .field-row{ display:flex; gap:10px; }
+  .field-row > div{ flex:1; }
+  .money-wrap{ position:relative; }
+  .money-wrap .cur{
+    position:absolute; left:14px; top:50%; transform:translateY(-50%);
+    color:var(--muted); font-weight:600; font-size:15px; pointer-events:none;
+  }
+  .money-wrap input{ padding-left:26px; }
+
+  /* ---------- Brainstorm chips ---------- */
+  .bs-group{ margin-bottom:6px; }
+  .bs-label{
+    display:flex; align-items:center; gap:8px; font-weight:600; font-size:14px;
+    color:var(--emerald); margin:16px 0 8px;
+  }
+  .bs-label .ico{ font-size:15px; }
+  .add-row{ display:flex; gap:8px; }
+  .add-row input{ flex:1; }
+  .add-mini{
+    flex:none; min-height:48px; min-width:48px; background:var(--emerald-soft);
+    color:var(--emerald); border:1px solid rgba(20,84,62,.18); border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:22px; line-height:1; cursor:pointer;
+  }
+  .add-mini:hover{ background:var(--gold-soft); }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+  .chip{
+    display:inline-flex; align-items:center; gap:7px;
+    background:var(--cream); border:1px solid var(--line); border-radius:999px;
+    padding:7px 8px 7px 14px; font-size:13.5px; color:var(--ink);
+  }
+  .chip button{
+    border:none; background:rgba(28,27,26,.06); color:var(--muted);
+    width:24px; height:24px; border-radius:50%; cursor:pointer; font-size:14px; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .chip button:hover{ background:var(--gold-soft); color:var(--emerald); }
+  .bs-empty{ color:var(--muted); font-size:13px; font-style:italic; margin-top:8px; }
+
+  /* ---------- Stream form ---------- */
+  .add-stream-btn{
+    width:100%; margin-top:8px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .add-stream-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .add-stream-btn:active{ transform:translateY(1px); }
+  .ghost-btn{
+    width:100%; margin-top:10px; min-height:48px;
+    background:var(--cream); color:var(--emerald); border:1px solid var(--line);
+    border-radius:12px; font-family:inherit; font-weight:600; font-size:15px; cursor:pointer;
+  }
+  .ghost-btn:hover{ border-color:var(--gold); }
+
+  /* ---------- Stream list ---------- */
+  .stream{
+    border:1px solid var(--line); border-radius:14px; padding:16px;
+    margin-top:12px; background:#fff; position:relative;
+  }
+  .stream.focus{ border-color:var(--gold); box-shadow:0 0 0 2px rgba(200,160,74,.18); }
+  .stream-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+  .stream-name{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:18px; line-height:1.2; word-break:break-word;
+  }
+  .stream-type{
+    display:inline-block; font-size:11.5px; font-weight:600; letter-spacing:.04em;
+    color:var(--muted); margin-top:3px;
+  }
+  .status-pill{
+    flex:none; font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+    padding:5px 11px; border-radius:999px;
+  }
+  .status-idea{ background:#F3EEE2; color:var(--muted); }
+  .status-building{ background:var(--gold-soft); color:#6b531c; }
+  .status-earning{ background:var(--emerald-soft); color:var(--emerald); }
+
+  .stream-nums{
+    display:flex; gap:12px; margin-top:14px; padding-top:14px; border-top:1px solid var(--line);
+  }
+  .stream-nums .n{ flex:1; }
+  .stream-nums .lbl{ font-size:11.5px; color:var(--muted); font-weight:600; letter-spacing:.02em; }
+  .stream-nums .val{ font-family:'Fraunces',serif; font-size:20px; color:var(--ink); font-weight:600; margin-top:2px; }
+  .stream-nums .val.pot{ color:var(--gold); }
+
+  .stream-actions{ display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; }
+  .mini-btn{
+    min-height:44px; flex:1; background:var(--cream); border:1px solid var(--line);
+    color:var(--ink); border-radius:10px; font-family:inherit; font-weight:600; font-size:13.5px;
+    cursor:pointer; padding:0 10px;
+  }
+  .mini-btn:hover{ border-color:var(--gold); }
+  .mini-btn.focus-on{ background:var(--gold-soft); border-color:var(--gold); color:#6b531c; }
+  .mini-btn.del:hover{ border-color:#C25B4A; color:#C25B4A; }
+
+  .focus-banner{
+    display:flex; align-items:center; gap:8px; margin:-2px 0 12px;
+    background:var(--gold-soft); color:#6b531c; border-radius:10px;
+    padding:8px 12px; font-size:12.5px; font-weight:600;
+  }
+
+  /* ---------- Summary ---------- */
+  .totals{ display:flex; gap:10px; }
+  .totals .box{
+    flex:1; background:var(--cream); border:1px solid var(--line); border-radius:13px;
+    padding:14px 12px; text-align:center;
+  }
+  .totals .box .cap{ font-size:11.5px; color:var(--muted); font-weight:600; letter-spacing:.03em; }
+  .totals .box .big{ font-family:'Fraunces',serif; font-size:23px; font-weight:600; margin-top:4px; color:var(--ink); }
+  .totals .box.cur .big{ color:var(--emerald); }
+  .totals .box.pot .big{ color:var(--gold); }
+  .gap-line{
+    margin-top:12px; text-align:center; font-size:14px; color:var(--muted);
+  }
+  .gap-line b{ color:var(--emerald); }
+
+  .div-title{
+    font-weight:600; font-size:13.5px; color:var(--ink); margin:20px 0 4px;
+  }
+  .div-sub{ color:var(--muted); font-size:12.5px; margin-bottom:12px; }
+  .bar-row{ margin-bottom:14px; }
+  .bar-head{ display:flex; justify-content:space-between; align-items:baseline; font-size:13px; margin-bottom:6px; }
+  .bar-head .nm{ font-weight:600; color:var(--ink); }
+  .bar-head .amt{ color:var(--muted); font-weight:600; }
+  .bar-track{ height:12px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .bar-fill{ height:100%; border-radius:999px; transition:width .4s ease; min-width:2px; }
+  .bar-fill.t0{ background:var(--emerald); }
+  .bar-fill.t1{ background:var(--gold); }
+  .bar-fill.t2{ background:#9C7BB5; }
+
+  .summary-empty{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- First-run welcome ---------- */
+  .welcome{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:20px 18px; margin-top:12px; color:var(--emerald);
+  }
+  .welcome .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:6px; }
+  .welcome .sm{ font-size:14px; color:var(--muted); line-height:1.55; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Multiple Streams of Income Mapper</h1>
+    <p class="subtitle">Map your income from your skills, your time, and what's already in your hands.</p>
+  </header>
+
+  <!-- Encouragement -->
+  <section class="card">
+    <div class="verse">
+      <p id="verseText">Cast your bread upon the waters, for you will find it after many days; give a portion to seven, or even to eight, for you know not what disaster may happen.</p>
+      <div class="ref">Ecclesiastes 11:1–2</div>
+    </div>
+    <p class="hint" style="margin-top:14px;margin-bottom:0;">Diversifying isn't a lack of faith — it's wisdom. Several gentle streams water a garden more steadily than one rushing river that can run dry. This is about <b>security and increase</b>, not hustle.</p>
+  </section>
+
+  <!-- 1. Brainstorm -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>What's already in your hands?</h2></div>
+    <p class="hint">Your first stream almost always flows from what you already carry. Take inventory — you're not starting from nothing, you're starting from <em>you</em>.</p>
+
+    <div class="bs-group">
+      <div class="bs-label"><span class="ico">🛠️</span> Skills &amp; talents</div>
+      <div class="add-row">
+        <input type="text" id="addSkills" placeholder="e.g. organising, baking, writing…" aria-label="Add a skill">
+        <button class="add-mini" type="button" data-add="skills" aria-label="Add skill">+</button>
+      </div>
+      <div class="chips" id="chips-skills"></div>
+      <p class="bs-empty" id="empty-skills">What do people thank you for? What comes easy to you?</p>
+    </div>
+
+    <div class="bs-group">
+      <div class="bs-label"><span class="ico">📚</span> Knowledge &amp; experience</div>
+      <div class="add-row">
+        <input type="text" id="addKnowledge" placeholder="e.g. budgeting, parenting, a career field…" aria-label="Add knowledge">
+        <button class="add-mini" type="button" data-add="knowledge" aria-label="Add knowledge">+</button>
+      </div>
+      <div class="chips" id="chips-knowledge"></div>
+      <p class="bs-empty" id="empty-knowledge">What have you learned the hard way that others would pay to skip?</p>
+    </div>
+
+    <div class="bs-group">
+      <div class="bs-label"><span class="ico">⏳</span> Time you can offer</div>
+      <div class="add-row">
+        <input type="text" id="addTime" placeholder="e.g. 5 hrs on weekends, early mornings…" aria-label="Add time">
+        <button class="add-mini" type="button" data-add="time" aria-label="Add time">+</button>
+      </div>
+      <div class="chips" id="chips-time"></div>
+      <p class="bs-empty" id="empty-time">Be honest and kind to yourself about the season you're in.</p>
+    </div>
+
+    <div class="bs-group">
+      <div class="bs-label"><span class="ico">🌱</span> Resources &amp; assets</div>
+      <div class="add-row">
+        <input type="text" id="addResources" placeholder="e.g. a spare room, a car, a camera, savings…" aria-label="Add resource">
+        <button class="add-mini" type="button" data-add="resources" aria-label="Add resource">+</button>
+      </div>
+      <div class="chips" id="chips-resources"></div>
+      <p class="bs-empty" id="empty-resources">Things you own that could be rented, leveraged, or put to work.</p>
+    </div>
+  </section>
+
+  <!-- 2. Map a stream -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Map your income streams</h2></div>
+    <p class="hint">Add a stream you have or one you're dreaming up. Each one is a small, real possibility.</p>
+
+    <label class="field-label" for="sName">Stream name</label>
+    <input type="text" id="sName" placeholder="e.g. Weekend cake orders">
+
+    <label class="field-label" for="sType">Type of stream</label>
+    <select id="sType">
+      <option value="0">Skill / service — trade your time</option>
+      <option value="1">Create once, sell many — digital product or asset</option>
+      <option value="2">Resource / asset — rent or leverage what you own</option>
+    </select>
+
+    <label class="field-label" for="sStatus">Where is it right now?</label>
+    <select id="sStatus">
+      <option value="idea">Idea — a seed I'm considering</option>
+      <option value="building">Building — putting it together</option>
+      <option value="earning">Earning — money is coming in</option>
+    </select>
+
+    <div class="field-row">
+      <div>
+        <label class="field-label" for="sCurrent">Earning now / month</label>
+        <div class="money-wrap"><span class="cur">$</span><input type="number" id="sCurrent" inputmode="decimal" min="0" step="1" placeholder="0"></div>
+      </div>
+      <div>
+        <label class="field-label" for="sPotential">Potential / month</label>
+        <div class="money-wrap"><span class="cur">$</span><input type="number" id="sPotential" inputmode="decimal" min="0" step="1" placeholder="0"></div>
+      </div>
+    </div>
+
+    <button class="add-stream-btn" id="saveStreamBtn" type="button">Add this stream 🌿</button>
+    <button class="ghost-btn" id="cancelEditBtn" type="button" style="display:none;">Cancel edit</button>
+  </section>
+
+  <!-- 3. Your streams -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Your streams</h2></div>
+    <p class="hint">Wisdom: get <b>one</b> stream to its very first dollar before chasing the next. Tap “Focus” on the stream that deserves your attention right now.</p>
+
+    <div class="welcome" id="welcome">
+      <div class="big">You're not starting from nothing, sister. 💛</div>
+      <div class="sm">You're starting from <em>you</em> — your gifts, your time, your hands. Add what's already in your hands above, then map your first stream. One small, faithful beginning is all increase ever asks for.</div>
+    </div>
+
+    <div id="streamList"></div>
+  </section>
+
+  <!-- 4. Summary -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Your picture of increase</h2></div>
+
+    <div class="totals">
+      <div class="box cur"><div class="cap">EARNING NOW</div><div class="big" id="totCurrent">$0</div></div>
+      <div class="box pot"><div class="cap">POTENTIAL</div><div class="big" id="totPotential">$0</div></div>
+    </div>
+    <div class="gap-line" id="gapLine">Your room to grow appears here as you map streams.</div>
+
+    <div class="div-title">Diversification by type</div>
+    <div class="div-sub">Healthy increase rarely rests on one basket. Here's how your potential is spread.</div>
+    <div id="breakdown"></div>
+    <p class="summary-empty" id="summaryEmpty">Add a stream or two and your breakdown will bloom here.</p>
+
+    <div class="verse" style="margin-top:18px;">
+      <p>“The blessing of the Lord makes one rich, and he adds no sorrow with it.”</p>
+      <div class="ref">Proverbs 10:22</div>
+    </div>
+    <p class="hint" style="margin-top:14px;margin-bottom:0;">However many streams you build, your worth was settled long before any of them. Steward what's in your hands, stay faithful in the small, and watch Him add. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_income_streams_mapper";
+
+  var TYPE_LABELS = [
+    "Skill / service (trade time)",
+    "Create-once, sell-many (digital)",
+    "Resource / asset (rent / leverage)"
+  ];
+  var TYPE_SHORT = ["Skill / service", "Create-once", "Resource / asset"];
+  var STATUS_LABELS = { idea:"Idea", building:"Building", earning:"Earning" };
+
+  // ---- State ----
+  var data = load();
+  var editingId = null;
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && o.streams && o.brainstorm) return o;
+      }
+    }catch(e){}
+    return {
+      brainstorm:{ skills:[], knowledge:[], time:[], resources:[] },
+      streams:[],
+      focusId:null
+    };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+  function uid(){ return "s"+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+  function money(n){
+    n = Number(n) || 0;
+    return "$" + n.toLocaleString(undefined, {maximumFractionDigits:0});
+  }
+  function num(v){ var n = parseFloat(v); return (isNaN(n)||n<0) ? 0 : n; }
+
+  // ================= BRAINSTORM =================
+  var BS_KEYS = ["skills","knowledge","time","resources"];
+  var ADD_INPUTS = { skills:"addSkills", knowledge:"addKnowledge", time:"addTime", resources:"addResources" };
+
+  function addChip(key){
+    var input = $(ADD_INPUTS[key]);
+    var val = (input.value || "").trim();
+    if(!val) return;
+    data.brainstorm[key].push(val);
+    input.value = "";
+    save();
+    renderChips(key);
+    input.focus();
+  }
+  function renderChips(key){
+    var box = $("chips-"+key);
+    var empty = $("empty-"+key);
+    var arr = data.brainstorm[key];
+    box.innerHTML = "";
+    if(arr.length === 0){ empty.style.display = "block"; return; }
+    empty.style.display = "none";
+    arr.forEach(function(item, idx){
+      var chip = document.createElement("span");
+      chip.className = "chip";
+      var txt = document.createElement("span");
+      txt.textContent = item;
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.setAttribute("aria-label", "Remove " + item);
+      btn.textContent = "×";
+      btn.addEventListener("click", function(){
+        data.brainstorm[key].splice(idx,1);
+        save();
+        renderChips(key);
+      });
+      chip.appendChild(txt); chip.appendChild(btn);
+      box.appendChild(chip);
+    });
+  }
+
+  document.querySelectorAll(".add-mini").forEach(function(b){
+    b.addEventListener("click", function(){ addChip(b.getAttribute("data-add")); });
+  });
+  BS_KEYS.forEach(function(key){
+    $(ADD_INPUTS[key]).addEventListener("keydown", function(e){
+      if(e.key === "Enter"){ e.preventDefault(); addChip(key); }
+    });
+  });
+
+  // ================= STREAM FORM =================
+  var nameEl = $("sName"), typeEl = $("sType"), statusEl = $("sStatus"),
+      curEl = $("sCurrent"), potEl = $("sPotential"),
+      saveBtn = $("saveStreamBtn"), cancelBtn = $("cancelEditBtn");
+
+  function clearForm(){
+    nameEl.value = ""; typeEl.value = "0"; statusEl.value = "idea";
+    curEl.value = ""; potEl.value = "";
+  }
+  function enterEdit(s){
+    editingId = s.id;
+    nameEl.value = s.name;
+    typeEl.value = String(s.type);
+    statusEl.value = s.status;
+    curEl.value = s.current ? s.current : "";
+    potEl.value = s.potential ? s.potential : "";
+    saveBtn.textContent = "Save changes ✓";
+    cancelBtn.style.display = "block";
+    nameEl.focus();
+    nameEl.scrollIntoView({behavior:"smooth", block:"center"});
+  }
+  function exitEdit(){
+    editingId = null;
+    saveBtn.textContent = "Add this stream 🌿";
+    cancelBtn.style.display = "none";
+    clearForm();
+  }
+
+  saveBtn.addEventListener("click", function(){
+    var name = (nameEl.value || "").trim();
+    if(!name){ nameEl.focus(); nameEl.placeholder = "Give your stream a name first 💛"; return; }
+    var payload = {
+      name: name,
+      type: parseInt(typeEl.value, 10) || 0,
+      status: statusEl.value,
+      current: num(curEl.value),
+      potential: num(potEl.value)
+    };
+    if(editingId){
+      var s = data.streams.find(function(x){ return x.id === editingId; });
+      if(s){ s.name=payload.name; s.type=payload.type; s.status=payload.status; s.current=payload.current; s.potential=payload.potential; }
+      exitEdit();
+    }else{
+      payload.id = uid();
+      data.streams.push(payload);
+      // first stream becomes focus by default — honour the "one first dollar" wisdom
+      if(!data.focusId){ data.focusId = payload.id; }
+      clearForm();
+    }
+    save();
+    renderStreams();
+    renderSummary();
+  });
+  cancelBtn.addEventListener("click", exitEdit);
+
+  // ================= STREAM LIST =================
+  function renderStreams(){
+    var list = $("streamList");
+    var welcome = $("welcome");
+    list.innerHTML = "";
+    if(data.streams.length === 0){
+      welcome.style.display = "block";
+      return;
+    }
+    welcome.style.display = "none";
+
+    data.streams.forEach(function(s){
+      var isFocus = (s.id === data.focusId);
+      var el = document.createElement("div");
+      el.className = "stream" + (isFocus ? " focus" : "");
+
+      if(isFocus){
+        var banner = document.createElement("div");
+        banner.className = "focus-banner";
+        banner.innerHTML = "⭐ Your focus stream — get this one to its first dollar before adding more.";
+        el.appendChild(banner);
+      }
+
+      var top = document.createElement("div");
+      top.className = "stream-top";
+      var left = document.createElement("div");
+      var nm = document.createElement("div");
+      nm.className = "stream-name";
+      nm.textContent = s.name;
+      var ty = document.createElement("div");
+      ty.className = "stream-type";
+      ty.textContent = TYPE_SHORT[s.type];
+      left.appendChild(nm); left.appendChild(ty);
+      var pill = document.createElement("span");
+      pill.className = "status-pill status-" + s.status;
+      pill.textContent = STATUS_LABELS[s.status];
+      top.appendChild(left); top.appendChild(pill);
+      el.appendChild(top);
+
+      var nums = document.createElement("div");
+      nums.className = "stream-nums";
+      nums.innerHTML =
+        '<div class="n"><div class="lbl">Earning now / mo</div><div class="val">'+money(s.current)+'</div></div>' +
+        '<div class="n"><div class="lbl">Potential / mo</div><div class="val pot">'+money(s.potential)+'</div></div>';
+      el.appendChild(nums);
+
+      var actions = document.createElement("div");
+      actions.className = "stream-actions";
+
+      var focusBtn = document.createElement("button");
+      focusBtn.className = "mini-btn" + (isFocus ? " focus-on" : "");
+      focusBtn.type = "button";
+      focusBtn.textContent = isFocus ? "★ Focus" : "☆ Focus";
+      focusBtn.addEventListener("click", function(){
+        data.focusId = isFocus ? null : s.id;
+        save(); renderStreams();
+      });
+
+      var editBtn = document.createElement("button");
+      editBtn.className = "mini-btn";
+      editBtn.type = "button";
+      editBtn.textContent = "Edit";
+      editBtn.addEventListener("click", function(){ enterEdit(s); });
+
+      var delBtn = document.createElement("button");
+      delBtn.className = "mini-btn del";
+      delBtn.type = "button";
+      delBtn.textContent = "Delete";
+      delBtn.addEventListener("click", function(){
+        if(confirm('Remove "'+s.name+'" from your map, sister?')){
+          data.streams = data.streams.filter(function(x){ return x.id !== s.id; });
+          if(data.focusId === s.id){ data.focusId = null; }
+          if(editingId === s.id){ exitEdit(); }
+          save(); renderStreams(); renderSummary();
+        }
+      });
+
+      actions.appendChild(focusBtn);
+      actions.appendChild(editBtn);
+      actions.appendChild(delBtn);
+      el.appendChild(actions);
+
+      list.appendChild(el);
+    });
+  }
+
+  // ================= SUMMARY =================
+  function renderSummary(){
+    var totCur = 0, totPot = 0;
+    var byType = [0,0,0]; // potential by type
+    data.streams.forEach(function(s){
+      totCur += Number(s.current) || 0;
+      totPot += Number(s.potential) || 0;
+      byType[s.type] += Number(s.potential) || 0;
+    });
+
+    $("totCurrent").textContent = money(totCur);
+    $("totPotential").textContent = money(totPot);
+
+    var gapEl = $("gapLine");
+    if(data.streams.length === 0){
+      gapEl.innerHTML = "Your room to grow appears here as you map streams.";
+    }else{
+      var gap = totPot - totCur;
+      if(gap > 0){
+        gapEl.innerHTML = "Room to grow: <b>"+money(gap)+"/mo</b> of potential still waiting to be tended.";
+      }else if(totPot > 0){
+        gapEl.innerHTML = "<b>You're already living your mapped potential.</b> Time to dream a new stream? 💛";
+      }else{
+        gapEl.innerHTML = "Add a potential amount to see your room to grow.";
+      }
+    }
+
+    // breakdown bars (by potential, fall back to current if no potential)
+    var bd = $("breakdown");
+    var empty = $("summaryEmpty");
+    bd.innerHTML = "";
+    var basis = byType;
+    var totalBasis = totPot;
+    if(totPot === 0){
+      // use current so the bars aren't all empty
+      basis = [0,0,0];
+      data.streams.forEach(function(s){ basis[s.type] += Number(s.current) || 0; });
+      totalBasis = totCur;
+    }
+
+    if(data.streams.length === 0 || totalBasis === 0){
+      empty.style.display = "block";
+      return;
+    }
+    empty.style.display = "none";
+
+    for(var t=0; t<3; t++){
+      if(basis[t] <= 0) continue;
+      var pct = Math.round((basis[t] / totalBasis) * 100);
+      var row = document.createElement("div");
+      row.className = "bar-row";
+      row.innerHTML =
+        '<div class="bar-head"><span class="nm">'+TYPE_LABELS[t]+'</span><span class="amt">'+pct+'%</span></div>' +
+        '<div class="bar-track"><div class="bar-fill t'+t+'" style="width:'+Math.max(pct,2)+'%;"></div></div>';
+      bd.appendChild(row);
+    }
+
+    // gentle diversification nudge
+    var activeTypes = basis.filter(function(v){ return v > 0; }).length;
+    if(activeTypes === 1 && data.streams.length >= 1){
+      var note = document.createElement("p");
+      note.className = "div-sub";
+      note.style.marginTop = "10px";
+      note.style.color = "var(--emerald)";
+      note.textContent = "All in one type for now — beautiful focus. When this one's steady, a different kind of stream can add real security.";
+      bd.appendChild(note);
+    }
+  }
+
+  // ================= RESET =================
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your income map — brainstorm and streams? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { brainstorm:{ skills:[], knowledge:[], time:[], resources:[] }, streams:[], focusId:null };
+      exitEdit();
+      renderAll();
+    }
+  });
+
+  // ================= INIT =================
+  function renderAll(){
+    BS_KEYS.forEach(renderChips);
+    renderStreams();
+    renderSummary();
+  }
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

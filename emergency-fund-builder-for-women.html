@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emergency Fund Builder · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+    margin-top:16px;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .welcome p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .welcome .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="number"], input[type="date"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="number"], input[type="date"]{ min-height:48px; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  .money-input{ font-family:'Fraunces',serif; font-size:20px; color:var(--emerald); font-weight:500; }
+
+  .row{ display:flex; gap:10px; }
+  .row > *{ flex:1; }
+
+  /* ---------- Preset chips ---------- */
+  .presets{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:6px; }
+  .chip{
+    flex:1; min-width:70px; min-height:48px;
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    font-family:'Fraunces',serif; font-weight:600; font-size:17px; color:var(--emerald);
+    cursor:pointer; transition:background .12s, border-color .12s, transform .08s;
+  }
+  .chip:hover{ border-color:var(--gold); }
+  .chip:active{ transform:translateY(1px); }
+  .chip.active{ background:var(--gold-soft); border-color:var(--gold); color:var(--emerald); }
+
+  /* ---------- Fuller goal ---------- */
+  .calc-line{
+    margin-top:14px; padding:14px; border-radius:12px;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    color:var(--emerald); font-size:14px;
+  }
+  .calc-line b{ font-family:'Fraunces',serif; font-size:18px; }
+  .use-goal-btn{
+    margin-top:10px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--emerald);
+    border-radius:10px; padding:10px 16px; font-family:inherit; font-weight:600;
+    font-size:13.5px; cursor:pointer; width:100%;
+  }
+  .use-goal-btn:hover{ border-color:var(--gold); }
+
+  /* ---------- Progress ---------- */
+  .balance-wrap{ text-align:center; margin:4px 0 16px; }
+  .balance-num{
+    font-family:'Fraunces',serif; font-weight:600; font-size:38px; color:var(--emerald);
+    line-height:1.1;
+  }
+  .balance-sub{ color:var(--muted); font-size:14px; margin-top:4px; }
+  .progress-track{
+    height:16px; border-radius:999px; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.12); overflow:hidden; margin:8px 0 6px;
+  }
+  .progress-fill{
+    height:100%; width:0%; border-radius:999px;
+    background:linear-gradient(90deg, var(--gold-soft), var(--gold));
+    transition:width .4s ease;
+  }
+  .progress-meta{ display:flex; justify-content:space-between; font-size:13px; color:var(--muted); }
+  .progress-meta b{ color:var(--emerald); }
+
+  .milestone{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:16px; color:var(--emerald);
+  }
+  .milestone.show{ display:block; animation:rise .4s ease; }
+  .milestone .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:2px; }
+  .milestone .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Add deposit ---------- */
+  .add-btn{
+    width:100%; margin-top:12px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .add-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .add-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Deposit list ---------- */
+  .history-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 4px;
+  }
+  .dep-list{ list-style:none; }
+  .dep-list li{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:11px 2px; border-bottom:1px solid var(--line); font-size:14px; gap:10px;
+  }
+  .dep-list li:last-child{ border-bottom:none; }
+  .dep-date{ color:var(--muted); }
+  .dep-amt{ color:var(--emerald); font-weight:700; font-family:'Fraunces',serif; font-size:16px; }
+  .dep-right{ display:flex; align-items:center; gap:6px; }
+  .del-btn{
+    background:none; border:none; color:#A7A095; cursor:pointer; font-size:18px;
+    min-width:44px; min-height:44px; line-height:1;
+  }
+  .del-btn:hover{ color:var(--gold); }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- How fast ---------- */
+  .seg{ display:flex; gap:8px; margin:6px 0 2px; }
+  .seg button{
+    flex:1; min-height:44px; background:var(--cream); border:1px solid var(--line);
+    border-radius:10px; font-family:inherit; font-weight:600; font-size:14px;
+    color:var(--muted); cursor:pointer;
+  }
+  .seg button.active{ background:var(--gold-soft); border-color:var(--gold); color:var(--emerald); }
+  .pace-result{
+    margin-top:14px; padding:14px; border-radius:12px;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    color:var(--emerald); font-size:15px;
+  }
+  .pace-result b{ font-family:'Fraunces',serif; }
+
+  /* ---------- Tips ---------- */
+  .tip-row{ display:flex; align-items:flex-start; gap:11px; padding:8px 0; }
+  .tip-row input[type="checkbox"]{
+    flex:none; width:22px; height:22px; margin-top:2px; accent-color:var(--emerald); cursor:pointer;
+  }
+  .tip-row label{ font-size:14.5px; cursor:pointer; color:var(--ink); }
+  .tip-row input:checked + label{ color:var(--muted); text-decoration:line-through; }
+
+  /* ---------- Faith note ---------- */
+  .faith{
+    margin-top:16px; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.15); border-radius:14px; padding:18px;
+  }
+  .faith p{ font-family:'Fraunces',serif; font-style:italic; color:var(--emerald); font-size:16px; line-height:1.45; }
+  .faith .ref{ margin-top:10px; font-style:normal; font-weight:600; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Emergency Fund Builder</h1>
+    <p class="subtitle">A cushion is freedom. Start where you are — even a little changes how you sleep.</p>
+  </header>
+
+  <!-- First-run welcome -->
+  <div class="welcome" id="welcome">
+    <p>You don't need a fortune to feel safe. A small cushion — set aside, untouched — is peace you can carry into hard weeks. Pick a starter goal below, and let's build it one deposit at a time.</p>
+    <div class="ref">Start small · Stay faithful</div>
+  </div>
+
+  <!-- 1. Set your target -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Set Your Starter Goal</h2></div>
+    <p class="hint">Small wins matter most. A starter cushion is your first, freeing milestone.</p>
+    <div class="presets" id="presets">
+      <button class="chip" type="button" data-amt="250">$250</button>
+      <button class="chip" type="button" data-amt="500">$500</button>
+      <button class="chip" type="button" data-amt="1000">$1,000</button>
+    </div>
+    <label class="field-label" for="customGoal">Or set your own goal</label>
+    <input type="number" inputmode="decimal" min="0" step="1" class="money-input" id="customGoal" placeholder="e.g. 350">
+  </section>
+
+  <!-- 2. Fuller goal (optional) -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>A Fuller Goal <span style="color:var(--muted);font-weight:400;font-size:14px;">(optional)</span></h2></div>
+    <p class="hint">Once your starter is in hand, you might aim for a few months of essentials. No pressure — this is just to see the bigger picture.</p>
+    <div class="row">
+      <div>
+        <label class="field-label" for="monthlyEssentials">Monthly essentials</label>
+        <input type="number" inputmode="decimal" min="0" step="1" id="monthlyEssentials" placeholder="e.g. 1800">
+      </div>
+      <div>
+        <label class="field-label" for="months">Months</label>
+        <input type="number" inputmode="numeric" min="1" step="1" id="months" placeholder="3">
+      </div>
+    </div>
+    <div class="calc-line" id="fullerLine">
+      Your fuller goal would be <b id="fullerAmt">$0</b>. That's a beautiful long-term target — but remember, your starter cushion comes first.
+    </div>
+    <button class="use-goal-btn" id="useFullerBtn" type="button">Use this as my goal instead →</button>
+  </section>
+
+  <!-- 3. Track + progress -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Your Progress</h2></div>
+
+    <div class="balance-wrap">
+      <div class="balance-num" id="balance">$0</div>
+      <div class="balance-sub" id="balanceSub">saved toward your goal</div>
+    </div>
+
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-meta">
+      <span><b id="pct">0%</b> there</span>
+      <span><b id="remaining">$0</b> to go</span>
+    </div>
+
+    <div class="milestone" id="milestone">
+      <div class="big" id="msBig">🌿</div>
+      <div class="sm" id="msSm"></div>
+    </div>
+
+    <label class="field-label" for="depAmt">Log a deposit</label>
+    <div class="row">
+      <input type="number" inputmode="decimal" min="0" step="1" id="depAmt" placeholder="Amount, e.g. 20">
+      <input type="date" id="depDate">
+    </div>
+    <button class="add-btn" id="addBtn" type="button">Add to my fund 💛</button>
+  </section>
+
+  <!-- Deposit history -->
+  <section class="card">
+    <div class="history-title">Your deposits</div>
+    <ul class="dep-list" id="depList"></ul>
+    <p class="empty-note" id="depEmpty">No deposits yet — your very first one is a win, no matter how small. 💛</p>
+  </section>
+
+  <!-- 4. How fast -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>How Fast Could You Get There?</h2></div>
+    <p class="hint">Set aside even $5 at a time. Consistency beats size — let's see what steady looks like.</p>
+    <label class="field-label" for="paceAmt">I can set aside about…</label>
+    <input type="number" inputmode="decimal" min="0" step="1" id="paceAmt" placeholder="e.g. 25">
+    <div class="seg" id="paceSeg">
+      <button type="button" data-per="week" class="active">per week</button>
+      <button type="button" data-per="month">per month</button>
+    </div>
+    <div class="pace-result" id="paceResult">Enter an amount above and we'll gently estimate your timeline.</div>
+  </section>
+
+  <!-- 5. Find the money -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>Gentle Ways to Find the Money</h2></div>
+    <p class="hint">Small and realistic. Check off any that feel doable — no judgment, just options.</p>
+    <div id="tips"></div>
+  </section>
+
+  <!-- Faith note -->
+  <section class="card">
+    <div class="step"><span class="num">6</span><h2>A Word for the Journey</h2></div>
+    <div class="faith">
+      <p>"The wise woman builds her house, and gathers in seasons of plenty so the lean ones don't shake her." Preparation isn't fear — it's faith with hands. You can trust God and still pack the umbrella.</p>
+      <div class="ref">Peace · Provision · Preparedness</div>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_emergency_fund";
+
+  var TIPS = [
+    "Move just $5 the day after payday — before it's spent.",
+    "Round up a purchase and stash the difference.",
+    "Sell one thing you no longer use this week.",
+    "Pause one subscription you forgot you had.",
+    "Bring lunch one extra day and bank the savings.",
+    "Add any unexpected money — refund, gift, change jar.",
+    "Set a tiny auto-transfer so saving happens without thinking."
+  ];
+
+  // ---- State ----
+  var data = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && typeof o === "object") return normalize(o); }
+    }catch(e){}
+    return normalize({});
+  }
+  function normalize(o){
+    return {
+      goal: typeof o.goal === "number" ? o.goal : 0,
+      monthlyEssentials: typeof o.monthlyEssentials === "number" ? o.monthlyEssentials : null,
+      months: typeof o.months === "number" ? o.months : null,
+      deposits: Array.isArray(o.deposits) ? o.deposits : [],
+      pace: typeof o.pace === "number" ? o.pace : null,
+      pacePer: o.pacePer === "month" ? "month" : "week",
+      tips: o.tips && typeof o.tips === "object" ? o.tips : {},
+      milestonesSeen: o.milestonesSeen && typeof o.milestonesSeen === "object" ? o.milestonesSeen : {}
+    };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Helpers ----
+  var $ = function(id){ return document.getElementById(id); };
+  function money(n){
+    n = isFinite(n) ? n : 0;
+    var rounded = Math.round(n * 100) / 100;
+    var hasCents = Math.abs(rounded % 1) > 0.0001;
+    return "$" + rounded.toLocaleString(undefined, {
+      minimumFractionDigits: hasCents ? 2 : 0,
+      maximumFractionDigits: 2
+    });
+  }
+  function num(v){ var n = parseFloat(v); return isFinite(n) && n > 0 ? n : 0; }
+  function balance(){
+    return data.deposits.reduce(function(s,d){ return s + (d.amt || 0); }, 0);
+  }
+  function todayISO(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function prettyDate(iso){
+    if(!iso) return "";
+    var p = iso.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{month:"short", day:"numeric", year:"numeric"});
+  }
+
+  // ---- Elements ----
+  var customGoalEl = $("customGoal");
+  var monthlyEl = $("monthlyEssentials"), monthsEl = $("months");
+  var depAmtEl = $("depAmt"), depDateEl = $("depDate");
+  var paceAmtEl = $("paceAmt");
+
+  // ---- Restore inputs ----
+  if(data.goal > 0) customGoalEl.value = data.goal;
+  if(data.monthlyEssentials != null) monthlyEl.value = data.monthlyEssentials;
+  if(data.months != null) monthsEl.value = data.months;
+  if(data.pace != null) paceAmtEl.value = data.pace;
+  depDateEl.value = todayISO();
+
+  // ---- Goal presets ----
+  var presetBtns = Array.prototype.slice.call(document.querySelectorAll("#presets .chip"));
+  presetBtns.forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var amt = parseFloat(btn.getAttribute("data-amt"));
+      data.goal = amt;
+      customGoalEl.value = amt;
+      save(); renderGoalChips(); renderProgress(); renderPace();
+    });
+  });
+  function renderGoalChips(){
+    presetBtns.forEach(function(btn){
+      var amt = parseFloat(btn.getAttribute("data-amt"));
+      btn.classList.toggle("active", Math.abs(amt - data.goal) < 0.001);
+    });
+  }
+  customGoalEl.addEventListener("input", function(){
+    data.goal = num(customGoalEl.value);
+    save(); renderGoalChips(); renderProgress(); renderPace();
+  });
+
+  // ---- Fuller goal ----
+  function fullerTotal(){
+    var me = num(monthlyEl.value), mo = num(monthsEl.value);
+    return me * mo;
+  }
+  function renderFuller(){
+    var total = fullerTotal();
+    $("fullerAmt").textContent = money(total);
+    $("useFullerBtn").disabled = total <= 0;
+    $("useFullerBtn").style.opacity = total <= 0 ? .5 : 1;
+  }
+  monthlyEl.addEventListener("input", function(){
+    data.monthlyEssentials = monthlyEl.value === "" ? null : num(monthlyEl.value);
+    save(); renderFuller();
+  });
+  monthsEl.addEventListener("input", function(){
+    data.months = monthsEl.value === "" ? null : num(monthsEl.value);
+    save(); renderFuller();
+  });
+  $("useFullerBtn").addEventListener("click", function(){
+    var total = fullerTotal();
+    if(total <= 0) return;
+    data.goal = total;
+    customGoalEl.value = total;
+    save(); renderGoalChips(); renderProgress(); renderPace();
+  });
+
+  // ---- Deposits ----
+  $("addBtn").addEventListener("click", function(){
+    var amt = num(depAmtEl.value);
+    if(amt <= 0){ depAmtEl.focus(); return; }
+    var date = depDateEl.value || todayISO();
+    data.deposits.push({ amt: amt, date: date, id: Date.now() + "-" + Math.random().toString(36).slice(2,7) });
+    depAmtEl.value = "";
+    save(); renderDeposits(); renderProgress();
+  });
+
+  function renderDeposits(){
+    var list = $("depList"), empty = $("depEmpty");
+    list.innerHTML = "";
+    if(data.deposits.length === 0){ empty.style.display = "block"; return; }
+    empty.style.display = "none";
+    var sorted = data.deposits.slice().sort(function(a,b){
+      return (b.date || "").localeCompare(a.date || "");
+    });
+    sorted.forEach(function(d){
+      var li = document.createElement("li");
+      var left = document.createElement("span");
+      left.className = "dep-date";
+      left.textContent = prettyDate(d.date) || "—";
+      var right = document.createElement("span");
+      right.className = "dep-right";
+      var amt = document.createElement("span");
+      amt.className = "dep-amt";
+      amt.textContent = "+" + money(d.amt);
+      var del = document.createElement("button");
+      del.className = "del-btn";
+      del.type = "button";
+      del.setAttribute("aria-label", "Remove deposit of " + money(d.amt));
+      del.textContent = "×";
+      del.addEventListener("click", function(){
+        data.deposits = data.deposits.filter(function(x){ return x.id !== d.id; });
+        save(); renderDeposits(); renderProgress();
+      });
+      right.appendChild(amt); right.appendChild(del);
+      li.appendChild(left); li.appendChild(right);
+      list.appendChild(li);
+    });
+  }
+
+  // ---- Progress + milestones ----
+  var MILESTONES = [
+    { p:100, big:"🎉 Goal reached!", sm:"You did it, sister. This cushion is yours — peace you built with your own faithful hands." },
+    { p:75,  big:"🌟 Three-quarters there!", sm:"So close you can feel it. Keep your steady rhythm — the finish is in sight." },
+    { p:50,  big:"💛 Halfway home!", sm:"Look how far you've come. Half a cushion is real safety — be proud of this." },
+    { p:25,  big:"🌿 A quarter of the way!", sm:"This is no small thing. You've proven you can do it — keep going, gently." }
+  ];
+  function renderProgress(){
+    var bal = balance();
+    var goal = data.goal;
+    $("balance").textContent = money(bal);
+    if(goal > 0){
+      $("balanceSub").textContent = "of " + money(goal) + " goal";
+    } else {
+      $("balanceSub").textContent = "saved — set a goal above to track progress";
+    }
+    var pct = goal > 0 ? Math.min(100, (bal / goal) * 100) : 0;
+    $("progressFill").style.width = pct + "%";
+    $("pct").textContent = (goal > 0 ? Math.floor(pct) : 0) + "%";
+    var remaining = goal > 0 ? Math.max(0, goal - bal) : 0;
+    $("remaining").textContent = money(remaining);
+
+    // milestone celebration (only newly crossed, only if goal set)
+    var ms = $("milestone");
+    if(goal > 0){
+      for(var i=0;i<MILESTONES.length;i++){
+        var m = MILESTONES[i];
+        if(pct >= m.p){
+          if(!data.milestonesSeen[m.p]){
+            data.milestonesSeen[m.p] = true;
+            save();
+            $("msBig").textContent = m.big;
+            $("msSm").textContent = m.sm;
+            ms.classList.add("show");
+          }
+          break;
+        }
+      }
+      // reset seen flags that no longer apply (e.g. after deleting deposits)
+      MILESTONES.forEach(function(m){
+        if(pct < m.p && data.milestonesSeen[m.p]){ delete data.milestonesSeen[m.p]; save(); }
+      });
+    }
+  }
+
+  // ---- How fast pacing ----
+  var paceBtns = Array.prototype.slice.call(document.querySelectorAll("#paceSeg button"));
+  function renderPaceSeg(){
+    paceBtns.forEach(function(b){
+      b.classList.toggle("active", b.getAttribute("data-per") === data.pacePer);
+    });
+  }
+  paceBtns.forEach(function(b){
+    b.addEventListener("click", function(){
+      data.pacePer = b.getAttribute("data-per");
+      save(); renderPaceSeg(); renderPace();
+    });
+  });
+  paceAmtEl.addEventListener("input", function(){
+    data.pace = paceAmtEl.value === "" ? null : num(paceAmtEl.value);
+    save(); renderPace();
+  });
+  function renderPace(){
+    var el = $("paceResult");
+    var amt = data.pace != null ? data.pace : 0;
+    var goal = data.goal;
+    var remaining = Math.max(0, goal - balance());
+    if(amt <= 0){
+      el.innerHTML = "Enter an amount above and we'll gently estimate your timeline.";
+      return;
+    }
+    if(goal <= 0){
+      el.innerHTML = "Set a goal above and we'll show how long this pace would take. Either way — every bit you set aside is progress. 💛";
+      return;
+    }
+    if(remaining <= 0){
+      el.innerHTML = "You've already reached your goal! 🎉 This pace can now grow your cushion even fuller.";
+      return;
+    }
+    var periods = Math.ceil(remaining / amt);
+    var perWeek = data.pacePer === "week";
+    var weeks = perWeek ? periods : periods * 4.345;
+    var label, count;
+    if(perWeek){ label = periods === 1 ? "week" : "weeks"; count = periods; }
+    else { label = periods === 1 ? "month" : "months"; count = periods; }
+    var weeksRounded = Math.round(weeks);
+    var extra = "";
+    if(perWeek && weeks >= 8){
+      extra = " (about " + Math.round(weeks/4.345) + " months)";
+    } else if(!perWeek){
+      extra = " (about " + weeksRounded + " weeks)";
+    }
+    el.innerHTML = "At <b>" + money(amt) + " per " + (perWeek ? "week" : "month") +
+      "</b>, you'd reach " + money(goal) + " in about <b>" + count + " " + label + "</b>" + extra +
+      ". No rush — steady is what wins. 🌿";
+  }
+
+  // ---- Tips checklist ----
+  function renderTips(){
+    var box = $("tips");
+    box.innerHTML = "";
+    TIPS.forEach(function(tip, i){
+      var id = "tip" + i;
+      var row = document.createElement("div");
+      row.className = "tip-row";
+      var cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.id = id;
+      cb.checked = !!data.tips[i];
+      cb.addEventListener("change", function(){
+        data.tips[i] = cb.checked;
+        save();
+      });
+      var lab = document.createElement("label");
+      lab.setAttribute("for", id);
+      lab.textContent = tip;
+      row.appendChild(cb); row.appendChild(lab);
+      box.appendChild(row);
+    });
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Emergency Fund data — goal, deposits and notes? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = normalize({});
+      customGoalEl.value = ""; monthlyEl.value = ""; monthsEl.value = "";
+      depAmtEl.value = ""; paceAmtEl.value = "";
+      depDateEl.value = todayISO();
+      $("milestone").classList.remove("show");
+      renderAll();
+    }
+  });
+
+  // ---- Initial render ----
+  function renderAll(){
+    renderGoalChips();
+    renderFuller();
+    renderDeposits();
+    renderProgress();
+    renderPaceSeg();
+    renderPace();
+    renderTips();
+  }
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

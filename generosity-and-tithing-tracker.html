@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generosity & Tithing Tracker · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Scripture ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:19px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .verse-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], input[type="number"], input[type="date"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], input[type="number"], input[type="date"], select{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  select{ -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236B655C' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; padding-right:38px;
+  }
+  .row2{ display:flex; gap:10px; }
+  .row2 > div{ flex:1; }
+
+  /* ---------- Type toggle ---------- */
+  .toggle{
+    display:flex; gap:8px; margin-bottom:4px;
+  }
+  .toggle button{
+    flex:1; min-height:46px; background:var(--cream); border:1px solid var(--line);
+    border-radius:11px; font-family:inherit; font-weight:600; font-size:14px;
+    color:var(--muted); cursor:pointer; transition:.15s;
+  }
+  .toggle button.active{
+    background:var(--emerald-soft); border-color:rgba(20,84,62,.3); color:var(--emerald);
+  }
+
+  /* ---------- Primary button ---------- */
+  .complete-btn{
+    width:100%; margin-top:14px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Goal / progress ---------- */
+  .goal-mode{ display:flex; gap:8px; margin-bottom:4px; }
+  .progress-wrap{ margin-top:16px; }
+  .progress-top{
+    display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;
+  }
+  .progress-top .lbl{ font-size:13.5px; color:var(--muted); font-weight:600; }
+  .progress-top .amt{ font-family:'Fraunces',serif; color:var(--emerald); font-weight:600; font-size:18px; }
+  .bar{
+    height:14px; background:var(--emerald-soft); border-radius:999px; overflow:hidden;
+    border:1px solid rgba(20,84,62,.1);
+  }
+  .bar > span{
+    display:block; height:100%; background:linear-gradient(90deg, var(--gold-soft), var(--gold));
+    border-radius:999px; width:0%; transition:width .4s ease;
+  }
+  .grace-note{
+    margin-top:10px; font-size:13.5px; color:var(--emerald); font-style:italic;
+    font-family:'Fraunces',serif;
+  }
+
+  /* ---------- Stats ---------- */
+  .stats{ display:flex; gap:10px; margin-top:4px; }
+  .stat{
+    flex:1; text-align:center; background:var(--cream); border:1px solid var(--line);
+    border-radius:13px; padding:14px 8px;
+  }
+  .stat .big{ font-family:'Fraunces',serif; color:var(--emerald); font-weight:600; font-size:22px; line-height:1.1; }
+  .stat .lbl{ color:var(--muted); font-size:11.5px; margin-top:4px; letter-spacing:.03em; }
+
+  .scope-toggle{ display:flex; gap:8px; margin-top:14px; }
+  .scope-toggle button{
+    flex:1; min-height:40px; background:var(--cream); border:1px solid var(--line);
+    border-radius:10px; font-family:inherit; font-weight:600; font-size:13px;
+    color:var(--muted); cursor:pointer; transition:.15s;
+  }
+  .scope-toggle button.active{ background:var(--gold-soft); border-color:var(--gold); color:var(--emerald); }
+
+  /* ---------- Breakdown ---------- */
+  .breakdown{ margin-top:18px; }
+  .bd-row{ margin-bottom:12px; }
+  .bd-top{ display:flex; justify-content:space-between; font-size:13.5px; margin-bottom:5px; }
+  .bd-top .name{ color:var(--ink); font-weight:600; }
+  .bd-top .val{ color:var(--emerald); font-weight:600; }
+  .bd-bar{ height:8px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .bd-bar > span{ display:block; height:100%; background:var(--gold); border-radius:999px; }
+
+  /* ---------- Entry list ---------- */
+  .history-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 4px;
+  }
+  .entry-list{ list-style:none; margin-top:6px; }
+  .entry-list li{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+    padding:12px 2px; border-bottom:1px solid var(--line);
+  }
+  .entry-list li:last-child{ border-bottom:none; }
+  .e-main{ flex:1; min-width:0; }
+  .e-line1{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .e-recip{ font-weight:600; color:var(--ink); font-size:14.5px; }
+  .e-tag{
+    font-size:10.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase;
+    padding:3px 8px; border-radius:999px; background:var(--emerald-soft); color:var(--emerald);
+  }
+  .e-tag.kind{ background:var(--gold-soft); color:var(--emerald); }
+  .e-meta{ color:var(--muted); font-size:12.5px; margin-top:3px; }
+  .e-right{ display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex:none; }
+  .e-amt{ font-family:'Fraunces',serif; color:var(--emerald); font-weight:600; font-size:16px; white-space:nowrap; }
+  .e-amt.kind{ color:var(--gold); font-style:italic; font-size:14px; }
+  .del-btn{
+    background:none; border:none; color:#B9534B; cursor:pointer; font-size:12px;
+    padding:6px 4px; min-height:30px; font-family:inherit; font-weight:600;
+  }
+  .del-btn:hover{ text-decoration:underline; }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    text-align:center; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:20px 18px; color:var(--emerald);
+  }
+  .welcome .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:6px; }
+  .welcome .sm{ font-size:14px; color:var(--muted); }
+
+  /* ---------- Ideas ---------- */
+  .ideas{ list-style:none; }
+  .ideas li{
+    display:flex; align-items:flex-start; gap:10px; padding:10px 2px;
+    border-bottom:1px solid var(--line); font-size:14.5px; color:var(--ink);
+  }
+  .ideas li:last-child{ border-bottom:none; }
+  .ideas .sprout{ flex:none; color:var(--gold); font-size:15px; line-height:1.5; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  .hide{ display:none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Generosity &amp; Tithing Tracker</h1>
+    <p class="subtitle">Track your giving — and watch your abundance grow.</p>
+  </header>
+
+  <!-- 1. Log a gift -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Log Your Giving</h2></div>
+    <p class="hint">Every gift counts — your tithe, an offering, your time, a quiet kindness.</p>
+
+    <div class="toggle" id="kindToggle">
+      <button type="button" data-kind="money" class="active">💛 Money</button>
+      <button type="button" data-kind="nonmoney">🤲 Time &amp; Kindness</button>
+    </div>
+
+    <label class="field-label" for="gType">Type of giving</label>
+    <select id="gType"></select>
+
+    <div id="moneyFields">
+      <label class="field-label" for="gAmount">Amount</label>
+      <input type="number" id="gAmount" inputmode="decimal" min="0" step="0.01" placeholder="0.00">
+    </div>
+
+    <div id="kindFields" class="hide">
+      <label class="field-label" for="gDesc">What did you give?</label>
+      <input type="text" id="gDesc" placeholder="e.g. 2 hours volunteering, a meal, encouragement…">
+    </div>
+
+    <div class="row2">
+      <div>
+        <label class="field-label" for="gRecipient">Recipient / cause</label>
+        <input type="text" id="gRecipient" placeholder="Church, a friend, a charity…">
+      </div>
+    </div>
+
+    <label class="field-label" for="gDate">Date</label>
+    <input type="date" id="gDate">
+
+    <label class="field-label" for="gNote">How did it feel? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <textarea id="gNote" placeholder="What you noticed, what you're believing for, a moment of joy…"></textarea>
+
+    <button class="complete-btn" id="addBtn" type="button">Add to my giving 🌿</button>
+  </section>
+
+  <!-- 2. Goal -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Your Giving Intention</h2></div>
+    <p class="hint">Optional — a gentle anchor, never a rule. Grace over guilt, always.</p>
+
+    <div class="goal-mode" id="goalMode">
+      <button type="button" data-mode="amount" class="active" style="flex:1;min-height:46px;background:var(--emerald-soft);border:1px solid rgba(20,84,62,.3);border-radius:11px;font-family:inherit;font-weight:600;font-size:14px;color:var(--emerald);cursor:pointer;">Monthly amount</button>
+      <button type="button" data-mode="percent" style="flex:1;min-height:46px;background:var(--cream);border:1px solid var(--line);border-radius:11px;font-family:inherit;font-weight:600;font-size:14px;color:var(--muted);cursor:pointer;">% of income</button>
+    </div>
+
+    <div id="goalAmountWrap">
+      <label class="field-label" for="goalAmount">My monthly giving intention</label>
+      <input type="number" id="goalAmount" inputmode="decimal" min="0" step="1" placeholder="e.g. 200">
+    </div>
+
+    <div id="goalPercentWrap" class="hide">
+      <div class="row2">
+        <div>
+          <label class="field-label" for="goalPct">Percent</label>
+          <input type="number" id="goalPct" inputmode="decimal" min="0" max="100" step="0.5" placeholder="e.g. 10">
+        </div>
+        <div>
+          <label class="field-label" for="goalIncome">Monthly income</label>
+          <input type="number" id="goalIncome" inputmode="decimal" min="0" step="1" placeholder="e.g. 3000">
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-top">
+        <span class="lbl">Given this month</span>
+        <span class="amt" id="progressAmt">—</span>
+      </div>
+      <div class="bar"><span id="progressBar"></span></div>
+      <div class="grace-note" id="graceNote"></div>
+    </div>
+  </section>
+
+  <!-- 3. Summary -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Your Generosity</h2></div>
+
+    <div class="scope-toggle" id="scopeToggle" style="margin-top:0;margin-bottom:14px;">
+      <button type="button" data-scope="month" class="active">This month</button>
+      <button type="button" data-scope="year">This year</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="big" id="statMoney">$0</div><div class="lbl">GIVEN</div></div>
+      <div class="stat"><div class="big" id="statActs">0</div><div class="lbl">GENEROUS ACTS</div></div>
+      <div class="stat"><div class="big" id="statKind">0</div><div class="lbl">ACTS OF KINDNESS</div></div>
+    </div>
+
+    <div class="breakdown" id="breakdown"></div>
+    <p class="empty-note" id="breakdownEmpty">Your breakdown will bloom here as you give. 💛</p>
+  </section>
+
+  <!-- Scripture / reflection -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Giving &amp; Abundance</h2></div>
+    <p class="hint">A word to settle your heart — generosity flows from trust, not lack.</p>
+    <div class="verse">
+      <p id="verseText">—</p>
+      <div class="ref" id="verseRef"></div>
+    </div>
+    <div class="verse-actions">
+      <button class="link-btn" id="anotherVerse" type="button">↻ Show me another</button>
+    </div>
+    <label class="field-label" for="bigReflection">What is giving teaching you? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <textarea id="bigReflection" placeholder="How giving felt this season, what you're believing for, where you've seen provision…"></textarea>
+  </section>
+
+  <!-- Your giving log -->
+  <section class="card">
+    <div class="history-title">Your giving log</div>
+    <div class="welcome" id="welcome">
+      <div class="big">A generous woman is a wealthy woman. 💛</div>
+      <div class="sm">However small it feels, your giving matters. Log your first gift above — money, time, or a simple kindness — and watch your generosity add up.</div>
+    </div>
+    <ul class="entry-list" id="entryList"></ul>
+  </section>
+
+  <!-- Ideas -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>Small Ways to Give</h2></div>
+    <p class="hint">Generosity doesn't always cost money. Browse for a nudge.</p>
+    <ul class="ideas">
+      <li><span class="sprout">✦</span> Send an encouraging text to someone who crossed your mind.</li>
+      <li><span class="sprout">✦</span> Leave a genuine, specific compliment for a stranger or coworker.</li>
+      <li><span class="sprout">✦</span> Bring a meal or coffee to someone who's stretched thin.</li>
+      <li><span class="sprout">✦</span> Offer your time — babysit, run an errand, lend an ear.</li>
+      <li><span class="sprout">✦</span> Pass on clothes, books, or items you no longer use.</li>
+      <li><span class="sprout">✦</span> Pray for someone by name and let them know.</li>
+      <li><span class="sprout">✦</span> Tip generously, and add a kind note.</li>
+      <li><span class="sprout">✦</span> Share your skill — a resume tip, a recipe, a connection.</li>
+      <li><span class="sprout">✦</span> Round up a purchase and give the change to a cause.</li>
+      <li><span class="sprout">✦</span> Write a thank-you to someone who shaped you.</li>
+    </ul>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_generosity_tithing";
+
+  // ---- Giving type options ----
+  var MONEY_TYPES = ["Tithe","Offering","Charitable giving","Gift to a person","Other"];
+  var KIND_TYPES  = ["Time / service","Act of kindness","Mentoring / encouragement","Donated goods","Other"];
+
+  // ---- Scripture library (generosity, abundance, trust) ----
+  var VERSES = [
+    ["Give, and it will be given to you. A good measure, pressed down, shaken together and running over.", "Luke 6:38"],
+    ["Each of you should give what you have decided in your heart to give — for God loves a cheerful giver.", "2 Corinthians 9:7"],
+    ["A generous person will prosper; whoever refreshes others will be refreshed.", "Proverbs 11:25"],
+    ["Bring the whole tithe… and see if I will not throw open the floodgates of heaven.", "Malachi 3:10"],
+    ["It is more blessed to give than to receive.", "Acts 20:35"],
+    ["She opens her arms to the poor and extends her hands to the needy.", "Proverbs 31:20"],
+    ["Honor the Lord with your wealth, with the firstfruits of all your crops.", "Proverbs 3:9"],
+    ["Whoever is kind to the poor lends to the Lord, and He will reward them.", "Proverbs 19:17"],
+    ["Where your treasure is, there your heart will be also.", "Matthew 6:21"],
+    ["And God is able to bless you abundantly, so that you will abound in every good work.", "2 Corinthians 9:8"],
+    ["Do not store up treasures on earth… but store up treasures in heaven.", "Matthew 6:19-20"],
+    ["Freely you have received; freely give.", "Matthew 10:8"],
+    ["Whoever sows generously will also reap generously.", "2 Corinthians 9:6"],
+    ["The generous will themselves be blessed, for they share their food with the poor.", "Proverbs 22:9"],
+    ["Command them to do good, to be rich in good deeds, and to be generous and willing to share.", "1 Timothy 6:18"],
+    ["Your giving is a gift, not a debt. Release it with open hands and a peaceful heart.", "A Word for You"],
+    ["What you give in love is never lost — it returns to you in ways you cannot count.", "A Word for You"]
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+  }
+  function pad(n){ return String(n).padStart(2,"0"); }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    return Math.floor((d - start) / 86400000);
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{month:"short", day:"numeric", year:"numeric"});
+  }
+  function inThisMonth(key){
+    var now = new Date();
+    var p = key.split("-");
+    return (+p[0] === now.getFullYear()) && (+p[1] === now.getMonth()+1);
+  }
+  function inThisYear(key){
+    return +key.split("-")[0] === new Date().getFullYear();
+  }
+  function money(n){
+    n = Number(n) || 0;
+    return "$" + n.toLocaleString(undefined,{minimumFractionDigits: (n % 1 ? 2 : 0), maximumFractionDigits:2});
+  }
+
+  // ---- State ----
+  var data = load();
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && o.entries){
+          if(!o.goal) o.goal = { mode:"amount", amount:"", pct:"", income:"" };
+          if(typeof o.reflection !== "string") o.reflection = "";
+          if(typeof o.verse !== "number") o.verse = dayOfYear(new Date()) % VERSES.length;
+          return o;
+        }
+      }
+    }catch(e){}
+    return {
+      entries:[],
+      goal:{ mode:"amount", amount:"", pct:"", income:"" },
+      reflection:"",
+      verse: dayOfYear(new Date()) % VERSES.length
+    };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var currentKind = "money";
+  var currentScope = "month";
+
+  var kindToggle = $("kindToggle");
+  var gType = $("gType"), gAmount = $("gAmount"), gDesc = $("gDesc");
+  var gRecipient = $("gRecipient"), gDate = $("gDate"), gNote = $("gNote");
+  var moneyFields = $("moneyFields"), kindFields = $("kindFields");
+
+  // ---- Build type options for current kind ----
+  function fillTypes(){
+    var list = currentKind === "money" ? MONEY_TYPES : KIND_TYPES;
+    gType.innerHTML = "";
+    list.forEach(function(t){
+      var o = document.createElement("option");
+      o.value = t; o.textContent = t; gType.appendChild(o);
+    });
+  }
+
+  // ---- Kind toggle ----
+  Array.prototype.forEach.call(kindToggle.querySelectorAll("button"), function(b){
+    b.addEventListener("click", function(){
+      currentKind = b.getAttribute("data-kind");
+      Array.prototype.forEach.call(kindToggle.querySelectorAll("button"), function(x){
+        x.classList.toggle("active", x === b);
+      });
+      moneyFields.classList.toggle("hide", currentKind !== "money");
+      kindFields.classList.toggle("hide", currentKind === "money");
+      fillTypes();
+    });
+  });
+
+  // ---- Add entry ----
+  $("addBtn").addEventListener("click", function(){
+    var rec = gRecipient.value.trim();
+    var date = gDate.value || todayKey();
+    var e = {
+      id: Date.now() + "-" + Math.random().toString(36).slice(2,7),
+      kind: currentKind,
+      type: gType.value,
+      recipient: rec,
+      date: date,
+      note: gNote.value.trim()
+    };
+    if(currentKind === "money"){
+      var amt = parseFloat(gAmount.value);
+      if(!(amt > 0)){ alert("Add an amount greater than zero, sister — every gift counts. 💛"); return; }
+      e.amount = Math.round(amt * 100) / 100;
+    }else{
+      var desc = gDesc.value.trim();
+      if(!desc){ alert("Tell us what you gave — a few words is plenty. 🤲"); return; }
+      e.description = desc;
+    }
+    data.entries.push(e);
+    save();
+    // clear input fields, keep date
+    gAmount.value = ""; gDesc.value = ""; gRecipient.value = ""; gNote.value = "";
+    renderAll();
+  });
+
+  // ---- Delete entry ----
+  function deleteEntry(id){
+    if(!confirm("Remove this entry from your giving log?")) return;
+    data.entries = data.entries.filter(function(e){ return e.id !== id; });
+    save(); renderAll();
+  }
+
+  // ---- Goal wiring ----
+  var goalMode = $("goalMode");
+  var goalAmount = $("goalAmount"), goalPct = $("goalPct"), goalIncome = $("goalIncome");
+  var goalAmountWrap = $("goalAmountWrap"), goalPercentWrap = $("goalPercentWrap");
+
+  function setGoalMode(mode){
+    data.goal.mode = mode;
+    Array.prototype.forEach.call(goalMode.querySelectorAll("button"), function(b){
+      var on = b.getAttribute("data-mode") === mode;
+      b.classList.toggle("active", on);
+      b.style.background = on ? "var(--emerald-soft)" : "var(--cream)";
+      b.style.borderColor = on ? "rgba(20,84,62,.3)" : "var(--line)";
+      b.style.color = on ? "var(--emerald)" : "var(--muted)";
+    });
+    goalAmountWrap.classList.toggle("hide", mode !== "amount");
+    goalPercentWrap.classList.toggle("hide", mode !== "percent");
+  }
+  Array.prototype.forEach.call(goalMode.querySelectorAll("button"), function(b){
+    b.addEventListener("click", function(){
+      setGoalMode(b.getAttribute("data-mode"));
+      save(); renderProgress();
+    });
+  });
+  goalAmount.addEventListener("input", function(){ data.goal.amount = goalAmount.value; save(); renderProgress(); });
+  goalPct.addEventListener("input", function(){ data.goal.pct = goalPct.value; save(); renderProgress(); });
+  goalIncome.addEventListener("input", function(){ data.goal.income = goalIncome.value; save(); renderProgress(); });
+
+  function goalTarget(){
+    if(data.goal.mode === "percent"){
+      var pct = parseFloat(data.goal.pct), inc = parseFloat(data.goal.income);
+      if(pct > 0 && inc > 0) return (pct/100) * inc;
+      return 0;
+    }
+    var a = parseFloat(data.goal.amount);
+    return a > 0 ? a : 0;
+  }
+
+  // ---- Scope toggle ----
+  var scopeToggle = $("scopeToggle");
+  Array.prototype.forEach.call(scopeToggle.querySelectorAll("button"), function(b){
+    b.addEventListener("click", function(){
+      currentScope = b.getAttribute("data-scope");
+      Array.prototype.forEach.call(scopeToggle.querySelectorAll("button"), function(x){
+        x.classList.toggle("active", x === b);
+      });
+      renderSummary();
+    });
+  });
+
+  // ---- Progress (always month-based) ----
+  function renderProgress(){
+    var givenMonth = data.entries.reduce(function(s,e){
+      return s + (e.kind === "money" && inThisMonth(e.date) ? (e.amount||0) : 0);
+    }, 0);
+    var target = goalTarget();
+    var amtEl = $("progressAmt"), bar = $("progressBar"), note = $("graceNote");
+
+    if(target > 0){
+      var pct = Math.min(100, (givenMonth / target) * 100);
+      bar.style.width = pct + "%";
+      amtEl.textContent = money(givenMonth) + " of " + money(target);
+      if(givenMonth >= target){
+        note.textContent = "You've met your intention — what a generous heart. 💛";
+      }else if(givenMonth > 0){
+        note.textContent = "You're on your way. There's no shame in the pace — only grace.";
+      }else{
+        note.textContent = "Whenever you're ready. This is an invitation, never a demand.";
+      }
+    }else{
+      bar.style.width = "0%";
+      amtEl.textContent = money(givenMonth) + " given";
+      note.textContent = "Set an intention above if it helps — or simply give as you feel led.";
+    }
+  }
+
+  // ---- Summary + breakdown ----
+  function renderSummary(){
+    var inScope = currentScope === "month" ? inThisMonth : inThisYear;
+    var scoped = data.entries.filter(function(e){ return inScope(e.date); });
+
+    var totalMoney = 0, kindCount = 0;
+    var byType = {};
+    scoped.forEach(function(e){
+      if(e.kind === "money"){
+        totalMoney += (e.amount || 0);
+        byType[e.type] = (byType[e.type] || 0) + (e.amount || 0);
+      }else{
+        kindCount++;
+      }
+    });
+
+    $("statMoney").textContent = money(totalMoney);
+    $("statActs").textContent = scoped.length;
+    $("statKind").textContent = kindCount;
+
+    // breakdown by money type
+    var bd = $("breakdown"), empty = $("breakdownEmpty");
+    bd.innerHTML = "";
+    var types = Object.keys(byType).sort(function(a,b){ return byType[b] - byType[a]; });
+    if(types.length === 0){
+      empty.style.display = "block";
+    }else{
+      empty.style.display = "none";
+      types.forEach(function(t){
+        var val = byType[t];
+        var pct = totalMoney > 0 ? (val / totalMoney) * 100 : 0;
+        var row = document.createElement("div"); row.className = "bd-row";
+        row.innerHTML =
+          '<div class="bd-top"><span class="name"></span><span class="val"></span></div>' +
+          '<div class="bd-bar"><span style="width:'+pct+'%"></span></div>';
+        row.querySelector(".name").textContent = t;
+        row.querySelector(".val").textContent = money(val) + "  ·  " + Math.round(pct) + "%";
+        bd.appendChild(row);
+      });
+    }
+  }
+
+  // ---- Entry list ----
+  function renderList(){
+    var list = $("entryList"), welcome = $("welcome");
+    list.innerHTML = "";
+    if(data.entries.length === 0){
+      welcome.style.display = "block";
+      return;
+    }
+    welcome.style.display = "none";
+    var sorted = data.entries.slice().sort(function(a,b){
+      if(a.date === b.date) return a.id < b.id ? 1 : -1;
+      return a.date < b.date ? 1 : -1;
+    });
+    sorted.forEach(function(e){
+      var li = document.createElement("li");
+
+      var main = document.createElement("div"); main.className = "e-main";
+      var line1 = document.createElement("div"); line1.className = "e-line1";
+      var recip = document.createElement("span"); recip.className = "e-recip";
+      recip.textContent = e.recipient || (e.kind === "money" ? "Giving" : "Generosity");
+      var tag = document.createElement("span");
+      tag.className = "e-tag" + (e.kind === "money" ? "" : " kind");
+      tag.textContent = e.type;
+      line1.appendChild(recip); line1.appendChild(tag);
+
+      var meta = document.createElement("div"); meta.className = "e-meta";
+      var metaText = prettyDate(e.date);
+      if(e.kind === "nonmoney" && e.description) metaText += " · " + e.description;
+      if(e.note) metaText += " · " + e.note;
+      meta.textContent = metaText;
+
+      main.appendChild(line1); main.appendChild(meta);
+
+      var right = document.createElement("div"); right.className = "e-right";
+      var amt = document.createElement("span");
+      if(e.kind === "money"){
+        amt.className = "e-amt"; amt.textContent = money(e.amount);
+      }else{
+        amt.className = "e-amt kind"; amt.textContent = "♥ given";
+      }
+      var del = document.createElement("button");
+      del.className = "del-btn"; del.type = "button"; del.textContent = "Delete";
+      del.addEventListener("click", function(){ deleteEntry(e.id); });
+      right.appendChild(amt); right.appendChild(del);
+
+      li.appendChild(main); li.appendChild(right);
+      list.appendChild(li);
+    });
+  }
+
+  // ---- Verse ----
+  function renderVerse(){
+    var v = VERSES[data.verse % VERSES.length];
+    $("verseText").textContent = v[0];
+    $("verseRef").textContent = v[1];
+  }
+  $("anotherVerse").addEventListener("click", function(){
+    data.verse = (data.verse + 1) % VERSES.length;
+    renderVerse(); save();
+  });
+
+  // ---- Reflection ----
+  var bigReflection = $("bigReflection");
+  bigReflection.addEventListener("input", function(){
+    data.reflection = bigReflection.value; save();
+  });
+
+  // ---- Render everything ----
+  function renderAll(){
+    renderProgress();
+    renderSummary();
+    renderList();
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your generosity & tithing data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = {
+        entries:[],
+        goal:{ mode:"amount", amount:"", pct:"", income:"" },
+        reflection:"",
+        verse: dayOfYear(new Date()) % VERSES.length
+      };
+      goalAmount.value = ""; goalPct.value = ""; goalIncome.value = "";
+      bigReflection.value = "";
+      gAmount.value = ""; gDesc.value = ""; gRecipient.value = ""; gNote.value = "";
+      gDate.value = todayKey();
+      currentKind = "money";
+      Array.prototype.forEach.call(kindToggle.querySelectorAll("button"), function(x){
+        x.classList.toggle("active", x.getAttribute("data-kind") === "money");
+      });
+      moneyFields.classList.remove("hide"); kindFields.classList.add("hide");
+      currentScope = "month";
+      Array.prototype.forEach.call(scopeToggle.querySelectorAll("button"), function(x){
+        x.classList.toggle("active", x.getAttribute("data-scope") === "month");
+      });
+      fillTypes();
+      setGoalMode("amount");
+      renderVerse();
+      renderAll();
+    }
+  });
+
+  // ---- Init / restore ----
+  fillTypes();
+  gDate.value = todayKey();
+  goalAmount.value = data.goal.amount || "";
+  goalPct.value = data.goal.pct || "";
+  goalIncome.value = data.goal.income || "";
+  bigReflection.value = data.reflection || "";
+  setGoalMode(data.goal.mode || "amount");
+  renderVerse();
+  renderAll();
+
+})();
+</script>
+</body>
+</html>
