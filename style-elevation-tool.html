@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Style Elevation Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome banner ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+    margin-top:16px;
+  }
+  .welcome::before{
+    content:"\2728"; position:absolute; top:-6px; right:14px; font-size:54px;
+    opacity:.18;
+  }
+  .welcome h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:21px; margin-bottom:8px;
+    position:relative; z-index:1;
+  }
+  .welcome p{
+    font-size:14.5px; line-height:1.5; position:relative; z-index:1;
+    color:#EDE6D6;
+  }
+  .welcome.hide{ display:none; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:72px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Vision chips ---------- */
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px; }
+  .chip{
+    font-family:inherit; font-size:14px; font-weight:500; cursor:pointer;
+    background:var(--cream); color:var(--ink); border:1px solid var(--line);
+    border-radius:999px; padding:9px 15px; min-height:44px;
+    transition:all .12s ease;
+  }
+  .chip:hover{ border-color:var(--gold); }
+  .chip.on{
+    background:var(--emerald); color:#FCF8EF; border-color:var(--emerald);
+  }
+  .add-row{ display:flex; gap:8px; margin-top:10px; }
+  .add-row input{ flex:1; }
+  .add-btn{
+    flex:none; min-height:48px; min-width:48px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer; padding:0 16px;
+    box-shadow:0 4px 12px rgba(200,160,74,.28);
+  }
+  .add-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Lists ---------- */
+  .list{ list-style:none; margin-top:6px; }
+  .list li{
+    display:flex; align-items:center; gap:10px;
+    padding:11px 4px; border-bottom:1px solid var(--line); font-size:15px;
+  }
+  .list li:last-child{ border-bottom:none; }
+  .list .dot{ flex:none; width:9px;height:9px;border-radius:50%;background:var(--gold); }
+  .list .txt{ flex:1; }
+  .list .txt.done{ text-decoration:line-through; color:var(--muted); }
+  .check{
+    flex:none; width:24px;height:24px;border-radius:7px; cursor:pointer;
+    border:2px solid var(--gold); background:var(--cream);
+    display:flex; align-items:center; justify-content:center; padding:0;
+  }
+  .check.on{ background:var(--gold); }
+  .check.on::after{ content:"✓"; color:var(--ink); font-size:14px; font-weight:700; }
+  .del{
+    flex:none; min-width:44px; min-height:44px; cursor:pointer;
+    background:none; border:none; color:#C99; font-size:18px; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .del:hover{ color:#A33; }
+  .list-empty{ color:var(--muted); font-size:14px; font-style:italic; padding:8px 4px; }
+
+  .tab-label{
+    display:inline-block; font-weight:700; font-size:12px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--emerald); margin:16px 0 4px;
+  }
+  .tab-label.release{ color:#B07A2E; }
+  .tab-label.gap{ color:var(--gold); }
+
+  /* ---------- Formulas ---------- */
+  .formula{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.14);
+    border-radius:12px; padding:13px 14px; margin-bottom:10px;
+    display:flex; align-items:flex-start; gap:10px;
+  }
+  .formula .body{ flex:1; }
+  .formula .f-name{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:16px; }
+  .formula .f-pieces{ font-size:14px; color:var(--ink); margin-top:2px; }
+  .formula .del{ color:#7A9; }
+  .formula .del:hover{ color:#14543E; }
+
+  /* ---------- Confidence note ---------- */
+  .note{
+    margin-top:16px; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.15); border-radius:14px;
+    padding:18px 16px; color:var(--emerald); text-align:center;
+  }
+  .note .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:5px; }
+  .note .sm{ font-size:14px; color:var(--muted); line-height:1.5; }
+
+  /* ---------- Progress ---------- */
+  .progress{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:16px; color:var(--muted); font-size:14px;
+  }
+  .progress b{ color:var(--emerald); font-size:15px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Style Elevation</h1>
+    <p class="subtitle">Dress like the woman you're becoming — on any budget, at any size.</p>
+  </header>
+
+  <!-- First-run welcome -->
+  <section class="welcome" id="welcome">
+    <h2>Welcome, beautiful.</h2>
+    <p>This isn't about money or labels — it's about self-respect made visible. Let's gently shape how you want to look and feel, keep what serves you, and make getting ready feel easy. You're doing this for <em>you</em>.</p>
+  </section>
+
+  <!-- 1. Her Style Vision -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Style Vision</h2></div>
+    <p class="hint">How do you want to look and feel? Tap the words that fit, or add your own.</p>
+    <div class="chips" id="visionChips"></div>
+    <div class="add-row">
+      <input type="text" id="visionInput" placeholder="Add your own word…" aria-label="Add a style word">
+      <button class="add-btn" id="visionAdd" type="button" aria-label="Add word">Add</button>
+    </div>
+    <label class="field-label" for="impression">The impression I want to give</label>
+    <textarea id="impression" placeholder="When I walk in, I want people to feel… / I want to carry myself like…"></textarea>
+  </section>
+
+  <!-- 2. Closet Audit -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Closet Audit (lite)</h2></div>
+    <p class="hint">A gentle look — no pressure, no shame. Just what serves the woman you are now.</p>
+
+    <span class="tab-label">💚 Keep — love it &amp; wear it</span>
+    <div class="add-row">
+      <input type="text" id="keepInput" placeholder="A piece that makes you feel great…" aria-label="Add a keep item">
+      <button class="add-btn" data-add="keep" type="button" aria-label="Add keep item">Add</button>
+    </div>
+    <ul class="list" id="keepList"></ul>
+
+    <span class="tab-label release">🍂 Release — doesn't fit your life or vision</span>
+    <div class="add-row">
+      <input type="text" id="releaseInput" placeholder="Something to let go with gratitude…" aria-label="Add a release item">
+      <button class="add-btn" data-add="release" type="button" aria-label="Add release item">Add</button>
+    </div>
+    <ul class="list" id="releaseList"></ul>
+
+    <span class="tab-label gap">✨ Gaps — versatile pieces that would elevate the everyday</span>
+    <div class="add-row">
+      <input type="text" id="gapInput" placeholder="A versatile piece you reach for but don't have…" aria-label="Add a gap item">
+      <button class="add-btn" data-add="gap" type="button" aria-label="Add gap item">Add</button>
+    </div>
+    <ul class="list" id="gapList"></ul>
+  </section>
+
+  <!-- 3. Elevation Habits -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Elevation Habits</h2></div>
+    <p class="hint">Small, low-cost upgrades. Tap to adopt and track the ones that are yours.</p>
+    <ul class="list" id="habitsList"></ul>
+    <div class="add-row">
+      <input type="text" id="habitInput" placeholder="Add your own habit…" aria-label="Add a habit">
+      <button class="add-btn" id="habitAdd" type="button" aria-label="Add habit">Add</button>
+    </div>
+    <div class="progress">
+      <span>🌿</span>
+      <span><b id="habitsDone">0</b> of <b id="habitsTotal">0</b> habits adopted</span>
+    </div>
+  </section>
+
+  <!-- 4. Get-Ready in 5 -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Get-Ready in 5</h2></div>
+    <p class="hint">Save signature outfit formulas so feeling put-together is effortless on busy days.</p>
+    <div id="formulaList"></div>
+    <label class="field-label" for="fName">Name this look</label>
+    <input type="text" id="fName" placeholder="e.g. Easy Elegant, Sunday Best, Errand Polish">
+    <label class="field-label" for="fPieces">The formula</label>
+    <input type="text" id="fPieces" placeholder="e.g. dark jeans + crisp white + gold hoops + good shoes">
+    <button class="add-btn" id="fAdd" type="button" style="width:100%;margin-top:12px;border-radius:13px;min-height:50px;">Save this look</button>
+  </section>
+
+  <!-- 5. Shopping Intentions -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>Shopping Intentions</h2></div>
+    <p class="hint">Only what fills a real gap, within budget. Thrift counts. Check it off when it's yours.</p>
+    <div class="add-row">
+      <input type="text" id="shopInput" placeholder="One intentional piece…" aria-label="Add a shopping intention">
+      <button class="add-btn" data-add="shop" type="button" aria-label="Add shopping intention">Add</button>
+    </div>
+    <ul class="list" id="shopList"></ul>
+  </section>
+
+  <!-- Confidence note -->
+  <div class="note">
+    <div class="big">Looking after your presentation is self-respect. 💛</div>
+    <div class="sm">It has nothing to do with your budget or your size — and everything to do with honouring the woman you are. You're allowed to feel beautiful today.</div>
+  </div>
+
+  <div class="center" style="margin-top:24px;">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_style_elevation";
+
+  var DEFAULT_VISION = ["Elegant","Put-together","Soft","Bold","Classic","Effortless","Polished","Radiant","Confident","Feminine","Timeless","Grounded"];
+
+  var DEFAULT_HABITS = [
+    "Wear clothes that actually fit me",
+    "Choose one signature look I feel like myself in",
+    "Stand and sit with good posture",
+    "Keep grooming basics simple and consistent",
+    "Add one polished detail (earrings, lip, scent)",
+    "Lay out tomorrow's outfit the night before",
+    "Keep my go-to pieces clean & ready",
+    "Smile — it's the best thing I wear"
+  ];
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- State ----
+  function fresh(){
+    return {
+      vision: { options: DEFAULT_VISION.slice(), selected: [] },
+      impression: "",
+      keep: [], release: [], gap: [],
+      habits: DEFAULT_HABITS.map(function(t){ return { text:t, done:false }; }),
+      formulas: [],
+      shop: [],
+      seen: false
+    };
+  }
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && typeof o === "object"){
+          // backfill any missing fields
+          var f = fresh();
+          for(var k in f){ if(!(k in o)) o[k] = f[k]; }
+          if(!o.vision || !o.vision.options) o.vision = f.vision;
+          return o;
+        }
+      }
+    }catch(e){}
+    return fresh();
+  }
+  var data = load();
+
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+  // ---- Welcome state ----
+  function refreshWelcome(){
+    var hasContent =
+      data.vision.selected.length || data.impression.trim() ||
+      data.keep.length || data.release.length || data.gap.length ||
+      data.formulas.length || data.shop.length ||
+      data.habits.some(function(h){ return h.done; });
+    if(hasContent){ data.seen = true; }
+    $("welcome").classList.toggle("hide", !!data.seen);
+  }
+
+  // ---- Vision chips ----
+  function renderVision(){
+    var box = $("visionChips");
+    box.innerHTML = "";
+    data.vision.options.forEach(function(word){
+      var on = data.vision.selected.indexOf(word) !== -1;
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip" + (on ? " on" : "");
+      b.textContent = word;
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.addEventListener("click", function(){
+        var idx = data.vision.selected.indexOf(word);
+        if(idx === -1) data.vision.selected.push(word);
+        else data.vision.selected.splice(idx,1);
+        save(); renderVision(); refreshWelcome();
+      });
+      box.appendChild(b);
+    });
+  }
+  $("visionAdd").addEventListener("click", addVision);
+  $("visionInput").addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); addVision(); } });
+  function addVision(){
+    var inp = $("visionInput");
+    var v = inp.value.trim();
+    if(!v) return;
+    if(data.vision.options.indexOf(v) === -1) data.vision.options.push(v);
+    if(data.vision.selected.indexOf(v) === -1) data.vision.selected.push(v);
+    inp.value = "";
+    save(); renderVision(); refreshWelcome();
+  }
+
+  // ---- Impression ----
+  $("impression").value = data.impression || "";
+  $("impression").addEventListener("input", function(){
+    data.impression = this.value; save(); refreshWelcome();
+  });
+
+  // ---- Generic list (keep / release / gap / shop) ----
+  // shop items are checkable; closet items are not
+  function renderList(field, listId, checkable){
+    var ul = $(listId);
+    ul.innerHTML = "";
+    var arr = data[field];
+    if(!arr.length){
+      var p = document.createElement("li");
+      p.className = "list-empty";
+      p.textContent = checkable
+        ? "Nothing yet — add a piece that fills a real gap."
+        : "Nothing here yet. Add gently, no rush.";
+      ul.appendChild(p);
+      return;
+    }
+    arr.forEach(function(item){
+      var li = document.createElement("li");
+      if(checkable){
+        var chk = document.createElement("button");
+        chk.type = "button";
+        chk.className = "check" + (item.done ? " on" : "");
+        chk.setAttribute("aria-label", item.done ? "Mark as not acquired" : "Mark as acquired");
+        chk.setAttribute("aria-pressed", item.done ? "true" : "false");
+        chk.addEventListener("click", function(){
+          item.done = !item.done; save(); renderList(field, listId, checkable);
+        });
+        li.appendChild(chk);
+      } else {
+        var dot = document.createElement("span");
+        dot.className = "dot";
+        li.appendChild(dot);
+      }
+      var txt = document.createElement("span");
+      txt.className = "txt" + (checkable && item.done ? " done" : "");
+      txt.textContent = item.text;
+      li.appendChild(txt);
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "del";
+      del.innerHTML = "✕";
+      del.setAttribute("aria-label", "Delete item");
+      del.addEventListener("click", function(){
+        if(confirm("Remove “" + item.text + "”?")){
+          var i = data[field].indexOf(item);
+          if(i !== -1) data[field].splice(i,1);
+          save(); renderList(field, listId, checkable); refreshWelcome();
+        }
+      });
+      li.appendChild(del);
+      ul.appendChild(li);
+    });
+  }
+
+  function addToList(field, inputId, listId, checkable){
+    var inp = $(inputId);
+    var v = inp.value.trim();
+    if(!v) return;
+    data[field].push(checkable ? { text:v, done:false } : { text:v });
+    inp.value = "";
+    save(); renderList(field, listId, checkable); refreshWelcome();
+  }
+
+  // wire add buttons via data-add
+  var addMap = {
+    keep:    { input:"keepInput",    list:"keepList",    check:false },
+    release: { input:"releaseInput", list:"releaseList", check:false },
+    gap:     { input:"gapInput",     list:"gapList",     check:false },
+    shop:    { input:"shopInput",    list:"shopList",    check:true  }
+  };
+  document.querySelectorAll("[data-add]").forEach(function(btn){
+    var key = btn.getAttribute("data-add");
+    var cfg = addMap[key];
+    btn.addEventListener("click", function(){ addToList(key, cfg.input, cfg.list, cfg.check); });
+  });
+  Object.keys(addMap).forEach(function(key){
+    var cfg = addMap[key];
+    $(cfg.input).addEventListener("keydown", function(e){
+      if(e.key === "Enter"){ e.preventDefault(); addToList(key, cfg.input, cfg.list, cfg.check); }
+    });
+  });
+
+  // ---- Habits ----
+  function renderHabits(){
+    var ul = $("habitsList");
+    ul.innerHTML = "";
+    var done = 0;
+    data.habits.forEach(function(h){
+      if(h.done) done++;
+      var li = document.createElement("li");
+      var chk = document.createElement("button");
+      chk.type = "button";
+      chk.className = "check" + (h.done ? " on" : "");
+      chk.setAttribute("aria-label", h.done ? "Unmark habit" : "Adopt habit");
+      chk.setAttribute("aria-pressed", h.done ? "true" : "false");
+      chk.addEventListener("click", function(){ h.done = !h.done; save(); renderHabits(); refreshWelcome(); });
+      var txt = document.createElement("span");
+      txt.className = "txt" + (h.done ? " done" : "");
+      txt.textContent = h.text;
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "del";
+      del.innerHTML = "✕";
+      del.setAttribute("aria-label", "Delete habit");
+      del.addEventListener("click", function(){
+        if(confirm("Remove this habit?")){
+          var i = data.habits.indexOf(h);
+          if(i !== -1) data.habits.splice(i,1);
+          save(); renderHabits(); refreshWelcome();
+        }
+      });
+      li.appendChild(chk); li.appendChild(txt); li.appendChild(del);
+      ul.appendChild(li);
+    });
+    $("habitsDone").textContent = done;
+    $("habitsTotal").textContent = data.habits.length;
+  }
+  $("habitAdd").addEventListener("click", addHabit);
+  $("habitInput").addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); addHabit(); } });
+  function addHabit(){
+    var inp = $("habitInput");
+    var v = inp.value.trim();
+    if(!v) return;
+    data.habits.push({ text:v, done:false });
+    inp.value = "";
+    save(); renderHabits();
+  }
+
+  // ---- Formulas ----
+  function renderFormulas(){
+    var box = $("formulaList");
+    box.innerHTML = "";
+    if(!data.formulas.length){
+      var p = document.createElement("p");
+      p.className = "list-empty";
+      p.style.padding = "0 0 4px";
+      p.textContent = "No signature looks saved yet. Build one below.";
+      box.appendChild(p);
+      return;
+    }
+    data.formulas.forEach(function(f){
+      var row = document.createElement("div");
+      row.className = "formula";
+      var body = document.createElement("div");
+      body.className = "body";
+      var name = document.createElement("div");
+      name.className = "f-name";
+      name.textContent = f.name;
+      var pieces = document.createElement("div");
+      pieces.className = "f-pieces";
+      pieces.textContent = f.pieces;
+      body.appendChild(name); body.appendChild(pieces);
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "del";
+      del.innerHTML = "✕";
+      del.setAttribute("aria-label", "Delete look");
+      del.addEventListener("click", function(){
+        if(confirm("Delete the “" + f.name + "” look?")){
+          var i = data.formulas.indexOf(f);
+          if(i !== -1) data.formulas.splice(i,1);
+          save(); renderFormulas(); refreshWelcome();
+        }
+      });
+      row.appendChild(body); row.appendChild(del);
+      box.appendChild(row);
+    });
+  }
+  $("fAdd").addEventListener("click", function(){
+    var name = $("fName").value.trim();
+    var pieces = $("fPieces").value.trim();
+    if(!name && !pieces) return;
+    data.formulas.push({ id:uid(), name: name || "My look", pieces: pieces || "" });
+    $("fName").value = ""; $("fPieces").value = "";
+    save(); renderFormulas(); refreshWelcome();
+  });
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Style Elevation data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = fresh();
+      $("impression").value = "";
+      $("fName").value = ""; $("fPieces").value = "";
+      $("visionInput").value = ""; $("habitInput").value = "";
+      Object.keys(addMap).forEach(function(k){ $(addMap[k].input).value = ""; });
+      renderAll();
+    }
+  });
+
+  // ---- Initial render ----
+  function renderAll(){
+    renderVision();
+    renderList("keep","keepList",false);
+    renderList("release","releaseList",false);
+    renderList("gap","gapList",false);
+    renderList("shop","shopList",true);
+    renderHabits();
+    renderFormulas();
+    refreshWelcome();
+  }
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

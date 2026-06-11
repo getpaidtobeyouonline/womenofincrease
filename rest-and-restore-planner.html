@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rest & Restore Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome (first run) ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .welcome p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .welcome .sm{
+    font-family:'Hanken Grotesk',sans-serif; font-style:normal; font-size:14px;
+    margin-top:12px; color:var(--gold-soft); position:relative; z-index:1; line-height:1.5;
+  }
+
+  /* ---------- Depletion check ---------- */
+  .scale-block{ margin-bottom:18px; }
+  .scale-label{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-weight:600; font-size:14px; color:var(--ink); margin-bottom:8px;
+  }
+  .scale-label .em{ color:var(--muted); font-weight:400; font-size:13px; }
+  .scale-btns{ display:flex; gap:8px; }
+  .scale-btns button{
+    flex:1; min-height:46px; border:1px solid var(--line); background:var(--cream);
+    border-radius:11px; font-family:inherit; font-weight:600; font-size:16px;
+    color:var(--muted); cursor:pointer; transition:all .12s ease;
+  }
+  .scale-btns button.sel{
+    background:var(--emerald); color:#FCF8EF; border-color:var(--emerald);
+    box-shadow:0 4px 12px rgba(20,84,62,.22);
+  }
+  .scale-ends{ display:flex; justify-content:space-between; margin-top:6px; font-size:11.5px; color:var(--muted); }
+
+  .tank{
+    margin-top:6px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .tank .bar-wrap{
+    height:14px; background:#fff; border:1px solid var(--line); border-radius:999px;
+    overflow:hidden; margin:4px 0 12px;
+  }
+  .tank .bar{
+    height:100%; width:0%; border-radius:999px; transition:width .5s ease, background .3s ease;
+    background:linear-gradient(90deg, var(--gold-soft), var(--gold));
+  }
+  .tank .reading{ font-family:'Fraunces',serif; font-weight:600; font-size:19px; margin-bottom:4px; }
+  .tank .msg{ font-size:14px; color:var(--muted); }
+
+  /* ---------- Rest types ---------- */
+  .rest-type{
+    border:1px solid var(--line); border-radius:13px; padding:14px;
+    margin-bottom:12px; background:var(--cream);
+  }
+  .rest-type-head{
+    display:flex; align-items:flex-start; gap:10px;
+  }
+  .rest-type-head .icon{ font-size:20px; flex:none; line-height:1.3; }
+  .rest-type-head .t-text{ flex:1; }
+  .rest-type-head .t-name{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:16px;
+  }
+  .rest-type-head .t-desc{ color:var(--muted); font-size:13px; margin-top:2px; }
+  .starved-toggle{
+    flex:none; min-height:44px; min-width:44px; border:1px solid var(--line);
+    background:#fff; border-radius:10px; font-family:inherit; font-size:12px; font-weight:600;
+    color:var(--muted); cursor:pointer; padding:6px 10px; transition:all .12s ease;
+    display:flex; align-items:center; justify-content:center; text-align:center; line-height:1.2;
+  }
+  .starved-toggle.on{
+    background:var(--gold); color:var(--ink); border-color:var(--gold);
+    box-shadow:0 3px 10px rgba(200,160,74,.3);
+  }
+  .rest-body{ display:none; margin-top:12px; }
+  .rest-body.show{ display:block; }
+  .lib-title{ font-size:12px; font-weight:600; color:var(--ink); margin:4px 0 8px; letter-spacing:.02em; }
+  .chips{ display:flex; flex-wrap:wrap; gap:7px; }
+  .chip{
+    min-height:38px; border:1px solid var(--line); background:#fff;
+    border-radius:999px; font-family:inherit; font-size:13px; color:var(--ink);
+    cursor:pointer; padding:7px 13px; transition:all .12s ease;
+  }
+  .chip.on{ background:var(--emerald-soft); border-color:var(--emerald); color:var(--emerald); font-weight:600; }
+  .add-own{ display:flex; gap:8px; margin-top:10px; }
+  .add-own input{ flex:1; }
+  .add-own button{
+    flex:none; min-height:44px; padding:0 14px; border:none; border-radius:10px;
+    background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.2);
+    font-family:inherit; font-weight:600; font-size:14px; cursor:pointer;
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  select{ min-height:48px; -webkit-appearance:none; appearance:none; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Restoration plan ---------- */
+  .plan-form{ display:flex; flex-direction:column; gap:10px; }
+  .plan-row-inputs{ display:flex; gap:8px; }
+  .plan-row-inputs select{ flex:none; width:120px; }
+  .plan-row-inputs input{ flex:1; }
+  .add-plan-btn{
+    min-height:48px; border:none; border-radius:12px; background:var(--gold); color:var(--ink);
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    box-shadow:0 6px 16px rgba(200,160,74,.32); transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .add-plan-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .add-plan-btn:active{ transform:translateY(1px); }
+
+  .plan-list{ list-style:none; margin-top:14px; }
+  .plan-item{
+    display:flex; align-items:center; gap:11px; padding:12px;
+    border:1px solid var(--line); border-radius:12px; margin-bottom:9px; background:var(--cream);
+  }
+  .plan-item.done{ background:var(--emerald-soft); border-color:rgba(20,84,62,.2); }
+  .check{
+    flex:none; width:26px; height:26px; border-radius:50%; border:2px solid var(--gold);
+    background:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    font-size:15px; color:#fff; transition:all .12s ease;
+  }
+  .plan-item.done .check{ background:var(--emerald); border-color:var(--emerald); }
+  .plan-text{ flex:1; min-width:0; }
+  .plan-text .day{
+    font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--gold);
+  }
+  .plan-text .act{ font-size:15px; color:var(--ink); word-break:break-word; }
+  .plan-item.done .plan-text .act{ text-decoration:line-through; color:var(--muted); }
+  .del-btn{
+    flex:none; min-width:44px; min-height:44px; border:none; background:none;
+    color:var(--muted); font-size:18px; cursor:pointer; border-radius:8px;
+  }
+  .del-btn:hover{ color:#B23A3A; }
+
+  .plan-stats{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:14px; color:var(--muted); font-size:14px;
+  }
+  .plan-stats b{ color:var(--emerald); font-size:15px; }
+
+  /* ---------- Emergency menu ---------- */
+  .emergency{
+    background:linear-gradient(180deg, #FBF1DE 0%, #F6E6C4 100%);
+    border:1px solid var(--gold-soft);
+  }
+  .emergency .step h2{ color:#8A6A1E; }
+  .crisis-list{ list-style:none; display:flex; flex-direction:column; gap:8px; }
+  .crisis-list li{
+    display:flex; align-items:flex-start; gap:10px; font-size:14.5px; color:var(--ink);
+    background:#fff; border:1px solid var(--gold-soft); border-radius:11px; padding:11px 13px;
+  }
+  .crisis-list li .b{ color:var(--gold); font-size:16px; flex:none; line-height:1.4; }
+
+  /* ---------- Faith note ---------- */
+  .faith-note{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .faith-note::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .faith-note p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .faith-note .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+    position:relative; z-index:1;
+  }
+
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; text-align:center; padding:6px 0; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Rest &amp; Restore Planner</h1>
+    <p class="subtitle">A real plan to refill — for the woman running on empty.</p>
+  </header>
+
+  <!-- Tender welcome (first run only) -->
+  <section class="card" id="welcomeCard" style="display:none;">
+    <div class="welcome">
+      <p>If you've been pouring out for everyone and quietly running dry — you're in the right place, sister.</p>
+      <p class="sm">Rest isn't a reward you earn after you collapse. It's how you were built. Let's check your tank, name the rest you're starved of, and put restoration back on your calendar — on purpose, and protected.</p>
+    </div>
+  </section>
+
+  <!-- 1. Depletion check -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>How depleted are you, really?</h2></div>
+    <p class="hint">Be honest — no one's grading you. Tap where you are right now in each area.</p>
+
+    <div class="scale-block" data-area="body">
+      <div class="scale-label"><span>Body</span><span class="em">tired, achy, wired?</span></div>
+      <div class="scale-btns" role="group" aria-label="Body energy 1 to 5"></div>
+    </div>
+    <div class="scale-block" data-area="mind">
+      <div class="scale-label"><span>Mind</span><span class="em">foggy, overloaded?</span></div>
+      <div class="scale-btns" role="group" aria-label="Mind energy 1 to 5"></div>
+    </div>
+    <div class="scale-block" data-area="emotions">
+      <div class="scale-label"><span>Emotions</span><span class="em">raw, numb, on edge?</span></div>
+      <div class="scale-btns" role="group" aria-label="Emotions energy 1 to 5"></div>
+    </div>
+    <div class="scale-block" data-area="spirit">
+      <div class="scale-label"><span>Spirit</span><span class="em">far, dry, disconnected?</span></div>
+      <div class="scale-btns" role="group" aria-label="Spirit energy 1 to 5"></div>
+    </div>
+    <div class="scale-ends"><span>1 = running on empty</span><span>5 = full &amp; flowing</span></div>
+
+    <div class="tank" id="tank" style="margin-top:16px;">
+      <div class="bar-wrap"><div class="bar" id="tankBar"></div></div>
+      <div class="reading" id="tankReading">Tap above to read your tank</div>
+      <div class="msg" id="tankMsg">We'll meet you exactly where you are.</div>
+    </div>
+  </section>
+
+  <!-- 2. The 7 types of rest -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>The 7 Types of Rest</h2></div>
+    <p class="hint">You can be sleeping plenty and still be exhausted — because not all rest is the same. Tap "I'm starved here" on the ones that hit home, then pick what would actually refill you.</p>
+    <div id="restTypes"></div>
+  </section>
+
+  <!-- 3. Restoration plan -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Put Rest On The Calendar</h2></div>
+    <p class="hint">Rest that isn't planned gets skipped. Commit it to a day, protect it, then mark it done when you actually take it.</p>
+    <div class="plan-form">
+      <div class="plan-row-inputs">
+        <select id="planDay" aria-label="Day for this rest"></select>
+        <input type="text" id="planAct" placeholder="e.g. 20-min walk, no phone" aria-label="Restoration activity">
+      </div>
+      <button class="add-plan-btn" id="addPlanBtn" type="button">+ Add to my plan</button>
+    </div>
+    <ul class="plan-list" id="planList"></ul>
+    <p class="empty-note" id="planEmpty">Nothing planned yet. Even one small restoration this week counts. 💛</p>
+    <div class="plan-stats">
+      <span>🌿 <b id="restTaken">0</b> rests taken · <b id="restPlanned">0</b> planned</span>
+    </div>
+  </section>
+
+  <!-- 4. Emergency menu -->
+  <section class="card emergency">
+    <div class="step"><span class="num">!</span><h2>Running On Empty Right Now?</h2></div>
+    <p class="hint">For the crisis-tired moments — when you can't do a whole plan, just do one of these.</p>
+    <ul class="crisis-list">
+      <li><span class="b">●</span><span>Put your phone in another room and lie flat for 10 minutes. That's it.</span></li>
+      <li><span class="b">●</span><span>Drink a full glass of water slowly and take 5 deep breaths.</span></li>
+      <li><span class="b">●</span><span>Say no to the next ask. "I can't take that on right now" is a full sentence.</span></li>
+      <li><span class="b">●</span><span>Step outside. Feel the air, the sun, the ground for two minutes.</span></li>
+      <li><span class="b">●</span><span>Text one safe person: "I'm depleted. Can you just sit with me?"</span></li>
+      <li><span class="b">●</span><span>Close your eyes and whisper, "God, I'm tired. Carry this for me."</span></li>
+      <li><span class="b">●</span><span>Cancel one thing. The world keeps spinning. You're allowed.</span></li>
+    </ul>
+  </section>
+
+  <!-- Faith note -->
+  <section class="card">
+    <div class="faith-note">
+      <p>Even God rested. On the seventh day He stopped — not because He was weak, but to show you that rest is holy, woven into the very design of your days.</p>
+      <div class="ref">Genesis 2:2–3</div>
+    </div>
+    <p class="hint" style="margin:14px 0 0; text-align:center;">Resting isn't laziness, sister. It's trust. It's obedience. It's how you stay whole enough to carry what He's given you.</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_rest_restore";
+
+  // ---- Rest type definitions ----
+  var REST_TYPES = [
+    { id:"physical", icon:"🛌", name:"Physical Rest",
+      desc:"Your body needs to stop — both deep sleep and gentle, active rest.",
+      lib:["Go to bed 30 min earlier","A real nap","Lie down, no screen","Gentle stretch","Warm bath","Slow walk"] },
+    { id:"mental", icon:"🧠", name:"Mental Rest",
+      desc:"Your mind is over-thinking and over-tracking. Let the noise quiet down.",
+      lib:["Brain-dump on paper","Single-task one hour","No notifications block","Set a hard stop time","Let something be 'good enough'"] },
+    { id:"emotional", icon:"💛", name:"Emotional Rest",
+      desc:"You've held space for everyone. Now make space to just feel and be honest.",
+      lib:["Journal how you really feel","Say no to one thing","Talk to a safe friend","Cry if you need to","Drop a mask for one person"] },
+    { id:"sensory", icon:"🌙", name:"Sensory Rest",
+      desc:"Too much screen, noise, and light. Your senses need a softer room.",
+      lib:["Screen-free hour","Dim the lights","Sit in silence","Close your eyes 5 min","Step away from noise"] },
+    { id:"social", icon:"🤝", name:"Social Rest",
+      desc:"Time with people who pour into you — and a break from those who drain.",
+      lib:["Time with a refilling friend","Decline a draining invite","Solo quiet time","Protect your alone hours","Mute a noisy chat"] },
+    { id:"creative", icon:"🎨", name:"Creative Rest",
+      desc:"Restock your wonder. Take in beauty without needing to produce anything.",
+      lib:["Walk somewhere beautiful","Play music you love","Make something with no goal","Watch a sunset","Visit nature"] },
+    { id:"spiritual", icon:"🕊️", name:"Spiritual Rest",
+      desc:"Reconnect with God and your sense of purpose. Be held, not just useful.",
+      lib:["Sit in prayer","Worship music","Read a verse slowly","Be still before God","Gratitude for 3 things"] }
+  ];
+
+  var DAYS = ["Anytime","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+
+  // ---- State ----
+  var data = load();
+
+  function blankState(){
+    return {
+      depletion:{ body:0, mind:0, emotions:0, spirit:0 },
+      rest:{},      // id -> { starved:bool, picks:[], custom:[] }
+      plan:[],      // { id, day, act, done }
+      seenWelcome:false
+    };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.depletion && o.rest && o.plan) return o; }
+    }catch(e){}
+    return blankState();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // =========================================================
+  // 1. DEPLETION CHECK
+  // =========================================================
+  function buildScales(){
+    var blocks = document.querySelectorAll(".scale-block");
+    blocks.forEach(function(block){
+      var area = block.getAttribute("data-area");
+      var btnWrap = block.querySelector(".scale-btns");
+      btnWrap.innerHTML = "";
+      for(var n=1;n<=5;n++){
+        (function(val){
+          var b = document.createElement("button");
+          b.type = "button";
+          b.textContent = val;
+          b.setAttribute("aria-label", area+" level "+val);
+          b.addEventListener("click", function(){
+            data.depletion[area] = val;
+            paintScale(area);
+            renderTank();
+            save();
+          });
+          btnWrap.appendChild(b);
+        })(n);
+      }
+      paintScale(area);
+    });
+  }
+  function paintScale(area){
+    var block = document.querySelector('.scale-block[data-area="'+area+'"]');
+    var btns = block.querySelectorAll(".scale-btns button");
+    var cur = data.depletion[area];
+    btns.forEach(function(b, idx){
+      if(idx+1 === cur){ b.classList.add("sel"); b.setAttribute("aria-pressed","true"); }
+      else{ b.classList.remove("sel"); b.setAttribute("aria-pressed","false"); }
+    });
+  }
+  function renderTank(){
+    var d = data.depletion;
+    var vals = [d.body, d.mind, d.emotions, d.spirit].filter(function(v){ return v>0; });
+    var bar = $("tankBar"), reading = $("tankReading"), msg = $("tankMsg");
+    if(vals.length === 0){
+      bar.style.width = "0%";
+      reading.textContent = "Tap above to read your tank";
+      msg.textContent = "We'll meet you exactly where you are.";
+      return;
+    }
+    var sum = vals.reduce(function(a,b){ return a+b; }, 0);
+    var avg = sum / vals.length;            // 1..5
+    var pct = Math.round(((avg-1)/4)*100);  // 0..100
+    bar.style.width = Math.max(pct, 6) + "%";
+
+    var col;
+    if(avg <= 2){ col = "linear-gradient(90deg,#D98C6A,#C8704A)"; }
+    else if(avg < 3.5){ col = "linear-gradient(90deg,var(--gold-soft),var(--gold))"; }
+    else { col = "linear-gradient(90deg,#9CC4A8,var(--emerald))"; }
+    bar.style.background = col;
+
+    if(avg <= 1.75){
+      reading.textContent = "Your tank is nearly empty, sister. 🤍";
+      msg.textContent = "This is not weakness — it's a body telling the truth. Pick at least 2 restorations below and plan them this week. You can't pour from a dry cup, and you don't have to.";
+    } else if(avg <= 2.75){
+      reading.textContent = "You're running low.";
+      msg.textContent = "You've been carrying a lot. Name the rest you're most starved of below and put one real restoration on your calendar — soon, not 'someday.'";
+    } else if(avg < 3.75){
+      reading.textContent = "Half-full, holding steady.";
+      msg.textContent = "Not empty, not overflowing. A little intentional rest now keeps you from slipping toward burnout. Top up gently.";
+    } else {
+      reading.textContent = "You're fairly full — beautiful. ✨";
+      msg.textContent = "Protect what's keeping you full. Keep rest on the calendar so you stay here instead of crashing later.";
+    }
+  }
+
+  // =========================================================
+  // 2. THE 7 TYPES OF REST
+  // =========================================================
+  function getRest(id){
+    if(!data.rest[id]){ data.rest[id] = { starved:false, picks:[], custom:[] }; }
+    return data.rest[id];
+  }
+  function buildRestTypes(){
+    var wrap = $("restTypes");
+    wrap.innerHTML = "";
+    REST_TYPES.forEach(function(rt){
+      var state = getRest(rt.id);
+
+      var box = document.createElement("div");
+      box.className = "rest-type";
+
+      var head = document.createElement("div");
+      head.className = "rest-type-head";
+      head.innerHTML =
+        '<span class="icon">'+rt.icon+'</span>'+
+        '<span class="t-text"><span class="t-name">'+rt.name+'</span>'+
+        '<span class="t-desc">'+rt.desc+'</span></span>';
+
+      var toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "starved-toggle" + (state.starved ? " on" : "");
+      toggle.textContent = state.starved ? "Starved ✓" : "I'm starved here";
+      toggle.setAttribute("aria-pressed", state.starved ? "true" : "false");
+      toggle.addEventListener("click", function(){
+        state.starved = !state.starved;
+        toggle.classList.toggle("on", state.starved);
+        toggle.textContent = state.starved ? "Starved ✓" : "I'm starved here";
+        toggle.setAttribute("aria-pressed", state.starved ? "true" : "false");
+        body.classList.toggle("show", state.starved || state.picks.length>0 || state.custom.length>0);
+        save();
+      });
+      head.appendChild(toggle);
+      box.appendChild(head);
+
+      var body = document.createElement("div");
+      body.className = "rest-body";
+      if(state.starved || state.picks.length>0 || state.custom.length>0){ body.classList.add("show"); }
+
+      var libTitle = document.createElement("div");
+      libTitle.className = "lib-title";
+      libTitle.textContent = "What would refill you?";
+      body.appendChild(libTitle);
+
+      var chips = document.createElement("div");
+      chips.className = "chips";
+      var allOptions = rt.lib.concat(state.custom);
+      allOptions.forEach(function(opt){
+        var chip = document.createElement("button");
+        chip.type = "button";
+        var on = state.picks.indexOf(opt) !== -1;
+        chip.className = "chip" + (on ? " on" : "");
+        chip.textContent = opt;
+        chip.setAttribute("aria-pressed", on ? "true" : "false");
+        chip.addEventListener("click", function(){
+          var i = state.picks.indexOf(opt);
+          if(i === -1){ state.picks.push(opt); chip.classList.add("on"); chip.setAttribute("aria-pressed","true"); }
+          else{ state.picks.splice(i,1); chip.classList.remove("on"); chip.setAttribute("aria-pressed","false"); }
+          save();
+        });
+        chips.appendChild(chip);
+      });
+      body.appendChild(chips);
+
+      // add own
+      var addRow = document.createElement("div");
+      addRow.className = "add-own";
+      var inp = document.createElement("input");
+      inp.type = "text";
+      inp.placeholder = "Add your own restoration…";
+      inp.setAttribute("aria-label", "Add your own "+rt.name+" idea");
+      var addBtn = document.createElement("button");
+      addBtn.type = "button";
+      addBtn.textContent = "Add";
+      function addCustom(){
+        var v = inp.value.trim();
+        if(!v) return;
+        if(state.custom.indexOf(v)===-1 && rt.lib.indexOf(v)===-1){
+          state.custom.push(v);
+          state.picks.push(v);
+        }
+        inp.value = "";
+        save();
+        buildRestTypes();
+      }
+      addBtn.addEventListener("click", addCustom);
+      inp.addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); addCustom(); } });
+      addRow.appendChild(inp);
+      addRow.appendChild(addBtn);
+      body.appendChild(addRow);
+
+      box.appendChild(body);
+      wrap.appendChild(box);
+    });
+  }
+
+  // =========================================================
+  // 3. RESTORATION PLAN
+  // =========================================================
+  function buildDayOptions(){
+    var sel = $("planDay");
+    sel.innerHTML = "";
+    DAYS.forEach(function(day){
+      var o = document.createElement("option");
+      o.value = day; o.textContent = day;
+      sel.appendChild(o);
+    });
+  }
+  function addPlanItem(){
+    var act = $("planAct").value.trim();
+    var day = $("planDay").value;
+    if(!act) return;
+    data.plan.push({ id: "p"+Date.now()+Math.random().toString(36).slice(2,6), day:day, act:act, done:false });
+    $("planAct").value = "";
+    save();
+    renderPlan();
+  }
+  function renderPlan(){
+    var list = $("planList"), empty = $("planEmpty");
+    list.innerHTML = "";
+    if(data.plan.length === 0){
+      empty.style.display = "block";
+    } else {
+      empty.style.display = "none";
+      data.plan.forEach(function(item){
+        var li = document.createElement("li");
+        li.className = "plan-item" + (item.done ? " done" : "");
+
+        var check = document.createElement("button");
+        check.type = "button";
+        check.className = "check";
+        check.textContent = item.done ? "✓" : "";
+        check.setAttribute("aria-label", (item.done?"Mark not done: ":"Mark done: ")+item.act);
+        check.addEventListener("click", function(){
+          item.done = !item.done;
+          save();
+          renderPlan();
+        });
+
+        var txt = document.createElement("div");
+        txt.className = "plan-text";
+        var dayEl = document.createElement("div");
+        dayEl.className = "day";
+        dayEl.textContent = item.day;
+        var actEl = document.createElement("div");
+        actEl.className = "act";
+        actEl.textContent = item.act;
+        txt.appendChild(dayEl); txt.appendChild(actEl);
+
+        var del = document.createElement("button");
+        del.type = "button";
+        del.className = "del-btn";
+        del.innerHTML = "✕";
+        del.setAttribute("aria-label", "Delete: "+item.act);
+        del.addEventListener("click", function(){
+          if(confirm("Remove this rest from your plan?")){
+            data.plan = data.plan.filter(function(p){ return p.id !== item.id; });
+            save();
+            renderPlan();
+          }
+        });
+
+        li.appendChild(check); li.appendChild(txt); li.appendChild(del);
+        list.appendChild(li);
+      });
+    }
+    var taken = data.plan.filter(function(p){ return p.done; }).length;
+    $("restTaken").textContent = taken;
+    $("restPlanned").textContent = data.plan.length;
+  }
+
+  // =========================================================
+  // Welcome (first run)
+  // =========================================================
+  function maybeWelcome(){
+    var fresh = !data.seenWelcome &&
+      data.plan.length === 0 &&
+      Object.keys(data.rest).length === 0 &&
+      data.depletion.body===0 && data.depletion.mind===0 &&
+      data.depletion.emotions===0 && data.depletion.spirit===0;
+    if(fresh){
+      $("welcomeCard").style.display = "block";
+    }
+    if(!data.seenWelcome){
+      data.seenWelcome = true; // mark so it hides once she starts
+      save();
+    }
+  }
+
+  // =========================================================
+  // Reset
+  // =========================================================
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Rest & Restore data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = blankState();
+      $("welcomeCard").style.display = "none";
+      buildScales();
+      renderTank();
+      buildRestTypes();
+      renderPlan();
+    }
+  });
+
+  // ---- Init ----
+  $("addPlanBtn").addEventListener("click", addPlanItem);
+  $("planAct").addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); addPlanItem(); } });
+
+  buildScales();
+  renderTank();
+  buildRestTypes();
+  buildDayOptions();
+  renderPlan();
+  maybeWelcome();
+
+})();
+</script>
+</body>
+</html>

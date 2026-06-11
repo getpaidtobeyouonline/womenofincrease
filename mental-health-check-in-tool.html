@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mental Health Check-In Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Care / crisis note ---------- */
+  .care-note{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.18);
+    border-radius:14px; padding:15px 16px; margin-top:16px;
+    color:var(--emerald); font-size:13.5px; line-height:1.5;
+  }
+  .care-note .care-head{
+    display:flex; align-items:center; gap:8px; font-weight:700;
+    font-family:'Fraunces',serif; font-size:15px; margin-bottom:6px;
+  }
+  .care-note b{ color:var(--emerald); }
+
+  /* ---------- Feeling chips ---------- */
+  .chips{ display:flex; flex-wrap:wrap; gap:9px; }
+  .chip{
+    flex:0 0 auto; min-height:44px; display:inline-flex; align-items:center; gap:7px;
+    background:var(--cream); border:1px solid var(--line); border-radius:999px;
+    padding:9px 15px; font-family:inherit; font-size:14.5px; font-weight:600; color:var(--ink);
+    cursor:pointer; transition:border-color .15s, background .15s, transform .08s;
+  }
+  .chip:hover{ border-color:var(--gold); }
+  .chip:active{ transform:translateY(1px); }
+  .chip[aria-pressed="true"]{
+    background:var(--emerald); color:#FCF8EF; border-color:var(--emerald);
+  }
+  .chip .emo{ font-size:16px; }
+
+  /* ---------- Wellbeing scale ---------- */
+  .scale{ display:flex; gap:8px; margin-top:4px; }
+  .scale button{
+    flex:1; min-height:54px; background:var(--cream); border:1px solid var(--line);
+    border-radius:12px; font-family:'Fraunces',serif; font-size:20px; font-weight:600;
+    color:var(--emerald); cursor:pointer; transition:border-color .15s, background .15s, transform .08s;
+  }
+  .scale button:hover{ border-color:var(--gold); }
+  .scale button:active{ transform:translateY(1px); }
+  .scale button[aria-pressed="true"]{
+    background:var(--gold); color:var(--ink); border-color:var(--gold);
+    box-shadow:0 4px 12px rgba(200,160,74,.3);
+  }
+  .scale-labels{ display:flex; justify-content:space-between; color:var(--muted); font-size:12px; margin-top:7px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+    min-height:84px; line-height:1.5;
+  }
+  textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Save button ---------- */
+  .complete-btn{
+    width:100%; margin-top:16px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+  .complete-btn:disabled{ opacity:.55; cursor:default; box-shadow:none; }
+
+  .blessing{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .blessing.show{ display:block; animation:rise .4s ease; }
+  .blessing .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .blessing .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Coping strategies ---------- */
+  .cope-group{ margin-top:14px; }
+  .cope-group:first-child{ margin-top:0; }
+  .cope-head{
+    font-family:'Fraunces',serif; color:var(--emerald); font-weight:600; font-size:16px;
+    display:flex; align-items:center; gap:8px; margin-bottom:8px;
+  }
+  .cope-item{
+    display:flex; align-items:flex-start; gap:10px;
+    background:var(--cream); border:1px solid var(--line); border-radius:12px;
+    padding:12px 13px; margin-bottom:9px;
+  }
+  .cope-item .body{ flex:1; }
+  .cope-item .t{ font-weight:600; font-size:14.5px; color:var(--ink); }
+  .cope-item .d{ color:var(--muted); font-size:13px; margin-top:2px; }
+  .star-btn{
+    flex:none; width:44px; height:44px; border:none; background:none; cursor:pointer;
+    font-size:20px; line-height:1; color:#C9C2B4; display:flex; align-items:center; justify-content:center;
+    border-radius:10px; transition:color .15s, transform .08s;
+  }
+  .star-btn:hover{ color:var(--gold); }
+  .star-btn:active{ transform:scale(.92); }
+  .star-btn[aria-pressed="true"]{ color:var(--gold); }
+  .cope-empty{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Faith anchor ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .verse-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Trend / history ---------- */
+  .history-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 4px;
+  }
+  .trend{ display:flex; align-items:flex-end; gap:6px; height:70px; margin:10px 0 4px; }
+  .trend .bar{ flex:1; display:flex; flex-direction:column; align-items:center; gap:5px; }
+  .trend .col{
+    width:100%; max-width:26px; border-radius:6px 6px 4px 4px;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.18);
+  }
+  .trend .bl{ font-size:10px; color:var(--muted); }
+  .trend-caption{ color:var(--muted); font-size:12.5px; font-style:italic; margin-bottom:6px; }
+
+  .history-list{ list-style:none; }
+  .history-list li{
+    padding:11px 2px; border-bottom:1px solid var(--line);
+  }
+  .history-list li:last-child{ border-bottom:none; }
+  .h-top{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .h-date{ color:var(--ink); font-weight:600; font-size:14px; }
+  .h-states{ color:var(--gold); font-family:'Fraunces',serif; font-style:italic; font-size:13.5px; text-align:right; }
+  .h-meta{ display:flex; align-items:center; gap:10px; margin-top:5px; }
+  .h-score{
+    color:var(--emerald); background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:12px; padding:2px 9px; border-radius:999px;
+  }
+  .h-note{ color:var(--muted); font-size:13px; flex:1; }
+  .del-btn{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    min-height:44px; min-width:44px; font-size:13px; font-family:inherit;
+  }
+  .del-btn:hover{ color:#a3402f; }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Mental Health Check-In</h1>
+    <p class="subtitle">A gentle pause to notice how you're really doing — and tend to it.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- Care note (top) -->
+  <div class="care-note">
+    <div class="care-head">💛 A caring word before you begin</div>
+    This is a gentle space to check in with yourself — not a diagnosis or treatment.
+    If you're struggling, having thoughts of harming yourself, or in crisis, reaching
+    out is a <b>brave and wise</b> step. Please contact your local emergency services,
+    a crisis line, or a trusted mental health professional. You don't have to carry it alone.
+  </div>
+
+  <!-- 1. Check-in -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>How are you, really?</h2></div>
+    <p class="hint">Tap whatever fits — you can pick more than one. There's no wrong answer here.</p>
+    <div class="chips" id="stateChips" role="group" aria-label="Select how you're feeling"></div>
+
+    <label class="field-label" id="scaleLabel">Your overall wellbeing right now</label>
+    <div class="scale" id="scale" role="group" aria-labelledby="scaleLabel"></div>
+    <div class="scale-labels"><span>Really hard</span><span>Doing well</span></div>
+
+    <label class="field-label" for="note">What's going on? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <textarea id="note" placeholder="A few words for yourself — what you're carrying, what you need…"></textarea>
+
+    <button class="complete-btn" id="saveBtn" type="button" disabled>Save today's check-in 🤍</button>
+    <div class="blessing" id="blessing">
+      <div class="big">Thank you for showing up for yourself. 💛</div>
+      <div class="sm">Noticing how you feel is a real act of self-care. Be gentle with you today.</div>
+    </div>
+  </section>
+
+  <!-- 2. Coping strategies -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Gentle tools for right now</h2></div>
+    <p class="hint">Small, kind things that meet you where you are. Tap the ⭐ to keep what helps in your toolkit.</p>
+    <div id="copeArea">
+      <p class="cope-empty" id="copeEmpty">Choose how you're feeling above, and tender, tailored tools will appear here for you.</p>
+    </div>
+  </section>
+
+  <!-- My toolkit -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>My toolkit</h2></div>
+    <p class="hint">The tools you've found helpful, gathered in one place for the harder days.</p>
+    <div id="toolkitArea">
+      <p class="cope-empty" id="toolkitEmpty">Star the tools that help, and they'll live here for you. 💛</p>
+    </div>
+  </section>
+
+  <!-- 4. Faith anchor -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>An anchor to lean on</h2></div>
+    <p class="hint">Optional — a soft reminder for when you need somewhere steady to rest.</p>
+    <div class="verse">
+      <p id="verseText">—</p>
+      <div class="ref" id="verseRef"></div>
+    </div>
+    <div class="verse-actions">
+      <button class="link-btn" id="anotherVerse" type="button">↻ Another reminder</button>
+    </div>
+  </section>
+
+  <!-- Trend + history -->
+  <section class="card">
+    <div class="history-title">Your wellbeing over time</div>
+    <p class="trend-caption" id="trendCaption">Your recent check-ins will form a gentle line here — hard days really do pass.</p>
+    <div class="trend" id="trend" aria-hidden="true"></div>
+    <ul class="history-list" id="historyList"></ul>
+    <p class="empty-note" id="historyEmpty">Save a check-in and it'll appear here, so you can look back with compassion. 💛</p>
+  </section>
+
+  <!-- Care note (bottom) -->
+  <div class="care-note">
+    <div class="care-head">🤍 You matter</div>
+    However today feels, your wellbeing is worth caring for. This tool is a companion,
+    not a substitute for support. If things feel heavy or unsafe, please reach out to
+    local emergency services, a crisis line, or a trusted professional — that's strength,
+    not weakness, sister.
+  </div>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_mental_health_checkin";
+
+  // ---- Feeling states ----
+  var STATES = [
+    {id:"anxious",   label:"Anxious",      emo:"😰"},
+    {id:"low",       label:"Low / sad",    emo:"😔"},
+    {id:"overwhelmed",label:"Overwhelmed", emo:"🌀"},
+    {id:"numb",      label:"Numb",         emo:"🌫️"},
+    {id:"irritable", label:"Irritable",    emo:"😤"},
+    {id:"okay",      label:"Okay",         emo:"🙂"},
+    {id:"good",      label:"Good",         emo:"😊"},
+    {id:"grateful",  label:"Grateful",     emo:"🙏"}
+  ];
+
+  // ---- Coping strategies per state ----
+  var COPING = {
+    anxious: [
+      {t:"Slow your breathing", d:"Breathe in for 4, hold for 4, out for 6. A few rounds tells your body it's safe."},
+      {t:"Name five senses", d:"Notice 5 things you see, 4 you hear, 3 you can touch — gently back to now."},
+      {t:"Step outside", d:"Fresh air and a little movement can soften the edges of a racing mind."}
+    ],
+    low: [
+      {t:"One tiny kind act for you", d:"Tea, a shower, a soft blanket. Small comfort still counts."},
+      {t:"Let in some sunlight", d:"Open a window or sit by the light for a few minutes — your body responds to it."},
+      {t:"Reach out to someone", d:"A simple 'thinking of you' text. Connection lifts more than we expect."}
+    ],
+    overwhelmed: [
+      {t:"Brain dump", d:"Write every loose thought down so your mind isn't holding it all at once."},
+      {t:"Just the one next thing", d:"Not the whole list — only the very next small step. That's enough."},
+      {t:"Ask for help", d:"You're allowed to share the load. Who could ease one thing today?"}
+    ],
+    numb: [
+      {t:"Gentle movement", d:"A slow stretch or short walk — no goal, just letting your body feel something."},
+      {t:"Find some warmth", d:"A warm drink, a hot shower, sunshine. Warmth can softly thaw a numb day."},
+      {t:"One small pleasure", d:"A favourite song, a familiar smell, a bite of something you love."}
+    ],
+    irritable: [
+      {t:"Make a little space", d:"Step away for two minutes before you respond. The pause is yours to take."},
+      {t:"Move the energy", d:"Shake out your hands, walk it off, or take a few firm exhales."},
+      {t:"Check your basics", d:"Hungry? Tired? Touched out? Irritability is often a body asking for care."}
+    ],
+    okay: [
+      {t:"Notice the okay", d:"Okay is a real and steady place. Let yourself rest in it without rushing on."},
+      {t:"Top up your reserves", d:"Water, a snack, a stretch — keep gently filling your own cup."}
+    ],
+    good: [
+      {t:"Savour it", d:"Pause and really feel the good for a moment — it helps it last and grow."},
+      {t:"Anchor the memory", d:"Note what made today feel good, so you can return to it on a harder day."}
+    ],
+    grateful: [
+      {t:"Name it out loud", d:"Speak or write what you're grateful for — gratitude deepens when it's voiced."},
+      {t:"Pass it on", d:"Tell someone they matter to you. Shared gratitude multiplies."}
+    ]
+  };
+
+  // ---- Faith anchors (gentle, optional, never preachy) ----
+  var VERSES = [
+    ["Cast all your anxiety on Him, because He cares for you.", "1 Peter 5:7"],
+    ["The Lord is close to the brokenhearted and saves those who are crushed in spirit.", "Psalm 34:18"],
+    ["Come to me, all you who are weary and burdened, and I will give you rest.", "Matthew 11:28"],
+    ["Be still, and know that I am God.", "Psalm 46:10"],
+    ["Weeping may stay for the night, but rejoicing comes in the morning.", "Psalm 30:5"],
+    ["He gives strength to the weary and increases the power of the weak.", "Isaiah 40:29"],
+    ["When anxiety was great within me, your consolation brought me joy.", "Psalm 94:19"],
+    ["God is within her, she will not fall.", "Psalm 46:5"],
+    ["He heals the brokenhearted and binds up their wounds.", "Psalm 147:3"],
+    ["You keep track of all my sorrows. You have collected all my tears.", "Psalm 56:8"],
+    ["His mercies are new every morning; great is your faithfulness.", "Lamentations 3:23"],
+    ["You are not alone, and you are deeply loved — exactly as you are today.", "A Word for You"],
+    ["This feeling is real, but it is not the end of your story.", "A Word for You"],
+    ["You have survived every hard day so far. That is quiet, holy strength.", "A Word for You"]
+  ];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    var diff = d - start;
+    return Math.floor(diff / 86400000);
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+  }
+  function shortDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{month:"short", day:"numeric"});
+  }
+
+  // ---- State ----
+  var data = load();
+  var TODAY = todayKey();
+  // working entry for today
+  var entry = data.entries[TODAY] || { states:[], score:0, note:"", saved:false };
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && o.entries){
+          if(!o.toolkit) o.toolkit = [];
+          if(typeof o.verse !== "number") o.verse = dayOfYear(new Date()) % VERSES.length;
+          return o;
+        }
+      }
+    }catch(e){}
+    return { entries:{}, toolkit:[], verse: dayOfYear(new Date()) % VERSES.length };
+  }
+  function save(){
+    if(entry.saved || entry.states.length || entry.score || entry.note){
+      data.entries[TODAY] = entry;
+    }
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Render feeling chips ----
+  var chipsWrap = $("stateChips");
+  STATES.forEach(function(s){
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.setAttribute("aria-pressed", entry.states.indexOf(s.id) > -1 ? "true" : "false");
+    b.dataset.id = s.id;
+    b.innerHTML = '<span class="emo">'+s.emo+'</span>'+s.label;
+    b.addEventListener("click", function(){
+      var i = entry.states.indexOf(s.id);
+      if(i > -1){ entry.states.splice(i,1); b.setAttribute("aria-pressed","false"); }
+      else{ entry.states.push(s.id); b.setAttribute("aria-pressed","true"); }
+      save();
+      renderCoping();
+      updateSaveState();
+    });
+    chipsWrap.appendChild(b);
+  });
+
+  // ---- Render wellbeing scale ----
+  var scaleWrap = $("scale");
+  for(var n=1;n<=5;n++){
+    (function(val){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = val;
+      b.setAttribute("aria-label", "Wellbeing "+val+" of 5");
+      b.setAttribute("aria-pressed", entry.score === val ? "true" : "false");
+      b.addEventListener("click", function(){
+        entry.score = val;
+        Array.prototype.forEach.call(scaleWrap.children, function(c){ c.setAttribute("aria-pressed","false"); });
+        b.setAttribute("aria-pressed","true");
+        save();
+        updateSaveState();
+      });
+      scaleWrap.appendChild(b);
+    })(n);
+  }
+
+  // ---- Note ----
+  var noteEl = $("note");
+  noteEl.value = entry.note || "";
+  noteEl.addEventListener("input", function(){
+    entry.note = noteEl.value;
+    save();
+    updateSaveState();
+  });
+
+  // ---- Save button ----
+  var saveBtn = $("saveBtn"), blessingEl = $("blessing");
+  function updateSaveState(){
+    var has = entry.states.length || entry.score || (entry.note && entry.note.trim());
+    saveBtn.disabled = !has;
+    saveBtn.textContent = entry.saved ? "Check-in saved for today ✓" : "Save today's check-in 🤍";
+  }
+  saveBtn.addEventListener("click", function(){
+    entry.saved = true;
+    save();
+    blessingEl.classList.add("show");
+    updateSaveState();
+    renderHistory();
+    renderTrend();
+  });
+  $("todayDate").textContent = prettyDate(TODAY);
+  if(entry.saved) blessingEl.classList.add("show");
+
+  // ---- Coping strategies ----
+  function toolkitHas(id){ return data.toolkit.indexOf(id) > -1; }
+  function copeId(stateId, idx){ return stateId+":"+idx; }
+
+  function renderCoping(){
+    var area = $("copeArea");
+    area.innerHTML = "";
+    if(entry.states.length === 0){
+      var p = document.createElement("p");
+      p.className = "cope-empty";
+      p.textContent = "Choose how you're feeling above, and tender, tailored tools will appear here for you.";
+      area.appendChild(p);
+      return;
+    }
+    entry.states.forEach(function(sid){
+      var meta = STATES.filter(function(s){ return s.id===sid; })[0];
+      var tools = COPING[sid] || [];
+      if(!tools.length) return;
+      var group = document.createElement("div");
+      group.className = "cope-group";
+      var head = document.createElement("div");
+      head.className = "cope-head";
+      head.innerHTML = '<span>'+meta.emo+'</span> When you feel '+meta.label.toLowerCase();
+      group.appendChild(head);
+      tools.forEach(function(tool, idx){
+        var id = copeId(sid, idx);
+        group.appendChild(buildCopeItem(id, tool));
+      });
+      area.appendChild(group);
+    });
+  }
+
+  function buildCopeItem(id, tool){
+    var item = document.createElement("div");
+    item.className = "cope-item";
+    var body = document.createElement("div");
+    body.className = "body";
+    body.innerHTML = '<div class="t">'+esc(tool.t)+'</div><div class="d">'+esc(tool.d)+'</div>';
+    var star = document.createElement("button");
+    star.type = "button";
+    star.className = "star-btn";
+    star.setAttribute("aria-pressed", toolkitHas(id) ? "true" : "false");
+    star.setAttribute("aria-label", (toolkitHas(id)?"Remove from":"Add to")+" my toolkit: "+tool.t);
+    star.textContent = toolkitHas(id) ? "★" : "☆";
+    star.addEventListener("click", function(){
+      var i = data.toolkit.indexOf(id);
+      if(i > -1){ data.toolkit.splice(i,1); }
+      else{ data.toolkit.push(id); }
+      var on = toolkitHas(id);
+      star.setAttribute("aria-pressed", on ? "true":"false");
+      star.textContent = on ? "★" : "☆";
+      save();
+      renderToolkit();
+    });
+    item.appendChild(body);
+    item.appendChild(star);
+    return item;
+  }
+
+  // Look up a tool's text by its composite id
+  function findTool(id){
+    var parts = id.split(":");
+    var sid = parts[0], idx = parseInt(parts[1],10);
+    var meta = STATES.filter(function(s){ return s.id===sid; })[0];
+    var tools = COPING[sid];
+    if(!meta || !tools || !tools[idx]) return null;
+    return { meta:meta, tool:tools[idx] };
+  }
+
+  function renderToolkit(){
+    var area = $("toolkitArea");
+    area.innerHTML = "";
+    var valid = data.toolkit.filter(function(id){ return findTool(id); });
+    if(valid.length === 0){
+      var p = document.createElement("p");
+      p.className = "cope-empty";
+      p.textContent = "Star the tools that help, and they'll live here for you. 💛";
+      area.appendChild(p);
+      return;
+    }
+    valid.forEach(function(id){
+      var f = findTool(id);
+      var item = document.createElement("div");
+      item.className = "cope-item";
+      var body = document.createElement("div");
+      body.className = "body";
+      body.innerHTML = '<div class="t">'+esc(f.tool.t)+'</div><div class="d">'+esc(f.tool.d)+'</div>';
+      var star = document.createElement("button");
+      star.type = "button";
+      star.className = "star-btn";
+      star.setAttribute("aria-pressed","true");
+      star.setAttribute("aria-label","Remove from my toolkit: "+f.tool.t);
+      star.textContent = "★";
+      star.addEventListener("click", function(){
+        var i = data.toolkit.indexOf(id);
+        if(i > -1) data.toolkit.splice(i,1);
+        save();
+        renderToolkit();
+        renderCoping();
+      });
+      item.appendChild(body);
+      item.appendChild(star);
+      area.appendChild(item);
+    });
+  }
+
+  // ---- Faith anchor ----
+  var verseTextEl = $("verseText"), verseRefEl = $("verseRef");
+  function renderVerse(){
+    var v = VERSES[data.verse % VERSES.length];
+    verseTextEl.textContent = v[0];
+    verseRefEl.textContent = v[1];
+  }
+  $("anotherVerse").addEventListener("click", function(){
+    data.verse = (data.verse + 1) % VERSES.length;
+    renderVerse();
+    save();
+  });
+
+  // ---- Trend (last 7 saved check-ins with a score) ----
+  function renderTrend(){
+    var trend = $("trend"), cap = $("trendCaption");
+    var keys = Object.keys(data.entries)
+      .filter(function(k){ return data.entries[k].saved && data.entries[k].score; })
+      .sort().slice(-7);
+    trend.innerHTML = "";
+    if(keys.length < 2){
+      cap.textContent = "Your recent check-ins will form a gentle line here — hard days really do pass.";
+      trend.style.display = "none";
+      return;
+    }
+    trend.style.display = "flex";
+    cap.textContent = "A few weeks in, you'll see the rhythm of your days — be kind to every bar.";
+    keys.forEach(function(k){
+      var e = data.entries[k];
+      var bar = document.createElement("div");
+      bar.className = "bar";
+      var col = document.createElement("div");
+      col.className = "col";
+      col.style.height = Math.max(10, (e.score/5)*58) + "px";
+      var bl = document.createElement("div");
+      bl.className = "bl";
+      bl.textContent = shortDate(k);
+      bar.appendChild(col);
+      bar.appendChild(bl);
+      trend.appendChild(bar);
+    });
+  }
+
+  // ---- History ----
+  function statesText(ids){
+    if(!ids || !ids.length) return "—";
+    return ids.map(function(id){
+      var m = STATES.filter(function(s){ return s.id===id; })[0];
+      return m ? m.label : id;
+    }).join(", ");
+  }
+  function renderHistory(){
+    var list = $("historyList"), empty = $("historyEmpty");
+    var keys = Object.keys(data.entries)
+      .filter(function(k){ return data.entries[k].saved; })
+      .sort().reverse().slice(0,14);
+    list.innerHTML = "";
+    if(keys.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+    keys.forEach(function(k){
+      var e = data.entries[k];
+      var li = document.createElement("li");
+
+      var top = document.createElement("div");
+      top.className = "h-top";
+      var d = document.createElement("span");
+      d.className = "h-date";
+      d.textContent = prettyDate(k);
+      var st = document.createElement("span");
+      st.className = "h-states";
+      st.textContent = statesText(e.states);
+      top.appendChild(d); top.appendChild(st);
+
+      var meta = document.createElement("div");
+      meta.className = "h-meta";
+      if(e.score){
+        var sc = document.createElement("span");
+        sc.className = "h-score";
+        sc.textContent = e.score + "/5";
+        meta.appendChild(sc);
+      }
+      var nt = document.createElement("span");
+      nt.className = "h-note";
+      nt.textContent = e.note ? e.note : "";
+      meta.appendChild(nt);
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "del-btn";
+      del.textContent = "Delete";
+      del.setAttribute("aria-label","Delete check-in from "+prettyDate(k));
+      del.addEventListener("click", function(){
+        if(confirm("Delete your check-in from "+prettyDate(k)+"? This can't be undone.")){
+          delete data.entries[k];
+          if(k === TODAY){
+            entry = { states:[], score:0, note:"", saved:false };
+            resetUI();
+          }
+          save();
+          renderHistory();
+          renderTrend();
+        }
+      });
+      meta.appendChild(del);
+
+      li.appendChild(top);
+      li.appendChild(meta);
+      list.appendChild(li);
+    });
+  }
+
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  function resetUI(){
+    Array.prototype.forEach.call(chipsWrap.children, function(c){
+      c.setAttribute("aria-pressed", entry.states.indexOf(c.dataset.id) > -1 ? "true":"false");
+    });
+    Array.prototype.forEach.call(scaleWrap.children, function(c, i){
+      c.setAttribute("aria-pressed", entry.score === (i+1) ? "true":"false");
+    });
+    noteEl.value = entry.note || "";
+    blessingEl.classList.remove("show");
+    if(entry.saved) blessingEl.classList.add("show");
+    updateSaveState();
+    renderCoping();
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your check-in data, history, and toolkit? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { entries:{}, toolkit:[], verse: dayOfYear(new Date()) % VERSES.length };
+      entry = { states:[], score:0, note:"", saved:false };
+      resetUI();
+      renderToolkit();
+      renderHistory();
+      renderTrend();
+      renderVerse();
+    }
+  });
+
+  // ---- Initial render ----
+  renderVerse();
+  renderCoping();
+  renderToolkit();
+  renderHistory();
+  renderTrend();
+  updateSaveState();
+
+})();
+</script>
+</body>
+</html>

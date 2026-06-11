@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faith-Based Weight Loss Journal · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome (first-run) ---------- */
+  .welcome{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 18px; color:var(--emerald); margin-top:16px;
+  }
+  .welcome p{ font-size:14.5px; line-height:1.55; }
+  .welcome p + p{ margin-top:10px; }
+  .welcome .lead{ font-family:'Fraunces',serif; font-size:17px; font-weight:600; margin-bottom:8px; }
+
+  /* ---------- Faith anchor ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:19px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .verse-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  .opt{ color:var(--muted); font-weight:400; }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  .word-input{ text-align:center; font-family:'Fraunces',serif; font-size:22px; color:var(--emerald); font-weight:500; }
+
+  /* ---------- Habit toggles ---------- */
+  .habits{ display:flex; flex-direction:column; gap:10px; }
+  .habit{
+    display:flex; align-items:center; gap:12px; width:100%;
+    background:var(--cream); border:1px solid var(--line); border-radius:12px;
+    padding:12px 14px; min-height:54px; cursor:pointer; text-align:left;
+    font-family:inherit; font-size:15px; color:var(--ink);
+    transition:border-color .15s, background .15s;
+  }
+  .habit:hover{ border-color:var(--gold-soft); }
+  .habit .box{
+    flex:none; width:24px;height:24px;border-radius:7px;
+    border:2px solid var(--gold-soft); background:#fff;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--ink); font-weight:700; font-size:14px; line-height:1;
+    transition:background .15s, border-color .15s;
+  }
+  .habit .emoji{ flex:none; font-size:18px; }
+  .habit.on{ background:var(--emerald-soft); border-color:rgba(20,84,62,.3); }
+  .habit.on .box{ background:var(--gold); border-color:var(--gold); }
+  .habit.on .label-text{ color:var(--emerald); font-weight:600; }
+
+  /* ---------- Feeling check ---------- */
+  .feel-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+  .feel{
+    border:1px solid var(--line); background:var(--cream); border-radius:12px;
+    padding:10px 4px 8px; min-height:64px; cursor:pointer; text-align:center;
+    font-family:inherit; transition:border-color .15s, background .15s, transform .08s;
+  }
+  .feel:active{ transform:translateY(1px); }
+  .feel .face{ font-size:22px; display:block; line-height:1.2; }
+  .feel .lbl{ font-size:10.5px; color:var(--muted); margin-top:3px; display:block; letter-spacing:.01em; }
+  .feel.on{ border-color:var(--gold); background:var(--gold-soft); }
+  .feel.on .lbl{ color:var(--emerald); font-weight:700; }
+
+  .mood-chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; }
+  .chip{
+    border:1px solid var(--line); background:var(--cream); color:var(--ink);
+    border-radius:999px; padding:9px 14px; min-height:44px; cursor:pointer;
+    font-family:inherit; font-size:13.5px; transition:border-color .15s, background .15s;
+  }
+  .chip.on{ background:var(--emerald-soft); border-color:rgba(20,84,62,.3); color:var(--emerald); font-weight:600; }
+
+  /* ---------- Surrender / gratitude ---------- */
+  .surrender-line{
+    font-family:'Fraunces',serif; font-style:italic; color:var(--emerald);
+    font-size:16px; margin-bottom:6px;
+  }
+
+  /* ---------- Collapsible private note ---------- */
+  .private{ margin-top:6px; }
+  .private summary{
+    list-style:none; cursor:pointer; color:var(--muted); font-size:13.5px;
+    font-weight:600; padding:10px 0; min-height:44px; display:flex; align-items:center; gap:6px;
+  }
+  .private summary::-webkit-details-marker{ display:none; }
+  .private summary .caret{ transition:transform .15s; }
+  .private[open] summary .caret{ transform:rotate(90deg); }
+  .private .pnote{ margin-top:4px; }
+  .private .micro{ color:var(--muted); font-size:12.5px; margin-top:6px; font-style:italic; }
+
+  /* ---------- Complete button ---------- */
+  .complete-btn{
+    width:100%; margin-top:8px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+  .complete-btn.done{
+    background:var(--emerald-soft); color:var(--emerald); box-shadow:none;
+    border:1px solid rgba(20,84,62,.2);
+  }
+  .blessing{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .blessing.show{ display:block; animation:rise .4s ease; }
+  .blessing .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .blessing .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Streak ---------- */
+  .streak{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:18px; color:var(--muted); font-size:14px; text-align:center;
+  }
+  .streak b{ color:var(--emerald); font-size:15px; }
+  .flame{ font-size:16px; }
+
+  /* ---------- History ---------- */
+  .history-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 4px;
+  }
+  .history-list{ list-style:none; }
+  .h-item{ border-bottom:1px solid var(--line); }
+  .h-item:last-child{ border-bottom:none; }
+  .h-head{
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+    padding:12px 2px; cursor:pointer; min-height:44px;
+  }
+  .h-head .h-date{ color:var(--ink); font-weight:600; font-size:14px; }
+  .h-head .h-feel{ color:var(--gold); font-family:'Fraunces',serif; font-style:italic; font-size:14px; margin-left:auto; }
+  .h-head .caret{ color:var(--muted); transition:transform .15s; flex:none; }
+  .h-item.open .h-head .caret{ transform:rotate(90deg); }
+  .h-body{ display:none; padding:0 2px 14px; font-size:13.5px; color:var(--ink); }
+  .h-item.open .h-body{ display:block; animation:rise .25s ease; }
+  .h-body .row{ margin-bottom:8px; }
+  .h-body .k{ color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.08em; display:block; margin-bottom:2px; }
+  .h-body .tags{ color:var(--emerald); }
+  .h-del{
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:9px; padding:8px 12px; min-height:44px; font-family:inherit;
+    font-size:12.5px; cursor:pointer; margin-top:4px;
+  }
+  .h-del:hover{ border-color:var(--gold); color:var(--ink); }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Faith-Based Weight Loss Journal</h1>
+    <p class="subtitle">Care for your body as a gift — habits over numbers, grace over guilt.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- First-run welcome -->
+  <section class="welcome" id="welcome" style="display:none;">
+    <p class="lead">Welcome, sister. 💛</p>
+    <p>This isn't a diet. There's no scale to fear, no calories to count, no "good" or "bad" days. This is a gentle space to notice how you <em>feel</em> and to honour your body with small acts of care.</p>
+    <p>You don't have to be perfect — you just have to be present. Tend to yourself today the way you'd tend to someone you love. That's the whole practice.</p>
+  </section>
+
+  <!-- 1. Faith anchor -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Faith Anchor</h2></div>
+    <p class="hint">Your body is a gift to steward gently, not a problem to fix.</p>
+    <div class="verse">
+      <p id="verseText">—</p>
+      <div class="ref" id="verseRef"></div>
+    </div>
+    <div class="verse-actions">
+      <button class="link-btn" id="anotherVerse" type="button">↻ Show me another</button>
+    </div>
+
+    <label class="field-label" for="surrender">Today I release ___ to You</label>
+    <input type="text" id="surrender" placeholder="the scale · shame · comparison · the rush…">
+
+    <label class="field-label" for="gratBody">One thing I'm grateful my body did for me today</label>
+    <input type="text" id="gratBody" placeholder="carried me · let me hug someone · kept breathing…">
+  </section>
+
+  <!-- 2. Habits of care -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Acts of Care</h2></div>
+    <p class="hint">Tap the ways you chose to nourish yourself. Any one is enough — this is consistency, not a checklist to ace.</p>
+    <div class="habits" id="habits"></div>
+  </section>
+
+  <!-- 3. How I feel -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>How I Feel Today</h2></div>
+    <p class="hint">This is what matters most — more than any number. How's your energy?</p>
+    <div class="feel-grid" id="feelGrid"></div>
+
+    <label class="field-label">A word for how I'm feeling <span class="opt">(tap any that fit)</span></label>
+    <div class="mood-chips" id="moodChips"></div>
+  </section>
+
+  <!-- 4. Reflection -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>A Kindness to Myself</h2></div>
+    <p class="hint">One kind thing about your body, or something that felt good today.</p>
+    <label class="field-label" for="reflection">My reflection <span class="opt">(optional)</span></label>
+    <textarea id="reflection" placeholder="Something gentle and true…"></textarea>
+
+    <details class="private" id="privateWrap">
+      <summary><span class="caret">›</span> Private note <span class="opt" style="margin-left:4px;">(just for you — optional)</span></summary>
+      <div class="pnote">
+        <label class="field-label" for="privateNote" style="margin-top:4px;">Yours to use however you'd like</label>
+        <textarea id="privateNote" placeholder="Anything at all. No pressure, no judgement."></textarea>
+        <p class="micro">This stays on your device, between you and your journal.</p>
+      </div>
+    </details>
+
+    <button class="complete-btn" id="completeBtn" type="button">Save today's care 🌿</button>
+    <div class="blessing" id="blessing">
+      <div class="big">Tenderly done. 💛</div>
+      <div class="sm">You showed up for your body with love today. That's the win, sister.</div>
+    </div>
+
+    <div class="streak">
+      <span class="flame">🔥</span>
+      <span><b id="streakCount">0</b>-day care streak · <b id="totalCount">0</b> entries of kindness</span>
+    </div>
+  </section>
+
+  <!-- History -->
+  <section class="card">
+    <div class="history-title">Your recent days of care</div>
+    <ul class="history-list" id="historyList"></ul>
+    <p class="empty-note" id="historyEmpty">Save today's care and it'll appear here, gently. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_faith_weight_loss";
+
+  // ---- Faith anchors: caring for the body as a gift, surrendering perfectionism ----
+  var VERSES = [
+    ["Do you not know that your body is a temple of the Holy Spirit within you? Honour God with your body.", "1 Corinthians 6:19-20"],
+    ["I praise You because I am fearfully and wonderfully made; Your works are wonderful.", "Psalm 139:14"],
+    ["She is clothed with strength and dignity, and she laughs without fear of the future.", "Proverbs 31:25"],
+    ["Come to Me, all you who are weary and burdened, and I will give you rest.", "Matthew 11:28"],
+    ["Cast all your anxiety on Him, because He cares for you.", "1 Peter 5:7"],
+    ["So whether you eat or drink or whatever you do, do it all for the glory of God.", "1 Corinthians 10:31"],
+    ["His mercies are new every morning; great is Your faithfulness.", "Lamentations 3:22-23"],
+    ["The Lord is my shepherd; He makes me lie down in green pastures, He leads me beside still waters. He restores my soul.", "Psalm 23:1-3"],
+    ["He gives strength to the weary and increases the power of the weak.", "Isaiah 40:29"],
+    ["You did not make yourself; you were knit together with intention and love.", "Psalm 139:13"],
+    ["Be still, and know that I am God.", "Psalm 46:10"],
+    ["Charm is deceptive and beauty is fleeting, but a woman who fears the Lord is to be praised.", "Proverbs 31:30"],
+    ["Therefore do not worry about tomorrow, for tomorrow will worry about itself.", "Matthew 6:34"],
+    ["You are altogether beautiful, my darling; there is no flaw in you.", "Song of Songs 4:7"],
+    ["My grace is sufficient for you, for My power is made perfect in weakness.", "2 Corinthians 12:9"],
+    ["The Lord will guide you always; He will satisfy your needs and strengthen your frame.", "Isaiah 58:11"],
+    ["Cease striving, and let your worth rest in being His — not in being perfect.", "A Word for You"],
+    ["Your body is not your enemy; it is the home that carries you through this life. Be gentle with it.", "A Word for You"],
+    ["You are loved fully today — not when you reach some other size, but now, as you are.", "A Word for You"],
+    ["Release the scale, the comparison, the shame. None of it gets to define your worth.", "A Word for You"],
+    ["Caring for yourself is not selfish — it is an act of gratitude for the gift you were given.", "A Word for You"],
+    ["Progress is not perfection. Showing up softly, again and again, is its own kind of faith.", "A Word for You"]
+  ];
+
+  // ---- Habits of care (non-restrictive, feeling-centred) ----
+  var HABITS = [
+    {id:"water",   emoji:"💧", text:"Drank water to nourish me"},
+    {id:"move",    emoji:"🤸‍♀️", text:"Moved my body joyfully"},
+    {id:"nourish", emoji:"🥗", text:"Ate something nourishing"},
+    {id:"rest",    emoji:"😴", text:"Let myself truly rest"},
+    {id:"mindful", emoji:"🍽️", text:"Ate slowly & mindfully"},
+    {id:"kind",    emoji:"🤍", text:"Was kind to myself about food"},
+    {id:"outside", emoji:"🌿", text:"Got fresh air or sunshine"},
+    {id:"breath",  emoji:"🌬️", text:"Took a deep, calming breath"}
+  ];
+
+  // ---- Energy scale (the primary metric) ----
+  var FEELINGS = [
+    {v:1, face:"🫂", lbl:"Tender"},
+    {v:2, face:"😌", lbl:"Soft"},
+    {v:3, face:"🙂", lbl:"Steady"},
+    {v:4, face:"☀️", lbl:"Bright"},
+    {v:5, face:"✨", lbl:"Radiant"}
+  ];
+
+  // ---- Mood chips ----
+  var MOODS = ["Peaceful","Grateful","Tired","Strong","Anxious","Hopeful","Loved","Heavy","Energised","Gentle"];
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    var diff = d - start;
+    return Math.floor(diff / 86400000);
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+  }
+
+  // ---- State ----
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.entries) return o; }
+    }catch(e){}
+    return { entries:{} };
+  }
+  var data = load();
+  var TODAY = todayKey();
+
+  function freshEntry(){
+    return { habits:{}, energy:0, moods:[], surrender:"", gratBody:"",
+             reflection:"", privateNote:"", verse:null, completed:false };
+  }
+  var entry = data.entries[TODAY] || freshEntry();
+
+  function save(){
+    data.entries[TODAY] = entry;
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Verse: deterministic daily default w/ shuffle, user can cycle ----
+  if(entry.verse === null || entry.verse === undefined){
+    entry.verse = dayOfYear(new Date()) % VERSES.length;
+  }
+  function renderVerse(){
+    var v = VERSES[entry.verse];
+    $("verseText").textContent = v[0];
+    $("verseRef").textContent = v[1];
+  }
+  $("anotherVerse").addEventListener("click", function(){
+    entry.verse = (entry.verse + 1) % VERSES.length;
+    renderVerse(); save();
+  });
+
+  // ---- Build habits ----
+  var habitsWrap = $("habits");
+  HABITS.forEach(function(h){
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "habit";
+    btn.setAttribute("aria-pressed","false");
+    btn.innerHTML = '<span class="box" aria-hidden="true"></span>'+
+                    '<span class="emoji" aria-hidden="true">'+h.emoji+'</span>'+
+                    '<span class="label-text">'+h.text+'</span>';
+    btn.addEventListener("click", function(){
+      entry.habits[h.id] = !entry.habits[h.id];
+      paintHabit(btn, h.id);
+      save(); renderStreak();
+    });
+    habitsWrap.appendChild(btn);
+    h._el = btn;
+  });
+  function paintHabit(btn, id){
+    var on = !!entry.habits[id];
+    btn.classList.toggle("on", on);
+    btn.setAttribute("aria-pressed", on ? "true":"false");
+    btn.querySelector(".box").textContent = on ? "✓" : "";
+  }
+
+  // ---- Build feeling grid ----
+  var feelGrid = $("feelGrid");
+  FEELINGS.forEach(function(f){
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "feel";
+    btn.setAttribute("aria-pressed","false");
+    btn.setAttribute("aria-label","Energy: "+f.lbl);
+    btn.innerHTML = '<span class="face" aria-hidden="true">'+f.face+'</span>'+
+                    '<span class="lbl">'+f.lbl+'</span>';
+    btn.addEventListener("click", function(){
+      entry.energy = (entry.energy === f.v) ? 0 : f.v;
+      paintFeelings(); save();
+    });
+    feelGrid.appendChild(btn);
+    f._el = btn;
+  });
+  function paintFeelings(){
+    FEELINGS.forEach(function(f){
+      var on = entry.energy === f.v;
+      f._el.classList.toggle("on", on);
+      f._el.setAttribute("aria-pressed", on ? "true":"false");
+    });
+  }
+
+  // ---- Build mood chips ----
+  var moodWrap = $("moodChips");
+  MOODS.forEach(function(m){
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "chip";
+    btn.textContent = m;
+    btn.setAttribute("aria-pressed","false");
+    btn.addEventListener("click", function(){
+      var i = entry.moods.indexOf(m);
+      if(i >= 0) entry.moods.splice(i,1); else entry.moods.push(m);
+      paintMood(btn, m); save();
+    });
+    moodWrap.appendChild(btn);
+    m && (btn._mood = m);
+  });
+  function paintMood(btn, m){
+    var on = entry.moods.indexOf(m) >= 0;
+    btn.classList.toggle("on", on);
+    btn.setAttribute("aria-pressed", on ? "true":"false");
+  }
+
+  // ---- Text inputs ----
+  var surrenderEl = $("surrender"), gratBodyEl = $("gratBody"),
+      reflectionEl = $("reflection"), privateEl = $("privateNote");
+  function wire(el, fn){
+    el.addEventListener("input", function(){ fn(el.value); save(); });
+  }
+  wire(surrenderEl,  function(v){ entry.surrender=v; });
+  wire(gratBodyEl,   function(v){ entry.gratBody=v; });
+  wire(reflectionEl, function(v){ entry.reflection=v; });
+  wire(privateEl,    function(v){ entry.privateNote=v; });
+
+  // ---- Complete ----
+  var completeBtn = $("completeBtn"), blessingEl = $("blessing");
+  function renderCompleted(){
+    if(entry.completed){
+      completeBtn.textContent = "Care saved for today ✓";
+      completeBtn.classList.add("done");
+    }else{
+      completeBtn.textContent = "Save today's care 🌿";
+      completeBtn.classList.remove("done");
+    }
+    renderStreak();
+    renderHistory();
+  }
+  completeBtn.addEventListener("click", function(){
+    entry.completed = !entry.completed;
+    save();
+    blessingEl.classList.toggle("show", entry.completed);
+    renderCompleted();
+  });
+
+  // ---- Streak + totals (kindness, never weight) ----
+  function isCared(e){
+    if(!e) return false;
+    if(e.completed) return true;
+    return false;
+  }
+  function renderStreak(){
+    var keys = Object.keys(data.entries).filter(function(k){ return isCared(data.entries[k]); });
+    $("totalCount").textContent = keys.length;
+    var streak = 0;
+    var d = new Date();
+    while(true){
+      var m = String(d.getMonth()+1).padStart(2,"0");
+      var day = String(d.getDate()).padStart(2,"0");
+      var k = d.getFullYear()+"-"+m+"-"+day;
+      if(data.entries[k] && isCared(data.entries[k])){ streak++; d.setDate(d.getDate()-1); }
+      else break;
+    }
+    $("streakCount").textContent = streak;
+  }
+
+  // ---- History (recent first, expandable, deletable) ----
+  function energyLabel(v){
+    for(var i=0;i<FEELINGS.length;i++){ if(FEELINGS[i].v === v) return FEELINGS[i].face+" "+FEELINGS[i].lbl; }
+    return "—";
+  }
+  function renderHistory(){
+    var list = $("historyList"), empty = $("historyEmpty");
+    var keys = Object.keys(data.entries)
+      .filter(function(k){ return isCared(data.entries[k]); })
+      .sort().reverse();
+    list.innerHTML = "";
+    if(keys.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+
+    keys.forEach(function(k){
+      var e = data.entries[k];
+      var li = document.createElement("li");
+      li.className = "h-item";
+
+      var head = document.createElement("div");
+      head.className = "h-head";
+      head.setAttribute("role","button");
+      head.setAttribute("tabindex","0");
+      head.innerHTML = '<span class="h-date">'+prettyDate(k)+'</span>'+
+                       '<span class="h-feel">'+ (e.energy ? energyLabel(e.energy) : "—") +'</span>'+
+                       '<span class="caret" aria-hidden="true">›</span>';
+
+      var body = document.createElement("div");
+      body.className = "h-body";
+
+      var careCount = HABITS.filter(function(h){ return e.habits && e.habits[h.id]; }).length;
+      var parts = "";
+      parts += '<div class="row"><span class="k">Acts of care</span>'+ careCount +' of '+HABITS.length+'</div>';
+      if(e.moods && e.moods.length){
+        parts += '<div class="row"><span class="k">Felt</span><span class="tags">'+ e.moods.join(" · ") +'</span></div>';
+      }
+      if(e.surrender){ parts += '<div class="row"><span class="k">Released</span>'+ esc(e.surrender) +'</div>'; }
+      if(e.gratBody){ parts += '<div class="row"><span class="k">Grateful body</span>'+ esc(e.gratBody) +'</div>'; }
+      if(e.reflection){ parts += '<div class="row"><span class="k">Reflection</span>'+ esc(e.reflection) +'</div>'; }
+      body.innerHTML = parts;
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "h-del";
+      del.textContent = "Delete this entry";
+      del.addEventListener("click", function(ev){
+        ev.stopPropagation();
+        if(confirm("Delete your entry for "+prettyDate(k)+"? This can't be undone.")){
+          delete data.entries[k];
+          if(k === TODAY){ entry = freshEntry(); entry.verse = dayOfYear(new Date()) % VERSES.length; restoreInputs(); }
+          save(); renderCompleted();
+        }
+      });
+      body.appendChild(del);
+
+      function toggle(){ li.classList.toggle("open"); }
+      head.addEventListener("click", toggle);
+      head.addEventListener("keydown", function(ev){
+        if(ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); toggle(); }
+      });
+
+      li.appendChild(head); li.appendChild(body);
+      list.appendChild(li);
+    });
+  }
+  function esc(s){
+    return String(s).replace(/[&<>"]/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];
+    });
+  }
+
+  // ---- Restore all inputs from entry ----
+  function restoreInputs(){
+    HABITS.forEach(function(h){ paintHabit(h._el, h.id); });
+    paintFeelings();
+    MOODS.forEach(function(){});
+    Array.prototype.forEach.call(moodWrap.children, function(btn){ paintMood(btn, btn._mood); });
+    surrenderEl.value = entry.surrender || "";
+    gratBodyEl.value = entry.gratBody || "";
+    reflectionEl.value = entry.reflection || "";
+    privateEl.value = entry.privateNote || "";
+    if(entry.privateNote){ $("privateWrap").setAttribute("open","open"); }
+    renderVerse();
+  }
+
+  // ---- First-run welcome ----
+  function maybeWelcome(){
+    if(Object.keys(data.entries).length === 0){ $("welcome").style.display="block"; }
+    else { $("welcome").style.display="none"; }
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your journal data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { entries:{} };
+      entry = freshEntry();
+      entry.verse = dayOfYear(new Date()) % VERSES.length;
+      restoreInputs();
+      blessingEl.classList.remove("show");
+      renderCompleted();
+      maybeWelcome();
+    }
+  });
+
+  // ---- Init ----
+  $("todayDate").textContent = prettyDate(TODAY);
+  restoreInputs();
+  blessingEl.classList.toggle("show", !!entry.completed);
+  renderCompleted();
+  maybeWelcome();
+
+})();
+</script>
+</body>
+</html>

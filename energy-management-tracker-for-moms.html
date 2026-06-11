@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Energy Management Tracker for Moms · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:16px; padding:22px 20px; margin-top:16px;
+    position:relative; overflow:hidden;
+  }
+  .welcome h2{ font-family:'Fraunces',serif; font-weight:600; font-size:21px; margin-bottom:8px; color:#FCF8EF; }
+  .welcome p{ font-size:14.5px; line-height:1.55; color:#EFE7D6; }
+  .welcome .emph{ color:var(--gold-soft); font-weight:600; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Two-column list builder ---------- */
+  .list-block{ margin-bottom:4px; }
+  .list-head{
+    display:flex; align-items:center; gap:8px; margin:6px 0 8px;
+    font-family:'Fraunces',serif; font-weight:600; font-size:16px;
+  }
+  .list-head.drain{ color:#9A3B2E; }
+  .list-head.fill{ color:var(--emerald); }
+  .list-head .ico{ font-size:17px; }
+
+  .chips{ display:flex; flex-wrap:wrap; gap:7px; margin-bottom:10px; }
+  .chip{
+    background:var(--cream); border:1px dashed var(--line); color:var(--muted);
+    border-radius:999px; padding:8px 12px; font-family:inherit; font-size:13px;
+    cursor:pointer; min-height:36px; transition:border-color .15s, color .15s, background .15s;
+  }
+  .chip:hover{ border-color:var(--gold); color:var(--ink); }
+
+  .add-row{ display:flex; gap:8px; margin-bottom:6px; }
+  .add-row input[type="text"]{ flex:1; }
+  .add-btn{
+    flex:none; min-width:48px; min-height:48px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:22px; line-height:1; cursor:pointer;
+    box-shadow:0 4px 12px rgba(200,160,74,.3);
+  }
+  .add-btn:active{ transform:translateY(1px); }
+
+  ul.items{ list-style:none; margin-top:6px; }
+  ul.items li{
+    display:flex; align-items:center; gap:10px;
+    padding:11px 12px; margin-bottom:8px; border-radius:12px;
+    border:1px solid var(--line); background:var(--cream);
+  }
+  ul.items li .label{ flex:1; font-size:14.5px; font-weight:600; color:var(--ink); }
+  .int-pick{ display:inline-flex; gap:3px; }
+  .int-pick button{
+    width:14px;height:14px;border-radius:50%;border:1px solid var(--line);
+    background:#fff; cursor:pointer; padding:0; min-height:0;
+  }
+  .int-pick.drain button.on{ background:#C5604F; border-color:#C5604F; }
+  .int-pick.fill button.on{ background:var(--emerald); border-color:var(--emerald); }
+  .del-btn{
+    flex:none; width:32px;height:32px;border-radius:8px; border:1px solid var(--line);
+    background:#fff; color:var(--muted); cursor:pointer; font-size:16px; line-height:1;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .del-btn:hover{ border-color:#C5604F; color:#C5604F; }
+  .list-empty{ color:var(--muted); font-size:13px; font-style:italic; padding:2px 2px 8px; }
+  .divider{ height:1px; background:var(--line); margin:16px 0; border:none; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  select{ min-height:48px; }
+  textarea{ min-height:72px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Battery picker ---------- */
+  .battery{
+    display:flex; align-items:center; gap:8px; justify-content:center; margin:4px 0 6px;
+  }
+  .cell{
+    flex:1; max-width:60px; height:46px; border-radius:10px;
+    border:1.5px solid var(--line); background:#fff; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-weight:600; font-size:15px; color:var(--muted);
+    transition:all .12s ease; min-height:44px;
+  }
+  .cell.lit{ color:#fff; border-color:transparent; }
+  .battery[data-level="1"] .cell.lit{ background:#C5604F; }
+  .battery[data-level="2"] .cell.lit{ background:#D08A3E; }
+  .battery[data-level="3"] .cell.lit{ background:var(--gold); color:var(--ink); }
+  .battery[data-level="4"] .cell.lit{ background:#5A8A5A; }
+  .battery[data-level="5"] .cell.lit{ background:var(--emerald); }
+  .battery-caption{ text-align:center; color:var(--muted); font-size:13.5px; min-height:20px; margin-bottom:6px; }
+
+  .quickpick-label{ font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 7px; }
+  .qp-chips{ display:flex; flex-wrap:wrap; gap:7px; }
+  .qp-chip{
+    border-radius:999px; padding:8px 12px; font-family:inherit; font-size:13px;
+    cursor:pointer; min-height:36px; border:1px solid var(--line); background:var(--cream); color:var(--muted);
+    transition:all .12s ease;
+  }
+  .qp-chip.drain.on{ background:#FBEAE6; border-color:#C5604F; color:#9A3B2E; }
+  .qp-chip.fill.on{ background:var(--emerald-soft); border-color:var(--emerald); color:var(--emerald); }
+  .qp-empty{ color:var(--muted); font-size:13px; font-style:italic; }
+
+  /* ---------- Complete button ---------- */
+  .complete-btn{
+    width:100%; margin-top:16px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+  .complete-btn:disabled{ background:var(--emerald-soft); color:var(--muted); box-shadow:none; cursor:default; }
+
+  .blessing{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .blessing.show{ display:block; animation:rise .4s ease; }
+  .blessing .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .blessing .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Insights ---------- */
+  .stat-grid{ display:flex; gap:10px; margin-bottom:8px; }
+  .stat{
+    flex:1; background:var(--cream); border:1px solid var(--line); border-radius:12px;
+    padding:14px 10px; text-align:center;
+  }
+  .stat .big{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:26px; line-height:1; }
+  .stat .lbl{ color:var(--muted); font-size:12px; margin-top:6px; letter-spacing:.02em; }
+  .top-block{ margin-top:14px; }
+  .top-title{
+    font-family:'Fraunces',serif; font-weight:600; font-size:15px; margin-bottom:8px;
+    display:flex; align-items:center; gap:7px;
+  }
+  .top-title.drain{ color:#9A3B2E; }
+  .top-title.fill{ color:var(--emerald); }
+  .bar-row{ display:flex; align-items:center; gap:10px; margin-bottom:8px; font-size:13.5px; }
+  .bar-row .bname{ flex:none; width:42%; font-weight:600; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .bar-track{ flex:1; height:10px; background:var(--cream); border:1px solid var(--line); border-radius:999px; overflow:hidden; }
+  .bar-fill{ height:100%; border-radius:999px; }
+  .bar-fill.drain{ background:#C5604F; }
+  .bar-fill.fill{ background:var(--emerald); }
+  .bar-row .bcount{ flex:none; color:var(--muted); font-size:12.5px; min-width:18px; text-align:right; }
+  .insight-note{
+    margin-top:14px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.14);
+    border-radius:12px; padding:14px; color:var(--emerald); font-size:14px; line-height:1.5;
+  }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Protect plan ---------- */
+  .plan-item{
+    display:flex; align-items:flex-start; gap:11px;
+    padding:13px; border:1px solid var(--line); border-radius:12px; margin-bottom:10px;
+    background:var(--cream); cursor:pointer;
+  }
+  .plan-item .box{
+    flex:none; width:24px;height:24px;border-radius:7px;border:2px solid var(--gold);
+    background:#fff; display:flex;align-items:center;justify-content:center;
+    font-size:14px; color:#fff; margin-top:1px;
+  }
+  .plan-item.checked .box{ background:var(--emerald); border-color:var(--emerald); }
+  .plan-item .ptxt{ flex:1; font-size:14px; line-height:1.45; }
+  .plan-item .ptxt .k{ font-weight:700; }
+  .plan-item.drain .ptxt .k{ color:#9A3B2E; }
+  .plan-item.fill .ptxt .k{ color:var(--emerald); }
+
+  /* ---------- Fill your cup menu ---------- */
+  .cup{
+    background:linear-gradient(180deg, var(--gold-soft) 0%, #F1E4C2 100%);
+    border:1px solid rgba(200,160,74,.4); border-radius:16px; padding:20px; margin-top:16px;
+  }
+  .cup h2{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:19px; margin-bottom:4px; }
+  .cup .hint{ color:#6b5a2e; }
+  .cup-list{ display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+  .cup-pill{
+    background:#fff; border:1px solid rgba(200,160,74,.5); border-radius:999px;
+    padding:9px 14px; font-size:14px; font-weight:600; color:var(--emerald);
+  }
+  .cup-empty{ color:#6b5a2e; font-size:13.5px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Energy Management Tracker</h1>
+    <p class="subtitle">Your energy is a vital resource. Protect it — you can't pour from empty.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- Welcome (first run only) -->
+  <section class="welcome" id="welcomeCard" style="display:none;">
+    <h2>Welcome, sister. 💛</h2>
+    <p>This is your space to honour your energy. Start by naming what <span class="emph">drains</span> you and what <span class="emph">fills you back up</span>. Then check in each day. Protecting your energy isn't selfish — <span class="emph">it's protecting your family.</span></p>
+  </section>
+
+  <!-- 1. Identify drains & fills -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Drains & Fills</h2></div>
+    <p class="hint">Name what pulls energy from you, and what restores it. Tap a starter, or add your own.</p>
+
+    <div class="list-block">
+      <div class="list-head drain"><span class="ico">🪫</span> What drains me</div>
+      <div class="chips" id="drainStarters"></div>
+      <div class="add-row">
+        <label class="field-label" for="drainInput" style="position:absolute;left:-9999px;">Add an energy drain</label>
+        <input type="text" id="drainInput" placeholder="Add a drain…" maxlength="60">
+        <button class="add-btn" id="drainAdd" type="button" aria-label="Add drain">+</button>
+      </div>
+      <ul class="items" id="drainList"></ul>
+      <p class="list-empty" id="drainEmpty">No drains yet — name the first one above.</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="list-block">
+      <div class="list-head fill"><span class="ico">🔋</span> What fills me up</div>
+      <div class="chips" id="fillStarters"></div>
+      <div class="add-row">
+        <label class="field-label" for="fillInput" style="position:absolute;left:-9999px;">Add an energy fill</label>
+        <input type="text" id="fillInput" placeholder="Add a restorer…" maxlength="60">
+        <button class="add-btn" id="fillAdd" type="button" aria-label="Add fill">+</button>
+      </div>
+      <ul class="items" id="fillList"></ul>
+      <p class="list-empty" id="fillEmpty">No fills yet — what restores you? Add it above.</p>
+    </div>
+    <p class="hint" style="margin:12px 0 0;">The dots set intensity — how strongly it drains or restores you.</p>
+  </section>
+
+  <!-- 2. Energy check-in -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Today's Energy Check-In</h2></div>
+    <p class="hint">Be honest, not perfect. Where is your battery right now?</p>
+
+    <div class="battery" id="battery">
+      <button class="cell" type="button" data-val="1" aria-label="Energy level 1, running on empty">1</button>
+      <button class="cell" type="button" data-val="2" aria-label="Energy level 2, low">2</button>
+      <button class="cell" type="button" data-val="3" aria-label="Energy level 3, holding steady">3</button>
+      <button class="cell" type="button" data-val="4" aria-label="Energy level 4, good">4</button>
+      <button class="cell" type="button" data-val="5" aria-label="Energy level 5, full">5</button>
+    </div>
+    <div class="battery-caption" id="batteryCaption">Tap your level above.</div>
+
+    <div class="quickpick-label">What drained you today? <span style="color:var(--muted);font-weight:400;">(optional)</span></div>
+    <div class="qp-chips" id="qpDrains"></div>
+    <p class="qp-empty" id="qpDrainsEmpty">Add some drains in step 1 to pick from here.</p>
+
+    <div class="quickpick-label">What filled you today? <span style="color:var(--muted);font-weight:400;">(optional)</span></div>
+    <div class="qp-chips" id="qpFills"></div>
+    <p class="qp-empty" id="qpFillsEmpty">Add some fills in step 1 to pick from here.</p>
+
+    <label class="field-label" for="note">A note to yourself <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <textarea id="note" placeholder="How are you, really?"></textarea>
+
+    <button class="complete-btn" id="logBtn" type="button">Save today's check-in 🔋</button>
+    <div class="blessing" id="blessing">
+      <div class="big">Logged with love. 💛</div>
+      <div class="sm">Noticing your energy is the first act of protecting it.</div>
+    </div>
+  </section>
+
+  <!-- 3. Insights -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Your Patterns</h2></div>
+    <p class="hint">Gentle truths from your check-ins — what to guard against, what to lean into.</p>
+    <div id="insightsBody">
+      <div class="stat-grid">
+        <div class="stat"><div class="big" id="avgEnergy">—</div><div class="lbl">Avg energy</div></div>
+        <div class="stat"><div class="big" id="checkinCount">0</div><div class="lbl">Check-ins</div></div>
+        <div class="stat"><div class="big" id="streakStat">0</div><div class="lbl">Day streak</div></div>
+      </div>
+      <div class="top-block" id="topDrainsBlock" style="display:none;">
+        <div class="top-title drain">🪫 Your top drains</div>
+        <div id="topDrains"></div>
+      </div>
+      <div class="top-block" id="topFillsBlock" style="display:none;">
+        <div class="top-title fill">🔋 Your top fills</div>
+        <div id="topFills"></div>
+      </div>
+      <div class="insight-note" id="insightNote">Log a few check-ins and your patterns will bloom here, sister.</div>
+    </div>
+    <p class="empty-note" id="insightsEmpty" style="display:none;">No check-ins yet. Your first one starts the story.</p>
+  </section>
+
+  <!-- 4. Protect the battery -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Protect Your Battery</h2></div>
+    <p class="hint">One small boundary, one small refill. Check them off as you live them.</p>
+    <div id="planBody"></div>
+    <p class="empty-note" id="planEmpty">Build your drains & fills above, then a gentle plan appears here. 💛</p>
+  </section>
+
+  <!-- Fill your cup -->
+  <section class="cup">
+    <h2>Fill your cup 🫖</h2>
+    <p class="hint">A low moment? Pick one of your restorers and do it now. You are worth refilling.</p>
+    <div class="cup-list" id="cupList"></div>
+    <p class="cup-empty" id="cupEmpty">Add what fills you in step 1, and your quick menu appears here.</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_energy_management";
+
+  var DRAIN_STARTERS = ["The mental load","Comparison / scrolling","Saying yes too much","Constant noise","Skipped meals","Poor sleep","Clutter everywhere","Rushing the school run","No alone time","Other people's moods"];
+  var FILL_STARTERS = ["Quiet coffee","A real walk outside","Prayer / quiet time","A good night's sleep","Time with a friend","Worship music","A warm shower / bath","Reading something for me","Movement I enjoy","Saying no without guilt"];
+
+  // ---- Date helpers ----
+  function todayKey(){
+    var d=new Date();
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  }
+  function prettyDate(key){
+    var p=key.split("-");
+    var d=new Date(p[0],p[1]-1,p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
+  }
+
+  // ---- State ----
+  var data = load();
+  var TODAY = todayKey();
+  var todayEntry = data.checkins[TODAY] || { level:0, drains:[], fills:[], note:"", saved:false };
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o=JSON.parse(raw);
+        if(o){ o.drains=o.drains||[]; o.fills=o.fills||[]; o.checkins=o.checkins||{}; o.plan=o.plan||{drainDone:false,fillDone:false}; return o; }
+      }
+    }catch(e){}
+    return { drains:[], fills:[], checkins:{}, plan:{drainDone:false,fillDone:false} };
+  }
+  function save(){
+    data.checkins[TODAY] = todayEntry;
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  $("todayDate").textContent = prettyDate(TODAY);
+
+  // ---- First-run welcome ----
+  function maybeWelcome(){
+    var fresh = data.drains.length===0 && data.fills.length===0 && Object.keys(data.checkins).length===0;
+    $("welcomeCard").style.display = fresh ? "block" : "none";
+  }
+
+  /* ===================== STARTERS ===================== */
+  function renderStarters(){
+    renderStarterRow("drainStarters", DRAIN_STARTERS, "drain");
+    renderStarterRow("fillStarters", FILL_STARTERS, "fill");
+  }
+  function renderStarterRow(elId, arr, type){
+    var box=$(elId); box.innerHTML="";
+    var existing = (type==="drain"?data.drains:data.fills).map(function(x){return x.label.toLowerCase();});
+    arr.forEach(function(label){
+      if(existing.indexOf(label.toLowerCase())!==-1) return;
+      var b=document.createElement("button");
+      b.type="button"; b.className="chip"; b.textContent="+ "+label;
+      b.addEventListener("click",function(){ addItem(type,label); });
+      box.appendChild(b);
+    });
+  }
+
+  /* ===================== LIST BUILDER ===================== */
+  function addItem(type,label){
+    label=(label||"").trim();
+    if(!label) return;
+    var list = type==="drain"?data.drains:data.fills;
+    if(list.some(function(x){return x.label.toLowerCase()===label.toLowerCase();})) return;
+    list.push({ id:uid(), label:label, intensity:2 });
+    save(); renderAll();
+  }
+  function renderList(type){
+    var list = type==="drain"?data.drains:data.fills;
+    var el = $(type==="drain"?"drainList":"fillList");
+    var empty = $(type==="drain"?"drainEmpty":"fillEmpty");
+    el.innerHTML="";
+    if(list.length===0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+    list.forEach(function(item){
+      var li=document.createElement("li");
+      var lab=document.createElement("span");
+      lab.className="label"; lab.textContent=item.label;
+
+      var pick=document.createElement("span");
+      pick.className="int-pick "+type;
+      pick.setAttribute("role","group");
+      pick.setAttribute("aria-label","Intensity for "+item.label);
+      for(var n=1;n<=3;n++){
+        (function(n){
+          var dot=document.createElement("button");
+          dot.type="button";
+          dot.setAttribute("aria-label","Set intensity "+n);
+          if(n<=item.intensity) dot.className="on";
+          dot.addEventListener("click",function(){ item.intensity=n; save(); renderList(type); });
+          pick.appendChild(dot);
+        })(n);
+      }
+
+      var del=document.createElement("button");
+      del.type="button"; del.className="del-btn"; del.textContent="×";
+      del.setAttribute("aria-label","Delete "+item.label);
+      del.addEventListener("click",function(){
+        if(confirm('Remove "'+item.label+'" from your list?')){
+          var arr=type==="drain"?data.drains:data.fills;
+          var i=arr.indexOf(item); if(i>-1) arr.splice(i,1);
+          save(); renderAll();
+        }
+      });
+
+      li.appendChild(lab); li.appendChild(pick); li.appendChild(del);
+      el.appendChild(li);
+    });
+  }
+
+  $("drainAdd").addEventListener("click",function(){ addItem("drain",$("drainInput").value); $("drainInput").value=""; $("drainInput").focus(); });
+  $("fillAdd").addEventListener("click",function(){ addItem("fill",$("fillInput").value); $("fillInput").value=""; $("fillInput").focus(); });
+  $("drainInput").addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); $("drainAdd").click(); } });
+  $("fillInput").addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); $("fillAdd").click(); } });
+
+  /* ===================== CHECK-IN ===================== */
+  var BAT_CAPTIONS = {
+    0:"Tap your level above.",
+    1:"Running on empty. Be so gentle with yourself today. 💛",
+    2:"Low. What's one small refill you can reach for?",
+    3:"Holding steady. You're doing more than you know.",
+    4:"Good energy. Protect it from the leaks.",
+    5:"Full and flowing. Soak it in, sister. ✨"
+  };
+  function renderBattery(){
+    var bat=$("battery");
+    bat.setAttribute("data-level",todayEntry.level||0);
+    var cells=bat.querySelectorAll(".cell");
+    cells.forEach(function(c){
+      var v=parseInt(c.getAttribute("data-val"),10);
+      c.classList.toggle("lit", todayEntry.level>0 && v<=todayEntry.level);
+      c.setAttribute("aria-pressed", v===todayEntry.level ? "true":"false");
+    });
+    $("batteryCaption").textContent = BAT_CAPTIONS[todayEntry.level||0];
+  }
+  $("battery").querySelectorAll(".cell").forEach(function(c){
+    c.addEventListener("click",function(){
+      todayEntry.level = parseInt(c.getAttribute("data-val"),10);
+      save(); renderBattery();
+    });
+  });
+
+  function renderQuickPick(type){
+    var list=type==="drain"?data.drains:data.fills;
+    var box=$(type==="drain"?"qpDrains":"qpFills");
+    var empty=$(type==="drain"?"qpDrainsEmpty":"qpFillsEmpty");
+    var chosen=type==="drain"?todayEntry.drains:todayEntry.fills;
+    box.innerHTML="";
+    if(list.length===0){ empty.style.display="block"; box.style.display="none"; return; }
+    empty.style.display="none"; box.style.display="flex";
+    list.forEach(function(item){
+      var b=document.createElement("button");
+      b.type="button"; b.className="qp-chip "+type+(chosen.indexOf(item.label)!==-1?" on":"");
+      b.textContent=item.label;
+      b.setAttribute("aria-pressed", chosen.indexOf(item.label)!==-1?"true":"false");
+      b.addEventListener("click",function(){
+        var i=chosen.indexOf(item.label);
+        if(i>-1) chosen.splice(i,1); else chosen.push(item.label);
+        save(); renderQuickPick(type);
+      });
+      box.appendChild(b);
+    });
+  }
+
+  $("note").addEventListener("input",function(){ todayEntry.note=this.value; save(); });
+
+  $("logBtn").addEventListener("click",function(){
+    if(!todayEntry.level){
+      $("batteryCaption").textContent="Tap your battery level first, sister. 💛";
+      $("battery").scrollIntoView({behavior:"smooth",block:"center"});
+      return;
+    }
+    todayEntry.saved=true;
+    save();
+    $("blessing").classList.add("show");
+    renderInsights(); renderPlan();
+  });
+
+  function renderCheckin(){
+    renderBattery();
+    renderQuickPick("drain");
+    renderQuickPick("fill");
+    $("note").value = todayEntry.note||"";
+    if(todayEntry.saved){
+      $("logBtn").textContent="Update today's check-in ✓";
+    }else{
+      $("logBtn").textContent="Save today's check-in 🔋";
+    }
+  }
+
+  /* ===================== INSIGHTS ===================== */
+  function savedCheckins(){
+    return Object.keys(data.checkins).filter(function(k){ return data.checkins[k].saved; })
+      .map(function(k){ var e=data.checkins[k]; e._date=k; return e; });
+  }
+  function computeStreak(){
+    var s=0; var d=new Date();
+    while(true){
+      var k=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+      if(data.checkins[k]&&data.checkins[k].saved){ s++; d.setDate(d.getDate()-1); } else break;
+    }
+    return s;
+  }
+  function tally(arrName){
+    var counts={};
+    savedCheckins().forEach(function(e){
+      (e[arrName]||[]).forEach(function(label){ counts[label]=(counts[label]||0)+1; });
+    });
+    return Object.keys(counts).map(function(l){ return {label:l,count:counts[l]}; })
+      .sort(function(a,b){ return b.count-a.count; }).slice(0,3);
+  }
+  function renderBars(elId, rows, type){
+    var box=$(elId); box.innerHTML="";
+    var max=rows.reduce(function(m,r){ return Math.max(m,r.count); },0)||1;
+    rows.forEach(function(r){
+      var row=document.createElement("div"); row.className="bar-row";
+      var name=document.createElement("span"); name.className="bname"; name.textContent=r.label;
+      var track=document.createElement("span"); track.className="bar-track";
+      var fill=document.createElement("span"); fill.className="bar-fill "+type;
+      fill.style.width=Math.round((r.count/max)*100)+"%";
+      track.appendChild(fill);
+      var cnt=document.createElement("span"); cnt.className="bcount"; cnt.textContent="×"+r.count;
+      row.appendChild(name); row.appendChild(track); row.appendChild(cnt);
+      box.appendChild(row);
+    });
+  }
+  function renderInsights(){
+    var entries=savedCheckins();
+    var hasData=entries.length>0;
+    $("insightsEmpty").style.display = hasData?"none":"block";
+    $("insightsBody").style.display = hasData?"block":"none";
+    if(!hasData) return;
+
+    var sum=entries.reduce(function(t,e){ return t+(e.level||0); },0);
+    $("avgEnergy").textContent = (sum/entries.length).toFixed(1);
+    $("checkinCount").textContent = entries.length;
+    $("streakStat").textContent = computeStreak();
+
+    var td=tally("drains"), tf=tally("fills");
+    $("topDrainsBlock").style.display = td.length?"block":"none";
+    $("topFillsBlock").style.display = tf.length?"block":"none";
+    if(td.length) renderBars("topDrains",td,"drain");
+    if(tf.length) renderBars("topFills",tf,"fill");
+
+    var note;
+    var avg=sum/entries.length;
+    if(td.length && tf.length){
+      note="Your energy leans on “"+td[0].label+"” more than anything — guard against it where you can. And “"+tf[0].label+"” keeps refilling you — make room for more of it.";
+    }else if(td.length){
+      note="“"+td[0].label+"” shows up most as a drain. Naming it is the first boundary, sister.";
+    }else if(tf.length){
+      note="“"+tf[0].label+"” is restoring you most. Lean into it without guilt.";
+    }else if(avg<=2.5){
+      note="Your battery's been running low. This is your sign to refill — you can't pour from empty.";
+    }else{
+      note="You're tending your energy well. Keep noticing what fills and what drains you.";
+    }
+    $("insightNote").textContent=note;
+  }
+
+  /* ===================== PROTECT PLAN ===================== */
+  function renderPlan(){
+    var body=$("planBody"), empty=$("planEmpty");
+    var topDrain = pickByIntensityOrFrequency(data.drains,"drains");
+    var topFill = pickByIntensityOrFrequency(data.fills,"fills");
+    body.innerHTML="";
+    if(!topDrain && !topFill){ empty.style.display="block"; return; }
+    empty.style.display="none";
+    if(topDrain){
+      body.appendChild(planItem("drain","Reduce or set a boundary around","drainDone",topDrain.label,"Less of this protects your peace."));
+    }
+    if(topFill){
+      body.appendChild(planItem("fill","Make more room for","fillDone",topFill.label,"More of this refills your cup."));
+    }
+  }
+  function pickByIntensityOrFrequency(list, arrName){
+    if(!list || list.length===0) return null;
+    var counts={};
+    savedCheckins().forEach(function(e){ (e[arrName]||[]).forEach(function(l){ counts[l]=(counts[l]||0)+1; }); });
+    var best=null, bestScore=-1;
+    list.forEach(function(item){
+      var score=(item.intensity||1)*2 + (counts[item.label]||0)*3;
+      if(score>bestScore){ bestScore=score; best=item; }
+    });
+    return best;
+  }
+  function planItem(type, lead, planKey, label, sub){
+    var div=document.createElement("div");
+    div.className="plan-item "+type+(data.plan[planKey]?" checked":"");
+    div.setAttribute("role","checkbox");
+    div.setAttribute("aria-checked", data.plan[planKey]?"true":"false");
+    div.setAttribute("tabindex","0");
+    var box=document.createElement("span"); box.className="box"; box.textContent=data.plan[planKey]?"✓":"";
+    var txt=document.createElement("span"); txt.className="ptxt";
+    txt.innerHTML = lead+' <span class="k">'+escapeHtml(label)+'</span> — <span style="color:var(--muted);">'+sub+'</span>';
+    div.appendChild(box); div.appendChild(txt);
+    function toggle(){ data.plan[planKey]=!data.plan[planKey]; save(); renderPlan(); }
+    div.addEventListener("click",toggle);
+    div.addEventListener("keydown",function(e){ if(e.key===" "||e.key==="Enter"){ e.preventDefault(); toggle(); } });
+    return div;
+  }
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g,function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+
+  /* ===================== FILL YOUR CUP ===================== */
+  function renderCup(){
+    var box=$("cupList"), empty=$("cupEmpty");
+    box.innerHTML="";
+    if(data.fills.length===0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+    var sorted=data.fills.slice().sort(function(a,b){ return (b.intensity||0)-(a.intensity||0); });
+    sorted.forEach(function(item){
+      var pill=document.createElement("span"); pill.className="cup-pill"; pill.textContent=item.label;
+      box.appendChild(pill);
+    });
+  }
+
+  /* ===================== RENDER ALL ===================== */
+  function renderAll(){
+    maybeWelcome();
+    renderStarters();
+    renderList("drain"); renderList("fill");
+    renderCheckin();
+    renderInsights();
+    renderPlan();
+    renderCup();
+  }
+
+  /* ===================== RESET ===================== */
+  $("resetBtn").addEventListener("click",function(){
+    if(confirm("Clear ALL your energy data — drains, fills, and every check-in? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { drains:[], fills:[], checkins:{}, plan:{drainDone:false,fillDone:false} };
+      todayEntry = { level:0, drains:[], fills:[], note:"", saved:false };
+      $("blessing").classList.remove("show");
+      $("drainInput").value=""; $("fillInput").value=""; $("note").value="";
+      renderAll();
+    }
+  });
+
+  renderAll();
+})();
+</script>
+</body>
+</html>

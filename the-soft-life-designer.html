@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Soft Life Designer · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Score ---------- */
+  .score-card{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:16px; padding:22px 20px; margin-top:16px;
+    text-align:center; box-shadow:0 6px 18px rgba(20,84,62,.18);
+  }
+  .score-label{
+    font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--gold-soft); font-weight:600;
+  }
+  .score-number{
+    font-family:'Fraunces',serif; font-weight:600; font-size:46px; line-height:1.1;
+    margin:4px 0 2px;
+  }
+  .score-feel{ font-family:'Fraunces',serif; font-style:italic; font-size:17px; }
+  .score-bar{
+    margin-top:14px; height:9px; border-radius:999px;
+    background:rgba(252,248,239,.18); overflow:hidden;
+  }
+  .score-fill{
+    height:100%; border-radius:999px; background:var(--gold);
+    width:0%; transition:width .5s ease;
+  }
+  .score-note{ margin-top:12px; font-size:13px; color:rgba(252,248,239,.78); }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:8px 0 14px; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 18px; margin-top:16px; color:var(--emerald);
+  }
+  .welcome .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:6px; }
+  .welcome .sm{ font-size:14px; color:var(--muted); line-height:1.5; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  label.field-label:first-child{ margin-top:0; }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:74px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Add row ---------- */
+  .add-row{ display:flex; gap:8px; margin-top:12px; }
+  .add-row input{ flex:1; }
+  .add-btn{
+    flex:none; min-width:48px; min-height:48px; padding:0 16px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    box-shadow:0 4px 12px rgba(200,160,74,.3);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .add-btn:hover{ box-shadow:0 6px 16px rgba(200,160,74,.4); }
+  .add-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Item lists ---------- */
+  .items{ list-style:none; margin-top:6px; }
+  .item{
+    display:flex; align-items:flex-start; gap:10px;
+    padding:12px 2px; border-bottom:1px solid var(--line);
+  }
+  .item:last-child{ border-bottom:none; }
+  .check{
+    flex:none; width:26px; height:26px; margin-top:1px; border-radius:8px;
+    border:2px solid var(--gold); background:#fff; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    font-size:15px; color:#fff; line-height:1; padding:0;
+    transition:background .15s, border-color .15s;
+  }
+  .check.on{ background:var(--emerald); border-color:var(--emerald); }
+  .item-body{ flex:1; min-width:0; }
+  .item-title{ font-size:15px; color:var(--ink); word-break:break-word; }
+  .item.done .item-title{ color:var(--muted); text-decoration:line-through; }
+  .item-sub{
+    display:block; width:100%; margin-top:7px;
+    font-family:inherit; font-size:14px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:9px;
+    padding:9px 11px; resize:none; min-height:40px; line-height:1.45;
+  }
+  .item-sub:focus{ outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,160,74,.18); }
+  .item-sub::placeholder{ color:#A7A095; }
+  .del{
+    flex:none; min-width:44px; min-height:44px; margin:-9px -6px -9px 0;
+    background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:18px; line-height:1; border-radius:10px;
+  }
+  .del:hover{ color:#9c3a2e; }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; margin-top:6px; }
+
+  /* ---------- Ritual chips ---------- */
+  .chip-label{ font-weight:600; font-size:13.5px; color:var(--ink); margin:6px 0 10px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
+  .chip{
+    min-height:44px; padding:9px 14px; border-radius:999px;
+    background:var(--cream); border:1px solid var(--line); color:var(--ink);
+    font-family:inherit; font-size:13.5px; cursor:pointer;
+    transition:border-color .15s, background .15s;
+  }
+  .chip:hover{ border-color:var(--gold); }
+  .chip.added{ background:var(--emerald-soft); border-color:rgba(20,84,62,.25); color:var(--emerald); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>The Soft Life Designer</h1>
+    <p class="subtitle">Design a soft, peaceful life — held up by gentle structure that fits your real budget and schedule.</p>
+  </header>
+
+  <!-- Soft life score -->
+  <section class="score-card">
+    <div class="score-label">Your Soft Life Score</div>
+    <div class="score-number" id="scoreNumber">0</div>
+    <div class="score-feel" id="scoreFeel">Let's begin, gently.</div>
+    <div class="score-bar"><div class="score-fill" id="scoreFill"></div></div>
+    <div class="score-note" id="scoreNote">Softness grows as you set up systems and practice rituals.</div>
+  </section>
+
+  <!-- Welcome (first run) -->
+  <section class="welcome" id="welcome">
+    <div class="big">Welcome, sister. 💛</div>
+    <div class="sm">You can be disciplined <em>and</em> at peace. A soft life isn't about having more — it's about a few quiet systems doing the heavy lifting so the rest of you can rest. Start anywhere below. Everything saves on its own.</div>
+  </section>
+
+  <!-- 1. Define her soft life -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Define Your Soft Life</h2></div>
+    <p class="hint">Close your eyes for a moment. What does a soft, peaceful life actually look and feel like for <em>you</em>?</p>
+
+    <label class="field-label" for="area_mornings">Mornings</label>
+    <textarea id="area_mornings" placeholder="Slow, unhurried, coffee before the noise…"></textarea>
+
+    <label class="field-label" for="area_home">Home</label>
+    <textarea id="area_home" placeholder="Calm, tidy enough, a candle lit, a soft place to land…"></textarea>
+
+    <label class="field-label" for="area_money">Money</label>
+    <textarea id="area_money" placeholder="No dread when I check my account. Quiet, covered, on autopilot…"></textarea>
+
+    <label class="field-label" for="area_work">Work</label>
+    <textarea id="area_work" placeholder="Focused, boundaried, finished by a certain hour…"></textarea>
+
+    <label class="field-label" for="area_relationships">Relationships</label>
+    <textarea id="area_relationships" placeholder="Honest, easeful, people who pour back into me…"></textarea>
+
+    <label class="field-label" for="area_rest">Rest</label>
+    <textarea id="area_rest" placeholder="Guilt-free rest. Early nights. A real day off…"></textarea>
+  </section>
+
+  <!-- 2. The structure that holds it -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>The Structure That Holds It</h2></div>
+    <p class="hint">Here's the secret: softness needs structure underneath. Pick a <em>few</em> essentials — money, meals, mornings, home basics — and put them on simple systems. Once those run themselves, the rest of your life gets to be soft.</p>
+    <ul class="items" id="structList"></ul>
+    <p class="empty-note" id="structEmpty">Name your first essential below — the thing that, once it's handled, lets everything else breathe.</p>
+    <div class="add-row">
+      <input type="text" id="structInput" placeholder="e.g. Money, weekly meals, morning routine…" aria-label="Add an essential to put on a system">
+      <button class="add-btn" id="structAdd" type="button">Add</button>
+    </div>
+  </section>
+
+  <!-- 3. Soft rituals -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Soft Rituals (On Any Budget)</h2></div>
+    <p class="hint">Softness is mostly free. Tap a ritual to add it to your life, then mark it once you've practiced it. Low cost, low time, high peace.</p>
+    <div class="chip-label">Add a ritual:</div>
+    <div class="chips" id="ritualChips"></div>
+    <ul class="items" id="ritualList"></ul>
+    <p class="empty-note" id="ritualEmpty">Tap a ritual above, or write your own to add it.</p>
+    <div class="add-row">
+      <input type="text" id="ritualInput" placeholder="Your own soft ritual…" aria-label="Add your own ritual">
+      <button class="add-btn" id="ritualAdd" type="button">Add</button>
+    </div>
+  </section>
+
+  <!-- 4. Protect the peace -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>Protect the Peace</h2></div>
+    <p class="hint">What's quietly draining your softness right now? Name each stressor — then one small change to ease it. Check it off when you've made that change.</p>
+    <ul class="items" id="stressList"></ul>
+    <p class="empty-note" id="stressEmpty">Name one thing stealing your peace. We'll soften it together.</p>
+    <div class="add-row">
+      <input type="text" id="stressInput" placeholder="e.g. Phone in bed, an over-full calendar…" aria-label="Add a stressor draining your peace">
+      <button class="add-btn" id="stressAdd" type="button">Add</button>
+    </div>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_soft_life_designer";
+
+  // ---- Ritual library (low cost, time-light) ----
+  var RITUAL_LIBRARY = [
+    "Slow morning — no phone for 20 min",
+    "Candle + tea in the evening",
+    "A no-rush, screen-free dinner",
+    "A 10-minute tidy reset before bed",
+    "Saying a gentle 'no' this week",
+    "A boundary on my time after 7pm",
+    "A walk with no destination",
+    "One unscheduled hour, just for me",
+    "Soft music while I cook",
+    "Phone parked outside the bedroom",
+    "Five quiet minutes of prayer",
+    "A bath instead of a scroll",
+    "Fresh sheets day",
+    "Sunlight + water first thing"
+  ];
+
+  // ---- State ----
+  var data = load();
+
+  function blankData(){
+    return {
+      areas:{ mornings:"", home:"", money:"", work:"", relationships:"", rest:"" },
+      structures:[], // {id,title,note,done}
+      rituals:[],    // {id,title,done}
+      stressors:[]   // {id,title,note,done}
+    };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && o.areas){
+          o.structures = o.structures || [];
+          o.rituals = o.rituals || [];
+          o.stressors = o.stressors || [];
+          return o;
+        }
+      }
+    }catch(e){}
+    return blankData();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Areas (reflection textareas) ----
+  var AREA_IDS = ["mornings","home","money","work","relationships","rest"];
+  AREA_IDS.forEach(function(a){
+    var el = $("area_"+a);
+    el.value = data.areas[a] || "";
+    el.addEventListener("input", function(){
+      data.areas[a] = el.value;
+      save(); renderScore();
+    });
+  });
+
+  // ---- Generic list renderer ----
+  // opts: { list, items, empty, hasNote, notePlaceholder, doneVerb }
+  function renderList(opts){
+    var ul = $(opts.list), empty = $(opts.empty);
+    ul.innerHTML = "";
+    if(!opts.items.length){ empty.style.display = "block"; renderScore(); return; }
+    empty.style.display = "none";
+
+    opts.items.forEach(function(it){
+      var li = document.createElement("li");
+      li.className = "item" + (it.done ? " done" : "");
+
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "check" + (it.done ? " on" : "");
+      btn.setAttribute("aria-pressed", it.done ? "true" : "false");
+      btn.setAttribute("aria-label", (it.done ? "Marked: " : "Mark: ") + it.title);
+      btn.textContent = it.done ? "✓" : "";
+      btn.addEventListener("click", function(){
+        it.done = !it.done; save(); renderList(opts);
+      });
+
+      var body = document.createElement("div");
+      body.className = "item-body";
+      var title = document.createElement("div");
+      title.className = "item-title";
+      title.textContent = it.title;
+      body.appendChild(title);
+
+      if(opts.hasNote){
+        var note = document.createElement("textarea");
+        note.className = "item-sub";
+        note.rows = 1;
+        note.placeholder = opts.notePlaceholder;
+        note.value = it.note || "";
+        note.setAttribute("aria-label", opts.noteLabel + ": " + it.title);
+        note.addEventListener("input", function(){ it.note = note.value; save(); });
+        body.appendChild(note);
+      }
+
+      var del = document.createElement("button");
+      del.type = "button";
+      del.className = "del";
+      del.innerHTML = "✕";
+      del.setAttribute("aria-label", "Delete: " + it.title);
+      del.addEventListener("click", function(){
+        if(confirm("Remove “" + it.title + "”?")){
+          var i = opts.items.indexOf(it);
+          if(i > -1){ opts.items.splice(i,1); save(); renderList(opts); }
+        }
+      });
+
+      li.appendChild(btn);
+      li.appendChild(body);
+      li.appendChild(del);
+      ul.appendChild(li);
+    });
+    renderScore();
+  }
+
+  // ---- Wire each list's add control ----
+  function wireAdd(inputId, addId, opts){
+    function add(){
+      var v = $(inputId).value.trim();
+      if(!v) return;
+      opts.items.push({ id:uid(), title:v, note:"", done:false });
+      $(inputId).value = "";
+      save(); renderList(opts);
+    }
+    $(addId).addEventListener("click", add);
+    $(inputId).addEventListener("keydown", function(e){
+      if(e.key === "Enter"){ e.preventDefault(); add(); }
+    });
+  }
+
+  var structOpts = {
+    list:"structList", items:data.structures, empty:"structEmpty",
+    hasNote:true, notePlaceholder:"The simple rhythm/system… (e.g. auto-transfer on payday)",
+    noteLabel:"System for"
+  };
+  var ritualOpts = {
+    list:"ritualList", items:data.rituals, empty:"ritualEmpty",
+    hasNote:false
+  };
+  var stressOpts = {
+    list:"stressList", items:data.stressors, empty:"stressEmpty",
+    hasNote:true, notePlaceholder:"One small change to ease it…",
+    noteLabel:"Small change for"
+  };
+
+  wireAdd("structInput", "structAdd", structOpts);
+  wireAdd("ritualInput", "ritualAdd", ritualOpts);
+  wireAdd("stressInput", "stressAdd", stressOpts);
+
+  // ---- Ritual chips ----
+  function renderChips(){
+    var box = $("ritualChips");
+    box.innerHTML = "";
+    RITUAL_LIBRARY.forEach(function(label){
+      var added = ritualOpts.items.some(function(r){ return r.title === label; });
+      var chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "chip" + (added ? " added" : "");
+      chip.textContent = (added ? "✓ " : "+ ") + label;
+      chip.setAttribute("aria-pressed", added ? "true" : "false");
+      chip.addEventListener("click", function(){
+        if(ritualOpts.items.some(function(r){ return r.title === label; })) return;
+        ritualOpts.items.push({ id:uid(), title:label, note:"", done:false });
+        save(); renderList(ritualOpts); renderChips();
+      });
+      box.appendChild(chip);
+    });
+  }
+
+  // ---- Soft life score ----
+  function renderScore(){
+    // Components: defined areas, structures set up, rituals practiced, stressors handled.
+    var areasFilled = AREA_IDS.filter(function(a){ return (data.areas[a]||"").trim(); }).length;
+    var structDone = data.structures.filter(function(s){ return s.done; }).length;
+    var ritualsDone = data.rituals.filter(function(r){ return r.done; }).length;
+    var stressDone = data.stressors.filter(function(s){ return s.done; }).length;
+
+    // Weighted toward structure (it's what holds the softness).
+    var pts = 0;
+    pts += Math.min(areasFilled, 6) * 4;        // up to 24 — clarity
+    pts += Math.min(structDone, 4) * 9;         // up to 36 — the structure
+    pts += Math.min(ritualsDone, 4) * 6;        // up to 24 — softness practiced
+    pts += Math.min(stressDone, 4) * 4;         // up to 16 — peace protected
+    var score = Math.min(100, pts);
+
+    $("scoreNumber").textContent = score;
+    $("scoreFill").style.width = score + "%";
+
+    var feel, note;
+    if(score === 0){
+      feel = "Let's begin, gently."; note = "Softness grows as you set up systems and practice rituals.";
+    }else if(score < 30){
+      feel = "Finding your footing."; note = "You're getting clear on what soft means for you. Beautiful start.";
+    }else if(score < 55){
+      feel = "Structure is forming."; note = "A few systems are taking root. Feel the ground steadying under you.";
+    }else if(score < 80){
+      feel = "Soft and steady."; note = "Look at you — disciplined and at peace. Keep tending it.";
+    }else{
+      feel = "A life that holds you."; note = "Structured underneath, soft on top. This is the increase, sister. 💛";
+    }
+    $("scoreFeel").textContent = feel;
+    $("scoreNote").textContent = note;
+
+    // Hide welcome once she's started
+    var started = areasFilled || data.structures.length || data.rituals.length || data.stressors.length;
+    $("welcome").style.display = started ? "none" : "block";
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Soft Life Designer data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = blankData();
+      structOpts.items = data.structures;
+      ritualOpts.items = data.rituals;
+      stressOpts.items = data.stressors;
+      AREA_IDS.forEach(function(a){ $("area_"+a).value = ""; });
+      // re-wire add controls to new arrays
+      renderAll();
+    }
+  });
+
+  // ---- Initial render ----
+  function renderAll(){
+    renderList(structOpts);
+    renderList(ritualOpts);
+    renderList(stressOpts);
+    renderChips();
+    renderScore();
+  }
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

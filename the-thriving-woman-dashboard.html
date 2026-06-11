@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Thriving Woman Dashboard · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Month picker ---------- */
+  .month-bar{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .month-bar .arrow{
+    flex:none; width:44px; height:44px; border-radius:11px;
+    background:var(--cream); border:1px solid var(--line); color:var(--emerald);
+    font-size:20px; font-weight:700; cursor:pointer; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .month-bar .arrow:hover{ border-color:var(--gold); color:var(--gold); }
+  .month-bar .arrow:disabled{ opacity:.35; cursor:not-allowed; }
+  .month-bar .arrow:disabled:hover{ border-color:var(--line); color:var(--emerald); }
+  .month-label{
+    flex:1; text-align:center; font-family:'Fraunces',serif; font-weight:600;
+    color:var(--emerald); font-size:20px;
+  }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:24px 20px; position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .welcome h3{
+    font-family:'Fraunces',serif; font-weight:600; font-size:21px;
+    margin-bottom:8px; position:relative; z-index:1;
+  }
+  .welcome p{
+    font-size:14.5px; line-height:1.5; position:relative; z-index:1; color:#EDE6D6;
+  }
+
+  /* ---------- Rating areas ---------- */
+  .area{
+    padding:16px 0; border-bottom:1px solid var(--line);
+  }
+  .area:last-of-type{ border-bottom:none; padding-bottom:6px; }
+  .area-head{
+    display:flex; align-items:center; gap:9px; margin-bottom:4px;
+  }
+  .area-icon{
+    flex:none; width:30px; height:30px; border-radius:50%;
+    background:var(--emerald-soft); display:flex; align-items:center; justify-content:center;
+    font-size:16px;
+  }
+  .area-name{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:17px;
+  }
+  .area-val{
+    margin-left:auto; font-weight:700; color:var(--gold); font-size:16px;
+    min-width:42px; text-align:right;
+  }
+  .area-val span{ color:var(--muted); font-weight:400; font-size:13px; }
+  .slider-row{ display:flex; align-items:center; gap:10px; }
+  input[type="range"]{
+    -webkit-appearance:none; appearance:none; width:100%; height:8px;
+    border-radius:999px; background:var(--gold-soft); outline:none; margin:10px 0 6px;
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none; width:26px; height:26px; border-radius:50%;
+    background:var(--gold); border:3px solid #fff; box-shadow:0 2px 6px rgba(200,160,74,.5);
+    cursor:pointer;
+  }
+  input[type="range"]::-moz-range-thumb{
+    width:26px; height:26px; border-radius:50%; background:var(--gold);
+    border:3px solid #fff; box-shadow:0 2px 6px rgba(200,160,74,.5); cursor:pointer;
+  }
+  input[type="range"]:focus{ box-shadow:0 0 0 3px rgba(200,160,74,.18); }
+  .note-input{
+    width:100%; font-family:inherit; font-size:15px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:11px 13px; min-height:46px; resize:none; line-height:1.45;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  .note-input:focus{
+    outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  .note-input::placeholder{ color:#A7A095; }
+
+  /* ---------- Dashboard ring ---------- */
+  .dash-top{ text-align:center; padding:6px 0 2px; }
+  .ring-wrap{ position:relative; width:168px; height:168px; margin:0 auto 8px; }
+  .ring-wrap svg{ transform:rotate(-90deg); }
+  .ring-center{
+    position:absolute; inset:0; display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+  }
+  .ring-num{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:46px; line-height:1;
+  }
+  .ring-out-of{ color:var(--muted); font-size:13px; margin-top:2px; letter-spacing:.04em; }
+  .ring-label{
+    font-weight:600; font-size:13px; color:var(--gold); margin-top:4px;
+    letter-spacing:.04em; text-transform:uppercase;
+  }
+  .dash-msg{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:13px; padding:15px 16px; margin-top:8px; color:var(--emerald);
+    font-size:14.5px; line-height:1.5; text-align:center;
+  }
+  .dash-msg b{ font-family:'Fraunces',serif; }
+
+  /* ---------- Per-area bars ---------- */
+  .bars{ margin-top:18px; }
+  .bar-row{ margin-bottom:13px; }
+  .bar-row:last-child{ margin-bottom:0; }
+  .bar-top{
+    display:flex; align-items:center; justify-content:space-between;
+    font-size:13.5px; margin-bottom:5px;
+  }
+  .bar-top .lbl{ font-weight:600; color:var(--ink); display:flex; align-items:center; gap:6px; }
+  .bar-top .num{ font-weight:700; color:var(--emerald); }
+  .bar-track{ height:12px; border-radius:999px; background:var(--emerald-soft); overflow:hidden; }
+  .bar-fill{ height:100%; border-radius:999px; background:var(--gold); transition:width .5s ease; }
+  .bar-row.low .bar-fill{ background:linear-gradient(90deg,#D98B5F,#C8A04A); }
+
+  .invite{
+    margin-top:16px; background:var(--cream); border:1px dashed var(--gold-soft);
+    border-radius:13px; padding:15px 16px;
+  }
+  .invite .ttl{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:15px; margin-bottom:4px;
+  }
+  .invite p{ color:var(--muted); font-size:14px; line-height:1.5; }
+
+  /* ---------- Focus ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  select, input[type="text"]{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; min-height:48px; transition:border-color .15s, box-shadow .15s;
+  }
+  select:focus, input[type="text"]:focus{
+    outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder{ color:#A7A095; }
+  .action-row{
+    display:flex; align-items:center; gap:12px; margin-top:14px;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:12px; padding:14px;
+  }
+  .action-row input[type="checkbox"]{
+    flex:none; width:26px; height:26px; accent-color:var(--emerald); cursor:pointer;
+  }
+  .action-row label{ font-size:15px; color:var(--emerald); font-weight:600; cursor:pointer; }
+  .action-row.done label{ text-decoration:line-through; opacity:.7; }
+
+  /* ---------- Trend ---------- */
+  .trend-legend{
+    display:flex; flex-wrap:wrap; gap:10px 14px; margin-bottom:14px;
+  }
+  .leg{ display:flex; align-items:center; gap:6px; font-size:12.5px; color:var(--muted); }
+  .leg .swatch{ width:11px; height:11px; border-radius:3px; }
+  .trend-list{ list-style:none; }
+  .trend-list li{
+    display:flex; align-items:center; gap:12px;
+    padding:11px 2px; border-bottom:1px solid var(--line);
+  }
+  .trend-list li:last-child{ border-bottom:none; }
+  .trend-month{ flex:none; width:62px; font-weight:600; font-size:13px; color:var(--ink); }
+  .trend-bar-track{ flex:1; height:10px; border-radius:999px; background:var(--emerald-soft); overflow:hidden; }
+  .trend-bar-fill{ height:100%; border-radius:999px; background:var(--emerald); }
+  .trend-score{
+    flex:none; width:54px; text-align:right; font-weight:700; font-size:14px; color:var(--emerald);
+  }
+  .trend-score .delta{ font-size:11.5px; font-weight:600; margin-left:4px; }
+  .delta.up{ color:#2E8B57; }
+  .delta.down{ color:#C0703F; }
+  .delta.same{ color:var(--muted); }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>The Thriving Woman Dashboard</h1>
+    <p class="subtitle">A monthly look at your whole life — and how she's flourishing.</p>
+    <div class="date" id="monthBadge">This month</div>
+  </header>
+
+  <!-- 1. Monthly check-in -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Your Monthly Check-In</h2></div>
+    <p class="hint">Be honest and gentle. These numbers aren't a grade — they're a mirror held with love.</p>
+
+    <div class="month-bar">
+      <button class="arrow" id="prevMonth" type="button" aria-label="Previous month">‹</button>
+      <div class="month-label" id="monthLabel">—</div>
+      <button class="arrow" id="nextMonth" type="button" aria-label="Next month">›</button>
+    </div>
+
+    <div id="areaList" style="margin-top:8px;"></div>
+  </section>
+
+  <!-- 2. Dashboard -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Your Thriving Score</h2></div>
+
+    <div id="welcomeBlock" class="welcome" style="display:none;">
+      <h3>Welcome, sister. 💛</h3>
+      <p>This is your space to see your whole life at once — faith, health, finances, relationships, and purpose. Move the sliders above to take your first check-in, and watch your dashboard come alive. There's no failing here. Only noticing, tending, and growing.</p>
+    </div>
+
+    <div id="dashBlock" style="display:none;">
+      <div class="dash-top">
+        <div class="ring-wrap">
+          <svg width="168" height="168" viewBox="0 0 168 168">
+            <circle cx="84" cy="84" r="74" fill="none" stroke="#E5EDE8" stroke-width="14"></circle>
+            <circle id="ringFill" cx="84" cy="84" r="74" fill="none" stroke="#C8A04A"
+              stroke-width="14" stroke-linecap="round" stroke-dasharray="465" stroke-dashoffset="465"></circle>
+          </svg>
+          <div class="ring-center">
+            <div class="ring-num" id="ringNum">0</div>
+            <div class="ring-out-of">out of 10</div>
+            <div class="ring-label" id="ringLabel"></div>
+          </div>
+        </div>
+      </div>
+      <div class="dash-msg" id="dashMsg"></div>
+
+      <div class="bars" id="bars"></div>
+
+      <div class="invite" id="inviteBlock">
+        <div class="ttl" id="inviteTtl"></div>
+        <p id="inviteText"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. One focus -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>One Focus This Month</h2></div>
+    <p class="hint">You don't have to tend the whole garden today. Pick one area to water, and one small thing you'll do.</p>
+
+    <label class="field-label" for="focusArea">The area I'm nurturing this month</label>
+    <select id="focusArea">
+      <option value="">Choose an area…</option>
+      <option value="Faith">Faith</option>
+      <option value="Health">Health</option>
+      <option value="Finances">Finances</option>
+      <option value="Relationships">Relationships</option>
+      <option value="Purpose">Purpose</option>
+    </select>
+
+    <label class="field-label" for="focusAction">One small action I'll take</label>
+    <input type="text" id="focusAction" placeholder="e.g. Pray for 5 minutes each morning">
+
+    <div class="action-row" id="actionRow" style="display:none;">
+      <input type="checkbox" id="focusDone">
+      <label for="focusDone" id="focusDoneLabel">Mark this done</label>
+    </div>
+  </section>
+
+  <!-- 4. Trend -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>You, Thriving Over Time</h2></div>
+    <p class="hint">Each month you check in, a snapshot is saved here. Watch yourself rise.</p>
+    <ul class="trend-list" id="trendList"></ul>
+    <p class="empty-note" id="trendEmpty">Complete a check-in and your overall scores will start charting here. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_thriving_dashboard";
+
+  var AREAS = [
+    { id:"faith",         name:"Faith",         icon:"🕊️", prompt:"What would help your faith feel more alive?" },
+    { id:"health",        name:"Health",        icon:"🌿", prompt:"What would help your body feel more cared for?" },
+    { id:"finances",      name:"Finances",      icon:"💰", prompt:"What would bring more peace to your finances?" },
+    { id:"relationships", name:"Relationships", icon:"🤍", prompt:"What would deepen your closest relationships?" },
+    { id:"purpose",       name:"Purpose",       icon:"✨", prompt:"What would make your purpose feel clearer?" }
+  ];
+  var NAME_BY_ID = {};
+  AREAS.forEach(function(a){ NAME_BY_ID[a.id] = a.name; });
+
+  // ---- Month helpers ----
+  function monthKey(d){
+    return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0");
+  }
+  function thisMonth(){ return monthKey(new Date()); }
+  function prettyMonth(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, 1);
+    return d.toLocaleDateString(undefined,{month:"long", year:"numeric"});
+  }
+  function shiftMonth(key, delta){
+    var p = key.split("-");
+    var d = new Date(parseInt(p[0],10), parseInt(p[1],10)-1+delta, 1);
+    return monthKey(d);
+  }
+
+  // ---- State ----
+  var data = load();
+  var CURRENT = thisMonth();
+
+  function blankEntry(){
+    return {
+      scores:{ faith:null, health:null, finances:null, relationships:null, purpose:null },
+      notes:{ faith:"", health:"", finances:"", relationships:"", purpose:"" },
+      focusArea:"", focusAction:"", focusDone:false
+    };
+  }
+  function getEntry(key){
+    if(!data.months[key]) data.months[key] = blankEntry();
+    return data.months[key];
+  }
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.months) return o; }
+    }catch(e){}
+    return { months:{} };
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Helpers ----
+  var $ = function(id){ return document.getElementById(id); };
+  function ratedScores(entry){
+    var out = [];
+    AREAS.forEach(function(a){
+      var v = entry.scores[a.id];
+      if(v !== null && v !== undefined) out.push({ id:a.id, name:a.name, icon:a.icon, value:v });
+    });
+    return out;
+  }
+  function average(entry){
+    var r = ratedScores(entry);
+    if(!r.length) return null;
+    var sum = 0;
+    r.forEach(function(s){ sum += s.value; });
+    return sum / r.length;
+  }
+
+  // ---- Build slider rows ----
+  function buildAreas(){
+    var entry = getEntry(CURRENT);
+    var host = $("areaList");
+    host.innerHTML = "";
+    AREAS.forEach(function(a){
+      var val = entry.scores[a.id];
+      var display = (val === null || val === undefined) ? 5 : val;
+      var rated = !(val === null || val === undefined);
+
+      var area = document.createElement("div");
+      area.className = "area";
+
+      var head = document.createElement("div");
+      head.className = "area-head";
+      head.innerHTML =
+        '<span class="area-icon">'+a.icon+'</span>' +
+        '<span class="area-name">'+a.name+'</span>' +
+        '<span class="area-val" id="val-'+a.id+'">'+(rated ? val+'<span>/10</span>' : '<span>not yet</span>')+'</span>';
+      area.appendChild(head);
+
+      var row = document.createElement("div");
+      row.className = "slider-row";
+      var slider = document.createElement("input");
+      slider.type = "range"; slider.min = "1"; slider.max = "10"; slider.step = "1";
+      slider.value = display;
+      slider.id = "slider-"+a.id;
+      slider.setAttribute("aria-label", a.name + " rating from 1 to 10");
+      row.appendChild(slider);
+      area.appendChild(row);
+
+      var note = document.createElement("textarea");
+      note.className = "note-input"; note.rows = 1;
+      note.id = "note-"+a.id;
+      note.placeholder = a.prompt;
+      note.value = entry.notes[a.id] || "";
+      area.appendChild(note);
+
+      host.appendChild(area);
+
+      slider.addEventListener("input", function(){
+        var v = parseInt(slider.value,10);
+        entry.scores[a.id] = v;
+        $("val-"+a.id).innerHTML = v + '<span>/10</span>';
+        save();
+        renderDashboard();
+        renderTrend();
+      });
+      note.addEventListener("input", function(){
+        entry.notes[a.id] = note.value;
+        save();
+      });
+    });
+  }
+
+  // ---- Dashboard ----
+  function scoreLabel(avg){
+    if(avg >= 8.5) return "Flourishing";
+    if(avg >= 7)   return "Thriving";
+    if(avg >= 5.5) return "Steady";
+    if(avg >= 4)   return "Tender";
+    return "Be gentle";
+  }
+  function scoreMsg(avg, lowest){
+    if(avg >= 8.5) return "Look at you, sister — <b>flourishing</b>. Your whole life is bearing fruit. Keep tending what's working and savour this season.";
+    if(avg >= 7)   return "You are <b>thriving</b>. There's real strength here. Stay rooted, and keep watering the areas you love.";
+    if(avg >= 5.5) return "You're <b>steady</b> — held and growing. A little focused care on " + lowest + " could lift your whole garden.";
+    if(avg >= 4)   return "This is a <b>tender</b> season, and that's okay. You're still here, still trying. Let's gently begin with " + lowest + ".";
+    return "Be <b>gentle</b> with yourself today. Naming where you are is brave. One small step toward " + lowest + " is enough.";
+  }
+
+  function renderDashboard(){
+    var entry = getEntry(CURRENT);
+    var avg = average(entry);
+    var welcome = $("welcomeBlock"), dash = $("dashBlock");
+
+    if(avg === null){
+      welcome.style.display = "block";
+      dash.style.display = "none";
+      return;
+    }
+    welcome.style.display = "none";
+    dash.style.display = "block";
+
+    var rounded = Math.round(avg * 10) / 10;
+    $("ringNum").textContent = (rounded % 1 === 0) ? rounded.toFixed(0) : rounded.toFixed(1);
+    $("ringLabel").textContent = scoreLabel(avg);
+
+    var circ = 465; // 2*pi*74
+    var offset = circ - (avg/10) * circ;
+    $("ringFill").style.strokeDashoffset = offset;
+
+    // lowest area (kind highlight)
+    var rated = ratedScores(entry);
+    var lowest = rated.slice().sort(function(a,b){ return a.value - b.value; })[0];
+    $("dashMsg").innerHTML = scoreMsg(avg, lowest.name);
+
+    // bars
+    var barHost = $("bars");
+    barHost.innerHTML = "";
+    rated.forEach(function(s){
+      var isLow = (s.id === lowest.id) && rated.length > 1 && lowest.value < 10;
+      var row = document.createElement("div");
+      row.className = "bar-row" + (isLow ? " low" : "");
+      row.innerHTML =
+        '<div class="bar-top"><span class="lbl">'+s.icon+' '+s.name+'</span>' +
+        '<span class="num">'+s.value+'/10</span></div>' +
+        '<div class="bar-track"><div class="bar-fill" style="width:'+(s.value*10)+'%"></div></div>';
+      barHost.appendChild(row);
+    });
+
+    // kind invitation toward lowest
+    $("inviteTtl").textContent = "An invitation, not a verdict";
+    if(lowest.value >= 8){
+      $("inviteText").textContent = "Even your lowest area — " + lowest.name + " — is strong. You're in a beautiful season. Keep going, sister.";
+    }else{
+      $("inviteText").textContent = lowest.name + " is asking for a little of your attention this month. Not because you're failing, but because you're worth tending. Make it your one focus below. 💛";
+    }
+  }
+
+  // ---- Focus ----
+  var focusArea = $("focusArea"), focusAction = $("focusAction");
+  var actionRow = $("actionRow"), focusDone = $("focusDone"), focusDoneLabel = $("focusDoneLabel");
+
+  function renderFocus(){
+    var entry = getEntry(CURRENT);
+    focusArea.value = entry.focusArea || "";
+    focusAction.value = entry.focusAction || "";
+    focusDone.checked = !!entry.focusDone;
+    updateActionRow();
+  }
+  function updateActionRow(){
+    var entry = getEntry(CURRENT);
+    if(entry.focusAction && entry.focusAction.trim()){
+      actionRow.style.display = "flex";
+      focusDoneLabel.textContent = entry.focusDone
+        ? "Done — proud of you. 💛"
+        : "I did it: " + entry.focusAction.trim();
+      actionRow.classList.toggle("done", !!entry.focusDone);
+    }else{
+      actionRow.style.display = "none";
+    }
+  }
+  focusArea.addEventListener("change", function(){
+    getEntry(CURRENT).focusArea = focusArea.value; save();
+  });
+  focusAction.addEventListener("input", function(){
+    getEntry(CURRENT).focusAction = focusAction.value; save(); updateActionRow();
+  });
+  focusDone.addEventListener("change", function(){
+    getEntry(CURRENT).focusDone = focusDone.checked; save(); updateActionRow();
+  });
+
+  // ---- Trend ----
+  function renderTrend(){
+    var list = $("trendList"), empty = $("trendEmpty");
+    var keys = Object.keys(data.months).filter(function(k){
+      return average(data.months[k]) !== null;
+    }).sort(); // ascending chronological
+    list.innerHTML = "";
+    if(!keys.length){ empty.style.display = "block"; return; }
+    empty.style.display = "none";
+
+    // show most recent up to 12, newest first
+    var show = keys.slice(-12).reverse();
+    var prevByKey = {};
+    keys.forEach(function(k, i){
+      if(i>0) prevByKey[k] = average(data.months[keys[i-1]]);
+    });
+
+    show.forEach(function(k){
+      var avg = average(data.months[k]);
+      var rounded = Math.round(avg*10)/10;
+      var li = document.createElement("li");
+
+      var deltaHtml = "";
+      if(prevByKey[k] !== undefined){
+        var diff = avg - prevByKey[k];
+        var d = Math.round(diff*10)/10;
+        if(d > 0) deltaHtml = '<span class="delta up">▲ '+Math.abs(d)+'</span>';
+        else if(d < 0) deltaHtml = '<span class="delta down">▼ '+Math.abs(d)+'</span>';
+        else deltaHtml = '<span class="delta same">–</span>';
+      }
+
+      var disp = (rounded % 1 === 0) ? rounded.toFixed(0) : rounded.toFixed(1);
+      li.innerHTML =
+        '<span class="trend-month">'+monthShort(k)+'</span>' +
+        '<span class="trend-bar-track"><span class="trend-bar-fill" style="width:'+(avg*10)+'%"></span></span>' +
+        '<span class="trend-score">'+disp+deltaHtml+'</span>';
+      list.appendChild(li);
+    });
+  }
+  function monthShort(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, 1);
+    return d.toLocaleDateString(undefined,{month:"short", year:"2-digit"});
+  }
+
+  // ---- Month navigation ----
+  function renderMonthBar(){
+    $("monthLabel").textContent = prettyMonth(CURRENT);
+    $("monthBadge").textContent = (CURRENT === thisMonth()) ? "This month" : prettyMonth(CURRENT);
+    // disallow navigating into the future
+    $("nextMonth").disabled = (CURRENT >= thisMonth());
+  }
+  function renderAll(){
+    renderMonthBar();
+    buildAreas();
+    renderDashboard();
+    renderFocus();
+    renderTrend();
+  }
+  $("prevMonth").addEventListener("click", function(){
+    CURRENT = shiftMonth(CURRENT, -1);
+    renderAll();
+  });
+  $("nextMonth").addEventListener("click", function(){
+    if(CURRENT >= thisMonth()) return;
+    CURRENT = shiftMonth(CURRENT, 1);
+    renderAll();
+  });
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Thriving Woman Dashboard data — every month and snapshot? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { months:{} };
+      CURRENT = thisMonth();
+      renderAll();
+    }
+  });
+
+  // ---- Init ----
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

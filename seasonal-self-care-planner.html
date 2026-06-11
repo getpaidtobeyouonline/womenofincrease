@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seasonal Self-Care Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Season switcher ---------- */
+  .seasons{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:18px;
+  }
+  .season-btn{
+    font-family:inherit; cursor:pointer; min-height:60px;
+    background:#fff; border:1px solid var(--line); border-radius:14px;
+    padding:10px 4px; display:flex; flex-direction:column; align-items:center; gap:3px;
+    color:var(--muted); font-weight:600; font-size:12.5px; transition:all .15s ease;
+  }
+  .season-btn .emoji{ font-size:20px; line-height:1; }
+  .season-btn:hover{ border-color:var(--gold-soft); }
+  .season-btn.active{
+    background:var(--emerald); color:#FCF8EF; border-color:var(--emerald);
+    box-shadow:0 6px 16px rgba(20,84,62,.22);
+  }
+  .season-btn.now{ border-color:var(--gold); }
+  .season-btn .nowtag{
+    font-size:9px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--gold); font-weight:700;
+  }
+  .season-btn.active .nowtag{ color:var(--gold-soft); }
+
+  .season-banner{
+    margin-top:14px; display:flex; align-items:center; gap:10px;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    border-radius:14px; padding:14px 16px;
+  }
+  .season-banner .big-emoji{ font-size:28px; line-height:1; }
+  .season-banner .s-title{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:19px;
+  }
+  .season-banner .s-sub{ color:var(--muted); font-size:13px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .dim-head{
+    display:flex; align-items:center; gap:10px; margin-bottom:4px;
+  }
+  .dim-head .icon{
+    flex:none; width:34px;height:34px;border-radius:10px;
+    background:var(--gold-soft); color:var(--emerald);
+    font-size:18px; display:flex;align-items:center;justify-content:center;
+  }
+  .dim-head h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:4px 0 12px; }
+
+  /* ---------- Items ---------- */
+  .item-list{ list-style:none; margin-bottom:10px; }
+  .item-list li{
+    display:flex; align-items:flex-start; gap:10px;
+    padding:9px 2px; border-bottom:1px solid var(--line);
+  }
+  .item-list li:last-child{ border-bottom:none; }
+  .item-list .chk{
+    flex:none; width:26px;height:26px;margin-top:1px; border-radius:7px;
+    border:1.5px solid var(--gold); background:var(--cream); cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    font-size:15px; color:transparent; transition:all .12s ease;
+  }
+  .item-list .chk.on{ background:var(--gold); color:var(--ink); }
+  .item-list .txt{ flex:1; font-size:14.5px; padding-top:3px; word-break:break-word; }
+  .item-list li.done .txt{ color:var(--muted); text-decoration:line-through; }
+  .item-list .del{
+    flex:none; background:none; border:none; color:#C0B8AA; cursor:pointer;
+    font-size:18px; line-height:1; padding:6px; min-width:32px; min-height:32px;
+    border-radius:8px;
+  }
+  .item-list .del:hover{ color:var(--ink); background:var(--emerald-soft); }
+  .empty-note{ color:var(--muted); font-size:13.5px; font-style:italic; margin-bottom:10px; }
+
+  /* ---------- Add row ---------- */
+  .add-row{ display:flex; gap:8px; }
+  .add-row input{
+    flex:1; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:12px 13px; min-height:46px;
+  }
+  .add-row input:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  .add-row input::placeholder{ color:#A7A095; }
+  .add-row button{
+    flex:none; min-width:46px; min-height:46px; border:none; border-radius:11px;
+    background:var(--emerald); color:#FCF8EF; font-size:22px; cursor:pointer;
+    font-family:inherit; line-height:1;
+  }
+  .add-row button:active{ transform:translateY(1px); }
+
+  /* ---------- Ideas ---------- */
+  .ideas-label{ font-size:12.5px; color:var(--muted); margin:12px 0 8px; font-weight:600; }
+  .ideas{ display:flex; flex-wrap:wrap; gap:7px; }
+  .idea-chip{
+    font-family:inherit; cursor:pointer; min-height:36px;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    color:var(--emerald); border-radius:999px; padding:7px 13px; font-size:13px; font-weight:500;
+  }
+  .idea-chip:hover{ background:var(--gold-soft); border-color:var(--gold); color:var(--ink); }
+  .idea-chip::before{ content:"＋ "; opacity:.6; }
+
+  /* ---------- Balance ---------- */
+  .balance-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:18px; font-weight:600; margin-bottom:4px;
+  }
+  .bal-row{
+    display:flex; align-items:center; gap:10px; margin-top:12px;
+  }
+  .bal-row .bicon{ flex:none; width:24px; text-align:center; font-size:16px; }
+  .bal-row .bname{ flex:none; width:96px; font-size:13.5px; font-weight:600; }
+  .bal-track{
+    flex:1; height:10px; background:var(--cream); border:1px solid var(--line);
+    border-radius:999px; overflow:hidden;
+  }
+  .bal-fill{ height:100%; background:var(--gold); border-radius:999px; transition:width .3s ease; }
+  .bal-row .bcount{ flex:none; width:34px; text-align:right; font-size:12.5px; color:var(--muted); }
+  .nudge{
+    margin-top:14px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:12px; padding:13px 14px; color:var(--emerald); font-size:14px;
+  }
+  .nudge b{ font-family:'Fraunces',serif; }
+
+  /* ---------- Reflection ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:0 0 8px;
+  }
+  textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; min-height:90px; line-height:1.5;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Welcome ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:16px; padding:22px 20px; margin-top:16px;
+  }
+  .welcome h2{ font-family:'Fraunces',serif; font-weight:600; font-size:21px; margin-bottom:8px; }
+  .welcome p{ font-size:14.5px; color:#E7D3A1; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Seasonal Self-Care Planner</h1>
+    <p class="subtitle">Tend to your body, soul, spirit &amp; relationships — through every season.</p>
+
+    <div class="seasons" id="seasons"></div>
+    <div class="season-banner">
+      <span class="big-emoji" id="bannerEmoji">🌸</span>
+      <div>
+        <div class="s-title" id="bannerTitle">Spring</div>
+        <div class="s-sub" id="bannerSub"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- First-run welcome -->
+  <section class="welcome" id="welcome" style="display:none;">
+    <h2>Welcome, sister 🌿</h2>
+    <p>Caring for yourself isn't a luxury — it's how you stay full enough to pour out. Plan a few gentle rituals for this season across your body, soul, spirit, and relationships. Tap an idea below to begin, or add your own.</p>
+  </section>
+
+  <!-- Dimension cards get inserted here -->
+  <div id="dims"></div>
+
+  <!-- Balance -->
+  <section class="card">
+    <div class="balance-title">How you're tending yourself this season</div>
+    <p class="hint" style="margin-top:2px;">Every dimension matters. Here's a gentle look at where your care is flowing.</p>
+    <div id="balance"></div>
+    <div class="nudge" id="nudge"></div>
+  </section>
+
+  <!-- Reflection -->
+  <section class="card">
+    <div class="dim-head"><span class="icon">🕊️</span><h2 id="reflTitle">A season reflection</h2></div>
+    <p class="hint" id="reflPrompt">What does this season ask of you?</p>
+    <label class="field-label" for="reflection">Your reflection</label>
+    <textarea id="reflection" placeholder="This season, I sense I need…"></textarea>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_seasonal_self_care";
+
+  var SEASONS = [
+    { id:"spring", name:"Spring", emoji:"🌸", sub:"Fresh starts, planting, gentle renewal.",
+      reflPrompt:"What is ready to bloom in you this spring?" },
+    { id:"summer", name:"Summer", emoji:"☀️", sub:"Play, sunlight, warmth & connection.",
+      reflPrompt:"Where can you let in more joy and light this summer?" },
+    { id:"autumn", name:"Autumn", emoji:"🍂", sub:"Reflect, nourish, release what's done.",
+      reflPrompt:"What is this season inviting you to release and give thanks for?" },
+    { id:"winter", name:"Winter", emoji:"❄️", sub:"Rest, cozy rituals, quiet restoration.",
+      reflPrompt:"How can you honour your need for rest this winter?" }
+  ];
+
+  var DIMENSIONS = [
+    { id:"body", name:"Body", icon:"💪",
+      hint:"How you'll move, rest, nourish and care for your physical self." },
+    { id:"soul", name:"Soul", icon:"🌷",
+      hint:"How you'll feed your mind and emotions — joy, creativity, peace." },
+    { id:"spirit", name:"Spirit", icon:"✨",
+      hint:"How you'll stay close to God and rooted in your faith." },
+    { id:"relationships", name:"Relationships", icon:"🤝",
+      hint:"How you'll nurture the people who matter — and yourself among them." }
+  ];
+
+  // ---- Built-in ideas: per dimension, with season flavor where natural ----
+  var IDEAS = {
+    body: {
+      _: ["Drink more water","8 hours of sleep","A gentle walk","Stretch each morning","Cook a nourishing meal","Rest without guilt"],
+      spring: ["Spring-clean your routine","Walk in the fresh air","Try a new movement"],
+      summer: ["Soak up morning sunlight","Swim or play outside","Hydrate generously"],
+      autumn: ["Warm, nourishing soups","Cozy evening wind-down","Slow, restorative yoga"],
+      winter: ["Rest more, push less","Warm baths","Extra sleep this season"]
+    },
+    soul: {
+      _: ["Journal your feelings","Read for pleasure","Make something with your hands","Say no to one thing","A digital sabbath","Listen to music you love"],
+      spring: ["Declutter one space","Start a fresh journal","Plant something"],
+      summer: ["Do something playful","Watch a sunset","Plan a little adventure"],
+      autumn: ["Reflect on the year so far","Cozy reading evenings","Gather & give thanks"],
+      winter: ["Slow mornings with tea","A creative cozy hobby","Permission to be still"]
+    },
+    spirit: {
+      _: ["Morning prayer","Read one psalm","Worship as you go","Gratitude before bed","Memorise a verse","Sit quietly with God"],
+      spring: ["Pray over new beginnings","A renewal of faith","Fresh devotional"],
+      summer: ["Worship outdoors","Bless someone this week","Pray with joy"],
+      autumn: ["A season of thanksgiving","Reflect on God's faithfulness","Release worries in prayer"],
+      winter: ["Quiet contemplative prayer","Rest in His presence","Advent / waiting practices"]
+    },
+    relationships: {
+      _: ["Call someone you love","Plan a friend date","Speak kindly to yourself","Forgive someone","Write a note of love","Ask for help"],
+      spring: ["Reconnect with an old friend","Host a fresh gathering","Mend a relationship"],
+      summer: ["Plan time with loved ones","A picnic or cookout","Celebrate someone"],
+      autumn: ["A gratitude letter","Slow meals together","Check in on someone"],
+      winter: ["Cozy time with family","A heartfelt phone call","Tend your own heart too"]
+    }
+  };
+
+  // ---- State ----
+  function blankSeason(){
+    var s = { reflection:"", dims:{} };
+    DIMENSIONS.forEach(function(d){ s.dims[d.id] = []; });
+    return s;
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.seasons) return o; }
+    }catch(e){}
+    return { seasons:{}, current:null };
+  }
+  var data = load();
+  SEASONS.forEach(function(s){ if(!data.seasons[s.id]) data.seasons[s.id] = blankSeason(); });
+
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Current season inference ----
+  function inferSeason(){
+    var m = new Date().getMonth(); // 0-11 (Northern hemisphere)
+    if(m>=2 && m<=4) return "spring";
+    if(m>=5 && m<=7) return "summer";
+    if(m>=8 && m<=10) return "autumn";
+    return "winter";
+  }
+  var NOW_SEASON = inferSeason();
+  var active = data.current || NOW_SEASON;
+
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var seasonsEl = $("seasons"), dimsEl = $("dims");
+
+  // ---- Season switcher ----
+  function renderSeasons(){
+    seasonsEl.innerHTML = "";
+    SEASONS.forEach(function(s){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "season-btn" + (s.id===active?" active":"") + (s.id===NOW_SEASON?" now":"");
+      var nowtag = s.id===NOW_SEASON ? '<span class="nowtag">Now</span>' : '<span class="nowtag" style="visibility:hidden;">Now</span>';
+      b.innerHTML = '<span class="emoji">'+s.emoji+'</span>'+s.name+nowtag;
+      b.setAttribute("aria-pressed", s.id===active ? "true":"false");
+      b.addEventListener("click", function(){
+        active = s.id; data.current = active; save(); renderAll();
+      });
+      seasonsEl.appendChild(b);
+    });
+  }
+
+  function seasonObj(id){ return SEASONS.filter(function(s){return s.id===id;})[0]; }
+
+  function renderBanner(){
+    var s = seasonObj(active);
+    $("bannerEmoji").textContent = s.emoji;
+    $("bannerTitle").textContent = s.name + (active===NOW_SEASON ? " · right now" : "");
+    $("bannerSub").textContent = s.sub;
+  }
+
+  // ---- Dimension cards ----
+  function ideasFor(dimId){
+    var pool = IDEAS[dimId];
+    var list = (pool[active] || []).concat(pool._);
+    // de-dupe while preserving order
+    var seen = {}, out = [];
+    list.forEach(function(x){ if(!seen[x]){ seen[x]=1; out.push(x); } });
+    return out;
+  }
+
+  function renderDims(){
+    dimsEl.innerHTML = "";
+    var season = data.seasons[active];
+    DIMENSIONS.forEach(function(d){
+      var card = document.createElement("section");
+      card.className = "card";
+
+      var head = document.createElement("div");
+      head.className = "dim-head";
+      head.innerHTML = '<span class="icon">'+d.icon+'</span><h2>'+d.name+'</h2>';
+      card.appendChild(head);
+
+      var hint = document.createElement("p");
+      hint.className = "hint";
+      hint.textContent = d.hint;
+      card.appendChild(hint);
+
+      var items = season.dims[d.id];
+      var ul = document.createElement("ul");
+      ul.className = "item-list";
+      if(items.length === 0){
+        var note = document.createElement("p");
+        note.className = "empty-note";
+        note.textContent = "Nothing here yet — add a small ritual that would feel like care.";
+        card.appendChild(note);
+      }else{
+        items.forEach(function(it){
+          var li = document.createElement("li");
+          if(it.done) li.className = "done";
+
+          var chk = document.createElement("button");
+          chk.type = "button";
+          chk.className = "chk" + (it.done?" on":"");
+          chk.textContent = it.done ? "✓" : "";
+          chk.setAttribute("aria-label", (it.done?"Mark not done: ":"Mark done: ")+it.text);
+          chk.addEventListener("click", function(){
+            it.done = !it.done; save(); renderDims(); renderBalance();
+          });
+
+          var txt = document.createElement("span");
+          txt.className = "txt";
+          txt.textContent = it.text;
+
+          var del = document.createElement("button");
+          del.type = "button";
+          del.className = "del";
+          del.innerHTML = "✕";
+          del.setAttribute("aria-label", "Delete: "+it.text);
+          del.addEventListener("click", function(){
+            if(confirm('Remove "'+it.text+'" from your '+d.name.toLowerCase()+' care?')){
+              season.dims[d.id] = season.dims[d.id].filter(function(x){return x.id!==it.id;});
+              save(); renderDims(); renderBalance();
+            }
+          });
+
+          li.appendChild(chk); li.appendChild(txt); li.appendChild(del);
+          ul.appendChild(li);
+        });
+        card.appendChild(ul);
+      }
+
+      // add row
+      var addRow = document.createElement("div");
+      addRow.className = "add-row";
+      var input = document.createElement("input");
+      input.type = "text";
+      input.placeholder = "Add your own…";
+      input.setAttribute("aria-label", "Add a "+d.name+" self-care intention");
+      var addBtn = document.createElement("button");
+      addBtn.type = "button";
+      addBtn.innerHTML = "＋";
+      addBtn.setAttribute("aria-label", "Add to "+d.name);
+      function addItem(){
+        var v = input.value.trim();
+        if(!v) return;
+        season.dims[d.id].push({ id:uid(), text:v, done:false });
+        input.value = "";
+        save(); renderDims(); renderBalance();
+      }
+      addBtn.addEventListener("click", addItem);
+      input.addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); addItem(); } });
+      addRow.appendChild(input); addRow.appendChild(addBtn);
+      card.appendChild(addRow);
+
+      // ideas
+      var ideasLbl = document.createElement("div");
+      ideasLbl.className = "ideas-label";
+      ideasLbl.textContent = "Gentle ideas — tap to add";
+      card.appendChild(ideasLbl);
+
+      var ideasWrap = document.createElement("div");
+      ideasWrap.className = "ideas";
+      ideasFor(d.id).forEach(function(text){
+        var chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "idea-chip";
+        chip.textContent = text;
+        chip.addEventListener("click", function(){
+          season.dims[d.id].push({ id:uid(), text:text, done:false });
+          save(); renderDims(); renderBalance();
+        });
+        ideasWrap.appendChild(chip);
+      });
+      card.appendChild(ideasWrap);
+
+      dimsEl.appendChild(card);
+    });
+  }
+
+  // ---- Balance ----
+  function renderBalance(){
+    var season = data.seasons[active];
+    var box = $("balance");
+    box.innerHTML = "";
+    var counts = {}, max = 0, totalItems = 0;
+    DIMENSIONS.forEach(function(d){
+      var n = season.dims[d.id].length;
+      counts[d.id] = n; totalItems += n;
+      if(n>max) max = n;
+    });
+
+    DIMENSIONS.forEach(function(d){
+      var n = counts[d.id];
+      var pct = max>0 ? Math.round((n/max)*100) : 0;
+      var row = document.createElement("div");
+      row.className = "bal-row";
+      row.innerHTML =
+        '<span class="bicon">'+d.icon+'</span>'+
+        '<span class="bname">'+d.name+'</span>'+
+        '<span class="bal-track"><span class="bal-fill" style="width:'+pct+'%"></span></span>'+
+        '<span class="bcount">'+n+'</span>';
+      box.appendChild(row);
+    });
+
+    // nudge
+    var nudge = $("nudge");
+    var s = seasonObj(active);
+    if(totalItems === 0){
+      nudge.innerHTML = "<b>Start small.</b> Even one gentle ritual this "+s.name.toLowerCase()+" is an act of love toward yourself. 💛";
+    }else{
+      // find a neglected dimension (the one with the fewest, kindly)
+      var minDim = DIMENSIONS[0], minN = counts[DIMENSIONS[0].id];
+      DIMENSIONS.forEach(function(d){ if(counts[d.id] < minN){ minN = counts[d.id]; minDim = d; } });
+      var allEqual = DIMENSIONS.every(function(d){ return counts[d.id]===counts[DIMENSIONS[0].id]; });
+      if(allEqual){
+        nudge.innerHTML = "<b>Beautifully balanced.</b> You're tending every part of yourself this "+s.name.toLowerCase()+" — keep going, sister. 🌿";
+      }else if(minN === 0){
+        nudge.innerHTML = "<b>Gentle nudge:</b> your "+minDim.name.toLowerCase()+" hasn't had any care yet this "+s.name.toLowerCase()+". When you're ready, add one small thing — no pressure. "+minDim.icon;
+      }else{
+        nudge.innerHTML = "<b>Lovely.</b> Your "+minDim.name.toLowerCase()+" could use a little more tending this "+s.name.toLowerCase()+" — but you're already caring for yourself well. 💛";
+      }
+    }
+  }
+
+  // ---- Reflection ----
+  var reflectionEl = $("reflection");
+  function renderReflection(){
+    var s = seasonObj(active);
+    $("reflTitle").textContent = s.name + " reflection";
+    $("reflPrompt").textContent = s.reflPrompt;
+    reflectionEl.value = data.seasons[active].reflection || "";
+  }
+  reflectionEl.addEventListener("input", function(){
+    data.seasons[active].reflection = reflectionEl.value;
+    save();
+  });
+
+  // ---- Welcome (first run) ----
+  function renderWelcome(){
+    var any = false;
+    SEASONS.forEach(function(s){
+      var sn = data.seasons[s.id];
+      DIMENSIONS.forEach(function(d){ if(sn.dims[d.id].length) any = true; });
+      if(sn.reflection) any = true;
+    });
+    $("welcome").style.display = any ? "none" : "block";
+  }
+
+  // ---- Render all ----
+  function renderAll(){
+    renderSeasons();
+    renderBanner();
+    renderDims();
+    renderBalance();
+    renderReflection();
+    renderWelcome();
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Seasonal Self-Care data across every season? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { seasons:{}, current:null };
+      SEASONS.forEach(function(s){ data.seasons[s.id] = blankSeason(); });
+      active = NOW_SEASON;
+      renderAll();
+    }
+  });
+
+  // ---- Init ----
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

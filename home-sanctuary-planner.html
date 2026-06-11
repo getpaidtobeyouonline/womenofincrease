@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Sanctuary Planner · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Progress ---------- */
+  .progress-wrap{
+    margin-top:16px; background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:18px 20px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .progress-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; }
+  .progress-top .lbl{ font-family:'Fraunces',serif; color:var(--emerald); font-size:17px; font-weight:600; }
+  .progress-top .pct{ color:var(--gold); font-weight:700; font-size:15px; }
+  .bar{ height:12px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .bar > span{
+    display:block; height:100%; width:0%;
+    background:linear-gradient(90deg, var(--gold-soft), var(--gold));
+    border-radius:999px; transition:width .35s ease;
+  }
+  .progress-note{ margin-top:10px; color:var(--muted); font-size:13px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{ display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:0 0 14px; }
+
+  /* ---------- Peace note ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:18px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea, select{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"], select{ min-height:48px; }
+  textarea{ min-height:72px; line-height:1.5; }
+  input:focus, textarea:focus, select:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Buttons ---------- */
+  .gold-btn{
+    min-height:48px; background:var(--gold); color:var(--ink); border:none; border-radius:12px;
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease; padding:0 18px;
+  }
+  .gold-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .gold-btn:active{ transform:translateY(1px); }
+  .ghost-btn{
+    min-height:44px; background:none; border:1px solid var(--line); color:var(--emerald);
+    border-radius:11px; font-family:inherit; font-weight:600; font-size:14px; cursor:pointer; padding:0 14px;
+  }
+  .ghost-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .add-room-row{ display:flex; gap:8px; margin-top:10px; }
+  .add-room-row input{ flex:1; }
+
+  /* ---------- Quick room chips ---------- */
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .chip{
+    min-height:44px; background:var(--emerald-soft); border:1px solid rgba(20,84,62,.14);
+    color:var(--emerald); border-radius:999px; font-family:inherit; font-weight:600;
+    font-size:13.5px; cursor:pointer; padding:0 14px;
+  }
+  .chip:hover{ border-color:var(--gold); }
+  .chip:disabled{ opacity:.4; cursor:default; }
+
+  /* ---------- Room cards ---------- */
+  .room{
+    border:1px solid var(--line); border-radius:14px; padding:16px; margin-top:14px;
+    background:var(--cream);
+  }
+  .room-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .room-name{ font-family:'Fraunces',serif; color:var(--emerald); font-size:18px; font-weight:600; }
+  .room-feel-line{ color:var(--muted); font-size:12.5px; margin-top:2px; }
+  .room-feel-line b{ color:var(--gold); font-weight:600; font-style:normal; }
+  .del-x{
+    flex:none; min-width:44px; min-height:44px; background:none; border:none; color:var(--muted);
+    font-size:18px; cursor:pointer; border-radius:10px; line-height:1;
+  }
+  .del-x:hover{ color:#b04a3a; }
+
+  .feel-label{ display:block; font-weight:600; font-size:12.5px; color:var(--ink); margin:12px 0 6px; }
+  .feel-opts{ display:flex; flex-wrap:wrap; gap:7px; }
+  .feel{
+    min-height:40px; padding:0 13px; background:#fff; border:1px solid var(--line);
+    border-radius:999px; font-family:inherit; font-size:13px; font-weight:600; color:var(--muted);
+    cursor:pointer;
+  }
+  .feel.on{ background:var(--gold); color:var(--ink); border-color:var(--gold); }
+
+  .actions-list{ list-style:none; margin-top:12px; }
+  .action-item{
+    display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--line);
+  }
+  .action-item:last-child{ border-bottom:none; }
+  .action-item input[type="checkbox"]{
+    flex:none; width:22px; height:22px; accent-color:var(--emerald); cursor:pointer;
+  }
+  .action-item label{ flex:1; font-size:14.5px; cursor:pointer; }
+  .action-item.done label{ text-decoration:line-through; color:var(--muted); }
+  .action-item .del-x{ min-width:40px; min-height:40px; font-size:15px; }
+  .add-action-row{ display:flex; gap:8px; margin-top:12px; }
+  .add-action-row input{ flex:1; }
+  .room-prog{ margin-top:12px; }
+  .room-prog .bar{ height:8px; }
+  .room-prog .mini-note{ margin-top:6px; color:var(--muted); font-size:12px; }
+
+  /* ---------- Basics library ---------- */
+  .basics{ display:grid; grid-template-columns:1fr; gap:10px; margin-top:12px; }
+  .basic{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    border:1px solid var(--line); border-radius:12px; padding:12px 14px; background:var(--cream);
+  }
+  .basic .b-txt{ font-size:14px; }
+  .basic .b-txt b{ display:block; color:var(--emerald); font-family:'Fraunces',serif; font-weight:600; font-size:14.5px; }
+  .basic .b-txt span{ color:var(--muted); font-size:12.5px; }
+  .basic select{ display:none; }
+  .add-to-wrap{ display:flex; gap:8px; align-items:center; flex:none; }
+  .add-to-wrap select{ min-height:44px; min-width:120px; font-size:13.5px; padding:8px 10px; }
+
+  /* ---------- Reset routine ---------- */
+  .reset-routine .actions-list .action-item label{ font-weight:500; }
+  .reset-count{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:16px; color:var(--muted); font-size:14px;
+  }
+  .reset-count b{ color:var(--emerald); font-size:15px; }
+  .run-reset-btn{ width:100%; margin-top:14px; }
+  .run-reset-btn.done{ background:var(--emerald-soft); color:var(--emerald); box-shadow:none; border:1px solid rgba(20,84,62,.2); }
+
+  /* ---------- Corner ---------- */
+  .corner-note{
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.14); border-radius:12px;
+    padding:14px 16px; color:var(--emerald); font-size:14px; margin-bottom:6px;
+  }
+
+  /* ---------- Empty state ---------- */
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; margin-top:10px; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Home Sanctuary Planner</h1>
+    <p class="subtitle">Make your home a place of rest — room by room, on any budget.</p>
+  </header>
+
+  <!-- Overall progress -->
+  <div class="progress-wrap">
+    <div class="progress-top">
+      <span class="lbl">Your sanctuary</span>
+      <span class="pct" id="overallPct">0%</span>
+    </div>
+    <div class="bar"><span id="overallBar"></span></div>
+    <p class="progress-note" id="overallNote">Add a room below to begin. Small steps make a soft home. 💛</p>
+  </div>
+
+  <!-- Peace note -->
+  <section class="card">
+    <div class="verse">
+      <p id="peaceText">—</p>
+      <div class="ref" id="peaceRef"></div>
+    </div>
+  </section>
+
+  <!-- 1. Rooms -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Room by room</h2></div>
+    <p class="hint">Add the spaces in your home. Tap a common one, or name your own.</p>
+
+    <div class="chips" id="quickChips"></div>
+
+    <label class="field-label" for="newRoom">Add your own space</label>
+    <div class="add-room-row">
+      <input type="text" id="newRoom" placeholder="e.g. Sunroom, Hallway, Study" maxlength="40">
+      <button class="gold-btn" id="addRoomBtn" type="button">Add</button>
+    </div>
+
+    <div id="roomsWrap"></div>
+    <p class="empty-note" id="roomsEmpty">No rooms yet. Start with one — even just the corner where you sit. 🌿</p>
+  </section>
+
+  <!-- 2. Sanctuary basics -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>Sanctuary basics</h2></div>
+    <p class="hint">Low- and no-cost ways to make a home feel peaceful. Tap to add to any room.</p>
+    <div class="basics" id="basicsWrap"></div>
+    <p class="empty-note" id="basicsHint" style="margin-top:14px;">Add a room first, then send any of these into it.</p>
+  </section>
+
+  <!-- 3. Daily/weekly reset -->
+  <section class="card reset-routine">
+    <div class="step"><span class="num">3</span><h2>Your reset routine</h2></div>
+    <p class="hint">A short list to restore peace. Run it daily or weekly — whatever your season allows.</p>
+    <ul class="actions-list" id="resetList"></ul>
+    <button class="gold-btn run-reset-btn" id="runResetBtn" type="button">I ran my reset today 🕯️</button>
+    <div class="reset-count">
+      <span>🏡</span>
+      <span><b id="resetTotal">0</b> resets · last: <b id="resetLast">never yet</b></span>
+    </div>
+  </section>
+
+  <!-- 4. Her own corner -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>A corner of your own</h2></div>
+    <p class="hint">Create one small space that's just yours — a chair, a nook, a windowsill. You deserve a spot of your own.</p>
+    <div class="corner-note">Where could it live? What would make it feel like <em>you</em> — a soft blanket, a candle, your Bible, a cup of tea?</div>
+    <label class="field-label" for="cornerSpot">Where my corner will be</label>
+    <input type="text" id="cornerSpot" placeholder="The armchair by the window…">
+    <label class="field-label" for="cornerDream">What makes it mine</label>
+    <textarea id="cornerDream" placeholder="A warm lamp, my journal, a plant, quiet in the morning…"></textarea>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="clearBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_home_sanctuary";
+
+  // ---- Peace notes (home as rest + refuge) ----
+  var PEACE = [
+    ["Your home does not need to be perfect to be a sanctuary — it only needs to hold you gently.", "A Word for You"],
+    ["She watches over the affairs of her household with peace, not pressure.", "Inspired by Proverbs 31:27"],
+    ["By wisdom a house is built, and through understanding it is established; through knowledge its rooms are filled with rare and beautiful treasures.", "Proverbs 24:3–4"],
+    ["Better a dry crust with peace and quiet than a house full of feasting, with strife.", "Proverbs 17:1"],
+    ["He makes me lie down in green pastures, He leads me beside quiet waters, He refreshes my soul.", "Psalm 23:2–3"],
+    ["A peaceful home begins not with what you buy, but with what you tend.", "A Word for You"],
+    ["Come to me, all you who are weary and burdened, and I will give you rest.", "Matthew 11:28"]
+  ];
+
+  // ---- Common rooms ----
+  var COMMON = ["Bedroom","Living room","Kitchen","Bathroom","Entryway","Kids' space","Her own corner"];
+
+  // ---- Feelings ----
+  var FEELINGS = ["calm","cozy","fresh","joyful"];
+
+  // ---- Default reset routine ----
+  var DEFAULT_RESET = [
+    "15-minute tidy — set a timer, do what you can",
+    "Clear the surfaces (counter, table, nightstand)",
+    "Make the bed / fluff the cushions",
+    "Soft lighting — a lamp or candle, not the big light",
+    "Open a window or refresh the air",
+    "One thing back where it belongs"
+  ];
+
+  // ---- Sanctuary basics library ----
+  var BASICS = [
+    ["Declutter one surface","Clear a counter or shelf — instant calm"],
+    ["Make the bed","A made bed resets the whole room"],
+    ["Light a candle","Warm light + gentle scent"],
+    ["Open the curtains","Free, fresh natural light"],
+    ["Add a plant or greenery","Even a cutting in a jar"],
+    ["A tidy entryway","Keys, shoes, a clear path in"],
+    ["Soft music or quiet","Set the sound of the space"],
+    ["Fresh linens or a throw","Cozy without spending much"],
+    ["A little corner of beauty","One framed photo or verse"],
+    ["Wipe & reset before bed","Wake to peace, not mess"]
+  ];
+
+  // ---- State ----
+  var data = load();
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.rooms) return migrate(o); }
+    }catch(e){}
+    return fresh();
+  }
+  function fresh(){
+    return {
+      rooms: [],
+      reset: { items: DEFAULT_RESET.map(function(t){ return {text:t, done:false}; }), total:0, last:null },
+      corner: { spot:"", dream:"" }
+    };
+  }
+  function migrate(o){
+    if(!o.reset) o.reset = fresh().reset;
+    if(!o.reset.items) o.reset.items = fresh().reset.items;
+    if(typeof o.reset.total !== "number") o.reset.total = 0;
+    if(!("last" in o.reset)) o.reset.last = null;
+    if(!o.corner) o.corner = { spot:"", dream:"" };
+    return o;
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Date helpers ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function prettyDate(key){
+    if(!key) return "never yet";
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{month:"short", day:"numeric"});
+  }
+
+  // ---- Peace note (rotates by day) ----
+  function renderPeace(){
+    var idx = Math.floor(Date.now()/86400000) % PEACE.length;
+    $("peaceText").textContent = PEACE[idx][0];
+    $("peaceRef").textContent = PEACE[idx][1];
+  }
+
+  // ---- Rooms ----
+  function addRoom(name){
+    name = (name||"").trim();
+    if(!name) return;
+    // avoid exact duplicate names (case-insensitive)
+    var exists = data.rooms.some(function(r){ return r.name.toLowerCase() === name.toLowerCase(); });
+    if(exists) return;
+    data.rooms.push({ id:uid(), name:name, feeling:"", actions:[] });
+    save(); renderRooms(); renderChips(); renderProgress(); renderBasics();
+  }
+
+  function renderChips(){
+    var wrap = $("quickChips");
+    wrap.innerHTML = "";
+    COMMON.forEach(function(name){
+      var taken = data.rooms.some(function(r){ return r.name.toLowerCase() === name.toLowerCase(); });
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip";
+      b.textContent = "+ " + name;
+      b.disabled = taken;
+      b.addEventListener("click", function(){ addRoom(name); });
+      wrap.appendChild(b);
+    });
+  }
+
+  function roomProgress(r){
+    if(!r.actions.length) return 0;
+    var done = r.actions.filter(function(a){ return a.done; }).length;
+    return Math.round(done / r.actions.length * 100);
+  }
+
+  function renderRooms(){
+    var wrap = $("roomsWrap");
+    wrap.innerHTML = "";
+    $("roomsEmpty").style.display = data.rooms.length ? "none" : "block";
+
+    data.rooms.forEach(function(r){
+      var room = document.createElement("div");
+      room.className = "room";
+
+      // head
+      var head = document.createElement("div");
+      head.className = "room-head";
+      var titleBox = document.createElement("div");
+      var title = document.createElement("div");
+      title.className = "room-name";
+      title.textContent = r.name;
+      var feelLine = document.createElement("div");
+      feelLine.className = "room-feel-line";
+      feelLine.innerHTML = r.feeling
+        ? 'A space that feels <b>' + escapeHtml(r.feeling) + '</b>'
+        : 'Pick how you want it to feel ↓';
+      titleBox.appendChild(title); titleBox.appendChild(feelLine);
+      var del = document.createElement("button");
+      del.className = "del-x"; del.type = "button"; del.setAttribute("aria-label","Delete " + r.name);
+      del.textContent = "✕";
+      del.addEventListener("click", function(){
+        if(confirm('Remove "' + r.name + '" and its actions?')){
+          data.rooms = data.rooms.filter(function(x){ return x.id !== r.id; });
+          save(); renderRooms(); renderChips(); renderProgress(); renderBasics();
+        }
+      });
+      head.appendChild(titleBox); head.appendChild(del);
+      room.appendChild(head);
+
+      // feeling options
+      var fl = document.createElement("span");
+      fl.className = "feel-label"; fl.textContent = "How I want it to feel";
+      room.appendChild(fl);
+      var opts = document.createElement("div");
+      opts.className = "feel-opts";
+      FEELINGS.forEach(function(f){
+        var fb = document.createElement("button");
+        fb.type = "button";
+        fb.className = "feel" + (r.feeling === f ? " on" : "");
+        fb.textContent = f;
+        fb.addEventListener("click", function(){
+          r.feeling = (r.feeling === f) ? "" : f;
+          save(); renderRooms();
+        });
+        opts.appendChild(fb);
+      });
+      room.appendChild(opts);
+
+      // actions
+      var list = document.createElement("ul");
+      list.className = "actions-list";
+      r.actions.forEach(function(a){
+        list.appendChild(actionRow(r, a));
+      });
+      room.appendChild(list);
+
+      // add action
+      var addRow = document.createElement("div");
+      addRow.className = "add-action-row";
+      var inp = document.createElement("input");
+      inp.type = "text"; inp.placeholder = "Add a small action…"; inp.maxLength = 80;
+      inp.setAttribute("aria-label","New action for " + r.name);
+      var addBtn = document.createElement("button");
+      addBtn.className = "ghost-btn"; addBtn.type = "button"; addBtn.textContent = "Add";
+      function doAdd(){
+        var t = inp.value.trim();
+        if(!t) return;
+        r.actions.push({ id:uid(), text:t, done:false });
+        inp.value = "";
+        save(); renderRooms(); renderProgress();
+        // refocus the new input in this room
+        var live = document.querySelector('[data-focus="'+r.id+'"]');
+        if(live) live.focus();
+      }
+      inp.setAttribute("data-focus", r.id);
+      addBtn.addEventListener("click", doAdd);
+      inp.addEventListener("keydown", function(e){ if(e.key === "Enter"){ e.preventDefault(); doAdd(); } });
+      addRow.appendChild(inp); addRow.appendChild(addBtn);
+      room.appendChild(addRow);
+
+      // room progress
+      var rp = document.createElement("div");
+      rp.className = "room-prog";
+      var pct = roomProgress(r);
+      rp.innerHTML = '<div class="bar"><span style="width:'+pct+'%"></span></div>' +
+        '<div class="mini-note">' + miniNote(r, pct) + '</div>';
+      room.appendChild(rp);
+
+      wrap.appendChild(room);
+    });
+  }
+
+  function miniNote(r, pct){
+    if(!r.actions.length) return "Add a small, mostly-free action to begin.";
+    var done = r.actions.filter(function(a){ return a.done; }).length;
+    if(pct === 100) return "Every action done — this room is a sanctuary. 💛";
+    return done + " of " + r.actions.length + " done";
+  }
+
+  function actionRow(r, a){
+    var li = document.createElement("li");
+    li.className = "action-item" + (a.done ? " done" : "");
+    var cb = document.createElement("input");
+    cb.type = "checkbox"; cb.checked = a.done; cb.id = "a_" + a.id;
+    cb.addEventListener("change", function(){
+      a.done = cb.checked;
+      save(); renderRooms(); renderProgress();
+    });
+    var lab = document.createElement("label");
+    lab.setAttribute("for", "a_" + a.id);
+    lab.textContent = a.text;
+    var del = document.createElement("button");
+    del.className = "del-x"; del.type = "button"; del.setAttribute("aria-label","Delete action");
+    del.textContent = "✕";
+    del.addEventListener("click", function(){
+      if(confirm('Remove "' + a.text + '"?')){
+        r.actions = r.actions.filter(function(x){ return x.id !== a.id; });
+        save(); renderRooms(); renderProgress();
+      }
+    });
+    li.appendChild(cb); li.appendChild(lab); li.appendChild(del);
+    return li;
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  // ---- Overall progress ----
+  function renderProgress(){
+    var total = 0, done = 0;
+    data.rooms.forEach(function(r){
+      total += r.actions.length;
+      done += r.actions.filter(function(a){ return a.done; }).length;
+    });
+    var pct = total ? Math.round(done/total*100) : 0;
+    $("overallPct").textContent = pct + "%";
+    $("overallBar").style.width = pct + "%";
+    var note;
+    if(!data.rooms.length){
+      note = "Add a room below to begin. Small steps make a soft home. 💛";
+    } else if(total === 0){
+      note = "Add a few small actions to your rooms — then watch your sanctuary grow.";
+    } else if(pct === 100){
+      note = "Every action complete. Your home is a place of rest. Well done, sister. 🌿";
+    } else {
+      note = done + " of " + total + " actions done across " + data.rooms.length + " " +
+             (data.rooms.length === 1 ? "room" : "rooms") + ". Keep going, gently.";
+    }
+    $("overallNote").textContent = note;
+  }
+
+  // ---- Basics library ----
+  function renderBasics(){
+    var wrap = $("basicsWrap");
+    wrap.innerHTML = "";
+    var hasRooms = data.rooms.length > 0;
+    $("basicsHint").style.display = hasRooms ? "none" : "block";
+
+    BASICS.forEach(function(b){
+      var row = document.createElement("div");
+      row.className = "basic";
+      var txt = document.createElement("div");
+      txt.className = "b-txt";
+      txt.innerHTML = "<b>" + escapeHtml(b[0]) + "</b><span>" + escapeHtml(b[1]) + "</span>";
+      row.appendChild(txt);
+
+      var ctrl = document.createElement("div");
+      ctrl.className = "add-to-wrap";
+      if(hasRooms){
+        var sel = document.createElement("select");
+        sel.setAttribute("aria-label", "Add \"" + b[0] + "\" to a room");
+        var ph = document.createElement("option");
+        ph.value = ""; ph.textContent = "Add to…";
+        sel.appendChild(ph);
+        data.rooms.forEach(function(r){
+          var o = document.createElement("option");
+          o.value = r.id; o.textContent = r.name;
+          sel.appendChild(o);
+        });
+        sel.style.display = "block";
+        sel.addEventListener("change", function(){
+          var rid = sel.value;
+          if(!rid) return;
+          var room = data.rooms.filter(function(x){ return x.id === rid; })[0];
+          if(room){
+            room.actions.push({ id:uid(), text:b[0], done:false });
+            save(); renderRooms(); renderProgress();
+          }
+          sel.value = "";
+        });
+        ctrl.appendChild(sel);
+      } else {
+        var lock = document.createElement("span");
+        lock.style.color = "var(--muted)";
+        lock.style.fontSize = "12.5px";
+        lock.textContent = "—";
+        ctrl.appendChild(lock);
+      }
+      row.appendChild(ctrl);
+      wrap.appendChild(row);
+    });
+  }
+
+  // ---- Reset routine ----
+  function renderReset(){
+    var list = $("resetList");
+    list.innerHTML = "";
+    data.reset.items.forEach(function(item, i){
+      var li = document.createElement("li");
+      li.className = "action-item" + (item.done ? " done" : "");
+      var cb = document.createElement("input");
+      cb.type = "checkbox"; cb.checked = item.done; cb.id = "rs_" + i;
+      cb.addEventListener("change", function(){
+        item.done = cb.checked; save(); renderReset();
+      });
+      var lab = document.createElement("label");
+      lab.setAttribute("for", "rs_" + i);
+      lab.textContent = item.text;
+      var del = document.createElement("button");
+      del.className = "del-x"; del.type = "button"; del.setAttribute("aria-label","Delete reset step");
+      del.textContent = "✕";
+      del.addEventListener("click", function(){
+        if(confirm('Remove "' + item.text + '" from your reset?')){
+          data.reset.items.splice(i,1); save(); renderReset();
+        }
+      });
+      li.appendChild(cb); li.appendChild(lab); li.appendChild(del);
+      list.appendChild(li);
+    });
+    $("resetTotal").textContent = data.reset.total;
+    $("resetLast").textContent = prettyDate(data.reset.last);
+    var ranToday = data.reset.last === todayKey();
+    var btn = $("runResetBtn");
+    if(ranToday){
+      btn.textContent = "Reset done today ✓";
+      btn.classList.add("done");
+    } else {
+      btn.textContent = "I ran my reset today 🕯️";
+      btn.classList.remove("done");
+    }
+  }
+
+  $("runResetBtn").addEventListener("click", function(){
+    var today = todayKey();
+    if(data.reset.last === today){
+      // undo today's count
+      data.reset.last = null;
+      data.reset.total = Math.max(0, data.reset.total - 1);
+    } else {
+      data.reset.last = today;
+      data.reset.total += 1;
+      // uncheck the steps for next run
+      data.reset.items.forEach(function(it){ it.done = false; });
+    }
+    save(); renderReset();
+  });
+
+  // ---- Corner ----
+  function wire(el, fn){
+    el.addEventListener("input", function(){ fn(el.value); save(); });
+  }
+  $("cornerSpot").value = data.corner.spot || "";
+  $("cornerDream").value = data.corner.dream || "";
+  wire($("cornerSpot"), function(v){ data.corner.spot = v; });
+  wire($("cornerDream"), function(v){ data.corner.dream = v; });
+
+  // ---- Add room handlers ----
+  $("addRoomBtn").addEventListener("click", function(){
+    addRoom($("newRoom").value);
+    $("newRoom").value = "";
+    $("newRoom").focus();
+  });
+  $("newRoom").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); $("addRoomBtn").click(); }
+  });
+
+  // ---- Clear all ----
+  $("clearBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Home Sanctuary data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = fresh();
+      $("cornerSpot").value = ""; $("cornerDream").value = "";
+      renderAll();
+    }
+  });
+
+  // ---- Initial render ----
+  function renderAll(){
+    renderPeace();
+    renderChips();
+    renderRooms();
+    renderBasics();
+    renderReset();
+    renderProgress();
+  }
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

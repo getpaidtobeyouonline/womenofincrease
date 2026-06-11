@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feminine Energy Daily Practice · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .date{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Prompt / affirmation ---------- */
+  .verse{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:22px 20px; position:relative; overflow:hidden;
+  }
+  .verse::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .verse p{
+    font-family:'Fraunces',serif; font-style:italic; font-weight:500;
+    font-size:19px; line-height:1.45; position:relative; z-index:1;
+  }
+  .verse .ref{
+    margin-top:12px; font-family:'Hanken Grotesk'; font-style:normal; font-weight:600;
+    font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft);
+  }
+  .verse-actions{ display:flex; justify-content:flex-end; margin-top:10px; }
+  .link-btn{
+    background:none; border:none; color:var(--emerald); font-family:inherit;
+    font-weight:600; font-size:13.5px; cursor:pointer; padding:8px 6px;
+    min-height:44px; display:inline-flex; align-items:center; gap:6px;
+  }
+  .link-btn:hover{ color:var(--gold); }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:84px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Practice picker ---------- */
+  .theme-label{
+    display:inline-flex; align-items:center; gap:6px;
+    font-weight:700; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--gold); margin:16px 0 8px;
+  }
+  .theme-label:first-of-type{ margin-top:4px; }
+  .practice{
+    display:flex; align-items:flex-start; gap:12px;
+    border:1px solid var(--line); border-radius:12px;
+    padding:12px 14px; margin-bottom:9px; cursor:pointer;
+    background:var(--cream); transition:border-color .15s, background .15s;
+    min-height:44px;
+  }
+  .practice:hover{ border-color:var(--gold-soft); }
+  .practice.on{ border-color:var(--gold); background:#FFFCF4; }
+  .practice input[type="checkbox"]{
+    flex:none; width:22px; height:22px; margin-top:1px; accent-color:var(--emerald); cursor:pointer;
+  }
+  .practice .txt{ font-size:15px; color:var(--ink); }
+  .practice.on .txt{ color:var(--emerald); font-weight:600; }
+
+  .pick-note{ color:var(--muted); font-size:13.5px; margin-top:6px; text-align:center; }
+  .pick-note b{ color:var(--emerald); }
+
+  /* ---------- Holding / mode slider ---------- */
+  .mode-wrap{ margin-top:4px; }
+  .mode-ends{
+    display:flex; justify-content:space-between; font-size:12.5px;
+    font-weight:600; color:var(--muted); margin-bottom:6px;
+  }
+  .mode-ends .hard{ color:var(--gold); }
+  .mode-ends .soft{ color:var(--emerald); }
+  input[type="range"]{
+    -webkit-appearance:none; appearance:none; width:100%; height:8px;
+    border-radius:999px; background:linear-gradient(90deg,var(--gold-soft),var(--emerald-soft));
+    outline:none; cursor:pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none; width:26px; height:26px; border-radius:50%;
+    background:var(--gold); border:3px solid #fff; box-shadow:0 2px 8px rgba(200,160,74,.45); cursor:pointer;
+  }
+  input[type="range"]::-moz-range-thumb{
+    width:26px; height:26px; border-radius:50%; background:var(--gold);
+    border:3px solid #fff; box-shadow:0 2px 8px rgba(200,160,74,.45); cursor:pointer;
+  }
+  .mode-read{
+    margin-top:14px; text-align:center; background:var(--emerald-soft);
+    border:1px solid rgba(20,84,62,.15); border-radius:12px; padding:14px 16px; color:var(--emerald);
+  }
+  .mode-read .big{ font-family:'Fraunces',serif; font-weight:600; font-size:17px; margin-bottom:3px; }
+  .mode-read .sm{ font-size:13.5px; color:var(--muted); }
+
+  /* ---------- Received log ---------- */
+  .recv-row{ display:flex; align-items:center; gap:10px; }
+  .recv-row .dot{ flex:none; width:9px;height:9px;border-radius:50%;background:var(--gold); }
+  .recv-row input{ flex:1; }
+  .recv-count{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:14px; color:var(--muted); font-size:14px;
+  }
+  .recv-count b{ color:var(--emerald); font-size:15px; }
+  .recv-count .heart{ font-size:16px; }
+
+  /* ---------- Complete button ---------- */
+  .complete-btn{
+    width:100%; margin-top:8px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .complete-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .complete-btn:active{ transform:translateY(1px); }
+  .complete-btn.done{
+    background:var(--emerald-soft); color:var(--emerald); box-shadow:none;
+    border:1px solid rgba(20,84,62,.2);
+  }
+
+  .blessing{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:18px 16px; color:var(--emerald);
+  }
+  .blessing.show{ display:block; animation:rise .4s ease; }
+  .blessing .big{ font-family:'Fraunces',serif; font-weight:600; font-size:18px; margin-bottom:4px; }
+  .blessing .sm{ font-size:14px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Streak ---------- */
+  .streak{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:18px; color:var(--muted); font-size:14px;
+  }
+  .streak b{ color:var(--emerald); font-size:15px; }
+  .flame{ font-size:16px; }
+
+  /* ---------- History ---------- */
+  .history-title{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600;
+    margin:6px 0 4px;
+  }
+  .history-list{ list-style:none; }
+  .history-list li{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
+    padding:12px 2px; border-bottom:1px solid var(--line); font-size:14px;
+  }
+  .history-list li:last-child{ border-bottom:none; }
+  .history-list .h-left .h-date{ color:var(--ink); font-weight:600; display:block; }
+  .history-list .h-left .h-meta{ color:var(--muted); font-size:13px; margin-top:2px; }
+  .history-list .h-left .h-recv{ color:var(--gold); font-family:'Fraunces',serif; font-style:italic; font-size:13.5px; margin-top:2px; }
+  .del-btn{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:13px; min-height:44px; min-width:44px; padding:0 4px;
+  }
+  .del-btn:hover{ color:var(--gold); }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Feminine Energy Daily Practice</h1>
+    <p class="subtitle">Soften into your day — practices in receiving, grace, and ease.</p>
+    <div class="date" id="todayDate">Today</div>
+  </header>
+
+  <!-- 1. Daily invitation -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>Today's Invitation</h2></div>
+    <p class="hint">Let this land softly. You don't have to earn it — just receive it.</p>
+    <div class="verse">
+      <p id="promptText">—</p>
+      <div class="ref" id="promptRef"></div>
+    </div>
+    <div class="verse-actions">
+      <button class="link-btn" id="anotherPrompt" type="button">↻ Show me another</button>
+    </div>
+    <label class="field-label" for="reflection">What does softening look like for you today? <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+    <textarea id="reflection" placeholder="A feeling, a longing, a gentle permission you're giving yourself…"></textarea>
+  </section>
+
+  <!-- 2. How am I holding myself -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>How Am I Holding Myself?</h2></div>
+    <p class="hint">No shame in your strength, love. This is just a check-in — where are you right now?</p>
+    <div class="mode-wrap">
+      <div class="mode-ends">
+        <span class="hard">Hard · pushing</span>
+        <span class="soft">Soft · receptive</span>
+      </div>
+      <input type="range" id="modeSlider" min="0" max="100" step="1" value="50" aria-label="How am I holding myself, from hard and pushing to soft and receptive">
+    </div>
+    <div class="mode-read">
+      <div class="big" id="modeBig">Somewhere in between</div>
+      <div class="sm" id="modeSm">Wherever you are is welcome here.</div>
+    </div>
+  </section>
+
+  <!-- 3. Choose your practices -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>Choose Your Practices</h2></div>
+    <p class="hint">Pick a few that call to you. Small and gentle counts. Check them off as you live them.</p>
+    <div id="practiceGroups"></div>
+    <p class="pick-note"><b id="pickDone">0</b> of <b id="pickTotal">0</b> chosen practices lived today</p>
+  </section>
+
+  <!-- 4. Received today -->
+  <section class="card">
+    <div class="step"><span class="num">4</span><h2>What Did You Receive?</h2></div>
+    <p class="hint">Name one thing you allowed in today — help, rest, a compliment, ease, pleasure. Receiving is a muscle.</p>
+    <div class="recv-row"><span class="dot"></span><input type="text" id="received" placeholder="Today, I let myself receive…"></div>
+    <div class="recv-count">
+      <span class="heart">💛</span>
+      <span>You've allowed yourself to receive <b id="recvTotal">0</b> times</span>
+    </div>
+  </section>
+
+  <!-- 5. Close the day -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>Close With Grace</h2></div>
+    <p class="hint">When your practice feels complete, mark today. Softness completes your strength — it doesn't replace it.</p>
+    <button class="complete-btn" id="completeBtn" type="button">Complete today's practice 🌸</button>
+    <div class="blessing" id="blessing">
+      <div class="big">Beautifully soft. 🌸</div>
+      <div class="sm">You let yourself be held today. That is its own kind of strength, sister.</div>
+    </div>
+
+    <div class="streak">
+      <span class="flame">🌿</span>
+      <span><b id="streakCount">0</b> day streak · <b id="totalCount">0</b> days practiced</span>
+    </div>
+  </section>
+
+  <!-- History -->
+  <section class="card">
+    <div class="history-title">Your recent days</div>
+    <ul class="history-list" id="historyList"></ul>
+    <p class="empty-note" id="historyEmpty">Complete today's practice and your gentle history will gather here. 💛</p>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_feminine_energy";
+
+  // ---- Daily invitations / affirmations (soft, receiving, grace) ----
+  var PROMPTS = [
+    ["I am allowed to move slowly. The world will not fall apart if I breathe.", "Softness"],
+    ["I don't have to earn my rest. I can simply receive it.", "Receiving"],
+    ["My softness is not weakness — it is the part of me strong enough to open.", "Grace"],
+    ["I release my grip on what I cannot control, and I let ease meet me.", "Flow & Trust"],
+    ["I am worthy of being cared for, exactly as I am today.", "Receiving"],
+    ["I let beauty and ritual back into my ordinary day.", "Grace"],
+    ["I can be powerful and tender at the same time. Both are mine.", "Softness"],
+    ["I trust that I don't have to force the good things — some are meant to flow to me.", "Flow & Trust"],
+    ["I accept help without apologizing for needing it.", "Receiving"],
+    ["I unclench my jaw, drop my shoulders, and soften my whole body.", "Softness"],
+    ["I treat myself with the same gentleness I so freely give others.", "Grace"],
+    ["I let go of who I think I should be, and rest in who I am.", "Flow & Trust"],
+    ["Receiving a compliment is not arrogance — it is grace. I simply say thank you.", "Receiving"],
+    ["I am allowed to enjoy my life, not just manage it.", "Softness"],
+    ["I move through today gently, as if I were precious — because I am.", "Grace"],
+    ["I make space for ease, and I trust that it belongs to me too.", "Flow & Trust"],
+    ["I let myself be poured into today, not only poured out.", "Receiving"],
+    ["My strength built this. My softness lets me actually live it.", "Softness"],
+    ["I do not have to be everything to everyone. I can simply be here.", "Grace"],
+    ["I release the timeline I've been gripping and trust the unfolding.", "Flow & Trust"],
+    ["I let pleasure and delight be reasons enough — they don't need justifying.", "Receiving"],
+    ["Softness is my homecoming. I am safe to return to it.", "Softness"],
+    ["I give myself permission to be tended, held, and adored today.", "Grace"],
+    ["I loosen my hands. What is mine will find its way to me.", "Flow & Trust"],
+    ["I let someone love me well today, without testing whether I deserve it.", "Receiving"],
+    ["I can do hard things and still choose to be gentle with myself doing them.", "Softness"],
+    ["I am a daughter cared for — I get to lean back and be held.", "Grace"],
+    ["I trade pushing for flowing, just for today, and I see what arrives.", "Flow & Trust"]
+  ];
+
+  // ---- Practice library, grouped by theme ----
+  var GROUPS = [
+    { theme:"Softness", icon:"🤍", items:[
+      "Take three slow, full breaths and let my shoulders drop",
+      "Slow down one task I'd normally rush",
+      "Unclench my jaw and soften my face",
+      "Move at half my usual pace for ten minutes"
+    ]},
+    { theme:"Receiving", icon:"💛", items:[
+      "Accept a compliment with just 'thank you' — no deflecting",
+      "Let someone help me without insisting I'm fine",
+      "Allow myself to be cared for in some small way",
+      "Ask for what I need instead of going without"
+    ]},
+    { theme:"Grace", icon:"🌸", items:[
+      "Add one small beauty or ritual to my day",
+      "Speak to myself the way I'd speak to a dear friend",
+      "Move gently and tend my body kindly",
+      "Forgive myself for something I've been carrying"
+    ]},
+    { theme:"Flow & Trust", icon:"🌿", items:[
+      "Release control of one outcome I've been gripping",
+      "Choose the easier, lighter option on purpose",
+      "Let something be 'good enough' instead of perfect",
+      "Rest without earning it first"
+    ]}
+  ];
+
+  // Flatten into a stable list with ids "theme:index"
+  var ALL_PRACTICES = [];
+  GROUPS.forEach(function(g){
+    g.items.forEach(function(text, i){
+      ALL_PRACTICES.push({ id:g.theme+":"+i, theme:g.theme, icon:g.icon, text:text });
+    });
+  });
+
+  // ---- Date helpers (local) ----
+  function todayKey(){
+    var d = new Date();
+    var m = String(d.getMonth()+1).padStart(2,"0");
+    var day = String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function dayOfYear(d){
+    var start = new Date(d.getFullYear(),0,0);
+    var diff = d - start;
+    return Math.floor(diff / 86400000);
+  }
+  function prettyDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"long", month:"long", day:"numeric"});
+  }
+  function shortDate(key){
+    var p = key.split("-");
+    var d = new Date(p[0], p[1]-1, p[2]);
+    return d.toLocaleDateString(undefined,{weekday:"short", month:"short", day:"numeric"});
+  }
+
+  // ---- State ----
+  var data = load();
+  var TODAY = todayKey();
+  var entry = data.entries[TODAY] || newEntry();
+
+  function newEntry(){
+    return { practices:{}, received:"", reflection:"", mode:50, prompt:null, completed:false };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && o.entries) return o; }
+    }catch(e){}
+    return { entries:{} };
+  }
+  function save(){
+    data.entries[TODAY] = entry;
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  // ---- Elements ----
+  var $ = function(id){ return document.getElementById(id); };
+  var promptTextEl = $("promptText"), promptRefEl = $("promptRef");
+  var reflectionEl = $("reflection"), receivedEl = $("received");
+  var modeSlider = $("modeSlider"), modeBig = $("modeBig"), modeSm = $("modeSm");
+  var completeBtn = $("completeBtn"), blessingEl = $("blessing");
+  var groupsEl = $("practiceGroups");
+
+  // ---- Daily prompt: deterministic default, user can cycle ----
+  if(entry.prompt === null || entry.prompt === undefined){
+    entry.prompt = dayOfYear(new Date()) % PROMPTS.length;
+  }
+  function renderPrompt(){
+    var p = PROMPTS[entry.prompt];
+    promptTextEl.textContent = p[0];
+    promptRefEl.textContent = p[1];
+  }
+  $("anotherPrompt").addEventListener("click", function(){
+    entry.prompt = (entry.prompt + 1) % PROMPTS.length;
+    renderPrompt(); save();
+  });
+
+  // ---- Build practice picker ----
+  function buildPractices(){
+    groupsEl.innerHTML = "";
+    GROUPS.forEach(function(g){
+      var label = document.createElement("div");
+      label.className = "theme-label";
+      label.innerHTML = "<span>"+g.icon+"</span><span>"+g.theme+"</span>";
+      groupsEl.appendChild(label);
+      g.items.forEach(function(text, i){
+        var id = g.theme+":"+i;
+        var row = document.createElement("label");
+        row.className = "practice";
+        row.setAttribute("for", "p_"+g.theme.replace(/[^a-z]/gi,"")+"_"+i);
+
+        var cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.id = "p_"+g.theme.replace(/[^a-z]/gi,"")+"_"+i;
+        cb.checked = !!entry.practices[id];
+
+        var span = document.createElement("span");
+        span.className = "txt";
+        span.textContent = text;
+
+        if(cb.checked) row.classList.add("on");
+
+        cb.addEventListener("change", function(){
+          if(cb.checked){ entry.practices[id] = true; row.classList.add("on"); }
+          else { delete entry.practices[id]; row.classList.remove("on"); }
+          save(); renderPickCount();
+        });
+
+        row.appendChild(cb);
+        row.appendChild(span);
+        groupsEl.appendChild(row);
+      });
+    });
+  }
+  function renderPickCount(){
+    var done = Object.keys(entry.practices).filter(function(k){ return entry.practices[k]; }).length;
+    $("pickDone").textContent = done;
+    $("pickTotal").textContent = Math.max(done, 0);
+    // "of" reads as chosen total === done since unchecking removes; show done/done
+    $("pickTotal").textContent = ALL_PRACTICES.length;
+  }
+
+  // ---- Mode slider read-out ----
+  function renderMode(){
+    var v = parseInt(modeSlider.value, 10);
+    modeSlider.value = v;
+    if(v <= 25){
+      modeBig.textContent = "In hard, pushing mode";
+      modeSm.textContent = "You've been carrying a lot. It's safe to set some of it down now.";
+    } else if(v < 45){
+      modeBig.textContent = "Leaning into effort";
+      modeSm.textContent = "Strong and capable — and allowed to exhale whenever you're ready.";
+    } else if(v <= 55){
+      modeBig.textContent = "Somewhere in between";
+      modeSm.textContent = "Wherever you are is welcome here. No need to rush the softening.";
+    } else if(v < 80){
+      modeBig.textContent = "Softening, opening";
+      modeSm.textContent = "Beautiful. Let yourself keep leaning back into receiving.";
+    } else {
+      modeBig.textContent = "Soft and receptive";
+      modeSm.textContent = "You're home in your feminine energy. Rest here as long as you like, love.";
+    }
+  }
+  modeSlider.addEventListener("input", function(){
+    entry.mode = parseInt(modeSlider.value, 10);
+    renderMode(); save();
+  });
+
+  // ---- Restore inputs ----
+  $("todayDate").textContent = prettyDate(TODAY);
+  reflectionEl.value = entry.reflection || "";
+  receivedEl.value = entry.received || "";
+  modeSlider.value = (entry.mode === undefined || entry.mode === null) ? 50 : entry.mode;
+  renderPrompt();
+  buildPractices();
+  renderMode();
+  renderCompleted();
+  renderPickCount();
+
+  // ---- Auto-save text inputs ----
+  reflectionEl.addEventListener("input", function(){ entry.reflection = reflectionEl.value; save(); });
+  receivedEl.addEventListener("input", function(){ entry.received = receivedEl.value; save(); });
+
+  // ---- Complete ----
+  function renderCompleted(){
+    if(entry.completed){
+      completeBtn.textContent = "Practice complete for today ✓";
+      completeBtn.classList.add("done");
+    }else{
+      completeBtn.textContent = "Complete today's practice 🌸";
+      completeBtn.classList.remove("done");
+    }
+    renderStreak();
+    renderReceived();
+    renderHistory();
+  }
+  completeBtn.addEventListener("click", function(){
+    entry.completed = !entry.completed;
+    save();
+    if(entry.completed){ blessingEl.classList.add("show"); }
+    else { blessingEl.classList.remove("show"); }
+    renderCompleted();
+  });
+
+  // ---- Streak + totals (days practiced = completed) ----
+  function renderStreak(){
+    var keys = Object.keys(data.entries).filter(function(k){ return data.entries[k].completed; });
+    $("totalCount").textContent = keys.length;
+    var streak = 0;
+    var d = new Date();
+    while(true){
+      var m = String(d.getMonth()+1).padStart(2,"0");
+      var day = String(d.getDate()).padStart(2,"0");
+      var k = d.getFullYear()+"-"+m+"-"+day;
+      if(data.entries[k] && data.entries[k].completed){ streak++; d.setDate(d.getDate()-1); }
+      else break;
+    }
+    $("streakCount").textContent = streak;
+  }
+
+  // ---- Received muscle count (any day with a non-empty received) ----
+  function renderReceived(){
+    var n = Object.keys(data.entries).filter(function(k){
+      var e = data.entries[k];
+      return e.received && e.received.trim().length > 0;
+    }).length;
+    $("recvTotal").textContent = n;
+  }
+
+  // ---- History (last 7 completed, recent first) ----
+  function renderHistory(){
+    var list = $("historyList"), empty = $("historyEmpty");
+    var keys = Object.keys(data.entries)
+      .filter(function(k){ return data.entries[k].completed; })
+      .sort().reverse().slice(0,7);
+    list.innerHTML = "";
+    if(keys.length === 0){ empty.style.display="block"; return; }
+    empty.style.display="none";
+    keys.forEach(function(k){
+      var e = data.entries[k];
+      var li = document.createElement("li");
+
+      var left = document.createElement("div");
+      left.className = "h-left";
+
+      var dateEl = document.createElement("span");
+      dateEl.className = "h-date";
+      dateEl.textContent = shortDate(k);
+      left.appendChild(dateEl);
+
+      var pCount = Object.keys(e.practices || {}).filter(function(p){ return e.practices[p]; }).length;
+      var meta = document.createElement("span");
+      meta.className = "h-meta";
+      meta.textContent = pCount + (pCount === 1 ? " practice lived" : " practices lived");
+      left.appendChild(meta);
+
+      if(e.received && e.received.trim()){
+        var recv = document.createElement("span");
+        recv.className = "h-recv";
+        recv.textContent = "received: " + e.received.trim();
+        left.appendChild(recv);
+      }
+
+      var del = document.createElement("button");
+      del.className = "del-btn";
+      del.type = "button";
+      del.setAttribute("aria-label", "Delete entry for " + shortDate(k));
+      del.textContent = "Remove";
+      del.addEventListener("click", function(){
+        if(confirm("Gently remove your practice from " + prettyDate(k) + "?")){
+          delete data.entries[k];
+          if(k === TODAY){
+            entry = newEntry();
+            entry.prompt = dayOfYear(new Date()) % PROMPTS.length;
+            reflectionEl.value=""; receivedEl.value="";
+            modeSlider.value = 50;
+            blessingEl.classList.remove("show");
+            renderPrompt(); buildPractices(); renderMode();
+          }
+          try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e2){}
+          renderCompleted(); renderPickCount();
+        }
+      });
+
+      li.appendChild(left);
+      li.appendChild(del);
+      list.appendChild(li);
+    });
+  }
+
+  // ---- Reset / Clear ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Feminine Energy Practice data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = { entries:{} };
+      entry = newEntry();
+      entry.prompt = dayOfYear(new Date()) % PROMPTS.length;
+      reflectionEl.value=""; receivedEl.value="";
+      modeSlider.value = 50;
+      blessingEl.classList.remove("show");
+      renderPrompt(); buildPractices(); renderMode(); renderCompleted(); renderPickCount();
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

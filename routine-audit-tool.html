@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Routine Audit Tool · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:6px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step .icon{
+    flex:none; width:26px;height:26px; font-size:18px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:0 0 14px; }
+
+  /* ---------- Inputs ---------- */
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:14px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:var(--cream); border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:64px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+
+  /* ---------- Add row ---------- */
+  .add-row{ display:flex; gap:8px; margin-top:4px; }
+  .add-row input{ flex:1; }
+  .add-btn{
+    flex:none; min-width:48px; min-height:48px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:11px;
+    font-family:inherit; font-weight:700; font-size:22px; line-height:1; cursor:pointer;
+    box-shadow:0 4px 12px rgba(200,160,74,.3);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .add-btn:hover{ box-shadow:0 6px 16px rgba(200,160,74,.4); }
+  .add-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Activity items ---------- */
+  .items{ list-style:none; margin-top:14px; }
+  .item{
+    border:1px solid var(--line); border-radius:13px; padding:12px 12px 14px;
+    margin-bottom:10px; background:var(--cream);
+  }
+  .item.serves{ border-color:rgba(20,84,62,.3); background:var(--emerald-soft); }
+  .item.depletes{ border-color:rgba(200,160,74,.45); background:#FBF3DF; }
+  .item-top{ display:flex; align-items:center; gap:8px; }
+  .item-name{ flex:1; font-weight:600; font-size:15px; color:var(--ink); word-break:break-word; }
+  .del-btn{
+    flex:none; width:34px;height:34px; min-height:34px;
+    background:none; border:1px solid var(--line); border-radius:9px;
+    color:var(--muted); font-size:16px; line-height:1; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .del-btn:hover{ border-color:#c0584a; color:#c0584a; }
+
+  .toggle{
+    display:flex; gap:6px; margin-top:10px;
+  }
+  .toggle button{
+    flex:1; min-height:44px; border-radius:10px; cursor:pointer;
+    font-family:inherit; font-weight:600; font-size:13.5px;
+    border:1px solid var(--line); background:#fff; color:var(--muted);
+    transition:all .12s ease;
+  }
+  .toggle button .em{ font-size:15px; }
+  .toggle button.sel-serves{ background:var(--emerald); color:#FCF8EF; border-color:var(--emerald); }
+  .toggle button.sel-depletes{ background:var(--gold); color:var(--ink); border-color:var(--gold); }
+
+  .note-input{ margin-top:10px; }
+  .note-input textarea{ min-height:48px; background:#fff; }
+
+  /* ---------- Deplete adjust block ---------- */
+  .adjust{
+    margin-top:10px; padding:12px; border-radius:11px;
+    background:#fff; border:1px dashed rgba(200,160,74,.55);
+  }
+  .adjust .lead{ font-size:13px; color:var(--emerald); font-weight:600; margin-bottom:8px; }
+  .choices{ display:flex; gap:6px; margin-bottom:8px; }
+  .choices button{
+    flex:1; min-height:40px; border-radius:9px; cursor:pointer;
+    font-family:inherit; font-weight:600; font-size:12.5px;
+    border:1px solid var(--line); background:var(--cream); color:var(--muted);
+  }
+  .choices button.on{ background:var(--emerald-soft); color:var(--emerald); border-color:rgba(20,84,62,.3); }
+  .adjust textarea{ min-height:44px; background:var(--cream); }
+  .adjust-done{
+    display:flex; align-items:center; gap:8px; margin-top:9px;
+    font-size:13px; color:var(--muted); cursor:pointer; user-select:none; min-height:34px;
+  }
+  .adjust-done input{ width:20px; height:20px; accent-color:var(--emerald); }
+  .adjust-done.checked{ color:var(--emerald); font-weight:600; }
+
+  /* ---------- Audit readout ---------- */
+  .readout{ margin-top:14px; }
+  .bar{
+    display:flex; height:16px; border-radius:999px; overflow:hidden;
+    background:var(--line); margin:8px 0 10px;
+  }
+  .bar .seg-serves{ background:var(--emerald); }
+  .bar .seg-depletes{ background:var(--gold); }
+  .readout-stats{ display:flex; justify-content:space-between; font-size:13px; }
+  .readout-stats .s{ color:var(--emerald); font-weight:600; }
+  .readout-stats .d{ color:var(--gold); font-weight:600; }
+  .readout-msg{
+    margin-top:12px; font-size:14px; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:11px; padding:12px 14px;
+  }
+  .ratio-big{ font-family:'Fraunces',serif; font-weight:600; }
+
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; margin-top:10px; }
+
+  /* ---------- Ideas library ---------- */
+  .ideas-group{ margin-top:10px; }
+  .ideas-group h3{
+    font-family:'Fraunces',serif; color:var(--emerald); font-size:15px; font-weight:600;
+    margin:12px 0 8px;
+  }
+  .idea{
+    display:flex; align-items:center; gap:10px;
+    border:1px solid var(--line); border-radius:11px; padding:11px 12px; margin-bottom:8px;
+    background:var(--cream);
+  }
+  .idea .idea-body{ flex:1; }
+  .idea .idea-name{ font-weight:600; font-size:14px; color:var(--ink); }
+  .idea .idea-cat{ font-size:12px; color:var(--gold); font-weight:600; letter-spacing:.04em; }
+  .idea-add{
+    flex:none; min-height:40px; padding:0 12px; border-radius:10px; cursor:pointer;
+    font-family:inherit; font-weight:600; font-size:12.5px;
+    background:var(--emerald-soft); color:var(--emerald); border:1px solid rgba(20,84,62,.2);
+  }
+  .idea-add:hover{ background:var(--emerald); color:#FCF8EF; }
+  .tabs{ display:flex; gap:8px; margin-bottom:4px; }
+  .tabs button{
+    flex:1; min-height:44px; border-radius:10px; cursor:pointer;
+    font-family:inherit; font-weight:600; font-size:13.5px;
+    border:1px solid var(--line); background:#fff; color:var(--muted);
+  }
+  .tabs button.active{ background:var(--gold-soft); color:var(--emerald); border-color:var(--gold-soft); }
+
+  /* ---------- Ideal routine ---------- */
+  .keepers{ list-style:none; margin-top:6px; }
+  .keepers li{
+    display:flex; align-items:center; gap:8px; font-size:14px; padding:7px 2px;
+    border-bottom:1px solid var(--line); color:var(--ink);
+  }
+  .keepers li:last-child{ border-bottom:none; }
+  .keepers .kp-dot{ flex:none; width:8px;height:8px;border-radius:50%;background:var(--emerald); }
+
+  /* ---------- Footer + reset ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Routine Audit</h1>
+    <p class="subtitle">Look honestly at your days — keep what fills you, release what drains you.</p>
+  </header>
+
+  <!-- Welcome / first run -->
+  <section class="card" id="welcomeCard">
+    <div class="step"><span class="icon">🌿</span><h2>Welcome, sister</h2></div>
+    <p class="hint" style="margin-bottom:0;">Your routine is shaping you whether you notice it or not. Let's gently look at how you begin and end your days — naming what serves you, and what quietly takes from you. No shame here. Just honesty, and room to grow. Add your first activity below to begin.</p>
+  </section>
+
+  <!-- MORNING -->
+  <section class="card">
+    <div class="step"><span class="icon">🌅</span><h2>Morning Routine</h2></div>
+    <p class="hint">What do you actually do in the first hour or two? List it as it is.</p>
+    <div class="add-row">
+      <input type="text" id="morningInput" placeholder="e.g. Scroll my phone in bed" aria-label="Add a morning activity">
+      <button class="add-btn" id="morningAdd" type="button" aria-label="Add morning activity">+</button>
+    </div>
+    <ul class="items" id="morningItems"></ul>
+    <p class="empty-note" id="morningEmpty">Nothing here yet — add your first morning activity above. 💛</p>
+
+    <div class="readout" id="morningReadout" style="display:none;">
+      <div class="bar"><div class="seg-serves" id="morningSegS"></div><div class="seg-depletes" id="morningSegD"></div></div>
+      <div class="readout-stats">
+        <span class="s">🌿 Serves: <span id="morningSCount">0</span></span>
+        <span class="d">🍂 Depletes: <span id="morningDCount">0</span></span>
+      </div>
+      <div class="readout-msg" id="morningMsg"></div>
+    </div>
+  </section>
+
+  <!-- EVENING -->
+  <section class="card">
+    <div class="step"><span class="icon">🌙</span><h2>Evening Routine</h2></div>
+    <p class="hint">How do you wind down — or not? List the last stretch of your day.</p>
+    <div class="add-row">
+      <input type="text" id="eveningInput" placeholder="e.g. Watch TV until late" aria-label="Add an evening activity">
+      <button class="add-btn" id="eveningAdd" type="button" aria-label="Add evening activity">+</button>
+    </div>
+    <ul class="items" id="eveningItems"></ul>
+    <p class="empty-note" id="eveningEmpty">Nothing here yet — add your first evening activity above. 💛</p>
+
+    <div class="readout" id="eveningReadout" style="display:none;">
+      <div class="bar"><div class="seg-serves" id="eveningSegS"></div><div class="seg-depletes" id="eveningSegD"></div></div>
+      <div class="readout-stats">
+        <span class="s">🌿 Serves: <span id="eveningSCount">0</span></span>
+        <span class="d">🍂 Depletes: <span id="eveningDCount">0</span></span>
+      </div>
+      <div class="readout-msg" id="eveningMsg"></div>
+    </div>
+  </section>
+
+  <!-- IDEAS LIBRARY -->
+  <section class="card">
+    <div class="step"><span class="icon">✨</span><h2>Build Something Better</h2></div>
+    <p class="hint">Gentle, nourishing ideas you can add to your routine. Tap “+ Add” to drop one in.</p>
+    <div class="tabs">
+      <button id="tabMorning" class="active" type="button">🌅 Morning</button>
+      <button id="tabEvening" type="button">🌙 Evening</button>
+    </div>
+    <div id="ideasContainer"></div>
+  </section>
+
+  <!-- IDEAL ROUTINE -->
+  <section class="card">
+    <div class="step"><span class="icon">📖</span><h2>My Ideal Routine</h2></div>
+    <p class="hint">Drafted from your keepers — the activities you marked as serving you. Add a few words on the rhythm you're reaching for.</p>
+    <div class="ideas-group">
+      <h3>🌅 Morning keepers</h3>
+      <ul class="keepers" id="keepersMorning"></ul>
+      <p class="empty-note" id="keepersMorningEmpty">Mark a morning activity as “Serves” and it'll appear here.</p>
+    </div>
+    <div class="ideas-group">
+      <h3>🌙 Evening keepers</h3>
+      <ul class="keepers" id="keepersEvening"></ul>
+      <p class="empty-note" id="keepersEveningEmpty">Mark an evening activity as “Serves” and it'll appear here.</p>
+    </div>
+    <label class="field-label" for="idealNote">The rhythm I'm reaching for</label>
+    <textarea id="idealNote" placeholder="When I wake, I want to feel… By night, I want to…"></textarea>
+  </section>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_routine_audit";
+
+  // ---- Nourishing routine ideas ----
+  var IDEAS = {
+    morning: [
+      ["Sit with scripture before screens", "Spirit"],
+      ["A short prayer or thanksgiving", "Spirit"],
+      ["Two minutes of quiet stillness", "Spirit"],
+      ["Write one intention for the day", "Mind"],
+      ["Name three things you're grateful for", "Mind"],
+      ["Read a page that grows you", "Mind"],
+      ["A full glass of water first", "Body"],
+      ["Gentle stretch or a short walk", "Body"],
+      ["Open the window, breathe, light in", "Body"]
+    ],
+    evening: [
+      ["Phone down an hour before bed", "Wind-down"],
+      ["Reflect: where did I see God today?", "Wind-down"],
+      ["Jot tomorrow's top three, then release it", "Wind-down"],
+      ["Tidy one small space", "Wind-down"],
+      ["Warm tea, no caffeine", "Wind-down"],
+      ["Read instead of scroll", "Wind-down"],
+      ["A gratitude or a closing prayer", "Wind-down"],
+      ["Dim the lights, slow your breath", "Wind-down"]
+    ]
+  };
+
+  var ADJUST_LABELS = { cut:"✂️ Cut it", shrink:"🤏 Shrink it", replace:"🔄 Replace it" };
+
+  // ---- State ----
+  var data = load();
+
+  function freshData(){
+    return { morning:[], evening:[], idealNote:"", tab:"morning" };
+  }
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){
+        var o = JSON.parse(raw);
+        if(o && o.morning && o.evening){
+          if(!o.tab) o.tab = "morning";
+          if(typeof o.idealNote !== "string") o.idealNote = "";
+          return o;
+        }
+      }
+    }catch(e){}
+    return freshData();
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+  function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ---- Add activity ----
+  function addActivity(routine, name){
+    name = (name||"").trim();
+    if(!name) return;
+    data[routine].push({
+      id: uid(), name:name, status:"", note:"",
+      adjust:"", change:"", adjusted:false
+    });
+    save();
+    renderRoutine(routine);
+    renderAll();
+  }
+
+  function bindAdd(routine, inputId, btnId){
+    var input = $(inputId), btn = $(btnId);
+    btn.addEventListener("click", function(){ addActivity(routine, input.value); input.value=""; input.focus(); });
+    input.addEventListener("keydown", function(e){
+      if(e.key === "Enter"){ e.preventDefault(); addActivity(routine, input.value); input.value=""; }
+    });
+  }
+  bindAdd("morning","morningInput","morningAdd");
+  bindAdd("evening","eveningInput","eveningAdd");
+
+  // ---- Render one routine's items ----
+  function renderRoutine(routine){
+    var list = $(routine+"Items");
+    var empty = $(routine+"Empty");
+    var arr = data[routine];
+    list.innerHTML = "";
+    empty.style.display = arr.length ? "none" : "block";
+
+    arr.forEach(function(it){
+      var li = document.createElement("li");
+      li.className = "item" + (it.status==="serves" ? " serves" : it.status==="depletes" ? " depletes" : "");
+
+      // top: name + delete
+      var top = document.createElement("div");
+      top.className = "item-top";
+      var nm = document.createElement("div");
+      nm.className = "item-name";
+      nm.textContent = it.name;
+      var del = document.createElement("button");
+      del.className = "del-btn"; del.type = "button"; del.setAttribute("aria-label","Delete "+it.name);
+      del.textContent = "✕";
+      del.addEventListener("click", function(){
+        if(confirm("Remove “"+it.name+"” from your "+routine+" routine?")){
+          data[routine] = data[routine].filter(function(x){ return x.id !== it.id; });
+          save(); renderRoutine(routine); renderAll();
+        }
+      });
+      top.appendChild(nm); top.appendChild(del);
+      li.appendChild(top);
+
+      // toggle serves / depletes
+      var tog = document.createElement("div");
+      tog.className = "toggle";
+      var bS = document.createElement("button");
+      bS.type = "button";
+      bS.innerHTML = '<span class="em">🌿</span> Serves me';
+      if(it.status==="serves") bS.className = "sel-serves";
+      var bD = document.createElement("button");
+      bD.type = "button";
+      bD.innerHTML = '<span class="em">🍂</span> Depletes me';
+      if(it.status==="depletes") bD.className = "sel-depletes";
+      bS.addEventListener("click", function(){
+        it.status = it.status==="serves" ? "" : "serves";
+        save(); renderRoutine(routine); renderAll();
+      });
+      bD.addEventListener("click", function(){
+        it.status = it.status==="depletes" ? "" : "depletes";
+        save(); renderRoutine(routine); renderAll();
+      });
+      tog.appendChild(bS); tog.appendChild(bD);
+      li.appendChild(tog);
+
+      // optional note
+      var noteWrap = document.createElement("div");
+      noteWrap.className = "note-input";
+      var note = document.createElement("textarea");
+      note.placeholder = "Optional note — how does this one feel?";
+      note.value = it.note || "";
+      note.setAttribute("aria-label", "Note for "+it.name);
+      note.addEventListener("input", function(){ it.note = note.value; save(); });
+      noteWrap.appendChild(note);
+      li.appendChild(noteWrap);
+
+      // adjust block for depleting items
+      if(it.status==="depletes"){
+        var adj = document.createElement("div");
+        adj.className = "adjust";
+        var lead = document.createElement("div");
+        lead.className = "lead";
+        lead.textContent = "This one drains you. What's the kind next step?";
+        adj.appendChild(lead);
+
+        var choices = document.createElement("div");
+        choices.className = "choices";
+        ["cut","shrink","replace"].forEach(function(key){
+          var b = document.createElement("button");
+          b.type = "button";
+          b.textContent = ADJUST_LABELS[key];
+          if(it.adjust===key) b.className = "on";
+          b.addEventListener("click", function(){
+            it.adjust = it.adjust===key ? "" : key;
+            save(); renderRoutine(routine);
+          });
+          choices.appendChild(b);
+        });
+        adj.appendChild(choices);
+
+        var change = document.createElement("textarea");
+        change.placeholder = "My small intended change…";
+        change.value = it.change || "";
+        change.setAttribute("aria-label","Intended change for "+it.name);
+        change.addEventListener("input", function(){ it.change = change.value; save(); });
+        adj.appendChild(change);
+
+        var doneLbl = document.createElement("label");
+        doneLbl.className = "adjust-done" + (it.adjusted ? " checked":"");
+        var cb = document.createElement("input");
+        cb.type = "checkbox"; cb.checked = !!it.adjusted;
+        cb.addEventListener("change", function(){
+          it.adjusted = cb.checked; save(); renderRoutine(routine);
+        });
+        var spn = document.createElement("span");
+        spn.textContent = "I've adjusted this 🌱";
+        doneLbl.appendChild(cb); doneLbl.appendChild(spn);
+        adj.appendChild(doneLbl);
+
+        li.appendChild(adj);
+      }
+
+      list.appendChild(li);
+    });
+  }
+
+  // ---- Audit readout ----
+  function renderReadout(routine){
+    var arr = data[routine];
+    var s = arr.filter(function(x){ return x.status==="serves"; }).length;
+    var d = arr.filter(function(x){ return x.status==="depletes"; }).length;
+    var tagged = s + d;
+    var box = $(routine+"Readout");
+    if(arr.length === 0){ box.style.display = "none"; return; }
+    box.style.display = "block";
+
+    $(routine+"SCount").textContent = s;
+    $(routine+"DCount").textContent = d;
+
+    var segS = $(routine+"SegS"), segD = $(routine+"SegD");
+    if(tagged === 0){
+      segS.style.flex = "0"; segD.style.flex = "0";
+    }else{
+      segS.style.flex = String(s);
+      segD.style.flex = String(d);
+    }
+
+    var msg = $(routine+"Msg");
+    var label = routine==="morning" ? "morning" : "evening";
+    if(tagged === 0){
+      msg.innerHTML = "Tap <strong>Serves</strong> or <strong>Depletes</strong> on each activity to see how your "+label+" really sits with you.";
+    }else{
+      var ratio = Math.round((s/tagged)*100);
+      var line;
+      if(ratio >= 75){
+        line = 'Beautiful — <span class="ratio-big">'+ratio+'%</span> of your tagged '+label+' is serving you. This is a rhythm worth protecting.';
+      }else if(ratio >= 50){
+        line = '<span class="ratio-big">'+ratio+'%</span> of your tagged '+label+' serves you. You\'re more than halfway — pick one draining thing to shrink or swap.';
+      }else if(ratio > 0){
+        line = 'Only <span class="ratio-big">'+ratio+'%</span> is serving you right now — and naming that is the brave part. One small change will move this number. You\'ve got this.';
+      }else{
+        line = 'Right now nothing here is serving you. That\'s not failure, sister — it\'s a starting line. Add one nourishing idea below.';
+      }
+      if(d>0) line += '<br><span style="font-size:13px;color:var(--muted);">'+d+' item'+(d===1?'':'s')+' to cut, shrink, or swap.</span>';
+      msg.innerHTML = line;
+    }
+  }
+
+  // ---- Keepers (ideal routine) ----
+  function renderKeepers(routine){
+    var list = $("keepers"+cap(routine));
+    var empty = $("keepers"+cap(routine)+"Empty");
+    var keepers = data[routine].filter(function(x){ return x.status==="serves"; });
+    list.innerHTML = "";
+    empty.style.display = keepers.length ? "none" : "block";
+    keepers.forEach(function(it){
+      var li = document.createElement("li");
+      var dot = document.createElement("span"); dot.className = "kp-dot";
+      var txt = document.createElement("span"); txt.textContent = it.name;
+      li.appendChild(dot); li.appendChild(txt);
+      list.appendChild(li);
+    });
+  }
+  function cap(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+
+  // ---- Ideas library ----
+  function renderIdeas(){
+    var routine = data.tab;
+    $("tabMorning").classList.toggle("active", routine==="morning");
+    $("tabEvening").classList.toggle("active", routine==="evening");
+    var container = $("ideasContainer");
+    container.innerHTML = "";
+    IDEAS[routine].forEach(function(idea){
+      var row = document.createElement("div");
+      row.className = "idea";
+      var body = document.createElement("div");
+      body.className = "idea-body";
+      var nm = document.createElement("div");
+      nm.className = "idea-name"; nm.textContent = idea[0];
+      var cat = document.createElement("div");
+      cat.className = "idea-cat"; cat.textContent = idea[1];
+      body.appendChild(nm); body.appendChild(cat);
+      var btn = document.createElement("button");
+      btn.className = "idea-add"; btn.type = "button"; btn.textContent = "+ Add";
+      btn.addEventListener("click", function(){
+        // add as a serving activity since these are nourishing
+        data[routine].push({ id:uid(), name:idea[0], status:"serves", note:"", adjust:"", change:"", adjusted:false });
+        save(); renderRoutine(routine); renderAll();
+        btn.textContent = "Added ✓";
+        setTimeout(function(){ btn.textContent = "+ Add"; }, 1200);
+      });
+      row.appendChild(body); row.appendChild(btn);
+      container.appendChild(row);
+    });
+  }
+  $("tabMorning").addEventListener("click", function(){ data.tab="morning"; save(); renderIdeas(); });
+  $("tabEvening").addEventListener("click", function(){ data.tab="evening"; save(); renderIdeas(); });
+
+  // ---- Ideal note ----
+  var idealNoteEl = $("idealNote");
+  idealNoteEl.value = data.idealNote || "";
+  idealNoteEl.addEventListener("input", function(){ data.idealNote = idealNoteEl.value; save(); });
+
+  // ---- Welcome card visibility ----
+  function renderWelcome(){
+    var any = data.morning.length || data.evening.length;
+    $("welcomeCard").style.display = any ? "none" : "block";
+  }
+
+  // ---- Render everything that depends on state ----
+  function renderAll(){
+    renderReadout("morning");
+    renderReadout("evening");
+    renderKeepers("morning");
+    renderKeepers("evening");
+    renderWelcome();
+  }
+
+  // ---- Reset ----
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Clear ALL your Routine Audit data? This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = freshData();
+      idealNoteEl.value = "";
+      renderRoutine("morning");
+      renderRoutine("evening");
+      renderIdeas();
+      renderAll();
+    }
+  });
+
+  // ---- Initial render ----
+  renderRoutine("morning");
+  renderRoutine("evening");
+  renderIdeas();
+  renderAll();
+
+})();
+</script>
+</body>
+</html>

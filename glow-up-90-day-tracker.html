@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glow Up 90 Day Tracker · Women of Increase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF5EC; --ink:#1C1B1A; --gold:#C8A04A; --gold-soft:#E7D3A1;
+    --emerald:#14543E; --emerald-soft:#E5EDE8; --line:#E3DAC9; --muted:#6B655C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--cream); color:var(--ink);
+    line-height:1.55; padding:0 16px 48px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:520px; margin:0 auto; }
+
+  /* ---------- Header ---------- */
+  header{ padding:26px 0 14px; text-align:center; }
+  .wordmark{
+    display:inline-flex; align-items:center; gap:9px; margin-bottom:18px;
+  }
+  .wordmark .mark{
+    width:34px;height:34px;border-radius:50%;background:var(--gold);color:var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+    box-shadow:0 3px 10px rgba(200,160,74,.35);
+  }
+  .wordmark .name{
+    font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-size:11px;color:var(--gold);
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:30px; line-height:1.12; letter-spacing:-0.3px; margin-bottom:6px;
+  }
+  .subtitle{ color:var(--muted); font-size:15px; }
+  .daychip{
+    margin-top:14px; display:inline-block; color:var(--emerald);
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.12);
+    font-weight:600; font-size:13px; letter-spacing:.04em;
+    padding:6px 14px; border-radius:999px;
+  }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-top:16px; box-shadow:0 6px 18px rgba(28,27,26,.04);
+  }
+  .step{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .step .num{
+    flex:none; width:26px;height:26px;border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    font-weight:700; font-size:13px; display:flex;align-items:center;justify-content:center;
+  }
+  .step h2{
+    font-family:'Fraunces',serif; font-weight:600; color:var(--emerald);
+    font-size:19px;
+  }
+  .hint{ color:var(--muted); font-size:13.5px; margin:-4px 0 14px; }
+
+  /* ---------- Welcome (first run) ---------- */
+  .welcome{
+    background:linear-gradient(180deg, var(--emerald) 0%, #0f3f2e 100%);
+    color:#FCF8EF; border-radius:14px; padding:24px 20px; position:relative; overflow:hidden;
+  }
+  .welcome::before{
+    content:"\201C"; font-family:'Fraunces',serif; position:absolute;
+    top:-18px; left:10px; font-size:90px; color:rgba(231,211,161,.25);
+  }
+  .welcome h3{
+    font-family:'Fraunces',serif; font-weight:600; font-size:22px; line-height:1.2;
+    position:relative; z-index:1; margin-bottom:10px;
+  }
+  .welcome p{ font-size:14.5px; position:relative; z-index:1; color:rgba(252,248,239,.92); }
+  .welcome p + p{ margin-top:10px; }
+
+  /* ---------- Goal areas ---------- */
+  .area{
+    border:1px solid var(--line); border-radius:13px; padding:14px;
+    margin-top:12px; background:var(--cream);
+  }
+  .area-head{ display:flex; align-items:center; gap:9px; margin-bottom:8px; }
+  .area-emoji{ font-size:20px; }
+  .area-name{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:16px; }
+  .area-tag{ color:var(--muted); font-size:12.5px; margin-left:auto; }
+
+  label.field-label{
+    display:block; font-weight:600; font-size:13.5px; color:var(--ink); margin:12px 0 6px;
+  }
+  input[type="text"], textarea{
+    width:100%; font-family:inherit; font-size:16px; color:var(--ink);
+    background:#fff; border:1px solid var(--line); border-radius:11px;
+    padding:13px 14px; resize:none; transition:border-color .15s, box-shadow .15s;
+  }
+  .area input[type="text"]{ background:#fff; }
+  input[type="text"]{ min-height:48px; }
+  textarea{ min-height:72px; line-height:1.5; }
+  input:focus, textarea:focus{
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,160,74,.18);
+  }
+  input::placeholder, textarea::placeholder{ color:#A7A095; }
+  .goal-row{ display:flex; align-items:center; gap:9px; margin-bottom:8px; }
+  .goal-row .dot{ flex:none; width:9px;height:9px;border-radius:50%;background:var(--gold); }
+  .goal-row input{ flex:1; }
+
+  /* ---------- Primary buttons ---------- */
+  .primary-btn{
+    width:100%; margin-top:14px; min-height:52px;
+    background:var(--gold); color:var(--ink); border:none; border-radius:13px;
+    font-family:inherit; font-weight:700; font-size:16px; letter-spacing:.01em;
+    cursor:pointer; box-shadow:0 6px 16px rgba(200,160,74,.32);
+    transition:transform .08s ease, box-shadow .15s ease;
+  }
+  .primary-btn:hover{ box-shadow:0 8px 22px rgba(200,160,74,.4); }
+  .primary-btn:active{ transform:translateY(1px); }
+
+  /* ---------- Daily check-in toggles ---------- */
+  .toggle-grid{ display:flex; flex-direction:column; gap:10px; }
+  .toggle{
+    display:flex; align-items:center; gap:12px; width:100%;
+    min-height:54px; padding:10px 14px; cursor:pointer;
+    background:var(--cream); border:1px solid var(--line); border-radius:13px;
+    transition:border-color .15s, background .15s;
+  }
+  .toggle input{ position:absolute; opacity:0; width:1px; height:1px; }
+  .toggle .box{
+    flex:none; width:26px; height:26px; border-radius:8px;
+    border:2px solid var(--gold-soft); background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:15px; font-weight:700; transition:all .15s;
+  }
+  .toggle .emoji{ font-size:20px; }
+  .toggle .t-name{ font-weight:600; font-size:15px; color:var(--ink); }
+  .toggle:hover{ border-color:var(--gold-soft); }
+  .toggle.on{ background:var(--emerald-soft); border-color:rgba(20,84,62,.25); }
+  .toggle.on .box{ background:var(--emerald); border-color:var(--emerald); }
+  .toggle input:focus-visible + .box{ box-shadow:0 0 0 3px rgba(200,160,74,.35); }
+
+  .save-row{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:14px; color:var(--muted); font-size:13px; min-height:20px;
+  }
+  .save-row.show{ color:var(--emerald); font-weight:600; }
+
+  .blessing{
+    display:none; margin-top:14px; text-align:center;
+    background:var(--emerald-soft); border:1px solid rgba(20,84,62,.15);
+    border-radius:14px; padding:16px; color:var(--emerald);
+  }
+  .blessing.show{ display:block; animation:rise .4s ease; }
+  .blessing .big{ font-family:'Fraunces',serif; font-weight:600; font-size:17px; margin-bottom:3px; }
+  .blessing .sm{ font-size:13.5px; color:var(--muted); }
+  @keyframes rise{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---------- Progress ---------- */
+  .big-progress{ margin-bottom:6px; }
+  .bp-top{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:6px; }
+  .bp-day{ font-family:'Fraunces',serif; color:var(--emerald); font-size:22px; font-weight:600; }
+  .bp-pct{ color:var(--gold); font-weight:700; font-size:15px; }
+  .track{ height:12px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .track .fill{ height:100%; background:linear-gradient(90deg,var(--gold-soft),var(--gold)); border-radius:999px; transition:width .4s ease; }
+
+  .stat-row{ display:flex; gap:12px; margin-top:16px; }
+  .stat{
+    flex:1; text-align:center; background:var(--cream);
+    border:1px solid var(--line); border-radius:13px; padding:12px 8px;
+  }
+  .stat .v{ font-family:'Fraunces',serif; color:var(--emerald); font-size:22px; font-weight:600; }
+  .stat .l{ color:var(--muted); font-size:12px; margin-top:2px; }
+
+  .momentum{ margin-top:18px; }
+  .mom-title{ font-family:'Fraunces',serif; color:var(--emerald); font-size:16px; font-weight:600; margin-bottom:10px; }
+  .mom-row{ margin-bottom:12px; }
+  .mom-head{ display:flex; align-items:center; gap:7px; font-size:13.5px; margin-bottom:5px; }
+  .mom-head .m-name{ font-weight:600; color:var(--ink); }
+  .mom-head .m-count{ margin-left:auto; color:var(--muted); font-size:12.5px; }
+  .mom-track{ height:8px; background:var(--emerald-soft); border-radius:999px; overflow:hidden; }
+  .mom-track .mom-fill{ height:100%; background:linear-gradient(90deg,var(--gold-soft),var(--gold)); border-radius:999px; transition:width .4s ease; }
+
+  /* ---------- Milestones ---------- */
+  .milestone{
+    border:1px dashed var(--line); border-radius:13px; padding:14px; margin-top:12px;
+    background:var(--cream);
+  }
+  .milestone.unlocked{ border-style:solid; border-color:rgba(20,84,62,.25); background:var(--emerald-soft); }
+  .ms-head{ display:flex; align-items:center; gap:9px; }
+  .ms-badge{
+    flex:none; width:42px; height:42px; border-radius:50%;
+    background:var(--gold-soft); color:var(--emerald);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-weight:600; font-size:15px;
+  }
+  .milestone.unlocked .ms-badge{ background:var(--gold); color:var(--ink); box-shadow:0 4px 12px rgba(200,160,74,.35); }
+  .ms-title{ font-family:'Fraunces',serif; font-weight:600; color:var(--emerald); font-size:16px; }
+  .ms-sub{ color:var(--muted); font-size:12.5px; }
+  .ms-locked-note{ color:var(--muted); font-size:13px; font-style:italic; margin-top:10px; }
+  .ms-prompt{ font-style:italic; color:var(--emerald); font-size:13.5px; margin:12px 0 6px; }
+
+  /* ---------- Wins / evidence ---------- */
+  .win-add{ display:flex; gap:9px; margin-bottom:6px; }
+  .win-add input{ flex:1; }
+  .win-add button{
+    flex:none; min-width:48px; min-height:48px; border-radius:11px;
+    background:var(--gold); color:var(--ink); border:none; font-family:inherit;
+    font-weight:700; font-size:22px; cursor:pointer; line-height:1;
+  }
+  .win-add button:active{ transform:translateY(1px); }
+  .win-list{ list-style:none; margin-top:6px; }
+  .win-list li{
+    display:flex; align-items:flex-start; gap:10px;
+    padding:11px 2px; border-bottom:1px solid var(--line); font-size:14px;
+  }
+  .win-list li:last-child{ border-bottom:none; }
+  .win-list .w-dot{ flex:none; color:var(--gold); font-size:14px; margin-top:1px; }
+  .win-list .w-text{ flex:1; color:var(--ink); }
+  .win-list .w-day{ color:var(--muted); font-size:11.5px; }
+  .win-list .w-del{
+    flex:none; background:none; border:none; color:var(--muted); cursor:pointer;
+    font-size:16px; min-width:32px; min-height:32px; line-height:1;
+  }
+  .win-list .w-del:hover{ color:var(--gold); }
+  .empty-note{ color:var(--muted); font-size:14px; font-style:italic; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    text-align:center; margin-top:30px; padding-top:18px;
+    border-top:1px solid var(--line); color:var(--muted); font-size:12.5px; letter-spacing:.02em;
+  }
+  .reset-btn{
+    display:inline-block; margin:0 auto 20px; min-height:44px;
+    background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:10px; padding:10px 18px; font-family:inherit; font-size:13px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--gold); color:var(--ink); }
+  .center{ text-align:center; }
+  .hidden{ display:none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="wordmark">
+      <span class="mark">W</span>
+      <span class="name">Women of Increase</span>
+    </div>
+    <h1>Glow Up · 90 Days</h1>
+    <p class="subtitle">An inside-out glow up across the five areas that make you, you.</p>
+    <div class="daychip" id="dayChip">Day 1 of 90</div>
+  </header>
+
+  <!-- ===== SETUP / FIRST RUN ===== -->
+  <section class="card" id="setupCard">
+    <div class="welcome">
+      <h3>Welcome to your 90-day glow up. 💛</h3>
+      <p>This isn't about becoming someone new — it's about coming home to who you already are. The glow up is an inside job first. Mind, body, peace, and presence.</p>
+      <p>Set one or two simple intentions in each area below. Soft goals. Doable ones. Then show up however you can. Progress over perfection, always.</p>
+    </div>
+
+    <div class="step" style="margin-top:18px;"><span class="num">✦</span><h2>Set your intentions</h2></div>
+    <p class="hint">What does glowing up look like for you in each area? Keep it gentle and specific.</p>
+
+    <div id="goalsSetup"></div>
+
+    <button class="primary-btn" id="startBtn" type="button">Begin my 90 days 🌿</button>
+    <p class="hint center" style="margin-top:10px;margin-bottom:0;">You can edit these anytime. No pressure to fill in every line.</p>
+  </section>
+
+  <!-- ===== ACTIVE JOURNEY ===== -->
+  <div id="journey" class="hidden">
+
+    <!-- Progress -->
+    <section class="card">
+      <div class="step"><span class="num">1</span><h2>Your progress</h2></div>
+      <div class="big-progress">
+        <div class="bp-top">
+          <span class="bp-day" id="progDay">Day 1 of 90</span>
+          <span class="bp-pct" id="progPct">0%</span>
+        </div>
+        <div class="track"><div class="fill" id="progFill" style="width:0%"></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><div class="v" id="statStreak">0</div><div class="l">🔥 day streak</div></div>
+        <div class="stat"><div class="v" id="statDays">0</div><div class="l">days engaged</div></div>
+        <div class="stat"><div class="v" id="statWins">0</div><div class="l">wins logged</div></div>
+      </div>
+
+      <div class="momentum">
+        <div class="mom-title">Where your love is going</div>
+        <div id="momentumList"></div>
+      </div>
+    </section>
+
+    <!-- Daily check-in -->
+    <section class="card">
+      <div class="step"><span class="num">2</span><h2>Today's check-in</h2></div>
+      <p class="hint" id="checkinHint">Tick the areas you nurtured today. Even one counts. 💛</p>
+      <div class="toggle-grid" id="toggleGrid"></div>
+
+      <label class="field-label" for="dayNote">A one-line win or note <span style="color:var(--muted);font-weight:400;">(optional)</span></label>
+      <input type="text" id="dayNote" placeholder="Today I showed up by…">
+
+      <div class="save-row" id="saveRow"><span id="saveText">Auto-saving as you go.</span></div>
+
+      <div class="blessing" id="blessing">
+        <div class="big" id="blessBig">Look at you, glowing. ✨</div>
+        <div class="sm" id="blessSm">That's how it's built — one gentle day at a time.</div>
+      </div>
+    </section>
+
+    <!-- Milestones -->
+    <section class="card">
+      <div class="step"><span class="num">3</span><h2>Milestones</h2></div>
+      <p class="hint">Pause and notice your growth at Day 30, 60, and 90.</p>
+      <div id="milestoneList"></div>
+    </section>
+
+    <!-- Wins / evidence -->
+    <section class="card">
+      <div class="step"><span class="num">4</span><h2>Glow up evidence</h2></div>
+      <p class="hint">Proof you're becoming. Big or tiny — capture every win.</p>
+      <div class="win-add">
+        <input type="text" id="winInput" placeholder="A win you're proud of…">
+        <button id="winAddBtn" type="button" aria-label="Add win">+</button>
+      </div>
+      <ul class="win-list" id="winList"></ul>
+      <p class="empty-note" id="winEmpty">Your wins will gather here. The first one is always the hardest — and the most beautiful. 💛</p>
+    </section>
+
+    <!-- Edit intentions -->
+    <section class="card">
+      <div class="step"><span class="num">5</span><h2>Your intentions</h2></div>
+      <p class="hint">Revisit and refine them whenever you grow. Saves automatically.</p>
+      <div id="goalsEdit"></div>
+    </section>
+
+  </div>
+
+  <div class="center">
+    <button class="reset-btn" id="resetBtn" type="button">Reset / Clear all data</button>
+  </div>
+
+  <footer>
+    Women of Increase · Heal. Grow. Elevate. Become.
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "woi_glow_up_90day";
+
+  var AREAS = [
+    { id:"inner",     emoji:"🌱", name:"Inner Work",         tag:"mindset & healing" },
+    { id:"health",    emoji:"🫧", name:"Health",             tag:"body & energy" },
+    { id:"finances",  emoji:"💰", name:"Finances",           tag:"abundance & order" },
+    { id:"style",     emoji:"💅", name:"Style / Presentation", tag:"how you show up" },
+    { id:"spiritual", emoji:"🙏", name:"Spiritual Growth",   tag:"faith & connection" }
+  ];
+
+  var GOAL_PLACEHOLDERS = {
+    inner:    ["e.g. Speak to myself with kindness", "e.g. Journal my feelings, not bury them"],
+    health:   ["e.g. Move my body 3x a week", "e.g. Drink more water, sleep earlier"],
+    finances: ["e.g. Track what I spend without shame", "e.g. Save a little, on purpose"],
+    style:    ["e.g. Dress like the woman I'm becoming", "e.g. A small self-care ritual"],
+    spiritual:["e.g. Pray each morning", "e.g. Sit with scripture, not scroll"]
+  };
+
+  var MILESTONES = [
+    { day:30, title:"30 days in", sub:"A whole month of choosing you.",
+      prompt:"How have you grown in this first month? What feels different inside?" },
+    { day:60, title:"60 days strong", sub:"Two-thirds of the way — momentum is yours.",
+      prompt:"What's becoming easier? What is God growing in you right now?" },
+    { day:90, title:"90 days — you did it", sub:"The glow you built from the inside out.",
+      prompt:"Look back at who you were on Day 1. What has shifted? Where do you go from here?" }
+  ];
+
+  var BLESS = [
+    ["Look at you, glowing. ✨", "That's how it's built — one gentle day at a time."],
+    ["Showed up again. 💛", "She's becoming, and it shows."],
+    ["This is the inside job. 🌱", "Quiet, consistent, all yours."],
+    ["Proud of you, sister. 🌿", "Progress over perfection — always."],
+    ["Another brick laid. 💪", "Soft and steady builds something lasting."]
+  ];
+
+  // ---- Date helpers ----
+  function dkey(d){
+    var m=String(d.getMonth()+1).padStart(2,"0");
+    var day=String(d.getDate()).padStart(2,"0");
+    return d.getFullYear()+"-"+m+"-"+day;
+  }
+  function todayKey(){ return dkey(new Date()); }
+  function dayNumber(){
+    if(!data.startDate) return 1;
+    var p = data.startDate.split("-");
+    var start = new Date(+p[0], +p[1]-1, +p[2]);
+    start.setHours(0,0,0,0);
+    var now = new Date(); now.setHours(0,0,0,0);
+    var diff = Math.floor((now - start)/86400000);
+    return Math.min(90, Math.max(1, diff+1));
+  }
+
+  // ---- State ----
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(raw){ var o = JSON.parse(raw); if(o && typeof o === "object") return normalize(o); }
+    }catch(e){}
+    return blank();
+  }
+  function blank(){
+    var g={}; AREAS.forEach(function(a){ g[a.id]=["",""]; });
+    return { started:false, startDate:null, goals:g, days:{}, wins:[], milestones:{} };
+  }
+  function normalize(o){
+    var b = blank();
+    if(o.goals){ AREAS.forEach(function(a){ if(o.goals[a.id]) b.goals[a.id]=o.goals[a.id]; }); }
+    b.started = !!o.started;
+    b.startDate = o.startDate || null;
+    b.days = o.days || {};
+    b.wins = Array.isArray(o.wins) ? o.wins : [];
+    b.milestones = o.milestones || {};
+    return b;
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  var data = load();
+  var $ = function(id){ return document.getElementById(id); };
+
+  // ===== SETUP =====
+  function buildSetup(){
+    var wrap = $("goalsSetup"); wrap.innerHTML="";
+    AREAS.forEach(function(a){
+      wrap.appendChild(areaGoalBlock(a, "set"));
+    });
+  }
+  function areaGoalBlock(a, prefix){
+    var div = document.createElement("div");
+    div.className = "area";
+    var head = document.createElement("div");
+    head.className = "area-head";
+    head.innerHTML = '<span class="area-emoji">'+a.emoji+'</span>'+
+      '<span class="area-name">'+a.name+'</span>'+
+      '<span class="area-tag">'+a.tag+'</span>';
+    div.appendChild(head);
+    for(var i=0;i<2;i++){
+      (function(idx){
+        var row = document.createElement("div");
+        row.className = "goal-row";
+        var dot = document.createElement("span"); dot.className="dot";
+        var inp = document.createElement("input");
+        inp.type="text";
+        inp.id = prefix+"_"+a.id+"_"+idx;
+        var lbl = document.createElement("label");
+        lbl.setAttribute("for", inp.id);
+        lbl.className="hidden";
+        lbl.textContent = a.name+" intention "+(idx+1);
+        inp.setAttribute("aria-label", a.name+" intention "+(idx+1));
+        inp.placeholder = GOAL_PLACEHOLDERS[a.id][idx];
+        inp.value = (data.goals[a.id] && data.goals[a.id][idx]) || "";
+        inp.addEventListener("input", function(){
+          if(!data.goals[a.id]) data.goals[a.id]=["",""];
+          data.goals[a.id][idx] = inp.value;
+          save();
+          // keep the mirror input (setup/edit) in sync if present
+          var other = (prefix==="set"?"edit":"set")+"_"+a.id+"_"+idx;
+          var oe = document.getElementById(other);
+          if(oe && oe.value !== inp.value) oe.value = inp.value;
+        });
+        row.appendChild(lbl); row.appendChild(dot); row.appendChild(inp);
+        div.appendChild(row);
+      })(i);
+    }
+    return div;
+  }
+
+  $("startBtn").addEventListener("click", function(){
+    data.started = true;
+    if(!data.startDate) data.startDate = todayKey();
+    save();
+    render();
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+
+  // ===== TODAY ENTRY =====
+  function todayEntry(){
+    var tk = todayKey();
+    if(!data.days[tk]) data.days[tk] = { areas:{}, note:"" };
+    return data.days[tk];
+  }
+
+  function buildToggles(){
+    var grid = $("toggleGrid"); grid.innerHTML="";
+    var entry = todayEntry();
+    AREAS.forEach(function(a){
+      var label = document.createElement("label");
+      label.className = "toggle" + (entry.areas[a.id] ? " on" : "");
+      var cb = document.createElement("input");
+      cb.type="checkbox";
+      cb.id = "tog_"+a.id;
+      cb.checked = !!entry.areas[a.id];
+      var box = document.createElement("span");
+      box.className="box"; box.textContent = cb.checked ? "✓" : "";
+      box.setAttribute("aria-hidden","true");
+      var em = document.createElement("span"); em.className="emoji"; em.textContent=a.emoji; em.setAttribute("aria-hidden","true");
+      var nm = document.createElement("span"); nm.className="t-name"; nm.textContent=a.name;
+      cb.setAttribute("aria-label","Nurtured "+a.name+" today");
+      cb.addEventListener("change", function(){
+        var e = todayEntry();
+        if(cb.checked){ e.areas[a.id]=true; box.textContent="✓"; label.classList.add("on"); }
+        else { delete e.areas[a.id]; box.textContent=""; label.classList.remove("on"); }
+        save();
+        flashSaved();
+        maybeBless();
+        renderProgress();
+      });
+      label.appendChild(cb); label.appendChild(box); label.appendChild(em); label.appendChild(nm);
+      grid.appendChild(label);
+    });
+    $("dayNote").value = entry.note || "";
+  }
+
+  $("dayNote").addEventListener("input", function(){
+    todayEntry().note = $("dayNote").value;
+    save(); flashSaved();
+  });
+
+  var flashTimer=null;
+  function flashSaved(){
+    var row=$("saveRow"), txt=$("saveText");
+    txt.textContent="Saved 💛";
+    row.classList.add("show");
+    if(flashTimer) clearTimeout(flashTimer);
+    flashTimer=setTimeout(function(){
+      row.classList.remove("show");
+      txt.textContent="Auto-saving as you go.";
+    },1400);
+  }
+
+  function dayIsEngaged(e){
+    if(!e) return false;
+    if(e.note && e.note.trim()) return true;
+    return Object.keys(e.areas||{}).length>0;
+  }
+
+  function maybeBless(){
+    var e = todayEntry();
+    var b=$("blessing");
+    if(Object.keys(e.areas||{}).length>0){
+      var pick = BLESS[ (dayNumber()-1) % BLESS.length ];
+      $("blessBig").textContent = pick[0];
+      $("blessSm").textContent = pick[1];
+      b.classList.add("show");
+    } else {
+      b.classList.remove("show");
+    }
+  }
+
+  // ===== PROGRESS =====
+  function renderProgress(){
+    var dn = dayNumber();
+    var pct = Math.round((dn/90)*100);
+    $("progDay").textContent = "Day "+dn+" of 90";
+    $("dayChip").textContent = "Day "+dn+" of 90";
+    $("progPct").textContent = pct+"%";
+    $("progFill").style.width = Math.min(100,pct)+"%";
+
+    var engagedKeys = Object.keys(data.days).filter(function(k){ return dayIsEngaged(data.days[k]); });
+    $("statDays").textContent = engagedKeys.length;
+    $("statWins").textContent = data.wins.length;
+
+    // streak: consecutive engaged days ending today (or yesterday)
+    var streak=0; var d=new Date(); d.setHours(0,0,0,0);
+    if(!dayIsEngaged(data.days[dkey(d)])) d.setDate(d.getDate()-1);
+    while(dayIsEngaged(data.days[dkey(d)])){ streak++; d.setDate(d.getDate()-1); }
+    $("statStreak").textContent = streak;
+
+    // momentum per area
+    var counts={}; AREAS.forEach(function(a){ counts[a.id]=0; });
+    engagedKeys.forEach(function(k){
+      var ar = data.days[k].areas||{};
+      AREAS.forEach(function(a){ if(ar[a.id]) counts[a.id]++; });
+    });
+    var maxCount = Math.max(1, dn);
+    var ml = $("momentumList"); ml.innerHTML="";
+    AREAS.forEach(function(a){
+      var c = counts[a.id];
+      var w = Math.round((c/maxCount)*100);
+      var row = document.createElement("div");
+      row.className="mom-row";
+      row.innerHTML =
+        '<div class="mom-head"><span aria-hidden="true">'+a.emoji+'</span>'+
+        '<span class="m-name">'+a.name+'</span>'+
+        '<span class="m-count">'+c+' day'+(c===1?'':'s')+'</span></div>'+
+        '<div class="mom-track"><div class="mom-fill" style="width:'+w+'%"></div></div>';
+      ml.appendChild(row);
+    });
+  }
+
+  // ===== MILESTONES =====
+  function buildMilestones(){
+    var dn = dayNumber();
+    var list = $("milestoneList"); list.innerHTML="";
+    MILESTONES.forEach(function(m){
+      var unlocked = dn >= m.day;
+      var box = document.createElement("div");
+      box.className = "milestone" + (unlocked ? " unlocked" : "");
+      var head = document.createElement("div");
+      head.className="ms-head";
+      head.innerHTML =
+        '<span class="ms-badge">'+(unlocked?'★':m.day)+'</span>'+
+        '<span><span class="ms-title">'+m.title+'</span><br><span class="ms-sub">'+m.sub+'</span></span>';
+      box.appendChild(head);
+      if(unlocked){
+        var p = document.createElement("p");
+        p.className="ms-prompt"; p.textContent = m.prompt;
+        box.appendChild(p);
+        var ta = document.createElement("textarea");
+        ta.id = "ms_"+m.day;
+        ta.setAttribute("aria-label", m.title+" reflection");
+        ta.placeholder = "Take a breath. Write what's true for you…";
+        ta.value = data.milestones[m.day] || "";
+        ta.addEventListener("input", function(){
+          data.milestones[m.day] = ta.value; save(); flashSaved();
+        });
+        box.appendChild(ta);
+      } else {
+        var note = document.createElement("p");
+        note.className="ms-locked-note";
+        note.textContent = "Unlocks on Day "+m.day+" — "+(m.day-dn)+" day"+((m.day-dn)===1?'':'s')+" to go. Keep being gentle with yourself.";
+        box.appendChild(note);
+      }
+      list.appendChild(box);
+    });
+  }
+
+  // ===== WINS =====
+  function addWin(text){
+    text = (text||"").trim();
+    if(!text) return;
+    data.wins.unshift({ text:text, day:dayNumber(), ts:Date.now() });
+    save();
+    renderWins(); renderProgress();
+  }
+  $("winAddBtn").addEventListener("click", function(){
+    addWin($("winInput").value); $("winInput").value="";
+  });
+  $("winInput").addEventListener("keydown", function(e){
+    if(e.key==="Enter"){ addWin($("winInput").value); $("winInput").value=""; }
+  });
+  function renderWins(){
+    var ul=$("winList"), empty=$("winEmpty");
+    ul.innerHTML="";
+    if(!data.wins.length){ empty.style.display="block"; return; }
+    empty.style.display="none";
+    data.wins.forEach(function(w, i){
+      var li=document.createElement("li");
+      var dot=document.createElement("span"); dot.className="w-dot"; dot.textContent="✦"; dot.setAttribute("aria-hidden","true");
+      var span=document.createElement("span"); span.className="w-text";
+      span.innerHTML = "";
+      span.appendChild(document.createTextNode(w.text+" "));
+      var day=document.createElement("span"); day.className="w-day"; day.textContent="· Day "+(w.day||1);
+      span.appendChild(day);
+      var del=document.createElement("button");
+      del.className="w-del"; del.type="button"; del.textContent="×";
+      del.setAttribute("aria-label","Remove win");
+      del.addEventListener("click", function(){
+        data.wins.splice(i,1); save(); renderWins(); renderProgress();
+      });
+      li.appendChild(dot); li.appendChild(span); li.appendChild(del);
+      ul.appendChild(li);
+    });
+  }
+
+  // ===== EDIT GOALS =====
+  function buildEdit(){
+    var wrap=$("goalsEdit"); wrap.innerHTML="";
+    AREAS.forEach(function(a){ wrap.appendChild(areaGoalBlock(a,"edit")); });
+  }
+
+  // ===== RESET =====
+  $("resetBtn").addEventListener("click", function(){
+    if(confirm("Start a fresh 90 days? This clears all your goals, check-ins, milestones and wins. This can't be undone, sister.")){
+      try{ localStorage.removeItem(KEY); }catch(e){}
+      data = blank();
+      render();
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+  });
+
+  // ===== RENDER ROUTER =====
+  function render(){
+    if(data.started){
+      $("setupCard").classList.add("hidden");
+      $("journey").classList.remove("hidden");
+      buildToggles();
+      renderProgress();
+      buildMilestones();
+      renderWins();
+      buildEdit();
+      maybeBless();
+    } else {
+      $("setupCard").classList.remove("hidden");
+      $("journey").classList.add("hidden");
+      buildSetup();
+      $("dayChip").textContent = "Day 1 of 90";
+    }
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
